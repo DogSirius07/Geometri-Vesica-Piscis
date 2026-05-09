@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Motivo do meu sorriso</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #ffd700;
+            --deep-blue: #050a14;
+            --purple-aura: #a066ff;
+            --glass: rgba(10, 26, 47, 0.85);
+        }
+
+        * { box-sizing: border-box; }
+
+        body, html {
+            margin: 0; padding: 0;
+            background-color: var(--deep-blue);
+            color: white;
+            font-family: 'Cormorant Garamond', serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Fundo com Geometria Sagrada */
+        .bg-fixed {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background-image: url('IMG_0028'); 
+            background-size: cover;
+            background-position: center;
+            opacity: 0.25;
+            z-index: -1;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 60px 0;
+        }
+
+        h1 { font-size: clamp(2.5rem, 8vw, 4rem); color: var(--gold); margin-bottom: 10px; font-weight: 300; }
+        h2 { font-weight: 300; letter-spacing: 2px; color: #e0e0e0; }
+
+        .counter { 
+            font-size: clamp(1.2rem, 5vw, 2rem); 
+            margin: 40px 0; 
+            padding: 20px;
+            border: 1px solid rgba(160, 102, 255, 0.3);
+            border-radius: 15px;
+            background: rgba(160, 102, 255, 0.05);
+        }
+
+        .btn {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 15px 35px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            margin: 10px;
+            border-radius: 50px;
+            display: inline-block;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
+
+        /* Estações */
+        .station { 
+            display: none; 
+            margin-top: 50px; 
+            padding: 40px; 
+            background: var(--glass);
+            border: 1px solid var(--purple-aura);
+            border-radius: 25px;
+            box-shadow: 0 0 30px rgba(160, 102, 255, 0.2);
+            animation: fadeIn 1s ease;
+        }
+
+        .audio-player { margin: 25px 0; width: 100%; }
+
+        .main-ask {
+            font-size: clamp(2rem, 6vw, 3.5rem);
+            background: linear-gradient(to right, #ffd700, #ffffff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 30px 0;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* Mobile Adjustments */
+        @media (max-width: 600px) {
+            .container { padding: 30px 15px; }
+            .btn { width: 100%; margin: 5px 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-fixed"></div>
+
+    <div class="container">
+        <header>
+            <h1>O Motivo do meu sorriso</h1>
+            <h2>31 dias de uma conexão sagrada.</h2>
+        </header>
+
+        <div class="counter" id="timer">Calculando nosso tempo...</div>
+
+        <!-- Player de Música Principal -->
+        <audio id="bgMusic" loop>
+            <source src="URL_DA_MUSICA_ROMANTICA.mp3" type="audio/mpeg">
+        </audio>
+        <button class="btn" onclick="toggleMusic()">🎵 Play/Pause Nossa Música</button>
+
+        <div class="navigation" style="margin-top: 30px;">
+            <button class="btn" onclick="unlockStation('sons', '0505')">Estação "Sons"</button>
+            <button class="btn" onclick="unlockStation('pedido', '1206')">Estação "O Pedido"</button>
+        </div>
+
+        <!-- ESTAÇÃO SONS -->
+        <div id="sons" class="station">
+            <h2 style="color: var(--gold);">Nossa Frequência</h2>
+            <p>Ouça a mensagem que gravei para você:</p>
+            <audio controls class="audio-player">
+                <source src="URL_DO_SEU_AUDIO_GRAVADO.mp3" type="audio/mpeg">
+            </audio>
+            <p style="font-style: italic; color: #b0b0b0;">"Algumas conexões não são explicadas por palavras, mas por vibrações."</p>
+        </div>
+
+        <!-- ESTAÇÃO PEDIDO -->
+        <div id="pedido" class="station">
+            <h2 style="color: var(--gold);">O Início do Nosso Sempre</h2>
+            <p>No dia 05 de maio, nossas almas se reconheceram.</p>
+            <p>Hoje, eu quero que o mundo saiba o que meu coração já decidiu.</p>
+            
+            <h1 class="main-ask">Quer namorar comigo oficialmente?</h1>
+            
+            <div style="border: 1px solid var(--gold); padding: 15px; border-radius: 10px; margin-top: 20px;">
+                <p>Para a mulher que será minha esposa e mãe dos meus dois filhos.</p>
+                <p><b>Eu escolho você, hoje e todos os dias.</b></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 1. Contador em Tempo Real (Iniciado em 05/05/2026 às 19:30)
+        const startDate = new Date('2026-05-05T19:30:00');
+        function updateTimer() {
+            const now = new Date();
+            const diff = now - startDate;
+            const d = Math.floor(diff / (1000*60*60*24));
+            const h = Math.floor((diff / (1000*60*60)) % 24);
+            const m = Math.floor((diff / 1000 / 60) % 60);
+            const s = Math.floor((diff / 1000) % 60);
+            document.getElementById('timer').innerHTML = `${d}d ${h}h ${m}m ${s}s de nós.`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        // 2. Controle de Música
+        function toggleMusic() {
+            const music = document.getElementById('bgMusic');
+            return music.paused ? music.play() : music.pause();
+        }
+
+        // 3. Sistema de Senhas para as Estações
+        function unlockStation(id, correctPass) {
+            const pass = prompt("Para acessar, digite nossa senha secreta (Dica: Data importante DDMM):");
+            if(pass === correctPass || pass === "0505") {
+                // Esconde as outras antes de abrir a nova
+                document.querySelectorAll('.station').forEach(s => s.style.display = 'none');
+                document.getElementById(id).style.display = "block";
+                window.location.hash = id;
+            } else {
+                alert("Senha incorreta, meu amor. Tente novamente.");
+            }
+        }
+    </script>
+</body>
+</html>

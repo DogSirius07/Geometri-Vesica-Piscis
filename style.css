@@ -1,0 +1,163 @@
+/* Configurações Globais */
+body, html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 100%;
+    font-family: 'Cormorant Garamond', serif; /* Fonte elegante e clássica */
+    color: #fff;
+    background-color: #050a14; /* Azul Profundo (Noite) */
+    overflow-x: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Fundo da Geometria Sagrada */
+.background-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('image_0.png'); /* Usa a imagem gerada */
+    background-size: cover;
+    background-position: center;
+    opacity: 0.3; /* Opacidade baixa para não atrapalhar a leitura */
+    z-index: -1;
+}
+
+/* Contêiner Principal */
+.container {
+    text-align: center;
+    padding: 20px;
+    max-width: 600px;
+    z-index: 1;
+}
+
+/* Títulos */
+.header h1 {
+    font-size: 3.5rem;
+    font-weight: 300;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(to right, #a066ff, #ffb3ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.header h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #e0e0e0;
+}
+
+/* Contador */
+.counter {
+    margin: 40px 0;
+    font-size: 1.8rem;
+    color: #fff;
+}
+
+.counter span {
+    font-weight: 500;
+    color: #ffd700; /* Dourado */
+}
+
+.sub-text {
+    font-size: 1rem;
+    color: #b0b0b0;
+    margin-top: -10px;
+}
+
+/* Memórias */
+.memories {
+    font-size: 1.2rem;
+    color: #d0d0d0;
+    margin-bottom: 40px;
+}
+
+/* Botão Spotify */
+.spotify-btn {
+    display: inline-flex;
+    align-items: center;
+    background-color: #1DB954; /* Verde Spotify */
+    color: #fff;
+    padding: 12px 24px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-size: 1.1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-bottom: 20px;
+}
+
+.spotify-btn:hover {
+    background-color: #1ed760;
+    transform: scale(1.05);
+}
+
+.spotify-icon {
+    width: 20px;
+    margin-right: 10px;
+}
+
+/* Botão Final */
+.final-btn {
+    display: inline-block;
+    background: linear-gradient(45deg, #a066ff, #ffd700); /* Roxo e Dourado */
+    color: #050a14;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    margin-top: 20px;
+}
+
+.final-btn:hover {
+    transform: scale(1.1);
+}
+
+/* Animações */
+.fade-in { animation: fadeIn 2s ease-in; }
+.fade-in-slow { animation: fadeIn 3s ease-in; }
+.fade-in-long { animation: fadeIn 4s ease-in; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.card-aura {
+    background: rgba(10, 26, 47, 0.8);
+    border: 1px solid var(--purple-aura);
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: 0 0 20px rgba(160, 102, 255, 0.2);
+    margin-top: 40px;
+    animation: slideUp 1s ease-out;
+}
+
+.gold-text { color: var(--gold); letter-spacing: 2px; }
+
+.main-ask {
+    font-size: 2.5rem;
+    text-transform: uppercase;
+    background: linear-gradient(to right, #ffd700, #fff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 20px 0;
+}
+
+.highlight-box {
+    border: 2px solid var(--gold);
+    padding: 20px;
+    display: inline-block;
+    border-radius: 50% 50% 0 0; /* Formato de arco */
+    margin-top: 20px;
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+}
