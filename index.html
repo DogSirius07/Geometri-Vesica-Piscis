@@ -5,20 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>O Motivo do meu sorriso</title>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;500;700&display=swap" rel="stylesheet">
+<!-- Configurações de Preview (Social Media) -->
+<meta property="og:title" content="O Motivo do meu sorriso">
+<meta property="og:description" content="05.05 - O início do nosso sempre.">
+<meta property="og:image" content="https://dogsirius07.github.io/Geometri-Vesica-Piscis/IMG_0028.png">
+<meta property="og:url" content="https://dogsirius07.github.io/Geometri-Vesica-Piscis/">
+<meta name="twitter:card" content="summary_large_image">
+
     <style>
         :root {
-            --gold: #ffd700;
-            --deep-blue: #050a14;
-            --purple-aura: #a066ff;
-            --glass: rgba(10, 26, 47, 0.85);
+            --aura-blue: #00d4ff;
+            --aura-purple: #a066ff;
+            --deep-night: #050a14;
+            --glass: rgba(15, 20, 35, 0.9);
         }
 
         * { box-sizing: border-box; }
 
         body, html {
             margin: 0; padding: 0;
-            background-color: var(--deep-blue);
-            color: white;
+            background-color: var(--deep-night);
+            color: #e0e0e0;
             font-family: 'Cormorant Garamond', serif;
             overflow-x: hidden;
             scroll-behavior: smooth;
@@ -32,76 +39,84 @@
             background-image: url('IMG_0028.png'); 
             background-size: cover;
             background-position: center;
-            opacity: 0.25;
+            opacity: 0.2;
             z-index: -1;
         }
 
         .container {
             width: 90%;
-            max-width: 900px;
+            max-width: 850px;
             margin: 0 auto;
             text-align: center;
             padding: 60px 0;
         }
 
-        h1 { font-size: clamp(2.5rem, 8vw, 4rem); color: var(--gold); margin-bottom: 10px; font-weight: 300; }
-        h2 { font-weight: 300; letter-spacing: 2px; color: #e0e0e0; }
+        h1 { 
+            font-size: clamp(2.5rem, 8vw, 4rem); 
+            background: linear-gradient(to right, var(--aura-blue), var(--aura-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px; 
+            font-weight: 500; 
+        }
+
+        h2 { font-weight: 300; letter-spacing: 2px; color: #b0c4de; }
 
         .counter { 
             font-size: clamp(1.2rem, 5vw, 2rem); 
             margin: 40px 0; 
-            padding: 20px;
-            border: 1px solid rgba(160, 102, 255, 0.3);
-            border-radius: 15px;
+            padding: 25px;
+            border: 1px solid var(--aura-purple);
+            border-radius: 20px;
             background: rgba(160, 102, 255, 0.05);
+            box-shadow: 0 0 15px rgba(0, 212, 255, 0.1);
         }
 
         .btn {
             background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
+            border: 1px solid var(--aura-blue);
+            color: var(--aura-blue);
             padding: 15px 35px;
             cursor: pointer;
             font-size: 1.1rem;
-            transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: 0.4s;
             margin: 10px;
-            border-radius: 50px;
+            border-radius: 4px;
             display: inline-block;
             text-decoration: none;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
         }
 
-        .btn:hover { background: var(--gold); color: black; box-shadow: 0 0 15px var(--gold); }
+        .btn:hover { 
+            background: linear-gradient(45deg, var(--aura-blue), var(--aura-purple));
+            color: white; 
+            border-color: transparent;
+            box-shadow: 0 0 20px rgba(160, 102, 255, 0.4);
+        }
 
-        /* Estações */
         .station { 
             display: none; 
             margin-top: 50px; 
             padding: 40px; 
             background: var(--glass);
-            border: 1px solid var(--purple-aura);
-            border-radius: 25px;
-            box-shadow: 0 0 30px rgba(160, 102, 255, 0.2);
-            animation: fadeIn 1s ease;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 30px;
+            animation: fadeIn 1.2s ease;
         }
 
-        .audio-player { margin: 25px 0; width: 100%; }
-
         .main-ask {
-            font-size: clamp(2rem, 6vw, 3.5rem);
-            background: linear-gradient(to right, #ffd700, #ffffff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            font-size: clamp(2rem, 6vw, 3rem);
+            color: white;
+            text-shadow: 0 0 10px var(--aura-blue);
             margin: 30px 0;
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Mobile Adjustments */
         @media (max-width: 600px) {
-            .container { padding: 30px 15px; }
-            .btn { width: 100%; margin: 5px 0; }
+            .container { padding: 40px 20px; }
+            .btn { width: 100%; margin: 8px 0; }
         }
     </style>
 </head>
@@ -111,50 +126,44 @@
 
     <div class="container">
         <header>
-            <h1>O Motivo do meu sorriso</h1>
-            <h2>31 dias de uma conexão sagrada.</h2>
+            <h1>O Motivo do meu sorriso é você..: Andressa!</h1>
+            <h2>Nossa conexão sagrada em auras com luzes azuis e roxas... </h2>
         </header>
 
-        <div class="counter" id="timer">Calculando nosso tempo...</div>
+        <div class="counter" id="timer">Sincronizando auras...</div>
 
-        <!-- Player de Música Principal -->
         <audio id="bgMusic" loop>
-            <source src="URL_DA_MUSICA_ROMANTICA.mp3" type="audio/mpeg">
+            <source src="SUA_MUSICA_AQUI.mp3" type="audio/mpeg">
         </audio>
-        <button class="btn" onclick="toggleMusic()">🎵 Play/Pause Nossa Música</button>
+        <button class="btn" onclick="toggleMusic()">🎵 Play/Pause Sintonia</button>
 
-        <div class="navigation" style="margin-top: 30px;">
-            <button class="btn" onclick="unlockStation('sons', '0505')">Estação "Sons"</button>
-            <button class="btn" onclick="unlockStation('pedido', '1206')">Estação "O Pedido"</button>
+        <div style="margin-top: 30px;">
+            <button class="btn" onclick="unlockStation('sons', '0505')">Estação Sons</button>
+            <button class="btn" onclick="unlockStation('pedido', '1206')">Estação O Pedido</button>
         </div>
 
         <!-- ESTAÇÃO SONS -->
         <div id="sons" class="station">
-            <h2 style="color: var(--gold);">Nossa Frequência</h2>
-            <p>Ouça a mensagem que gravei para você:</p>
-            <audio controls class="audio-player">
-                <source src="URL_DO_SEU_AUDIO_GRAVADO.mp3" type="audio/mpeg">
+            <h2 style="color: var(--aura-blue);">Frequência de Nós</h2>
+            <p>Um sussurro da minha alma para a sua:</p>
+            <audio controls style="width:100%; margin: 20px 0;">
+                <source src="SEU_AUDIO_AQUI.mp3" type="audio/mpeg">
             </audio>
-            <p style="font-style: italic; color: #b0b0b0;">"Algumas conexões não são explicadas por palavras, mas por vibrações."</p>
         </div>
 
         <!-- ESTAÇÃO PEDIDO -->
         <div id="pedido" class="station">
-            <h2 style="color: var(--gold);">O Início do Nosso Sempre</h2>
-            <p>No dia 05 de maio, nossas almas se reconheceram.</p>
-            <p>Hoje, eu quero que o mundo saiba o que meu coração já decidiu.</p>
-            
+            <h2 style="color: var(--aura-purple);">O Início do Infinito</h2>
+            <p>Desde 05 de maio, nossas cores se misturaram.</p>
             <h1 class="main-ask">Quer namorar comigo oficialmente?</h1>
-            
-            <div style="border: 1px solid var(--gold); padding: 15px; border-radius: 10px; margin-top: 20px;">
-                <p>Para a mulher que será minha esposa e mãe dos meus dois filhos.</p>
-                <p><b>Eu escolho você, hoje e todos os dias.</b></p>
+            <div style="border-left: 3px solid var(--aura-blue); padding-left: 20px; text-align: left; margin-top: 30px;">
+                <p><i>Para a futura mãe dos meus dois filhos e o amor da minha vida.</i></p>
+                <p><b>Eu escolho você agora e para sempre.</b></p>
             </div>
         </div>
     </div>
 
     <script>
-        // 1. Contador em Tempo Real (Iniciado em 05/05/2026 às 19:30)
         const startDate = new Date('2026-05-05T19:30:00');
         function updateTimer() {
             const now = new Date();
@@ -163,27 +172,23 @@
             const h = Math.floor((diff / (1000*60*60)) % 24);
             const m = Math.floor((diff / 1000 / 60) % 60);
             const s = Math.floor((diff / 1000) % 60);
-            document.getElementById('timer').innerHTML = `${d}d ${h}h ${m}m ${s}s de nós.`;
+            document.getElementById('timer').innerHTML = `${d} Dias • ${h}h ${m}m ${s}s`;
         }
         setInterval(updateTimer, 1000);
         updateTimer();
 
-        // 2. Controle de Música
         function toggleMusic() {
-            const music = document.getElementById('bgMusic');
-            return music.paused ? music.play() : music.pause();
+            const m = document.getElementById('bgMusic');
+            return m.paused ? m.play() : m.pause();
         }
 
-        // 3. Sistema de Senhas para as Estações
-        function unlockStation(id, correctPass) {
-            const pass = prompt("Para acessar, digite nossa senha secreta (Dica: Data importante DDMM):");
-            if(pass === correctPass || pass === "0505") {
-                // Esconde as outras antes de abrir a nova
+        function unlockStation(id, correct) {
+            const pass = prompt("Digite a chave (DDMM):");
+            if(pass === correct || pass === "0505") {
                 document.querySelectorAll('.station').forEach(s => s.style.display = 'none');
                 document.getElementById(id).style.display = "block";
-                window.location.hash = id;
             } else {
-                alert("Senha incorreta, meu amor. Tente novamente.");
+                alert("Essa não é a senha certa, meu amor...");
             }
         }
     </script>
