@@ -4,49 +4,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#050a14">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Nossa Frequência & Guardião</title>
 
-    <link rel="manifest" href='data:application/manifest+json,{"name":"Nossa Frequencia","short_name":"Frequencia","start_url":".","display":"standalone","background_color":"#050a14","theme_color":"#050a14","icons":[{"src":"https://via.placeholder.com/192/00d4ff/050a14?text=05","sizes":"192x192","type":"image/png"}]}'>
-    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bibliotecas 3D e Gráficos -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
-            --aura-blue: #00d4ff;
-            --aura-purple: #a066ff;
-            --gold: #ffd700;
-            --emerald: #00f5d4;
-            --danger: #ff4d6d;
-            --pink-balloon: #ff85a1;
-            --deep-night: #050a14;
-            --glass: rgba(15, 20, 35, 0.94);
+            --aura-blue: #00d4ff; --aura-purple: #a066ff; --gold: #ffd700;
+            --emerald: #00f5d4; --danger: #ff4d6d; --pink-balloon: #ff85a1;
+            --deep-night: #050a14; --glass: rgba(15, 20, 35, 0.94);
             --border-glow: rgba(160, 102, 255, 0.4);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
         body { background-color: var(--deep-night); color: #ffffff; font-family: 'Montserrat', sans-serif; min-height: 100vh; overflow-x: hidden; transition: filter 1.5s ease; }
-        body.calm-mode { filter: brightness(0.4) contrast(0.9); }
+        body.calm-mode { filter: brightness(0.5) contrast(0.9); }
 
         #canvas3d { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
 
-        .top-bar {
-            position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
-            background: rgba(5, 10, 20, 0.95); border-bottom: 1px solid var(--border-glow);
-            padding: 12px 16px; display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(10px);
-        }
+        .top-bar { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; background: rgba(5, 10, 20, 0.95); border-bottom: 1px solid var(--border-glow); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); }
+        .btn-top { background: rgba(255, 215, 0, 0.12); border: 1px solid var(--gold); color: var(--gold); padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: 600; }
 
-        .btn-top {
-            background: rgba(255, 215, 0, 0.12); border: 1px solid var(--gold); color: var(--gold);
-            padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: 600;
-        }
-
-        /* Estrutura Centralizada */
         .global-header { position: relative; z-index: 1; margin: 80px auto 10px; text-align: center; }
         .container { position: relative; z-index: 1; width: 92%; max-width: 540px; margin: 0 auto 40px; padding: 10px; display: flex; flex-direction: column; gap: 16px; }
 
@@ -55,23 +39,42 @@
         p.subtitle { font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
 
         .card { background: var(--glass); border: 1px solid var(--border-glow); border-radius: 18px; padding: 18px; backdrop-filter: blur(16px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7); }
-        .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--gold); margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between; }
+        .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--gold); margin-bottom: 12px; }
 
+        /* Estilos do Chat e Inputs */
         .aria-chat-box { background: rgba(0,0,0,0.5); border-radius: 12px; padding: 12px; height: 180px; overflow-y: auto; margin-bottom: 10px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.1); }
         .aria-msg { margin-bottom: 8px; padding: 8px 12px; border-radius: 10px; max-width: 88%; line-height: 1.4; }
         .aria-msg.aria { background: rgba(0, 212, 255, 0.15); border: 1px solid var(--aura-blue); color: #e0f7ff; }
         .aria-msg.user { background: rgba(160, 102, 255, 0.2); border: 1px solid var(--aura-purple); margin-left: auto; text-align: right; }
 
         input, select, textarea { width: 100%; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid var(--aura-purple); padding: 12px; border-radius: 10px; outline: none; font-size: 0.9rem; margin-bottom: 10px; font-family: inherit; }
-        .btn-action { background: linear-gradient(135deg, var(--aura-purple), var(--aura-blue)); border: none; color: white; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; width: 100%; font-size: 0.9rem; }
+        
+        .btn-action { background: linear-gradient(135deg, var(--aura-purple), var(--aura-blue)); border: none; color: white; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; width: 100%; font-size: 0.9rem; margin-bottom: 8px; }
         .btn-calm { background: linear-gradient(135deg, #00f5d4, #00d4ff); color: #050a14; font-weight: 700; border: none; padding: 14px; border-radius: 12px; cursor: pointer; width: 100%; font-size: 1rem; box-shadow: 0 0 15px rgba(0, 245, 212, 0.4); }
-        .btn-small { background: rgba(255, 215, 0, 0.12); border: 1px solid var(--gold); color: var(--gold); padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; margin: 4px 0; font-weight: 600;}
+        .btn-small { background: rgba(255, 215, 0, 0.12); border: 1px solid var(--gold); color: var(--gold); padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; margin: 4px 0; width: 100%; font-weight: 600;}
+
+        /* Animação Respiração Guiada */
+        .breathe-container { display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0; }
+        .breathe-circle { width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, var(--emerald) 0%, transparent 70%); animation: breathe 10s infinite ease-in-out; display: flex; align-items: center; justify-content: center; }
+        .breathe-text { font-weight: bold; color: #fff; text-shadow: 0 0 5px #000; z-index: 2; position: absolute; }
+        @keyframes breathe {
+            0% { transform: scale(1); opacity: 0.4; }
+            40% { transform: scale(1.8); opacity: 1; } /* Inspira */
+            60% { transform: scale(1.8); opacity: 1; } /* Segura */
+            100% { transform: scale(1); opacity: 0.4; } /* Expira */
+        }
+
+        /* Timeline Simples */
+        .timeline { border-left: 2px solid var(--aura-purple); padding-left: 15px; margin-top: 15px; font-size: 0.85rem; }
+        .timeline-item { margin-bottom: 15px; position: relative; }
+        .timeline-item::before { content: ''; position: absolute; left: -21px; top: 4px; width: 10px; height: 10px; background: var(--aura-blue); border-radius: 50%; }
+        
+        .timer-box { text-align: center; font-size: 1.5rem; font-family: 'Cormorant Garamond', serif; color: var(--pink-balloon); text-shadow: 0 0 10px rgba(255, 133, 161, 0.5); margin: 10px 0; }
 
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 20, 0.96); z-index: 300; display: none; padding: 20px; overflow-y: auto; }
         .modal.active { display: flex; align-items: center; justify-content: center; }
         .modal-content { width: 100%; max-width: 440px; background: var(--glass); border: 1px solid var(--gold); padding: 25px; border-radius: 20px; font-size: 0.88rem; text-align: center; }
         .pin-input { font-size: 1.8rem; text-align: center; letter-spacing: 10px; font-weight: bold; margin: 15px 0; }
-
         .hidden-menu { display: none !important; }
     </style>
 </head>
@@ -98,26 +101,67 @@
         <p class="subtitle" id="mainSubtitle">ACERVO DE PROJETOS ESPECIAIS</p>
     </div>
 
-    <!-- 1. TELA INICIAL PÚBLICA: ACERVO -->
+    <!-- 1. ACERVO (PÚBLICO) -->
     <div id="acervoView" class="container">
         <section class="card" style="border-color: var(--aura-purple);">
             <div class="card-title" style="color: #fff;">🕰️ Nosso Baú de Projetos</div>
-            <p style="font-size:0.8rem; margin-bottom:12px; color:#ccc;">Versões originais e criações especiais que desenvolvi para você ao longo do tempo.</p>
-            <button class="btn-small" style="width:100%; border-color:var(--aura-blue); color:var(--aura-blue);" onclick="alert('Iniciando Versão Original do Guardião...')">🛡️ Projeto Guardião (Versão 1.0)</button>
-            <button class="btn-small" style="width:100%; border-color:var(--aura-purple); color:#d4a0ff;" onclick="alert('Carregando Projeto Aria (Alpha)...')">🤖 Projeto Aria (Versão Clássica)</button>
-            <button class="btn-small" style="width:100%; border-color:var(--pink-balloon); color:var(--pink-balloon);" onclick="alert('Abrindo Galeria de Projetos Especiais...')">✨ Outros Projetos Especiais</button>
+            <p style="font-size:0.8rem; margin-bottom:12px; color:#ccc;">Versões originais e criações especiais que desenvolvi para você.</p>
+            <button class="btn-small" style="border-color:var(--aura-blue); color:var(--aura-blue);">🛡️ Projeto Guardião (V 1.0)</button>
+            <button class="btn-small" style="border-color:var(--aura-purple); color:#d4a0ff;">🤖 Projeto Aria (Clássica)</button>
+            
+            <div class="timeline">
+                <div class="timeline-item"><b>O Início</b><br><span style="color:#aaa; font-size:0.75rem;">Onde tudo começou, nossa primeira faísca.</span></div>
+                <div class="timeline-item"><b>O Balão</b><br><span style="color:#aaa; font-size:0.75rem;">Para soltar ansiedades ao vento.</span></div>
+                <div class="timeline-item"><b>Sistema Atual</b><br><span style="color:#aaa; font-size:0.75rem;">A integração de todas as nossas frequências.</span></div>
+            </div>
         </section>
     </div>
 
-    <!-- 2. FREQUÊNCIAS E ACOLHIMENTO -->
+    <!-- 2. NAMORADA: CÁPSULA & CONTADOR -->
+    <div id="namoradaExtraView" class="container hidden-menu">
+        <section class="card" style="border-color: var(--pink-balloon);">
+            <div class="card-title" style="color: var(--pink-balloon);">⏳ Nosso Tempo</div>
+            <div id="relationshipTimer" class="timer-box">Carregando...</div>
+            <p style="font-size:0.75rem; text-align:center; color:#ccc;">Desde o primeiro dia.</p>
+        </section>
+
+        <section class="card">
+            <div class="card-title">✉️ Cápsula do Tempo</div>
+            <p style="font-size:0.8rem; margin-bottom:10px;">Escreva algo e tranque até uma data futura.</p>
+            <textarea id="capsuleMsg" rows="3" placeholder="Sua mensagem secreta..."></textarea>
+            <input type="date" id="capsuleDate">
+            <button class="btn-action" onclick="saveCapsule()">Trancar Cápsula 🔒</button>
+            <div id="capsuleStatus" style="margin-top:10px; font-size:0.8rem; color:var(--gold);"></div>
+        </section>
+    </div>
+
+    <!-- 3. BALÃO -->
+    <div id="balaoView" class="container hidden-menu">
+        <section class="card" style="border-color: var(--pink-balloon);">
+            <div class="card-title" style="color: var(--pink-balloon);">🎈 Balão de Emoções</div>
+            <input type="text" id="balloonText" placeholder="O que você quer soltar hoje?">
+            <button class="btn-action" style="background: linear-gradient(135deg, var(--pink-balloon), var(--aura-purple));" onclick="releaseBalloon()">Soltar Balão no Céu</button>
+            <div id="balloonHistory" style="margin-top:10px; font-size:0.75rem; max-height:100px; overflow-y:auto;"></div>
+        </section>
+    </div>
+
+    <!-- 4. FREQUÊNCIAS E ACOLHIMENTO (MÃE) -->
     <div id="frequenciaView" class="container hidden-menu">
         <section id="calmModule" class="card hidden-menu" style="border-color: var(--emerald);">
             <div class="card-title" style="color: var(--emerald);">🌿 Modo Acolhimento</div>
             <button class="btn-calm" onclick="triggerQuickCalm()">✨ BOTÃO DE CALMA IMEDIATA</button>
+            
+            <div id="breatheVisual" style="display:none;" class="breathe-container">
+                <span style="font-size:0.85rem; margin-bottom:10px;">Siga o círculo com a respiração:</span>
+                <div style="position:relative; display:flex; justify-content:center; align-items:center; height:120px; width:100%;">
+                    <div class="breathe-circle"></div>
+                    <span class="breathe-text">Inspire / Expire</span>
+                </div>
+            </div>
         </section>
 
         <section class="card">
-            <div class="card-title">✨ Frequências Calmantes</div>
+            <div class="card-title">✨ Frequências</div>
             <select id="freqSelect" onchange="updateAudioEngine()">
                 <option value="432">432 Hz — Paz & Redução de Ansiedade</option>
                 <option value="528">528 Hz — Regeneração Mental</option>
@@ -127,117 +171,87 @@
         </section>
     </div>
 
-    <!-- 3. BALÃO -->
-    <div id="balaoView" class="container hidden-menu">
-        <section class="card" style="border-color: var(--pink-balloon);">
-            <div class="card-title" style="color: var(--pink-balloon);">🎈 Projeto Balão de Emoções</div>
-            <p style="font-size:0.8rem; margin-bottom:10px;">Escreva e veja o balão subir ao céu 3D.</p>
-            <input type="text" id="balloonText" placeholder="O que você quer soltar hoje?">
-            <button class="btn-action" style="background: linear-gradient(135deg, var(--pink-balloon), var(--aura-purple));" onclick="releaseBalloon()">🎈 Soltar Balão no Céu</button>
-            <div id="balloonHistory" style="margin-top:10px; font-size:0.75rem; max-height:120px; overflow-y:auto;"></div>
-        </section>
-    </div>
-
-    <!-- 4. MODO GUARDIÃO -->
+    <!-- 5. MODO GUARDIÃO (PAI) -->
     <div id="guardiaoView" class="container hidden-menu">
-        <section id="adminPrimaryMenu" class="card hidden-menu" style="border-color: var(--gold);">
-            <div class="card-title">⚙️ Painel do Admin Primário</div>
-            <div style="font-size:0.75rem; color:var(--emerald); margin-bottom:10px;">
-                • Admin Primário (Você): 120697<br>
-                • Admin Secundário (Pai): 280598<br>
-                • Namorada (Balão/Acervo): 050526<br>
-                • Mãe (Acolhimento): 150850
+        <section class="card">
+            <div class="card-title">🩺 Diário de Saúde</div>
+            <div style="display:flex; gap:10px;">
+                <input type="number" id="glucoseInput" placeholder="Glicemia (mg/dL)">
+                <input type="text" id="bpInput" placeholder="P.A. (ex: 12/8)">
             </div>
-        </section>
-
-        <section class="card">
-            <div class="card-title">🩺 Saúde & Glicemia</div>
-            <input type="number" id="glucoseInput" placeholder="Glicemia (mg/dL)">
-            <button class="btn-action" onclick="saveGlucose()">Registrar Glicemia</button>
-            <div id="healthLogs" style="margin-top:10px; font-size:0.75rem; max-height:120px; overflow-y:auto;"></div>
-        </section>
-
-        <section class="card">
-            <div class="card-title">📖 Manual de Operação</div>
-            <button class="btn-small" style="width:100%;" onclick="toggleManualModal()">Ver Manual Completo</button>
+            <button class="btn-action" onclick="saveHealthData()">Registrar Saúde</button>
+            
+            <div style="background: rgba(0,0,0,0.3); border-radius:10px; padding:10px; margin-top:15px;">
+                <canvas id="healthChart" height="150"></canvas>
+            </div>
+            
+            <div id="healthLogs" style="margin-top:10px; font-size:0.75rem; max-height:100px; overflow-y:auto;"></div>
+            <button class="btn-small" style="margin-top:10px;" onclick="exportLogsToTxt()">📄 Baixar Relatório Médico</button>
         </section>
     </div>
 
-    <!-- 5. ARIA AI -->
+    <!-- 6. ADMIN (VOCÊ) -->
+    <div id="adminPrimaryMenu" class="container hidden-menu">
+        <section class="card" style="border-color: var(--gold);">
+            <div class="card-title">⚙️ Painel Central Admin</div>
+            <p style="font-size:0.8rem; margin-bottom:10px;">Acesso irrestrito a todos os registros.</p>
+            <button class="btn-small" onclick="viewAllLogsAdmin()">Visualizar Banco de Dados (Logs)</button>
+            <div id="adminLogView" style="margin-top:10px; font-size:0.75rem; color:var(--emerald); max-height:150px; overflow-y:auto; display:none; background:rgba(0,0,0,0.5); padding:10px; border-radius:8px;"></div>
+        </section>
+    </div>
+
+    <!-- 7. ARIA AI -->
     <div id="ariaView" class="container hidden-menu">
         <section class="card">
-            <div class="card-title">🤖 Aria AI — Assistente</div>
-            <div class="aria-chat-box" id="ariaChat">
-                <div class="aria-msg aria">Aria pronta para ajudar.</div>
-            </div>
+            <div class="card-title">🤖 Aria AI</div>
+            <div class="aria-chat-box" id="ariaChat"><div class="aria-msg aria">Aria conectada.</div></div>
             <div style="display:flex; gap:6px;">
-                <input type="text" id="ariaInput" placeholder="Digite uma mensagem..." style="margin-bottom:0;">
+                <input type="text" id="ariaInput" placeholder="Mensagem..." style="margin-bottom:0;">
                 <button class="btn-action" style="width:auto; padding:0 16px;" onclick="askAria()">Enviar</button>
             </div>
-            <button class="btn-small" style="width:100%; margin-top:10px;" onclick="toggleManualModal()">📖 Ver Manual na Aria</button>
         </section>
     </div>
 
     <!-- MODAL DE SENHA -->
     <div class="modal" id="pinModal">
         <div class="modal-content">
-            <h2>🛡️ Digite a Senha</h2>
+            <h2>🛡️ Identificação</h2>
             <input type="password" id="pinInput" class="pin-input" placeholder="••••••" maxlength="8" inputmode="numeric" autocomplete="off">
             <div style="display:flex; gap:10px; margin-top:10px;">
                 <button class="btn-action" onclick="verifyAccess()">Entrar</button>
                 <button class="btn-small" style="background:rgba(255,255,255,0.1); border:none; color:#fff;" onclick="closePinModal()">Cancelar</button>
             </div>
-            <p id="pinError" style="color:var(--danger); font-size:0.8rem; margin-top:10px; display:none;">Senha incorreta!</p>
-        </div>
-    </div>
-
-    <!-- MODAL MANUAL -->
-    <div class="modal" id="manualModal">
-        <div class="modal-content" style="text-align:left;">
-            <h2>📖 Manual do Guardião & Aria</h2>
-            <br>
-            <p><b>• Admin Primário (120697):</b> Gestão global de logs e acessos.</p>
-            <p><b>• Admin Secundário (280598):</b> Gestão diária de glicemia e medicação.</p>
-            <p><b>• Namorada (050526):</b> Projeto Balão 3D, Acervo de Projetos, Frequências e Aria Afetiva.</p>
-            <p><b>• Mãe (150850):</b> Modo Acolhimento e Botão de Calma Imediata.</p>
-            <button class="btn-action" style="margin-top:15px;" onclick="toggleManualModal()">Fechar</button>
+            <p id="pinError" style="color:var(--danger); font-size:0.8rem; margin-top:10px; display:none;">Acesso Negado</p>
         </div>
     </div>
 
     <script>
+        // CONFIGURAÇÕES GERAIS
         const PASSWORDS = { PRIMARY: '120697', SECONDARY: '280598', GIRLFRIEND: '050526', MOTHER: '150850' };
+        
+        // Data do início do namoro/relacionamento (Altere aqui: Ano-Mês-Dia)
+        const START_DATE = new Date('2023-01-01T00:00:00'); 
 
         const ARIA_RESPONSES = {
-            PRIMARY: ["Aria [Admin]: Módulo ativo. Logs sincronizados.", "Aria [Admin]: Sistema pronto para diagnóstico."],
-            SECONDARY: ["Aria [Cuidado]: Registro salvo. Lembre-se da glicemia pós-refeição.", "Aria [Cuidado]: Rotina supervisionada."],
-            GIRLFRIEND: ["Aria [Carinho]: Seu balão subiu! Estou aqui para trazer leveza.", "Aria [Carinho]: Seus projetos antigos continuam guardados com carinho."],
-            MOTHER: ["Aria [Acolhimento]: O ambiente está sereno. Respire fundo.", "Aria [Acolhimento]: Tudo está protegido e calmo."]
+            PRIMARY: ["Aria: Sistemas operacionais.", "Aria: Banco de dados sincronizado."],
+            SECONDARY: ["Aria: Registro de saúde guardado.", "Aria: Fique de olho nos horários das medicações."],
+            GIRLFRIEND: ["Aria: Que bom ter você aqui! 💖", "Aria: Seu balão chegou nas nuvens."],
+            MOTHER: ["Aria: Respire devagar. Tudo no seu tempo.", "Aria: Ativando frequências de cura para você."]
         };
 
         let currentRole = null;
+        let glucoseChartInstance = null;
 
+        // BANCO DE DADOS LOCAL (LocalStorage)
         function saveStorage(key, data) {
             const current = JSON.parse(localStorage.getItem(key) || '[]');
             current.unshift(data); localStorage.setItem(key, JSON.stringify(current));
         }
 
-        function loadStorage(key, elementId, renderFn) {
-            const data = JSON.parse(localStorage.getItem(key) || '[]');
-            const container = document.getElementById(elementId);
-            if (container) container.innerHTML = data.map(renderFn).join('');
-        }
-
+        // SENHA E ROTAS
         const pinInput = document.getElementById('pinInput');
-        pinInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') { e.preventDefault(); verifyAccess(); }
-        });
-
-        function openPinModal() {
-            pinInput.value = ''; document.getElementById('pinError').style.display = 'none';
-            document.getElementById('pinModal').classList.add('active');
-            setTimeout(() => pinInput.focus(), 100);
-        }
-
+        pinInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); verifyAccess(); } });
+        function openPinModal() { pinInput.value = ''; document.getElementById('pinError').style.display = 'none'; document.getElementById('pinModal').classList.add('active'); setTimeout(() => pinInput.focus(), 100); }
         function closePinModal() { document.getElementById('pinModal').classList.remove('active'); }
 
         function verifyAccess() {
@@ -251,54 +265,179 @@
         }
 
         function unlockView() {
-            // Ocultar todos os painéis
-            ['acervoView', 'frequenciaView', 'guardiaoView', 'ariaView', 'balaoView', 'calmModule', 'adminPrimaryMenu'].forEach(id => {
-                document.getElementById(id).classList.add('hidden-menu');
-            });
-
+            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden-menu'));
+            document.getElementById('calmModule').classList.add('hidden-menu');
             document.getElementById('lockBtn').style.display = 'inline-block';
             document.getElementById('accessBtn').style.display = 'none';
 
             const title = document.getElementById('mainTitle');
             const subtitle = document.getElementById('mainSubtitle');
 
-            // Lógica de Roteamento Dinâmico
             if (currentRole === 'PRIMARY') {
                 title.innerText = 'Modo Guardião'; subtitle.innerText = 'CONTROLE ADMINISTRATIVO';
-                ['acervoView', 'frequenciaView', 'guardiaoView', 'ariaView', 'balaoView', 'adminPrimaryMenu'].forEach(id => document.getElementById(id).classList.remove('hidden-menu'));
+                ['adminPrimaryMenu','acervoView', 'namoradaExtraView', 'balaoView', 'frequenciaView', 'guardiaoView', 'ariaView'].forEach(id => document.getElementById(id).classList.remove('hidden-menu'));
+                document.getElementById('calmModule').classList.remove('hidden-menu');
             } else if (currentRole === 'SECONDARY') {
                 title.innerText = 'Modo Guardião'; subtitle.innerText = 'MONITORAMENTO DE SAÚDE';
                 ['guardiaoView', 'ariaView'].forEach(id => document.getElementById(id).classList.remove('hidden-menu'));
             } else if (currentRole === 'GIRLFRIEND') {
                 title.innerText = 'Nosso Espaço'; subtitle.innerText = 'SINTONIA E CUIDADO';
-                ['acervoView', 'frequenciaView', 'balaoView', 'ariaView'].forEach(id => document.getElementById(id).classList.remove('hidden-menu'));
+                ['acervoView', 'namoradaExtraView', 'balaoView', 'frequenciaView', 'ariaView'].forEach(id => document.getElementById(id).classList.remove('hidden-menu'));
             } else if (currentRole === 'MOTHER') {
                 title.innerText = 'Nossa Frequência'; subtitle.innerText = 'MODO ACOLHIMENTO';
-                ['frequenciaView', 'calmModule'].forEach(id => document.getElementById(id).classList.remove('hidden-menu'));
+                ['frequenciaView'].forEach(id => document.getElementById(id).classList.remove('hidden-menu'));
+                document.getElementById('calmModule').classList.remove('hidden-menu');
             }
-            loadLogs();
+            
+            loadDashboardData();
         }
 
         function lockSystem() {
             currentRole = null; document.body.classList.remove('calm-mode');
-            
-            // Retorna ao estado Público
+            document.getElementById('breatheVisual').style.display = 'none';
             document.getElementById('mainTitle').innerText = 'Nossa História';
             document.getElementById('mainSubtitle').innerText = 'ACERVO DE PROJETOS ESPECIAIS';
             
-            ['frequenciaView', 'guardiaoView', 'ariaView', 'balaoView', 'calmModule'].forEach(id => document.getElementById(id).classList.add('hidden-menu'));
+            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden-menu'));
             document.getElementById('acervoView').classList.remove('hidden-menu');
             
             document.getElementById('lockBtn').style.display = 'none';
             document.getElementById('accessBtn').style.display = 'inline-block';
+            stopAudioEngine();
         }
 
-        function toggleManualModal() { document.getElementById('manualModal').classList.toggle('active'); }
+        // CARREGAR DADOS NA TELA
+        function loadDashboardData() {
+            // Relógio Namorada
+            if(currentRole === 'GIRLFRIEND' || currentRole === 'PRIMARY') startTimer();
+            checkCapsule();
 
+            // Histórico Pai (Logs e Gráfico)
+            if(currentRole === 'SECONDARY' || currentRole === 'PRIMARY') {
+                const logs = JSON.parse(localStorage.getItem('health_logs') || '[]');
+                document.getElementById('healthLogs').innerHTML = logs.map(i => `<div>🩺 <b>[${i.date}]</b> Glicose: ${i.glicose} | P.A: ${i.pa}</div>`).join('');
+                updateChart(logs);
+            }
+
+            // Balões
+            if(currentRole === 'GIRLFRIEND' || currentRole === 'PRIMARY') {
+                const bLogs = JSON.parse(localStorage.getItem('balloon_logs') || '[]');
+                document.getElementById('balloonHistory').innerHTML = bLogs.map(i => `<div>🎈 <b>[${i.date}]</b> "${i.txt}"</div>`).join('');
+            }
+        }
+
+        // RECURSOS DA NAMORADA
+        function startTimer() {
+            setInterval(() => {
+                const now = new Date(); const diff = now - START_DATE;
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const m = Math.floor((diff / 1000 / 60) % 60);
+                document.getElementById('relationshipTimer').innerText = `${d}d ${h}h ${m}m`;
+            }, 1000);
+        }
+
+        function saveCapsule() {
+            const txt = document.getElementById('capsuleMsg').value;
+            const date = document.getElementById('capsuleDate').value;
+            if(!txt || !date) return alert('Preencha a mensagem e a data!');
+            localStorage.setItem('time_capsule', JSON.stringify({ msg: txt, unlockDate: date }));
+            document.getElementById('capsuleMsg').value = '';
+            checkCapsule();
+        }
+
+        function checkCapsule() {
+            const cap = JSON.parse(localStorage.getItem('time_capsule'));
+            const statusDiv = document.getElementById('capsuleStatus');
+            if(!cap) { statusDiv.innerText = "Nenhuma cápsula guardada."; return; }
+            
+            const today = new Date().toISOString().split('T')[0];
+            if(today >= cap.unlockDate) {
+                statusDiv.innerHTML = `<span style="color:var(--emerald);">🔓 Cápsula Aberta:</span> "${cap.msg}"`;
+            } else {
+                statusDiv.innerText = `🔒 Trancada até: ${cap.unlockDate}`;
+            }
+        }
+
+        // RECURSOS DO PAI
+        function saveHealthData() {
+            const gli = document.getElementById('glucoseInput').value || '--';
+            const pa = document.getElementById('bpInput').value || '--';
+            if(gli === '--' && pa === '--') return;
+            const now = new Date();
+            saveStorage('health_logs', { glicose: gli, pa: pa, date: now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}) });
+            document.getElementById('glucoseInput').value = ''; document.getElementById('bpInput').value = '';
+            loadDashboardData();
+        }
+
+        function updateChart(logs) {
+            const ctx = document.getElementById('healthChart').getContext('2d');
+            // Pegar os últimos 7 registros de glicemia que sejam números
+            const reversedLogs = [...logs].reverse().filter(l => l.glicose !== '--').slice(-7);
+            const labels = reversedLogs.map(l => l.date.split(' ')[0]);
+            const data = reversedLogs.map(l => l.glicose);
+
+            if(glucoseChartInstance) glucoseChartInstance.destroy();
+            
+            glucoseChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: 'Glicemia (mg/dL)', data: data,
+                        borderColor: '#00d4ff', backgroundColor: 'rgba(0, 212, 255, 0.2)',
+                        borderWidth: 2, pointRadius: 4, fill: true, tension: 0.3
+                    }]
+                },
+                options: {
+                    responsive: true, maintainAspectRatio: false,
+                    plugins: { legend: { display: false } },
+                    scales: { 
+                        x: { ticks: { color: '#ccc', font:{size:9} } }, 
+                        y: { ticks: { color: '#ccc', font:{size:10} } } 
+                    }
+                }
+            });
+        }
+
+        function exportLogsToTxt() {
+            const logs = JSON.parse(localStorage.getItem('health_logs') || '[]');
+            let txt = "RELATÓRIO DE SAÚDE - GUARDIAO\n================================\n\n";
+            logs.forEach(l => { txt += `Data/Hora: ${l.date} | Glicemia: ${l.glicose} | P.A: ${l.pa}\n`; });
+            const blob = new Blob([txt], { type: "text/plain" });
+            const link = document.createElement("a"); link.href = URL.createObjectURL(blob);
+            link.download = "Relatorio_Saude.txt"; link.click();
+        }
+
+        // RECURSOS DA MÃE
         function triggerQuickCalm() {
             document.body.classList.add('calm-mode');
+            document.getElementById('breatheVisual').style.display = 'flex';
             document.getElementById('freqSelect').value = 'brown_noise';
             if (!isAudioPlaying) toggleAudioEngine();
+        }
+
+        // RECURSOS DO ADMIN
+        function viewAllLogsAdmin() {
+            const view = document.getElementById('adminLogView');
+            view.style.display = 'block'; view.innerHTML = 'Carregando...';
+            
+            const health = JSON.parse(localStorage.getItem('health_logs') || '[]');
+            const balloons = JSON.parse(localStorage.getItem('balloon_logs') || '[]');
+            const cap = JSON.parse(localStorage.getItem('time_capsule') || '{}');
+
+            let html = `<b>Total de Registros de Saúde:</b> ${health.length}<br>`;
+            let html2 = `<br><b>Total de Balões:</b> ${balloons.length}<br>`;
+            let html3 = `<br><b>Cápsula Salva:</b> ${cap.unlockDate ? cap.unlockDate : 'Nenhuma'}<br>`;
+            
+            view.innerHTML = html + html2 + html3;
+        }
+
+        // BALÃO E ARIA
+        function releaseBalloon() {
+            const txt = document.getElementById('balloonText').value.trim(); if(!txt) return;
+            saveStorage('balloon_logs', { txt, date: new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}) });
+            create3DBalloon(); document.getElementById('balloonText').value = ''; loadDashboardData();
         }
 
         function askAria() {
@@ -311,39 +450,20 @@
             }, 400);
         }
 
-        function saveGlucose() {
-            const val = document.getElementById('glucoseInput').value; if(!val) return;
-            saveStorage('health_logs', { type: 'Glicemia', val: `${val} mg/dL`, date: new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}) });
-            document.getElementById('glucoseInput').value = ''; loadLogs();
-        }
-
-        function releaseBalloon() {
-            const txt = document.getElementById('balloonText').value.trim(); if(!txt) return;
-            saveStorage('balloon_logs', { txt, date: new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}) });
-            create3DBalloon(); document.getElementById('balloonText').value = ''; loadLogs();
-        }
-
-        function loadLogs() {
-            loadStorage('health_logs', 'healthLogs', item => `<div>🩸 <b>[${item.date}]</b> Glicemia: ${item.val}</div>`);
-            loadStorage('balloon_logs', 'balloonHistory', item => `<div>🎈 <b>[${item.date}]</b> "${item.txt}"</div>`);
-        }
-
+        // MOTOR DE ÁUDIO (MANTIDO)
         let audioCtx = null, osc1 = null, isAudioPlaying = false, noiseNode = null;
         function toggleAudioEngine() {
             const btn = document.getElementById('solfeggioBtn');
             if (!isAudioPlaying) { startAudioEngine(); btn.innerText = "⏸ Pausar Áudio"; isAudioPlaying = true; } 
             else { stopAudioEngine(); btn.innerText = "▶ Iniciar Áudio"; isAudioPlaying = false; }
         }
-
         function startAudioEngine() {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
             const val = document.getElementById('freqSelect').value;
             if (val === 'brown_noise') {
                 const bufferSize = audioCtx.sampleRate * 2; const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
                 const data = buffer.getChannelData(0); let lastOut = 0.0;
-                for (let i = 0; i < bufferSize; i++) {
-                    const white = Math.random() * 2 - 1; data[i] = (lastOut + (0.02 * white)) / 1.02; lastOut = data[i]; data[i] *= 3.5;
-                }
+                for (let i = 0; i < bufferSize; i++) { const white = Math.random() * 2 - 1; data[i] = (lastOut + (0.02 * white)) / 1.02; lastOut = data[i]; data[i] *= 3.5; }
                 noiseNode = audioCtx.createBufferSource(); noiseNode.buffer = buffer; noiseNode.loop = true;
                 const gain = audioCtx.createGain(); gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
                 noiseNode.connect(gain); gain.connect(audioCtx.destination); noiseNode.start();
@@ -353,15 +473,16 @@
                 gain.gain.setValueAtTime(0.06, audioCtx.currentTime); osc1.connect(gain); gain.connect(audioCtx.destination); osc1.start();
             }
         }
-
         function stopAudioEngine() {
             if (osc1) { try { osc1.stop(); } catch(e){} }
             if (noiseNode) { try { noiseNode.stop(); } catch(e){} }
             if (audioCtx) { try { audioCtx.close(); } catch(e){} }
+            document.getElementById('solfeggioBtn').innerText = "▶ Iniciar Áudio";
+            isAudioPlaying = false;
         }
-
         function updateAudioEngine() { if (isAudioPlaying) { stopAudioEngine(); startAudioEngine(); } }
 
+        // MOTOR 3D (MANTIDO)
         const canvas3d = document.getElementById('canvas3d'); const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ canvas: canvas3d, alpha: true }); renderer.setSize(window.innerWidth, window.innerHeight);
@@ -385,11 +506,6 @@
             }); renderer.render(scene, camera);
         }
         animate();
-
-        if ('serviceWorker' in navigator) {
-            const swCode = `self.addEventListener('fetch', function(e) { e.respondWith(fetch(e.request).catch(() => caches.match(e.request))); });`;
-            const blob = new Blob([swCode], { type: 'text/javascript' }); navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
-        }
     </script>
 </body>
 </html>
