@@ -1,9 +1,24 @@
-Atue como Desenvolvedor Web Front-End Sênior. Tenho o código atualizado da aplicação PWA "Nossa Frequência" (HTML/CSS/JS) hospedada no GitHub Pages com tema místico, paleta (--aura-blue: #00d4ff, --aura-purple: #a066ff, --gold: #ffd700, --deep-night: #050a14), player de música do YouTube, PWA ativo e estações trancadas por senha.
-
-Quero adicionar a seguinte modificação/funcionalidade:
-[DESCREVA AQUI A NOVA FUNCIONALIDADE OU AJUSTE]
-
-Instruções técnicas obrigatórias:
-1. Mantenha o arquivo estático único (index.html) totalmente funcional sem necessidade de servidor backend.
-2. Preserve as variáveis de cores CSS, a animação de partículas e o suporte ao Service Worker (sw.js).
-3. Integre a nova funcionalidade respeitando a identidade mística e romântica do projeto.
+{
+  "name": "Nossa Frequência — Sintonias Sagradas",
+  "short_name": "NossaFrequência",
+  "description": "Espaço místico e romântico de conexão e sintonia.",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#050a14",
+  "theme_color": "#050a14",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
