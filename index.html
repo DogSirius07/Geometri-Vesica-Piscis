@@ -1,161 +1,107 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tela de Autenticação</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f4f4f9;
-            margin: 0;
-        }
-        .login-container {
-            background-color: white;
-            padding: 30px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            width: 100%;
-            max-width: 350px;
-        }
-        .login-container h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        .input-group {
-            margin-bottom: 15px;
-            position: relative;
-        }
-        .input-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #666;
-        }
-        .input-group input {
-            width: 100%;
-            padding: 10px;
-            padding-right: 40px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-        .input-group input.error {
-            border-color: #dc3545;
-        }
-        .toggle-password {
-            position: absolute;
-            right: 10px;
-            top: 32px;
-            cursor: pointer;
-            background: none;
-            border: none;
-            font-size: 18px;
-            color: #666;
-        }
-        .error-message {
-            color: #dc3545;
-            font-size: 12px;
-            margin-top: 5px;
-            display: none;
-        }
-        .btn-auth {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        .btn-auth:hover {
-            background-color: #0056b3;
-        }
-        .forgot-password {
-            display: block;
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-            color: #007bff;
-            text-decoration: none;
-        }
-        .forgot-password:hover {
-            text-decoration: underline;
-        }
-    </style>
-</head>
-<body>
+<!-- Botão de Alternância de Tema (Dark/Light) -->
+<button id="themeToggle" class="absolute top-6 right-6 p-3 rounded-full bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 transition shadow-md" aria-label="Alternar Modo Noturno">
+    <!-- Ícone Sol (Modo Claro) -->
+    <svg id="sunIcon" class="w-5 h-5 hidden dark:block text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+    </svg>
+    <!-- Ícone Lua (Modo Escuro) -->
+    <svg id="moonIcon" class="w-5 h-5 block dark:hidden text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+    </svg>
+</button>
 
-<div class="login-container">
-    <h2>Login</h2>
-    <form action="#" method="POST" id="loginForm">
-        <div class="input-group">
-            <label for="login">Usuário ou E-mail</label>
-            <input type="text" id="login" name="login" required placeholder="Digite seu login">
-        </div>
-        
-        <div class="input-group">
-            <label for="senha">Senha</label>
-            <input type="password" id="senha" name="senha" required placeholder="Digite sua senha">
-            <button type="button" id="togglePassword" class="toggle-password" aria-label="Mostrar ou ocultar senha">👁️</button>
-            <div id="errorMessage" class="error-message">A senha deve ter pelo menos 8 caracteres.</div>
+<!-- Container do Login -->
+<div class="w-full max-w-md mx-4 p-8 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl backdrop-blur-xl transition-all">
+    
+    <div class="text-center mb-8">
+        <h1 class="text-2xl font-black tracking-wider uppercase mb-1">ARIA<span class="text-cyan-500">.OS</span></h1>
+        <p class="text-xs text-slate-500 dark:text-slate-400 tracking-widest font-mono">AUTENTICAÇÃO DE NÚCLEO</p>
+    </div>
+
+    <form id="loginForm" class="space-y-6" novalidate>
+        <!-- Campo Usuário/E-mail -->
+        <div>
+            <label for="login" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2">Usuário ou E-mail</label>
+            <input type="text" id="login" name="login" required placeholder="Digite seu acesso..." 
+                class="w-full px-4 py-3 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-cyan-500 dark:focus:border-cyan-500 transition text-sm">
         </div>
 
-        <button type="submit" class="btn-auth">Autenticar</button>
-        <a href="#" class="forgot-password">Esqueci minha senha</a>
+        <!-- Campo Senha -->
+        <div class="relative">
+            <label for="senha" class="block text-xs font-bold uppercase tracking-wider text-slate-600 dark:text-slate-400 mb-2">Chave de Acesso (Senha)</label>
+            <div class="relative">
+                <input type="password" id="senha" name="senha" required placeholder="Mínimo 8 caracteres" 
+                    class="w-full px-4 py-3 pr-12 rounded-xl bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-800 text-slate-900 dark:text-white placeholder-slate-400 focus:outline-none focus:border-cyan-500 dark:focus:border-cyan-500 transition text-sm">
+                <!-- Botão Mostrar/Ocultar Senha -->
+                <button type="button" id="togglePassword" class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700 dark:hover:text-slate-300 focus:outline-none text-base p-1" aria-label="Mostrar ou ocultar senha">
+                    👁️
+                </button>
+            </div>
+            <!-- Mensagem de Erro -->
+            <p id="errorMessage" class="text-rose-500 text-xs mt-2 hidden font-mono">⚠️ A senha deve conter pelo menos 8 caracteres.</p>
+        </div>
+
+        <!-- Botão de Envio -->
+        <button type="submit" class="w-full py-3.5 rounded-xl bg-slate-900 dark:bg-cyan-500 text-white dark:text-slate-950 font-bold tracking-widest text-xs uppercase hover:bg-cyan-600 dark:hover:bg-cyan-400 shadow-lg shadow-cyan-500/10 transition duration-300">
+            Autenticar Sistema
+        </button>
+
+        <!-- Link de Recuperação -->
+        <div class="text-center pt-2">
+            <a href="#" class="text-xs text-slate-500 dark:text-slate-400 hover:text-cyan-500 dark:hover:text-cyan-400 transition">Esqueci minhas credenciais</a>
+        </div>
     </form>
 </div>
 
+<!-- Scripts de Funcionalidade -->
 <script>
-    // Alternar visibilidade da senha
-    const togglePasswordButton = document.querySelector('#togglePassword');
-    const passwordInput = document.querySelector('#senha');
+    // 1. Alternância de Modo Noturno (Dark / Light)
+    const themeToggle = document.getElementById('themeToggle');
+    const htmlElement = document.documentElement;
 
-    togglePasswordButton.addEventListener('click', function () {
-        const currentType = passwordInput.getAttribute('type');
-        const newType = currentType === 'password' ? 'text' : 'password';
-        
-        passwordInput.setAttribute('type', newType);
-        this.textContent = newType === 'password' ? '👁️' : '🙈';
-    });
-
-    // Validação do formulário no envio
-    const loginForm = document.querySelector('#loginForm');
-    const errorMessage = document.querySelector('#errorMessage');
-
-    loginForm.addEventListener('submit', function (event) {
-        const senhaValor = passwordInput.value;
-
-        // Verifica se a senha tem menos de 8 caracteres
-        if (senhaValor.length < 8) {
-            // Impede o envio do formulário
-            event.preventDefault();
-            
-            // Adiciona classe de erro no input e exibe a mensagem
-            passwordInput.classList.add('error');
-            errorMessage.style.display = 'block';
-            passwordInput.focus();
+    themeToggle.addEventListener('click', () => {
+        if (htmlElement.classList.contains('dark')) {
+            htmlElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
         } else {
-            // Remove o erro caso esteja válido
-            passwordInput.classList.remove('error');
-            errorMessage.style.display = 'none';
+            htmlElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
         }
     });
 
-    // Limpa o erro dinamicamente enquanto o usuário digita uma senha válida
-    passwordInput.addEventListener('input', function () {
+    // 2. Visibilidade da Senha
+    const togglePasswordBtn = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('senha');
+
+    togglePasswordBtn.addEventListener('click', () => {
+        const isPassword = passwordInput.type === 'password';
+        passwordInput.type = isPassword ? 'text' : 'password';
+        togglePasswordBtn.textContent = isPassword ? '🙈' : '👁️';
+    });
+
+    // 3. Validação de Mínimo de 8 Caracteres
+    const loginForm = document.getElementById('loginForm');
+    const errorMessage = document.getElementById('errorMessage');
+
+    loginForm.addEventListener('submit', (e) => {
+        const senhaVal = passwordInput.value;
+        
+        if (senhaVal.length < 8) {
+            e.preventDefault(); // Impede o envio
+            passwordInput.classList.add('border-rose-500', 'dark:border-rose-500');
+            errorMessage.classList.remove('hidden');
+            passwordInput.focus();
+        } else {
+            passwordInput.classList.remove('border-rose-500', 'dark:border-rose-500');
+            errorMessage.classList.add('hidden');
+        }
+    });
+
+    // Limpa o erro dinamicamente ao digitar
+    passwordInput.addEventListener('input', () => {
         if (passwordInput.value.length >= 8) {
-            passwordInput.classList.remove('error');
-            errorMessage.style.display = 'none';
+            passwordInput.classList.remove('border-rose-500', 'dark:border-rose-500');
+            errorMessage.classList.add('hidden');
         }
     });
 </script>
-
-</body>
-</html>
