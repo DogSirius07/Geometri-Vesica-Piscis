@@ -1,26 +1,50 @@
 [
   {
     "id": 1,
-    "titulo": "Calculadora de Frequência",
-    "descricao": "Sistema desenvolvido para calcular a frequência dos alunos automaticamente.",
-    "tecnologias": ["JavaScript", "HTML", "CSS"],
+    "titulo": "O Balão de Emoções",
+    "descricao": "Um espaço interativo em 3D para soltar ansiedades e pensamentos ao vento. Módulo especial para alívio emocional.",
+    "tecnologias": ["Three.js", "Animação 3D", "JavaScript"],
     "link": "#",
-    "imagem": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop"
+    "imagem": "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=600&h=400&fit=crop"
   },
   {
     "id": 2,
-    "titulo": "Portfólio Antigo",
-    "descricao": "A primeira versão do meu portfólio acadêmico.",
-    "tecnologias": ["HTML", "Bootstrap"],
+    "titulo": "Nossa Frequência",
+    "descricao": "Módulo de acolhimento com frequências de cura (432Hz, 528Hz, Ruído Marrom) e respiração guiada.",
+    "tecnologias": ["Web Audio API", "CSS Animations"],
     "link": "#",
-    "imagem": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop"
+    "imagem": "https://images.unsplash.com/photo-1518241353330-0f797f6cceea?w=600&h=400&fit=crop"
   },
   {
     "id": 3,
-    "titulo": "Dashboard Moderno",
-    "descricao": "Painel de controle com gráficos interativos.",
-    "tecnologias": ["React", "Tailwind"],
+    "titulo": "Projeto Guardião",
+    "descricao": "Diário de saúde para monitoramento de glicemia e pressão arterial com geração de gráficos dinâmicos e exportação de logs.",
+    "tecnologias": ["Chart.js", "LocalStorage", "Exportação TXT"],
     "link": "#",
-    "imagem": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop"
+    "imagem": "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=400&fit=crop"
+  },
+  {
+    "id": 4,
+    "titulo": "Projeto Aria AI",
+    "descricao": "Assistente virtual integrada ao sistema com respostas personalizadas dependendo do nível de acesso (Guardião, Namorada, Mãe).",
+    "tecnologias": ["Inteligência Lógica", "DOM Manipulation"],
+    "link": "#",
+    "imagem": "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&h=400&fit=crop"
+  },
+  {
+    "id": 5,
+    "titulo": "Cápsula do Tempo",
+    "descricao": "Sistema de mensagens secretas que só podem ser abertas em datas futuras, integrado a um relógio de relacionamento.",
+    "tecnologias": ["JavaScript Dates", "LocalStorage"],
+    "link": "#",
+    "imagem": "https://images.unsplash.com/photo-1501139083538-0139583c060f?w=600&h=400&fit=crop"
+  },
+  {
+    "id": 6,
+    "titulo": "Controle de Acesso Restrito",
+    "descricao": "Painel central do sistema com bloqueio por senhas específicas que liberam módulos diferentes dependendo de quem acessa.",
+    "tecnologias": ["Segurança Lógica", "Renderização Condicional"],
+    "link": "#",
+    "imagem": "https://images.unsplash.com/photo-1510511459019-5d26af37f394?w=600&h=400&fit=crop"
   }
 ]
