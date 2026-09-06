@@ -3,24 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <!-- Link para o Web App Manifest (PWA) -->
-    <link rel="manifest" href="manifest.json">
     <title>O Motivo do Meu Sorriso • Andressa</title>
     
-    <!-- PWA & Meta Tags -->
+    <!-- Meta Tags & PWA Links -->
     <meta name="theme-color" content="#a066ff">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta property="og:title" content="O Motivo do Meu Sorriso • Andressa">
-    <meta property="og:description" content="Nossa frequência sagrada e inesquecível.">
-    <meta property="og:image" content="IMG_0028.png">
-    
-    <!-- Favicon Místico Embutido -->
+    <link rel="manifest" href="manifest.json">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
     
-    <!-- Google Fonts -->
+    <!-- Google Fonts & Leaflet CSS (Mapa) -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,500;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
     <style>
         :root {
@@ -28,7 +22,7 @@
             --aura-purple: #a066ff;
             --gold: #ffd700;
             --deep-night: #050a14;
-            --glass: rgba(15, 20, 35, 0.85);
+            --glass: rgba(15, 20, 35, 0.88);
             --glass-border: rgba(160, 102, 255, 0.3);
         }
 
@@ -43,7 +37,6 @@
             scroll-behavior: smooth;
         }
 
-        /* Canvas de Partículas */
         #particles-canvas {
             position: fixed; top: 0; left: 0;
             width: 100%; height: 100%;
@@ -55,17 +48,15 @@
             width: 100%; height: 100%;
             background-image: url('IMG_0028.png'); 
             background-size: cover; background-position: center;
-            opacity: 0.18; z-index: -1;
+            opacity: 0.15; z-index: -1;
         }
 
-        /* Tela de Entrada / Splash Screen */
         .splash-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: var(--deep-night); z-index: 1000;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
             text-align: center; padding: 20px; transition: opacity 0.8s ease, visibility 0.8s;
         }
-
         .splash-overlay.hidden { opacity: 0; visibility: hidden; }
 
         .splash-title {
@@ -77,7 +68,7 @@
 
         .container {
             position: relative; z-index: 1;
-            width: 90%; max-width: 850px;
+            width: 90%; max-width: 880px;
             margin: 0 auto; text-align: center;
             padding: 40px 0 80px 0;
         }
@@ -91,19 +82,14 @@
 
         h2 { font-weight: 300; letter-spacing: 2px; color: #b0c4de; font-size: clamp(1rem, 3vw, 1.4rem); }
 
-        /* Cards do Contador */
         .counter-card { 
             margin: 30px 0; padding: 25px 15px;
-            border: 1px solid var(--glass-border);
-            border-radius: 20px; background: var(--glass);
-            box-shadow: 0 0 25px rgba(0, 212, 255, 0.15);
+            border: 1px solid var(--glass-border); border-radius: 20px;
+            background: var(--glass); box-shadow: 0 0 25px rgba(0, 212, 255, 0.15);
             backdrop-filter: blur(8px);
         }
 
-        .timer-grid {
-            display: grid; grid-template-columns: repeat(4, 1fr);
-            gap: 10px; margin-top: 15px;
-        }
+        .timer-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 15px; }
 
         .timer-block {
             background: rgba(0,0,0,0.4); border: 1px solid var(--glass-border);
@@ -123,18 +109,13 @@
         }
         .sub-metrics span { color: var(--gold); }
 
-        /* Player Místico com Playlist do YouTube */
         .player-card {
-            background: var(--glass);
-            border: 1px solid var(--aura-blue);
+            background: var(--glass); border: 1px solid var(--aura-blue);
             border-radius: 20px; padding: 20px; margin: 30px 0; text-align: left;
             box-shadow: 0 0 20px rgba(0, 212, 255, 0.1);
         }
 
-        .player-header {
-            display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;
-        }
-
+        .player-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .track-info { display: flex; flex-direction: column; }
         .track-title { font-size: 1.3rem; color: #fff; font-weight: 500; }
         .track-subtitle { font-size: 0.9rem; color: var(--aura-blue); }
@@ -143,8 +124,12 @@
             position: relative; width: 100%; padding-bottom: 56.25%; height: 0;
             border-radius: 12px; overflow: hidden; margin-top: 10px; border: 1px solid var(--glass-border);
         }
-        .youtube-container iframe {
-            position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+        .youtube-container iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .track-story {
+            margin-top: 12px; padding: 12px; background: rgba(0,0,0,0.4);
+            border-left: 3px solid var(--gold); border-radius: 6px;
+            font-style: italic; color: #d0d0d0; font-size: 0.95rem;
         }
 
         .playlist-select {
@@ -153,7 +138,6 @@
             color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 1rem; outline: none;
         }
 
-        /* Botões do Menu */
         .btn-group { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
 
         .btn {
@@ -170,35 +154,46 @@
             box-shadow: 0 0 15px rgba(160, 102, 255, 0.4);
         }
 
-        /* Estações */
         .station { 
             display: none; margin-top: 30px; padding: 25px; 
             background: var(--glass); border: 1px solid var(--glass-border);
             border-radius: 25px; animation: fadeIn 0.8s ease; text-align: left;
         }
 
-        /* Galeria e Lightbox */
-        .gallery-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-            gap: 15px; margin-top: 20px;
+        /* Tarot Cards */
+        .tarot-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-top: 20px; }
+        .tarot-card {
+            background: linear-gradient(135deg, rgba(160,102,255,0.2), rgba(0,0,0,0.6));
+            border: 1px solid var(--gold); border-radius: 12px; height: 180px;
+            display: flex; flex-direction: column; justify-content: center; align-items: center;
+            cursor: pointer; transition: 0.4s; text-align: center; padding: 10px;
+        }
+        .tarot-card:hover { transform: translateY(-8px) scale(1.03); box-shadow: 0 0 20px var(--gold); }
+        .tarot-reveal { display: none; font-size: 0.9rem; color: #fff; margin-top: 15px; background: rgba(0,0,0,0.5); padding: 15px; border-radius: 10px; border: 1px solid var(--aura-blue); }
+
+        /* Leaflet Map Styling */
+        #map { height: 320px; width: 100%; border-radius: 15px; margin-top: 15px; border: 1px solid var(--aura-purple); }
+
+        /* Formspree Mural */
+        .mural-form input, .mural-form textarea {
+            width: 100%; padding: 12px; margin: 8px 0 15px 0; border-radius: 8px;
+            border: 1px solid var(--glass-border); background: rgba(0,0,0,0.5); color: #fff;
+            font-family: 'Cormorant Garamond', serif; font-size: 1rem;
         }
 
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-top: 20px; }
         .gallery-item {
             position: relative; border-radius: 15px; overflow: hidden;
-            border: 1px solid var(--glass-border); aspect-ratio: 4/5; cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--glass-border); aspect-ratio: 4/5; cursor: pointer; transition: 0.3s;
         }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-        .gallery-item:hover { transform: translateY(-5px); box-shadow: 0 0 20px rgba(0, 212, 255, 0.3); }
         .gallery-item:hover img { transform: scale(1.08); }
-
         .gallery-caption {
             position: absolute; bottom: 0; left: 0; width: 100%;
             background: linear-gradient(transparent, rgba(5, 10, 20, 0.95));
             padding: 15px 10px 10px 10px; font-size: 0.9rem; color: #fff; text-align: center;
         }
 
-        /* Lightbox Modal */
         .lightbox-modal {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.92); z-index: 2000; justify-content: center; align-items: center;
@@ -206,83 +201,45 @@
         }
         .lightbox-modal img { max-width: 90%; max-height: 80vh; border-radius: 12px; border: 1px solid var(--aura-blue); }
 
-        /* Linha do Tempo */
         .timeline { position: relative; margin-top: 25px; padding-left: 20px; }
-        .timeline::before {
-            content: ''; position: absolute; left: 0; top: 0; width: 2px; height: 100%;
-            background: linear-gradient(to bottom, var(--aura-blue), var(--aura-purple));
-        }
+        .timeline::before { content: ''; position: absolute; left: 0; top: 0; width: 2px; height: 100%; background: linear-gradient(to bottom, var(--aura-blue), var(--aura-purple)); }
         .timeline-event { position: relative; margin-bottom: 25px; padding-left: 20px; }
-        .timeline-event::before {
-            content: ''; position: absolute; left: -25px; top: 5px; width: 12px; height: 12px;
-            border-radius: 50%; background: var(--gold); box-shadow: 0 0 10px var(--gold);
-        }
+        .timeline-event::before { content: ''; position: absolute; left: -25px; top: 5px; width: 12px; height: 12px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 10px var(--gold); }
         .timeline-date { color: var(--aura-blue); font-size: 0.9rem; font-weight: bold; }
         .timeline-title { color: #fff; font-size: 1.2rem; margin: 3px 0; }
         .timeline-desc { color: #b0b0b0; font-size: 0.95rem; }
 
-        /* Cartas */
         .envelope-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 20px; }
-        .envelope-card {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--aura-purple);
-            border-radius: 15px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s;
-        }
+        .envelope-card { background: rgba(255,255,255,0.03); border: 1px solid var(--aura-purple); border-radius: 15px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; }
         .envelope-card:hover { background: rgba(160, 102, 255, 0.1); transform: scale(1.02); }
         .letter-content { display: none; margin-top: 15px; font-style: italic; color: #e0e0e0; border-top: 1px dashed var(--aura-purple); padding-top: 10px; }
 
-        /* Quiz do Casal */
-        .quiz-option {
-            background: rgba(255,255,255,0.05); border: 1px solid var(--aura-blue);
-            padding: 12px; border-radius: 10px; margin: 8px 0; cursor: pointer; transition: 0.3s;
-        }
+        .quiz-option { background: rgba(255,255,255,0.05); border: 1px solid var(--aura-blue); padding: 12px; border-radius: 10px; margin: 8px 0; cursor: pointer; transition: 0.3s; }
         .quiz-option:hover { background: rgba(0, 212, 255, 0.2); }
 
-        /* Cápsula do Tempo */
-        .capsule-box {
-            text-align: center; padding: 30px; border: 1px dashed var(--gold);
-            border-radius: 20px; background: rgba(255, 215, 0, 0.03); margin-top: 20px;
-        }
+        .capsule-box { text-align: center; padding: 30px; border: 1px dashed var(--gold); border-radius: 20px; background: rgba(255, 215, 0, 0.03); margin-top: 20px; }
 
-        /* Sons de Ambiência */
         .soundboard-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 15px; margin-top: 20px; }
-        .sound-card {
-            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 15px; padding: 15px; text-align: center; cursor: pointer; transition: 0.3s;
-        }
+        .sound-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); border-radius: 15px; padding: 15px; text-align: center; cursor: pointer; transition: 0.3s; }
         .sound-card.active { border-color: var(--aura-blue); background: rgba(0, 212, 255, 0.1); box-shadow: 0 0 10px rgba(0, 212, 255, 0.2); }
 
-        /* Modal de Senha */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(5, 10, 20, 0.88); backdrop-filter: blur(10px);
             z-index: 100; justify-content: center; align-items: center;
         }
-        .modal-card {
-            background: var(--glass); border: 1px solid var(--aura-purple);
-            padding: 30px; border-radius: 20px; text-align: center;
-            max-width: 350px; width: 90%; box-shadow: 0 0 30px rgba(160, 102, 255, 0.3);
-        }
-        .modal-input {
-            width: 100%; padding: 12px; margin: 20px 0; border-radius: 8px;
-            border: 1px solid var(--aura-blue); background: rgba(0,0,0,0.5);
-            color: #fff; text-align: center; font-size: 1.2rem; outline: none;
-        }
+        .modal-card { background: var(--glass); border: 1px solid var(--aura-purple); padding: 30px; border-radius: 20px; text-align: center; max-width: 350px; width: 90%; box-shadow: 0 0 30px rgba(160, 102, 255, 0.3); }
+        .modal-input { width: 100%; padding: 12px; margin: 20px 0; border-radius: 8px; border: 1px solid var(--aura-blue); background: rgba(0,0,0,0.5); color: #fff; text-align: center; font-size: 1.2rem; outline: none; }
 
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
-
-        @media (max-width: 600px) {
-            .container { padding: 25px 12px; }
-            .timer-grid { grid-template-columns: repeat(2, 1fr); }
-        }
+        @media (max-width: 600px) { .container { padding: 25px 12px; } .timer-grid { grid-template-columns: repeat(2, 1fr); } }
     </style>
 </head>
 <body>
 
-    <!-- Canvas para Partículas Estelares -->
     <canvas id="particles-canvas"></canvas>
     <div class="bg-fixed"></div>
 
-    <!-- Tela de Abertura (Splash Screen) -->
     <div class="splash-overlay" id="splashScreen">
         <div class="splash-title">Nossa Frequência</div>
         <p style="margin-bottom: 25px; color: #b0c4de;">Sintonizando universos e momentos inesquecíveis...</p>
@@ -295,7 +252,6 @@
             <h2>Andressa • Nossa Frequência Sagrada</h2>
         </header>
 
-        <!-- Contador Principal em Bloco -->
         <div class="counter-card">
             <div class="timer-grid">
                 <div class="timer-block"><div class="timer-num" id="days">0</div><div class="timer-label">Dias</div></div>
@@ -310,7 +266,6 @@
             </div>
         </div>
 
-        <!-- Player Místico com Playlist do YouTube -->
         <div class="player-card">
             <div class="player-header">
                 <div class="track-info">
@@ -324,12 +279,16 @@
                 <iframe id="ytPlayer" src="https://www.youtube-nocookie.com/embed/BcqxLCWn-CE?enablejsapi=1" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
 
+            <div class="track-story" id="trackStory">
+                "Esta música traduz a vibe marcante de quando o nosso olhar cruzou e sintonizamos na mesma frequência."
+            </div>
+
             <select class="playlist-select" id="playlistSelect" onchange="changeTrack(this.value)">
                 <option value="BcqxLCWn-CE">Música 1 — Especial do Casal</option>
                 <option value="-YzDsDMYqdw">Música 2 — Nossa Sintonia</option>
                 <option value="qFpHQoH8V9Q">Música 3 — Vibração Mística</option>
                 <option value="7PlW6F37XRg">Música 4 — Romance Nostálgico</option>
-                <option value="otLB2Zn2X3I">Música 5 — Pop Pop Girl 1998</option>
+                <option value="otLB2Zn2X3I">Música 5 — Pop Girl 1998</option>
                 <option value="-2z3YwCrGMc">Música 6 — Patricinha Vibe</option>
                 <option value="fkMlqffMlqff">Música 7 — Momento Inesquecível</option>
                 <option value="1pGh-wLu1pA">Música 8 — Amor em Frequência</option>
@@ -338,21 +297,22 @@
             </select>
         </div>
 
-        <!-- Menu de Estações -->
         <div class="btn-group">
             <button class="btn" onclick="openKeyModal('galeria', this)">Galeria</button>
             <button class="btn" onclick="openKeyModal('timeline', this)">Linha do Tempo</button>
             <button class="btn" onclick="openKeyModal('cartas', this)">Cartas</button>
+            <button class="btn" onclick="openKeyModal('tarot', this)">Tarot do Casal</button>
+            <button class="btn" onclick="openKeyModal('mapa', this)">Nosso Mapa</button>
+            <button class="btn" onclick="openKeyModal('mural', this)">Mural</button>
             <button class="btn" onclick="openKeyModal('quiz', this)">Quiz</button>
             <button class="btn" onclick="openKeyModal('capsula', this)">Cápsula</button>
             <button class="btn" onclick="openKeyModal('sons', this)">Sons</button>
             <button class="btn" onclick="openKeyModal('pedido', this)">O Pedido</button>
         </div>
 
-        <!-- 1. GALERIA DE FOTOS COM LIGHTBOX -->
+        <!-- STATIONS -->
         <div id="galeria" class="station">
             <h2 style="color: var(--aura-blue); margin-bottom: 10px;">Galeria • Nossas Frequências em Luz</h2>
-            <p style="margin-bottom: 15px; color: #aaa;">Clique na imagem para expandir:</p>
             <div class="gallery-grid">
                 <div class="gallery-item" onclick="openLightbox('IMG_0028.png', 'O Início do Nosso Sempre')">
                     <img src="IMG_0028.png" alt="Foto 1">
@@ -369,7 +329,6 @@
             </div>
         </div>
 
-        <!-- 2. LINHA DO TEMPO -->
         <div id="timeline" class="station">
             <h2 style="color: var(--aura-purple); margin-bottom: 10px;">Linha do Tempo • Nossa Trajetória</h2>
             <div class="timeline">
@@ -383,47 +342,72 @@
                     <div class="timeline-title">Oficialização do Nosso Amor</div>
                     <div class="timeline-desc">O pedido inesquecível no Dia dos Namorados.</div>
                 </div>
-                <div class="timeline-event">
-                    <div class="timeline-date">Hoje & Sempre</div>
-                    <div class="timeline-title">Onde Estamos</div>
-                    <div class="timeline-desc">Mais sintonizados e apaixonados a cada segundo.</div>
-                </div>
             </div>
         </div>
 
-        <!-- 3. CARTAS VIRTUAIS -->
         <div id="cartas" class="station">
             <h2 style="color: var(--gold); margin-bottom: 10px;">Cartas Virtuais • Abra Quando Precisar</h2>
             <div class="envelope-grid">
                 <div class="envelope-card" onclick="toggleLetter(this)">
-                    <span style="font-size: 2.2rem; display: block; margin-bottom: 8px;">✉️</span>
+                    <span style="font-size: 2.2rem; display: block;">✉️</span>
                     <h3>Abra quando estiver com saudade</h3>
-                    <div class="letter-content">
-                        "Lembre-se de que não importa a distância, estamos sintonizados no mesmo coração."
-                    </div>
+                    <div class="letter-content">"Não importa a distância, estamos sintonizados no mesmo coração."</div>
                 </div>
                 <div class="envelope-card" onclick="toggleLetter(this)">
-                    <span style="font-size: 2.2rem; display: block; margin-bottom: 8px;">💌</span>
+                    <span style="font-size: 2.2rem; display: block;">💌</span>
                     <h3>Abra quando tiver um dia difícil</h3>
-                    <div class="letter-content">
-                        "Você é a pessoa mais forte e incrível que eu conheço. Estou sempre aqui por você!"
-                    </div>
+                    <div class="letter-content">"Você é a pessoa mais forte que conheço. Estou sempre aqui por você!"</div>
                 </div>
             </div>
         </div>
 
-        <!-- 4. QUIZ DO CASAL -->
-        <div id="quiz" class="station">
-            <h2 style="color: var(--aura-blue); margin-bottom: 10px;">Quiz do Casal • O Quanto Você Lembra?</h2>
-            <div id="quizContent">
-                <p style="margin-bottom: 15px;">1. Onde foi nossa primeira conversa marcante?</p>
-                <div class="quiz-option" onclick="answerQuiz(true)">No lugar que virou nosso ponto especial</div>
-                <div class="quiz-option" onclick="answerQuiz(false)">Em uma festa aleatória</div>
-                <div id="quizResult" style="margin-top: 15px; font-weight: bold; color: var(--gold);"></div>
+        <!-- TAROT DO CASAL -->
+        <div id="tarot" class="station">
+            <h2 style="color: var(--gold); margin-bottom: 10px;">Baralho Místico do Amor • Conselho Diário</h2>
+            <p style="margin-bottom: 15px; color: #bbb;">Escolha uma carta para revelar uma mensagem especial de hoje:</p>
+            <div class="tarot-grid">
+                <div class="tarot-card" onclick="drawTarot('O Sol: Seu sorriso ilumina o meu dia inteiro e traz luz para qualquer momento.')">
+                    <span style="font-size: 2.5rem;">☀️</span>
+                    <span style="color: var(--gold); margin-top: 8px;">Carta 1</span>
+                </div>
+                <div class="tarot-card" onclick="drawTarot('A Estrela: Cada plano que fazemos juntos está gravado no meu destino.')">
+                    <span style="font-size: 2.5rem;">🌟</span>
+                    <span style="color: var(--aura-blue); margin-top: 8px;">Carta 2</span>
+                </div>
+                <div class="tarot-card" onclick="drawTarot('O Mundo: Estar ao seu lado me faz ter a certeza de que já tenho o meu mundo completo.')">
+                    <span style="font-size: 2.5rem;">🌍</span>
+                    <span style="color: var(--aura-purple); margin-top: 8px;">Carta 3</span>
+                </div>
             </div>
+            <div class="tarot-reveal" id="tarotReveal"></div>
         </div>
 
-        <!-- 5. CÁPSULA DO TEMPO -->
+        <!-- MAPA INTERATIVO -->
+        <div id="mapa" class="station">
+            <h2 style="color: var(--aura-blue); margin-bottom: 10px;">Mapa Interativo do Nosso Amor</h2>
+            <p style="color: #bbb;">Nossos pontos marcantes sintonizados no mapa:</p>
+            <div id="map"></div>
+        </div>
+
+        <!-- MURAL DE RECADOS -->
+        <div id="mural" class="station">
+            <h2 style="color: var(--aura-purple); margin-bottom: 10px;">Mural de Recados • Caixa de Desejos</h2>
+            <p style="margin-bottom: 15px; color: #bbb;">Envie uma mensagem, recadinho ou sugestão de música diretamente para mim:</p>
+            <form class="mural-form" action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" onsubmit="alert('Sua mensagem foi enviada nas frequências do amor! ✨');">
+                <input type="text" name="nome" placeholder="Seu nome / apelido carinhoso" required>
+                <textarea name="mensagem" rows="4" placeholder="Escreva aqui o que seu coração desejar..." required></textarea>
+                <button type="submit" class="btn">Enviar Mensagem ✨</button>
+            </form>
+        </div>
+
+        <div id="quiz" class="station">
+            <h2 style="color: var(--aura-blue); margin-bottom: 10px;">Quiz do Casal • O Quanto Você Lembra?</h2>
+            <p style="margin-bottom: 15px;">1. Onde foi nossa primeira conversa marcante?</p>
+            <div class="quiz-option" onclick="answerQuiz(true)">No lugar que virou nosso ponto especial</div>
+            <div class="quiz-option" onclick="answerQuiz(false)">Em uma festa aleatória</div>
+            <div id="quizResult" style="margin-top: 15px; font-weight: bold; color: var(--gold);"></div>
+        </div>
+
         <div id="capsula" class="station">
             <h2 style="color: var(--aura-blue); margin-bottom: 10px;">Cápsula do Tempo Digital</h2>
             <div class="capsule-box">
@@ -434,7 +418,6 @@
             </div>
         </div>
 
-        <!-- 6. SONS DE AMBIÊNCIA -->
         <div id="sons" class="station">
             <h2 style="color: var(--aura-blue); margin-bottom: 10px;">Estação Sons • Frequências de Relaxamento</h2>
             <div class="soundboard-grid">
@@ -448,16 +431,10 @@
                     <span>Fogueira</span>
                     <audio id="sound-fogueira" loop src="https://assets.mixkit.co/active_storage/sfx/2670/2670-preview.mp3"></audio>
                 </div>
-                <div class="sound-card" onclick="toggleAmbientSound(this, 'espaco')">
-                    <span style="font-size: 1.8rem; display: block; margin-bottom: 5px;">🌌</span>
-                    <span>Cosmos</span>
-                    <audio id="sound-espaco" loop src="https://assets.mixkit.co/active_storage/sfx/2658/2658-preview.mp3"></audio>
-                </div>
             </div>
             <button class="btn" style="margin-top: 20px; font-size: 0.8rem; border-color: #666; color: #aaa;" onclick="stopAllAmbient()">Pausar Sons</button>
         </div>
 
-        <!-- 7. ESTAÇÃO PEDIDO (SENHA EXCLUSIVA 1206) -->
         <div id="pedido" class="station">
             <h2 style="color: var(--aura-purple); margin-bottom: 15px;">O Início do Infinito</h2>
             <p>Desde 05 de Maio, nossas auras se uniram no mesmo fluxo do universo.</p>
@@ -469,7 +446,7 @@
         </div>
     </div>
 
-    <!-- Modal Místico de Senha -->
+    <!-- Modais -->
     <div class="modal-overlay" id="modalOverlay" onclick="closeModalOnOverlay(event)">
         <div class="modal-card">
             <h3 style="color: var(--aura-blue);">Chave Secreta</h3>
@@ -480,119 +457,113 @@
         </div>
     </div>
 
-    <!-- Lightbox Modal -->
     <div class="lightbox-modal" id="lightbox" onclick="closeLightbox()">
         <img id="lightboxImg" src="" alt="Ampliada">
     </div>
 
+    <!-- Scripts Externos: Leaflet & Confetti -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <script>
-        // Entrar no App e fechar Splash
-        function enterApp() {
-            document.getElementById('splashScreen').classList.add('hidden');
-        }
-
-        // Partículas Estelares (Canvas)
-        const canvas = document.getElementById('particles-canvas');
-        const ctx = canvas.getContext('2d');
-        let particles = [];
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        for (let i = 0; i < 60; i++) {
-            particles.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                radius: Math.random() * 1.8,
-                alpha: Math.random(),
-                speed: Math.random() * 0.02 + 0.005
+        // Registrar Service Worker (PWA Offline)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW ativo!', reg.scope))
+                    .catch(err => console.log('Erro no SW:', err));
             });
         }
 
+        function enterApp() { document.getElementById('splashScreen').classList.add('hidden'); }
+
+        // Canvas de Partículas
+        const canvas = document.getElementById('particles-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resizeCanvas); resizeCanvas();
+        for (let i = 0; i < 60; i++) {
+            particles.push({
+                x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                radius: Math.random() * 1.8, alpha: Math.random(), speed: Math.random() * 0.02 + 0.005
+            });
+        }
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             particles.forEach(p => {
                 p.alpha += p.speed;
                 if (p.alpha > 1 || p.alpha < 0) p.speed = -p.speed;
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 212, 255, ${Math.abs(p.alpha)})`;
-                ctx.fill();
+                ctx.beginPath(); ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(0, 212, 255, ${Math.abs(p.alpha)})`; ctx.fill();
             });
             requestAnimationFrame(animateParticles);
         }
         animateParticles();
 
-        // Data de Início
+        // Contador
         const startDate = new Date('2026-05-05T19:30:00');
         const capsuleDate = new Date('2027-05-05T00:00:00');
-
         function updateTimer() {
             const now = new Date();
             const diff = now - startDate;
-            
             if (diff > 0) {
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                const m = Math.floor((diff / (1000 * 60)) % 60);
-                const s = Math.floor((diff / 1000) % 60);
-
-                document.getElementById('days').innerText = d;
-                document.getElementById('hours').innerText = h;
-                document.getElementById('minutes').innerText = m;
-                document.getElementById('seconds').innerText = s;
-
+                document.getElementById('days').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
+                document.getElementById('hours').innerText = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                document.getElementById('minutes').innerText = Math.floor((diff / (1000 * 60)) % 60);
+                document.getElementById('seconds').innerText = Math.floor((diff / 1000) % 60);
                 document.getElementById('hours-count').innerText = Math.floor(diff / (1000 * 60 * 60));
-                document.getElementById('orbit-count').innerText = d;
-            }
-
-            // Cápsula do Tempo
-            const capsuleDiff = capsuleDate - now;
-            if (capsuleDiff <= 0) {
-                document.getElementById('capsuleStatus').innerText = "🔓 Cápsula Desbloqueada!";
-                document.getElementById('capsuleMessage').innerHTML = "<b>Mensagem Secreta:</b> Obrigado por mais um ano incrível ao meu lado!";
-                document.getElementById('capsuleTimer').innerText = "";
-            } else {
-                const cd = Math.floor(capsuleDiff / (1000 * 60 * 60 * 24));
-                const ch = Math.floor((capsuleDiff / (1000 * 60 * 60)) % 24);
-                document.getElementById('capsuleTimer').innerText = `Abre em: ${cd} dias e ${ch} horas`;
+                document.getElementById('orbit-count').innerText = Math.floor(diff / (1000 * 60 * 60 * 24));
             }
         }
-        setInterval(updateTimer, 1000);
-        updateTimer();
+        setInterval(updateTimer, 1000); updateTimer();
 
-        // Player de Vídeo/Música
+        // Músicas & Histórias
+        const musicStories = {
+            'BcqxLCWn-CE': '"Esta música traduz a vibe marcante de quando o nosso olhar cruzou e sintonizamos na mesma frequência."',
+            '-YzDsDMYqdw': '"Nossa trilha sonora de viagens e momentos onde o tempo parecia parar só pra nós dois."',
+            'qFpHQoH8V9Q': '"A sintonia leve e mística do nosso amor refletida em acordes perfeitos."',
+            '7PlW6F37XRg': '"Nostalgia pura dos anos 90/2000 que lembra exatamente o seu estilo único."',
+            'otLB2Zn2X3I': '"Pop vibe 1998, animada e charmosa do jeito que você ama cantar junto!"',
+            '-2z3YwCrGMc': '"Aquele tom patricinha & chic que combina com seu sorriso marcante."',
+            'fkMlqffMlqff': '"Música marcante do nosso repertório inesquecível."',
+            '1pGh-wLu1pA': '"Amor em alta frequência e vibração positiva."',
+            'SjU4u6C-eaA': '"Balada suave para noites tranquilas sintonizados."',
+            'keWoksM8Sk0': '"Fechando com chave de ouro a nossa playlist divina."'
+        };
+
         function changeTrack(videoId) {
             document.getElementById('ytPlayer').src = `https://www.youtube-nocookie.com/embed/${videoId}?autoplay=1`;
+            document.getElementById('trackStory').innerText = musicStories[videoId] || '"Uma faixa especial sintonizada no nosso amor."';
         }
 
-        // Lightbox
-        function openLightbox(src, caption) {
-            document.getElementById('lightboxImg').src = src;
-            document.getElementById('lightbox').style.display = 'flex';
-        }
-        function closeLightbox() {
-            document.getElementById('lightbox').style.display = 'none';
-        }
-
-        // Cartas
-        function toggleLetter(card) {
-            const content = card.querySelector('.letter-content');
-            content.style.display = content.style.display === 'block' ? 'none' : 'block';
+        // Lightbox & Cartas
+        function openLightbox(src, caption) { document.getElementById('lightboxImg').src = src; document.getElementById('lightbox').style.display = 'flex'; }
+        function closeLightbox() { document.getElementById('lightbox').style.display = 'none'; }
+        function toggleLetter(card) { const c = card.querySelector('.letter-content'); c.style.display = c.style.display === 'block' ? 'none' : 'block'; }
+        
+        // Tarot Function
+        function drawTarot(msg) {
+            const rev = document.getElementById('tarotReveal');
+            rev.innerText = msg; rev.style.display = 'block';
         }
 
-        // Quiz
+        // Leaflet Map Initialization
+        let mapInitialized = false;
+        function initMap() {
+            if (mapInitialized) return;
+            mapInitialized = true;
+            setTimeout(() => {
+                const map = L.map('map').setView([-23.5505, -46.6333], 12); // Coordenadas de Exemplo
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: 'Nossa Frequência'
+                }).addTo(map);
+                L.marker([-23.5505, -46.6333]).addTo(map).bindPopup('✨ Ponto Inicial do Nosso Amor').openPopup();
+            }, 300);
+        }
+
         function answerQuiz(isCorrect) {
-            const res = document.getElementById('quizResult');
-            if (isCorrect) {
-                res.innerText = "✨ Resposta correta! Você lembra de cada detalhe da nossa frequência.";
-            } else {
-                res.innerText = "Sua memória falhou, mas o coração sabe a resposta certa! ❤️";
-            }
+            document.getElementById('quizResult').innerText = isCorrect ? "✨ Resposta correta! Você lembra de tudo." : "O coração sabe a resposta certa! ❤️";
         }
 
         // Estações e Modais
@@ -600,75 +571,55 @@
         let activeBtnElement = null;
 
         function openKeyModal(stationId, btnEl) {
-            targetStation = stationId;
-            activeBtnElement = btnEl;
+            targetStation = stationId; activeBtnElement = btnEl;
             document.getElementById('modalInput').value = '';
-            
-            if (stationId === 'pedido') {
-                document.getElementById('modalHint').innerText = "Esta estação exige a senha única do Nosso Pedido (DDMM):";
-            } else {
-                document.getElementById('modalHint').innerText = "Digite a data especial (DDMM):";
-            }
-
+            document.getElementById('modalHint').innerText = (stationId === 'pedido') ? "Digite a senha única do Nosso Pedido (1206):" : "Digite a data especial (DDMM):";
             document.getElementById('modalOverlay').style.display = 'flex';
             document.getElementById('modalInput').focus();
         }
 
-        function closeModal() {
-            document.getElementById('modalOverlay').style.display = 'none';
-        }
-
-        function closeModalOnOverlay(e) {
-            if (e.target.id === 'modalOverlay') closeModal();
-        }
+        function closeModal() { document.getElementById('modalOverlay').style.display = 'none'; }
+        function closeModalOnOverlay(e) { if (e.target.id === 'modalOverlay') closeModal(); }
 
         function confirmKey() {
             const pass = document.getElementById('modalInput').value;
-
-            // 'pedido' só aceita 1206. As outras aceitam 0505 (ou 1206).
             if (targetStation === 'pedido') {
                 if (pass === '1206') {
                     unlockStation();
-                } else {
-                    alert("Chave incorreta para O Pedido! Dica: Dia do Namorados (1206)");
-                }
+                    triggerHeartsConfetti();
+                } else { alert("Chave incorreta para O Pedido! Dica: Dia dos Namorados (1206)"); }
             } else {
                 if (pass === '0505' || pass === '1206') {
                     unlockStation();
-                } else {
-                    alert("Sintonização falhou. Tente a chave 0505...");
-                }
+                } else { alert("Sintonização falhou. Tente a chave 0505..."); }
             }
         }
 
         function unlockStation() {
             document.querySelectorAll('.station').forEach(s => s.style.display = 'none');
             document.getElementById(targetStation).style.display = 'block';
-            
             document.querySelectorAll('.btn-group .btn').forEach(b => b.classList.remove('active-tab'));
             if (activeBtnElement) activeBtnElement.classList.add('active-tab');
-
+            if (targetStation === 'mapa') initMap();
             closeModal();
         }
 
-        document.getElementById('modalInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') confirmKey();
-        });
+        function triggerHeartsConfetti() {
+            confetti({
+                particleCount: 80, spread: 100, origin: { y: 0.6 },
+                colors: ['#00d4ff', '#a066ff', '#ffd700', '#ff66b2']
+            });
+        }
 
-        // Ambiência
+        document.getElementById('modalInput').addEventListener('keypress', function(e) { if (e.key === 'Enter') confirmKey(); });
+
         function toggleAmbientSound(card, soundId) {
-            const ambientAudio = document.getElementById('sound-' + soundId);
-            if (ambientAudio.paused) {
-                ambientAudio.play(); card.classList.add('active');
-            } else {
-                ambientAudio.pause(); card.classList.remove('active');
-            }
+            const a = document.getElementById('sound-' + soundId);
+            if (a.paused) { a.play(); card.classList.add('active'); } else { a.pause(); card.classList.remove('active'); }
         }
 
         function stopAllAmbient() {
-            document.querySelectorAll('.soundboard-grid audio').forEach(a => {
-                a.pause(); a.currentTime = 0;
-            });
+            document.querySelectorAll('.soundboard-grid audio').forEach(a => { a.pause(); a.currentTime = 0; });
             document.querySelectorAll('.sound-card').forEach(c => c.classList.remove('active'));
         }
     </script>
