@@ -4,7 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#050a14">
-    <title>Nossa Frequência — Ecossistema Integrado</title>
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Nossa Frequência & Guardião</title>
+
+    <!-- Manifest Inline para PWA (Instalação no Celular) -->
+    <link rel="manifest" href='data:application/manifest+json,{"name":"Nossa Frequencia","short_name":"Frequencia","start_url":".","display":"standalone","background_color":"#050a14","theme_color":"#050a14","icons":[{"src":"https://via.placeholder.com/192/00d4ff/050a14?text=05","sizes":"192x192","type":"image/png"}]}'>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -25,7 +30,8 @@
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--deep-night); color: #ffffff; font-family: 'Montserrat', sans-serif; min-height: 100vh; overflow-x: hidden; }
+        body { background-color: var(--deep-night); color: #ffffff; font-family: 'Montserrat', sans-serif; min-height: 100vh; overflow-x: hidden; transition: filter 1.5s ease; }
+        body.calm-mode { filter: brightness(0.4) contrast(0.9); }
 
         #canvas3d { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
 
@@ -62,6 +68,7 @@
 
         input, select, textarea { width: 100%; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid var(--aura-purple); padding: 12px; border-radius: 10px; outline: none; font-size: 0.9rem; margin-bottom: 10px; font-family: inherit; }
         .btn-action { background: linear-gradient(135deg, var(--aura-purple), var(--aura-blue)); border: none; color: white; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; width: 100%; font-size: 0.9rem; }
+        .btn-calm { background: linear-gradient(135deg, #00f5d4, #00d4ff); color: #050a14; font-weight: 700; border: none; padding: 14px; border-radius: 12px; cursor: pointer; width: 100%; font-size: 1rem; box-shadow: 0 0 15px rgba(0, 245, 212, 0.4); }
         .btn-small { background: rgba(255, 215, 0, 0.12); border: 1px solid var(--gold); color: var(--gold); padding: 8px 12px; border-radius: 8px; cursor: pointer; font-size: 0.78rem; margin: 3px 0; }
 
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 20, 0.96); z-index: 300; display: none; padding: 20px; overflow-y: auto; }
@@ -84,7 +91,7 @@
         </div>
     </div>
 
-    <!-- 1. TELA INICIAL: NOSSA FREQUÊNCIA (SEM MANUAIS E SEM CLÍNICOS) -->
+    <!-- 1. TELA INICIAL: NOSSA FREQUÊNCIA -->
     <div id="frequenciaView" class="container">
         <header>
             <svg class="vesica-logo" onclick="openPinModal()" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -93,8 +100,14 @@
                 <path d="M 100 51 A 60 60 0 0 1 100 149 A 60 60 0 0 1 100 51 Z" fill="rgba(255,217,0,0.18)" stroke="#ffd700" stroke-width="1.8"/>
             </svg>
             <h1>Nossa Frequência</h1>
-            <p class="subtitle">SINTONIA SENSORIAL & HARMONIZATION</p>
+            <p class="subtitle">SINTONIA SENSORIAL & HARMONIZAÇÃO</p>
         </header>
+
+        <!-- BOTÃO DE CALMA IMEDIATA (MÃE / ACOLHIMENTO) -->
+        <section id="calmModule" class="card hidden-menu" style="border-color: var(--emerald);">
+            <div class="card-title" style="color: var(--emerald);">🌿 Modo Acolhimento</div>
+            <button class="btn-calm" onclick="triggerQuickCalm()">✨ BOTÃO DE CALMA IMEDIATA</button>
+        </section>
 
         <section class="card">
             <div class="card-title">✨ Frequências Calmantes</div>
@@ -107,18 +120,18 @@
         </section>
     </div>
 
-    <!-- 2. MÓDULO PROJETO BALÃO (EXCLUSIVO NAMORADA E ADMIN PRIMÁRIO) -->
+    <!-- 2. PROJETO BALÃO -->
     <div id="balaoView" class="container hidden-menu">
         <section class="card" style="border-color: var(--pink-balloon);">
             <div class="card-title" style="color: var(--pink-balloon);">🎈 Projeto Balão de Emoções</div>
-            <p style="font-size:0.8rem; margin-bottom:10px;">Espaço de soltar sentimentos e criar leveza.</p>
-            <input type="text" id="balloonText" placeholder="Escreva o que quer soltar no balão...">
-            <button class="btn-action" style="background: linear-gradient(135deg, var(--pink-balloon), var(--aura-purple));" onclick="releaseBalloon()">🎈 Soltar Balão</button>
-            <div id="balloonHistory" style="margin-top:10px; font-size:0.75rem;"></div>
+            <p style="font-size:0.8rem; margin-bottom:10px;">Escreva e veja o balão subir ao céu 3D.</p>
+            <input type="text" id="balloonText" placeholder="O que você quer soltar hoje?">
+            <button class="btn-action" style="background: linear-gradient(135deg, var(--pink-balloon), var(--aura-purple));" onclick="releaseBalloon()">🎈 Soltar Balão no Céu</button>
+            <div id="balloonHistory" style="margin-top:10px; font-size:0.75rem; max-height:120px; overflow-y:auto;"></div>
         </section>
     </div>
 
-    <!-- 3. MODO GUARDIÃO (VOCÊ E PAI) -->
+    <!-- 3. MODO GUARDIÃO -->
     <div id="guardiaoView" class="container hidden-menu">
         <header>
             <h1>Modo Guardião</h1>
@@ -127,11 +140,10 @@
 
         <section id="adminPrimaryMenu" class="card hidden-menu" style="border-color: var(--gold);">
             <div class="card-title">⚙️ Painel do Admin Primário</div>
-            <p style="font-size:0.75rem; color:#ccc; margin-bottom:8px;">Senhas ativas do sistema:</p>
             <div style="font-size:0.75rem; color:var(--emerald); margin-bottom:10px;">
-                • Você (Admin): 120697<br>
-                • Pai (Secundário): 280598<br>
-                • Namorada (Balão/Freq): 050526<br>
+                • Admin Primário (Você): 120697<br>
+                • Admin Secundário (Pai): 280598<br>
+                • Namorada (Balão/Aria): 050526<br>
                 • Mãe (Acolhimento): 150850
             </div>
         </section>
@@ -140,7 +152,7 @@
             <div class="card-title">🩺 Saúde & Glicemia</div>
             <input type="number" id="glucoseInput" placeholder="Glicemia (mg/dL)">
             <button class="btn-action" onclick="saveGlucose()">Registrar Glicemia</button>
-            <div id="healthLogs" style="margin-top:10px; font-size:0.75rem;"></div>
+            <div id="healthLogs" style="margin-top:10px; font-size:0.75rem; max-height:120px; overflow-y:auto;"></div>
         </section>
 
         <section class="card">
@@ -149,15 +161,15 @@
         </section>
     </div>
 
-    <!-- 4. ARIA AI (VOCÊ, PAI E NAMORADA) -->
+    <!-- 4. ARIA AI -->
     <div id="ariaView" class="container hidden-menu">
         <section class="card">
-            <div class="card-title">🤖 Aria AI</div>
+            <div class="card-title">🤖 Aria AI — Assistente</div>
             <div class="aria-chat-box" id="ariaChat">
-                <div class="aria-msg aria">Aria pronta para orientar.</div>
+                <div class="aria-msg aria">Aria pronta para ajudar.</div>
             </div>
             <div style="display:flex; gap:6px;">
-                <input type="text" id="ariaInput" placeholder="Digite uma pergunta..." style="margin-bottom:0;">
+                <input type="text" id="ariaInput" placeholder="Digite uma mensagem..." style="margin-bottom:0;">
                 <button class="btn-action" style="width:auto; padding:0 16px;" onclick="askAria()">Enviar</button>
             </div>
             <button class="btn-small" style="width:100%; margin-top:10px;" onclick="toggleManualModal()">📖 Ver Manual na Aria</button>
@@ -177,30 +189,64 @@
         </div>
     </div>
 
-    <!-- MODAL DO MANUAL -->
+    <!-- MODAL MANUAL -->
     <div class="modal" id="manualModal">
         <div class="modal-content" style="text-align:left;">
             <h2>📖 Manual do Guardião & Aria</h2>
             <br>
-            <p><b>• Admin Primário (120697):</b> Controle global de dados e logs.</p>
-            <p><b>• Admin Secundário (280598):</b> Gestão de exames e saúde diária.</p>
-            <p><b>• Namorada (050526):</b> Projeto Balão, Aria e Frequências.</p>
-            <p><b>• Mãe (150850):</b> Modo Acolhimento e Paz.</p>
+            <p><b>• Admin Primário (120697):</b> Gestão global de logs e acessos.</p>
+            <p><b>• Admin Secundário (280598):</b> Gestão diária de glicemia e medicação.</p>
+            <p><b>• Namorada (050526):</b> Projeto Balão 3D, Frequências e Aria Afetiva.</p>
+            <p><b>• Mãe (150850):</b> Modo Acolhimento e Botão de Calma Imediata.</p>
             <button class="btn-action" style="margin-top:15px;" onclick="toggleManualModal()">Fechar</button>
         </div>
     </div>
 
     <script>
         const PASSWORDS = {
-            PRIMARY: '120697',   // Você
-            SECONDARY: '280598', // Pai
-            GIRLFRIEND: '050526',// Namorada
-            MOTHER: '150850'     // Mãe
+            PRIMARY: '120697',
+            SECONDARY: '280598',
+            GIRLFRIEND: '050526',
+            MOTHER: '150850'
+        };
+
+        const ARIA_RESPONSES = {
+            PRIMARY: [
+                "Aria [Admin]: Módulo do Admin Primário ativo. Históricos e logs sincronizados.",
+                "Aria [Admin]: Sistema pronto para diagnóstico ou exportação de relatórios."
+            ],
+            SECONDARY: [
+                "Aria [Cuidado]: Registro salvo no histórico. Lembre-se de verificar a glicemia pós-refeição.",
+                "Aria [Cuidado]: Rotina de medicação mantida sob supervisão."
+            ],
+            GIRLFRIEND: [
+                "Aria [Carinho]: Seu balão subiu aos céus! Estou aqui para trazer leveza ao seu dia.",
+                "Aria [Carinho]: Que tal ouvir uma frequência de 528 Hz agora para relaxar?"
+            ],
+            MOTHER: [
+                "Aria [Acolhimento]: O ambiente está seguro e sereno. Respire fundo.",
+                "Aria [Acolhimento]: Paz e calma ativadas. Tudo está protegido."
+            ]
         };
 
         let currentRole = null;
 
-        // Captura de Teclado (Enter e Backspace no PC e Celular)
+        /* PERSISTÊNCIA LOCAL (LOCALSTORAGE) */
+        function saveStorage(key, data) {
+            const current = JSON.parse(localStorage.getItem(key) || '[]');
+            current.unshift(data);
+            localStorage.setItem(key, JSON.stringify(current));
+        }
+
+        function loadStorage(key, elementId, renderFn) {
+            const data = JSON.parse(localStorage.getItem(key) || '[]');
+            const container = document.getElementById(elementId);
+            if (container) {
+                container.innerHTML = data.map(renderFn).join('');
+            }
+        }
+
+        /* CAPTURA DE TECLADO (ENTER / BACKSPACE) */
         const pinInput = document.getElementById('pinInput');
         pinInput.addEventListener('keydown', function(e) {
             if (e.key === 'Enter') {
@@ -224,29 +270,23 @@
             const entered = pinInput.value.trim();
             closePinModal();
 
-            if (entered === PASSWORDS.PRIMARY) {
-                currentRole = 'PRIMARY';
-                unlockView();
-            } else if (entered === PASSWORDS.SECONDARY) {
-                currentRole = 'SECONDARY';
-                unlockView();
-            } else if (entered === PASSWORDS.GIRLFRIEND) {
-                currentRole = 'GIRLFRIEND';
-                unlockView();
-            } else if (entered === PASSWORDS.MOTHER) {
-                currentRole = 'MOTHER';
-                unlockView();
-            } else {
+            if (entered === PASSWORDS.PRIMARY) currentRole = 'PRIMARY';
+            else if (entered === PASSWORDS.SECONDARY) currentRole = 'SECONDARY';
+            else if (entered === PASSWORDS.GIRLFRIEND) currentRole = 'GIRLFRIEND';
+            else if (entered === PASSWORDS.MOTHER) currentRole = 'MOTHER';
+            else {
                 document.getElementById('pinError').style.display = 'block';
+                return;
             }
+            unlockView();
         }
 
         function unlockView() {
-            // Esconde todas as visões
             document.getElementById('frequenciaView').classList.add('hidden-menu');
             document.getElementById('guardiaoView').classList.add('hidden-menu');
             document.getElementById('ariaView').classList.add('hidden-menu');
             document.getElementById('balaoView').classList.add('hidden-menu');
+            document.getElementById('calmModule').classList.add('hidden-menu');
 
             document.getElementById('lockBtn').style.display = 'inline-block';
             document.getElementById('accessBtn').style.display = 'none';
@@ -266,16 +306,20 @@
                 document.getElementById('ariaView').classList.remove('hidden-menu');
             } else if (currentRole === 'MOTHER') {
                 document.getElementById('frequenciaView').classList.remove('hidden-menu');
-                alert("Modo Acolhimento Ativado com Sucesso.");
+                document.getElementById('calmModule').classList.remove('hidden-menu');
             }
+
+            loadLogs();
         }
 
         function lockSystem() {
             currentRole = null;
+            document.body.classList.remove('calm-mode');
             document.getElementById('frequenciaView').classList.remove('hidden-menu');
             document.getElementById('guardiaoView').classList.add('hidden-menu');
             document.getElementById('ariaView').classList.add('hidden-menu');
             document.getElementById('balaoView').classList.add('hidden-menu');
+            document.getElementById('calmModule').classList.add('hidden-menu');
             
             document.getElementById('lockBtn').style.display = 'none';
             document.getElementById('accessBtn').style.display = 'inline-block';
@@ -285,15 +329,53 @@
             document.getElementById('manualModal').classList.toggle('active');
         }
 
-        function releaseBalloon() {
-            const txt = document.getElementById('balloonText').value.trim();
-            if(!txt) return;
-            const box = document.getElementById('balloonHistory');
-            box.innerHTML = `<div>🎈 <b>Solto no ar:</b> "${txt}"</div>` + box.innerHTML;
-            document.getElementById('balloonText').value = '';
+        /* BOTÃO DE CALMA IMEDIATA */
+        function triggerQuickCalm() {
+            document.body.classList.add('calm-mode');
+            document.getElementById('freqSelect').value = 'brown_noise';
+            if (!isAudioPlaying) toggleAudioEngine();
         }
 
-        /* --- MOTOR DE ÁUDIO --- */
+        /* ARIA ADAPTATIVA */
+        function askAria() {
+            const inp = document.getElementById('ariaInput');
+            const txt = inp.value.trim();
+            if (!txt) return;
+            const box = document.getElementById('ariaChat');
+            box.innerHTML += `<div class="aria-msg user">${txt}</div>`;
+            inp.value = '';
+            
+            setTimeout(() => {
+                const replies = ARIA_RESPONSES[currentRole] || ["Aria: Estou pronta para ajudar."];
+                const reply = replies[Math.floor(Math.random() * replies.length)];
+                box.innerHTML += `<div class="aria-msg aria">${reply}</div>`;
+                box.scrollTop = box.scrollHeight;
+            }, 400);
+        }
+
+        /* SALVAMENTO DE LOGS */
+        function saveGlucose() {
+            const val = document.getElementById('glucoseInput').value; if(!val) return;
+            const log = { type: 'Glicemia', val: `${val} mg/dL`, date: new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}) };
+            saveStorage('health_logs', log);
+            document.getElementById('glucoseInput').value = '';
+            loadLogs();
+        }
+
+        function releaseBalloon() {
+            const txt = document.getElementById('balloonText').value.trim(); if(!txt) return;
+            saveStorage('balloon_logs', { txt, date: new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}) });
+            create3DBalloon();
+            document.getElementById('balloonText').value = '';
+            loadLogs();
+        }
+
+        function loadLogs() {
+            loadStorage('health_logs', 'healthLogs', item => `<div>🩸 <b>[${item.date}]</b> Glicemia: ${item.val}</div>`);
+            loadStorage('balloon_logs', 'balloonHistory', item => `<div>🎈 <b>[${item.date}]</b> "${item.txt}"</div>`);
+        }
+
+        /* MOTOR DE ÁUDIO */
         let audioCtx = null, osc1 = null, isAudioPlaying = false, noiseNode = null;
 
         function toggleAudioEngine() {
@@ -346,38 +428,57 @@
 
         function updateAudioEngine() { if (isAudioPlaying) { stopAudioEngine(); startAudioEngine(); } }
 
-        function askAria() {
-            const inp = document.getElementById('ariaInput');
-            const txt = inp.value.trim();
-            if (!txt) return;
-            const box = document.getElementById('ariaChat');
-            box.innerHTML += `<div class="aria-msg user">${txt}</div>`;
-            inp.value = '';
-            setTimeout(() => {
-                box.innerHTML += `<div class="aria-msg aria">Aria respondeu com base no seu perfil.</div>`;
-                box.scrollTop = box.scrollHeight;
-            }, 400);
-        }
-
-        function saveGlucose() {
-            const val = document.getElementById('glucoseInput').value; if(!val) return;
-            const box = document.getElementById('healthLogs');
-            box.innerHTML = `<div>🩸 Glicemia: ${val} mg/dL</div>` + box.innerHTML;
-            document.getElementById('glucoseInput').value = '';
-        }
-
-        /* THREE JS BACKGROUND */
+        /* THREE.JS BACKGROUND & BALÃO 3D ANIMADO */
         const canvas3d = document.getElementById('canvas3d');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ canvas: canvas3d, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
+
         const geometry = new THREE.IcosahedronGeometry(2, 1);
-        const material = new THREE.MeshBasicMaterial({ color: 0xa066ff, wireframe: true, transparent: true, opacity: 0.25 });
+        const material = new THREE.MeshBasicMaterial({ color: 0xa066ff, wireframe: true, transparent: true, opacity: 0.2 });
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh); camera.position.z = 5;
-        function animate() { requestAnimationFrame(animate); mesh.rotation.x += 0.002; mesh.rotation.y += 0.003; renderer.render(scene, camera); }
+
+        const activeBalloons = [];
+
+        function create3DBalloon() {
+            const group = new THREE.Group();
+            const balloonGeo = new THREE.SphereGeometry(0.4, 16, 16);
+            balloonGeo.scale(1, 1.25, 1);
+            const balloonMat = new THREE.MeshBasicMaterial({ color: 0xff85a1, wireframe: true });
+            const balloonMesh = new THREE.Mesh(balloonGeo, balloonMat);
+            group.add(balloonMesh);
+
+            group.position.set((Math.random() - 0.5) * 3, -3, 2);
+            scene.add(group);
+            activeBalloons.push({ group, speed: 0.02 + Math.random() * 0.01 });
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            mesh.rotation.x += 0.002;
+            mesh.rotation.y += 0.003;
+
+            activeBalloons.forEach((b, index) => {
+                b.group.position.y += b.speed;
+                b.group.position.x += Math.sin(b.group.position.y * 2) * 0.005;
+                if (b.group.position.y > 5) {
+                    scene.remove(b.group);
+                    activeBalloons.splice(index, 1);
+                }
+            });
+
+            renderer.render(scene, camera);
+        }
         animate();
+
+        /* REGISTRO DO SERVICE WORKER (PWA OFFLINE) */
+        if ('serviceWorker' in navigator) {
+            const swCode = `self.addEventListener('fetch', function(e) { e.respondWith(fetch(e.request).catch(() => caches.match(e.request))); });`;
+            const blob = new Blob([swCode], { type: 'text/javascript' });
+            navigator.serviceWorker.register(URL.createObjectURL(blob)).catch(() => {});
+        }
     </script>
 </body>
 </html>
