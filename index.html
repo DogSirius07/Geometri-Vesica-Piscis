@@ -3,42 +3,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Meu Portfólio Dinâmico</title>
+  <title>Acervo de Projetos Especiais</title>
   <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    /* Cores inspiradas no seu código original */
+    body { background-color: #050a14; color: #ffffff; }
+    .glass-card {
+      background: rgba(15, 20, 35, 0.94);
+      border: 1px solid rgba(160, 102, 255, 0.4);
+      backdrop-filter: blur(16px);
+    }
+    .text-gradient {
+      background: linear-gradient(135deg, #fff, #00d4ff, #a066ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .tag-glow {
+      background: rgba(0, 212, 255, 0.15);
+      border: 1px solid #00d4ff;
+      color: #e0f7ff;
+    }
+  </style>
 </head>
-<body class="bg-gray-50 font-sans">
+<body class="font-sans min-h-screen">
 
   <!-- Navbar -->
-  <nav class="bg-gray-900 text-white p-4 shadow-lg sticky top-0 z-50">
+  <nav class="border-b border-purple-900/50 bg-[#050a14]/90 backdrop-blur-md sticky top-0 z-50 p-4 shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <a href="#" class="text-2xl font-bold text-blue-400">Portfólio.</a>
-      <div class="hidden md:flex space-x-6">
-        <a href="#" class="hover:text-blue-400">Início</a>
-        <a href="#projetos" class="hover:text-blue-400">Projetos</a>
+      <a href="#" class="text-2xl font-serif font-bold text-gradient">✦ Nossa História</a>
+      <div class="hidden md:flex space-x-6 text-sm font-semibold tracking-wider text-yellow-500">
+        <a href="#" class="hover:text-white transition">INÍCIO</a>
+        <a href="#projetos" class="hover:text-white transition">ACERVO</a>
       </div>
     </div>
   </nav>
 
   <!-- Seção de Projetos -->
-  <section id="projetos" class="min-h-screen py-16 px-4">
+  <section id="projetos" class="py-16 px-4">
     <div class="max-w-6xl mx-auto">
-      <div class="mb-8 text-center">
-        <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Meus Projetos</h1>
+      <div class="mb-12 text-center">
+        <h1 class="text-4xl md:text-5xl font-serif font-extrabold text-gradient mb-4">Acervo de Projetos Especiais</h1>
+        <p class="text-yellow-500 text-sm tracking-[2px] uppercase">Todas as nossas frequências em um só lugar</p>
         
         <!-- Barra de Busca Dinâmica -->
-        <div class="max-w-md mx-auto mt-6">
+        <div class="max-w-lg mx-auto mt-8">
           <input 
             type="text" 
             id="barra-busca" 
-            placeholder="Digite uma tecnologia (ex: React, JavaScript)..." 
-            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            placeholder="Buscar por módulo ou tecnologia (ex: Balão, Chart.js)..." 
+            class="w-full px-5 py-3 rounded-xl bg-black/50 border border-purple-500 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#00d4ff] focus:border-transparent transition"
           >
         </div>
       </div>
 
       <!-- Grid Vazio (Preenchido pelo JS) -->
       <div id="grid-projetos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <p class="text-gray-500 col-span-full text-center">Carregando projetos...</p>
+        <p class="text-gray-400 col-span-full text-center">Iniciando sistemas da Aria...</p>
       </div>
     </div>
   </section>
@@ -56,7 +76,7 @@
         todosOsProjetos = await resposta.json();
         renderizarProjetos(todosOsProjetos);
       } catch (erro) {
-        gridProjetos.innerHTML = `<p class="text-red-500 col-span-full text-center">Erro ao carregar os projetos. Verifique se o arquivo projetos.json existe.</p>`;
+        gridProjetos.innerHTML = `<p class="text-red-400 col-span-full text-center">Falha ao carregar o banco de dados local. Verifique o arquivo projetos.json.</p>`;
       }
     }
 
@@ -65,23 +85,25 @@
       gridProjetos.innerHTML = ''; // Limpa a tela
 
       if (listaDeProjetos.length === 0) {
-        gridProjetos.innerHTML = `<p class="text-gray-500 col-span-full text-center">Nenhum projeto encontrado.</p>`;
+        gridProjetos.innerHTML = `<p class="text-gray-400 col-span-full text-center">Nenhum projeto encontrado nesta frequência.</p>`;
         return;
       }
 
       listaDeProjetos.forEach(projeto => {
         const tagsHtml = projeto.tecnologias.map(tech => 
-          `<span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">${tech}</span>`
+          `<span class="tag-glow text-[10px] font-bold px-2 py-1 rounded-md uppercase tracking-wider">${tech}</span>`
         ).join('');
 
         const card = `
-          <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden">
-            <img src="${projeto.imagem}" alt="${projeto.titulo}" class="w-full h-48 object-cover" />
+          <div class="glass-card rounded-2xl overflow-hidden hover:shadow-[0_0_20px_rgba(160,102,255,0.3)] transition duration-300 transform hover:-translate-y-1">
+            <img src="${projeto.imagem}" alt="${projeto.titulo}" class="w-full h-48 object-cover opacity-80 hover:opacity-100 transition" />
             <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-800 mb-2">${projeto.titulo}</h3>
-              <p class="text-gray-600 mb-4 h-12 overflow-hidden text-sm">${projeto.descricao}</p>
-              <div class="flex flex-wrap gap-2 mb-4">${tagsHtml}</div>
-              <a href="${projeto.link}" class="text-blue-600 font-semibold hover:underline">Ver Projeto &rarr;</a>
+              <h3 class="text-xl font-serif font-bold text-[#ffd700] mb-3">${projeto.titulo}</h3>
+              <p class="text-gray-300 mb-5 h-16 overflow-hidden text-sm leading-relaxed">${projeto.descricao}</p>
+              <div class="flex flex-wrap gap-2 mb-6">${tagsHtml}</div>
+              <button onclick="alert('Sistema Guardião: Acesso restrito via senha no sistema principal.')" class="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white font-bold py-3 rounded-xl hover:scale-[0.98] transition">
+                Acessar Módulo
+              </button>
             </div>
           </div>
         `;
@@ -89,20 +111,21 @@
       });
     }
 
-    // 3. Evento de Filtro Dinâmico (dispara a cada letra digitada)
+    // 3. Evento de Filtro Dinâmico
     barraBusca.addEventListener('input', (evento) => {
       const termoDigitado = evento.target.value.toLowerCase();
       
       const projetosFiltrados = todosOsProjetos.filter(projeto => {
         const tituloBate = projeto.titulo.toLowerCase().includes(termoDigitado);
         const tecnologiaBate = projeto.tecnologias.some(tech => tech.toLowerCase().includes(termoDigitado));
-        return tituloBate || tecnologiaBate;
+        const descricaoBate = projeto.descricao.toLowerCase().includes(termoDigitado);
+        return tituloBate || tecnologiaBate || descricaoBate;
       });
 
       renderizarProjetos(projetosFiltrados);
     });
 
-    // Inicia o carregamento ao abrir a página
+    // Inicia o carregamento
     carregarProjetos();
   </script>
 </body>
