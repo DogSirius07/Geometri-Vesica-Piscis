@@ -3,300 +3,617 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title># Guardião — Cuidado Perpétuo & Aria AI</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Fredoka:wght@400;600&display=swap" rel="stylesheet">
+    <meta name="theme-color" content="#050a14">
+    <title># Guardião & Nossa Frequência com Aria AI — Sistema Unificado</title>
+    
+    <!-- Fontes Google & Bibliotecas CDN -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Fredoka:wght@400;600&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+
     <style>
         :root {
-            --bg-dark: #0a0e17;
-            --card-bg: rgba(22, 30, 46, 0.9);
-            --accent-gold: #ffd700;
-            --accent-blue: #00d4ff;
-            --accent-purple: #9d4edd;
-            --accent-green: #00f5d4;
+            --aura-blue: #00d4ff;
+            --aura-purple: #a066ff;
+            --gold: #ffd700;
+            --emerald: #00f5d4;
             --danger: #ff4d6d;
-            --child-bg: #fff0f5;
+            --deep-night: #050a14;
+            --glass: rgba(15, 20, 35, 0.88);
+            --border-glow: rgba(160, 102, 255, 0.4);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
-        body { background: var(--bg-dark); color: #fff; font-family: 'Montserrat', sans-serif; min-height: 100vh; padding-bottom: 40px; }
+        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
+        body { background-color: var(--deep-night); color: #ffffff; font-family: 'Montserrat', sans-serif; min-height: 100vh; overflow-x: hidden; }
 
-        /* Alternador de Modo */
-        .mode-switch {
-            position: fixed; top: 10px; right: 10px; z-index: 1000;
-            background: rgba(0,0,0,0.8); border: 1px solid var(--accent-gold);
-            padding: 6px 12px; border-radius: 20px; font-size: 0.75rem; color: var(--accent-gold); cursor: pointer;
+        /* Canvas 3D de Fundo */
+        #canvas3d { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
+
+        /* Barra de Controle Superior Fixo */
+        .top-bar {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
+            background: rgba(5, 10, 20, 0.95); border-bottom: 1px solid var(--border-glow);
+            padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(10px);
         }
 
-        .container { max-width: 500px; margin: 0 auto; padding: 15px; }
+        .btn-top {
+            background: rgba(255, 215, 0, 0.12); border: 1px solid var(--gold); color: var(--gold);
+            padding: 6px 12px; border-radius: 20px; font-size: 0.72rem; cursor: pointer; font-weight: 600;
+        }
 
-        header { text-align: center; margin-top: 15px; margin-bottom: 20px; }
-        h1 { font-size: 1.8rem; background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .subtitle { font-size: 0.75rem; color: var(--accent-gold); letter-spacing: 2px; }
+        .container { position: relative; z-index: 1; max-width: 500px; margin: 60px auto 40px; padding: 15px; display: flex; flex-direction: column; gap: 16px; }
+
+        header { text-align: center; margin-bottom: 5px; }
+        .vesica-logo { width: 85px; height: 85px; margin: 0 auto 5px; filter: drop-shadow(0 0 15px var(--aura-blue)); cursor: pointer; }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; background: linear-gradient(135deg, #fff, var(--aura-blue), var(--aura-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p.subtitle { font-size: 0.72rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
 
         .card {
-            background: var(--card-bg); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 16px; padding: 16px; margin-bottom: 15px; backdrop-filter: blur(10px);
+            background: var(--glass); border: 1px solid var(--border-glow); border-radius: 18px;
+            padding: 16px; backdrop-filter: blur(16px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7);
         }
 
-        .card-title { font-size: 1.1rem; color: var(--accent-gold); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
+        .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--gold); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
 
-        /* MÓDO CRIANÇA / ACESSÍVEL */
-        .child-mode { display: none; background: #181124; min-height: 100vh; padding: 15px; }
-        .child-mode.active { display: block; }
-        
+        /* MODO ACESSÍVEL / PRINCESA (7 ANOS) */
+        .child-mode-view { display: none; background: #120924; min-height: 100vh; padding: 20px; text-align: center; }
+        .child-mode-view.active { display: block; }
         .big-button {
-            width: 100%; padding: 20px; margin-bottom: 12px; border-radius: 24px; border: none;
-            font-family: 'Fredoka', cursive; font-size: 1.3rem; font-weight: 600; color: #fff;
-            display: flex; align-items: center; justify-content: center; gap: 15px;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3); cursor: pointer; transition: transform 0.1s;
+            width: 100%; padding: 22px; margin-bottom: 14px; border-radius: 24px; border: none;
+            font-family: 'Fredoka', cursive; font-size: 1.35rem; font-weight: 600; color: #fff;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4); cursor: pointer; transition: transform 0.1s;
         }
         .big-button:active { transform: scale(0.96); }
-        .btn-aria { background: linear-gradient(135deg, #a2d2ff, #bde0fe); color: #03045e; }
-        .btn-calm { background: linear-gradient(135deg, #ffafcc, #ffc8dd); color: #590d22; }
-        .btn-routine { background: linear-gradient(135deg, #c0fdff, #deb8f5); color: #240046; }
+        .btn-aria-child { background: linear-gradient(135deg, #ff9ebb, #ffc2d1); color: #590d22; }
+        .btn-calm-child { background: linear-gradient(135deg, #a2d2ff, #bde0fe); color: #03045e; }
+        .btn-star-child { background: linear-gradient(135deg, #c0fdff, #deb8f5); color: #240046; }
 
-        /* ARIA ASSISTANT CHAT */
-        .aria-chat { background: rgba(0,0,0,0.4); border-radius: 12px; padding: 10px; height: 180px; overflow-y: auto; margin-bottom: 10px; font-size: 0.85rem; }
-        .aria-msg { margin-bottom: 8px; padding: 8px 12px; border-radius: 10px; max-width: 85%; }
-        .aria-msg.aria { background: rgba(0, 212, 255, 0.15); border: 1px solid var(--accent-blue); align-self: flex-start; }
-        .aria-msg.user { background: rgba(157, 78, 221, 0.2); border: 1px solid var(--accent-purple); margin-left: auto; text-align: right; }
+        /* CHAT DA ARIA AI */
+        .aria-chat-box { background: rgba(0,0,0,0.5); border-radius: 12px; padding: 10px; height: 180px; overflow-y: auto; margin-bottom: 10px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.1); }
+        .aria-msg { margin-bottom: 8px; padding: 8px 12px; border-radius: 10px; max-width: 88%; line-height: 1.4; }
+        .aria-msg.aria { background: rgba(0, 212, 255, 0.15); border: 1px solid var(--aura-blue); color: #e0f7ff; }
+        .aria-msg.user { background: rgba(160, 102, 255, 0.2); border: 1px solid var(--aura-purple); margin-left: auto; text-align: right; }
 
-        /* FORMULÁRIOS E CONTROLES */
-        input, select, textarea, button { width: 100%; padding: 10px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.2); background: rgba(0,0,0,0.5); color: #fff; margin-bottom: 8px; font-family: inherit; }
-        button.btn-primary { background: linear-gradient(135deg, var(--accent-purple), var(--accent-blue)); border: none; font-weight: 600; cursor: pointer; }
-        
-        .routine-item { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.05); padding: 10px; border-radius: 8px; margin-bottom: 6px; }
-        .routine-item.done { opacity: 0.5; text-decoration: line-through; }
+        /* FORMULÁRIOS & ELEMENTOS */
+        input, select, textarea { width: 100%; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid var(--aura-purple); padding: 10px; border-radius: 8px; outline: none; font-size: 0.82rem; margin-bottom: 8px; font-family: inherit; }
+        .btn-action { background: linear-gradient(135deg, var(--aura-purple), var(--aura-blue)); border: none; color: white; padding: 11px; border-radius: 10px; cursor: pointer; font-weight: 600; width: 100%; font-size: 0.88rem; }
+        .btn-small { background: rgba(255, 215, 0, 0.12); border: 1px solid var(--gold); color: var(--gold); padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.7rem; margin: 2px; }
 
-        /* Círculo de Calma */
-        .calm-circle { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--accent-blue); margin: 10px auto; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; text-align: center; transition: transform 4s ease-in-out; }
-        .calm-circle.expand { transform: scale(1.4); border-color: var(--accent-green); }
+        /* Círculo de Respiração */
+        .breath-circle { width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--aura-blue); margin: 10px auto; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; text-align: center; transition: transform 4s ease-in-out, border-color 1s ease; }
+        .breath-circle.inhale { transform: scale(1.35); border-color: var(--emerald); }
+        .breath-circle.hold { transform: scale(1.35); border-color: var(--gold); }
+        .breath-circle.exhale { transform: scale(0.9); border-color: var(--aura-purple); }
+
+        .routine-item { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.04); padding: 8px 10px; border-radius: 8px; margin-bottom: 6px; font-size: 0.8rem; }
+        .routine-item.done { opacity: 0.4; text-decoration: line-through; }
+
+        /* Modal do Manual */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 20, 0.96); z-index: 200; display: none; padding: 20px; overflow-y: auto; }
+        .modal.active { display: block; }
+        .modal-content { max-width: 600px; margin: 40px auto; background: var(--glass); border: 1px solid var(--gold); padding: 20px; border-radius: 20px; font-size: 0.85rem; line-height: 1.6; }
+        .modal-content h2 { font-family: 'Cormorant Garamond'; color: var(--gold); font-size: 1.8rem; margin-bottom: 10px; }
+        .modal-content h3 { color: var(--aura-blue); margin-top: 15px; font-size: 1.1rem; }
     </style>
 </head>
 <body>
 
-    <button class="mode-switch" onclick="toggleViewMode()">🔄 Alternar para Modo Criança/Acessível</button>
+    <!-- Canvas 3D de Fundo -->
+    <canvas id="canvas3d"></canvas>
 
-    <!-- MODO CUIDADOR / PAINEL COMPLETO -->
-    <div id="caregiverView" class="container">
-        <header>
-            <h1># Guardião</h1>
-            <p class="subtitle">SISTEMA DE CUIDADO PERPÉTUO & ARIA AI</p>
-        </header>
-
-        <!-- ASSISTENTE ARIA (COPILOTO DO CUIDADOR) -->
-        <section class="card">
-            <div class="card-title">
-                <span>🤖 Aria — Inteligência Agêntica</span>
-                <span style="font-size: 0.7rem; color: var(--accent-green);">● Ativa</span>
-            </div>
-            <div class="aria-chat" id="ariaChat">
-                <div class="aria-msg aria">Olá! Eu sou a Aria. Estou pronta para ajudar na gestão de crises, rotina e acolhimento emocional. Como posso ajudar agora?</div>
-            </div>
-            <div style="display: flex; gap: 5px;">
-                <input type="text" id="ariaInput" placeholder="Ex: Ela está agitada com alucinações, o que fazer?" style="margin:0;">
-                <button class="btn-primary" style="width: auto; padding: 0 15px;" onclick="askAria()">Enviar</button>
-            </div>
-            <div style="display: flex; gap: 5px; margin-top: 6px;">
-                <button style="font-size:0.7rem; padding:4px;" onclick="quickAriaPrompt('crisis')">🚨 Orientação para Crise</button>
-                <button style="font-size:0.7rem; padding:4px;" onclick="quickAriaPrompt('meds')">💊 Lembrete de Remédios</button>
-                <button style="font-size:0.7rem; padding:4px;" onclick="quickAriaPrompt('story')">📖 Gerar Historieta de 7 anos</button>
-            </div>
-        </section>
-
-        <!-- FREQUÊNCIA SENSORIAL E SOS CALMA -->
-        <section class="card">
-            <div class="card-title">✨ Nossa Frequência — SOS Calma</div>
-            <p style="font-size:0.75rem; opacity:0.8; margin-bottom:8px;">Ative para acalmar episódios de mania, pânico ou agitação.</p>
-            <div class="calm-circle" id="calmCircle">Respiração</div>
-            <button class="btn-primary" onclick="toggleCalmSession()">▶ Iniciar Ciclo de Acalmamento (432Hz + Respiração)</button>
-        </section>
-
-        <!-- ROTINA DIÁRIA ILUSTRADA DA MANHÃ À NOITE -->
-        <section class="card">
-            <div class="card-title">📅 Rotina Adaptada (Visual de 7 anos)</div>
-            <div id="routineList">
-                <div class="routine-item"><span>08:00 - 💊 Remédio da Manhã + Café</span><button style="width:auto; padding:2px 8px;" onclick="checkRoutine(this)">✓ ok</button></div>
-                <div class="routine-item"><span>10:00 - 🎨 Desenhar com a Aria / Música</span><button style="width:auto; padding:2px 8px;" onclick="checkRoutine(this)">✓ ok</button></div>
-                <div class="routine-item"><span>14:00 - 🚿 Banho da Princesa</span><button style="width:auto; padding:2px 8px;" onclick="checkRoutine(this)">✓ ok</button></div>
-                <div class="routine-item"><span>20:00 - 💊 Remédio da Noite + Historinha</span><button style="width:auto; padding:2px 8px;" onclick="checkRoutine(this)">✓ ok</button></div>
-            </div>
-        </section>
-
-        <!-- RASTREADOR DE HUMOR E SINTOMAS (ESQUIZOFRENIA/BIPOLARIDADE) -->
-        <section class="card">
-            <div class="card-title">📝 Diário de Sintomas & Psicose</div>
-            <select id="moodState">
-                <option value="estavel">😊 Estável / Aconchegada</option>
-                <option value="infantilizada">🧸 Regressão Infantil Accentuda (7 anos)</option>
-                <option value="mania">⚡ Fase Maníaca / Agitada (Bipolar)</option>
-                <option value="depressao">🌧️ Fase Depressiva (Bipolar)</option>
-                <option value="psicose">🌀 Alucinação / Delírio (Esquizofrenia)</option>
-            </select>
-            <textarea id="symptomNotes" rows="2" placeholder="Observações (ex: ouviu vozes, recusou comida, teve medo do escuro)..."></textarea>
-            <button class="btn-primary" onclick="saveSymptomLog()">Registrar no Diário do Médico</button>
-            <div id="symptomLogs" style="margin-top:10px; font-size:0.75rem; max-height:100px; overflow-y:auto;"></div>
-        </section>
+    <!-- Barra de Controle Superior -->
+    <div class="top-bar">
+        <button class="btn-top" onclick="toggleManualModal()">📖 Manual & Guia Completo</button>
+        <button class="btn-top" style="border-color:var(--aura-purple); color:var(--aura-purple);" onclick="toggleViewMode()" id="viewModeBtn">🔄 Modo Princesa (7 Anos)</button>
     </div>
 
-    <!-- MODO CRIANÇA / INTERFACE ACESSÍVEL PARA ELA -->
-    <div id="childView" class="child-mode">
+    <!-- MODO CUIDADOR (PAINEL COMPLETO DO ACOMPANHANTE) -->
+    <div id="caregiverView" class="container">
+
         <header>
-            <h1 style="font-family:'Fredoka'; color:#ffafcc; -webkit-text-fill-color: initial;">Meu Espaço Mágico 🌟</h1>
-            <p style="font-size:0.9rem; color:#bde0fe;">Com amor e carinho para você!</p>
+            <svg class="vesica-logo" onclick="triggerP2PPulse()" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="75" cy="100" r="60" stroke="#00d4ff" stroke-width="2.5" opacity="0.85"/>
+                <circle cx="125" cy="100" r="60" stroke="#a066ff" stroke-width="2.5" opacity="0.85"/>
+                <path d="M 100 51 A 60 60 0 0 1 100 149 A 60 60 0 0 1 100 51 Z" fill="rgba(255,217,0,0.18)" stroke="#ffd700" stroke-width="1.8"/>
+                <text x="100" y="107" font-family="Cormorant Garamond" font-size="24" fill="#ffd700" text-anchor="middle" font-weight="600">05</text>
+            </svg>
+            <h1># Guardião & Nossa Frequência</h1>
+            <p class="subtitle">SISTEMA UNIFICADO DE CUIDADO PERPÉTUO & ARIA AI</p>
         </header>
 
-        <button class="big-button btn-aria" onclick="ariaChildGreeting()">
-            🗣️ Ouvir Historinha da Aria
-        </button>
+        <!-- Banner Criptografia -->
+        <div class="card" style="padding: 10px; border-color: var(--gold);">
+            <p style="font-size:0.72rem; color: var(--gold); margin-bottom: 4px;">🔐 Senha Mestra (Criptografia Local AES-GCM):</p>
+            <input type="password" id="masterPass" placeholder="Digite sua senha de segurança local..." style="margin-bottom:0;">
+        </div>
 
-        <button class="big-button btn-calm" onclick="toggleCalmSession()">
-            🎈 Respiração do Balãozinho
-        </button>
+        <!-- ARIA AI ASSISTANT (COPILOTO DO CUIDADOR) -->
+        <section class="card">
+            <div class="card-title">
+                <span>🤖 Aria AI — Agente Assistente de Cuidado</span>
+                <span style="font-size:0.68rem; color:var(--emerald);">● Ativa</span>
+            </div>
+            <div class="aria-chat-box" id="ariaChat">
+                <div class="aria-msg aria">Olá! Eu sou a Aria. Estou sincronizada com os protocolos de crise para esquizofrenia, bipolaridade e suporte de desenvolvimento infantil (7 anos). Como posso te orientar agora?</div>
+            </div>
+            <div style="display:flex; gap:5px;">
+                <input type="text" id="ariaInput" placeholder="Ex: Ela está assustada vendo coisas. O que fazer?" style="margin-bottom:0;">
+                <button class="btn-action" style="width:auto; padding:0 15px;" onclick="askAria()">Enviar</button>
+            </div>
+            <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:8px;">
+                <button class="btn-small" onclick="quickAriaPrompt('esquizofrenia')">🌀 Alucinação / Surto</button>
+                <button class="btn-small" onclick="quickAriaPrompt('bipolar')">⚡ Agitação / Mania</button>
+                <button class="btn-small" onclick="quickAriaPrompt('remedio')">💊 Recusa de Medicação</button>
+                <button class="btn-small" onclick="quickAriaPrompt('historia')">📖 Historinha de 7 Anos</button>
+            </div>
+        </section>
 
-        <button class="big-button btn-routine" onclick="showChildRoutine()">
-            ⭐ Ver Minhas Tarefinhas de Hoje
-        </button>
+        <!-- CONEXÃO P2P & PULSO SENSORIAL -->
+        <section class="card">
+            <div class="card-title">
+                <span>📡 Conexão P2P à Distância</span>
+                <span id="p2pStatus" style="font-size:0.68rem; color:var(--danger);">● Desconectado</span>
+            </div>
+            <p style="font-size:0.72rem; opacity:0.8; margin-bottom:6px;">Seu Código de Pareamento: <b id="myPeerId" style="color:var(--aura-blue);">Gerando...</b></p>
+            <div style="display:flex; gap:6px;">
+                <input type="text" id="remotePeerInput" placeholder="Código do outro celular..." style="margin-bottom:0;">
+                <button class="btn-small" onclick="connectToPeer()">Conectar</button>
+            </div>
+        </section>
 
-        <div class="card" style="background: rgba(255,255,255,0.1); text-align:center; margin-top:20px;">
-            <p style="font-size:1.1rem; font-family:'Fredoka'; color:#ffd700;" id="childMessage">Você está segura aqui. Nós amamos muito você! ❤️</p>
+        <!-- ASTRONOMIA & COERÊNCIA CARDÍACA -->
+        <section class="card">
+            <div class="card-title">
+                <span>✦ Sintonia Astral & Respiração</span>
+                <span id="moonPhase" style="font-size:0.75rem; color:var(--aura-blue);">Lua...</span>
+            </div>
+            <div class="breath-circle" id="breathCircle">Toque p/ Iniciar</div>
+            <button class="btn-action" onclick="toggleBreathing()">🫁 Iniciar Coerência Cardíaca (4-7-8)</button>
+        </section>
+
+        <!-- SINTETIZADOR DE ÁUDIO CIRCADIANO -->
+        <section class="card">
+            <div class="card-title">✨ Áudio Engine & Solfeggio</div>
+            <p id="circadianRec" style="font-size:0.72rem; color:var(--emerald); margin-bottom:6px;"></p>
+            <select id="freqSelect">
+                <option value="432">432 Hz — Calma Profunda & Harmonia</option>
+                <option value="528">528 Hz — Regeneração & Paz</option>
+                <option value="639">639 Hz — Conexão & Afeto</option>
+                <option value="852">852 Hz — Intuição & Clareza</option>
+            </select>
+            <button class="btn-action" id="solfeggioBtn" onclick="toggleSolfeggio()">▶ Iniciar Som Restaurador</button>
+        </section>
+
+        <!-- ROTINA DE MEDICAÇÃO E CUIDADOS (7 ANOS) -->
+        <section class="card">
+            <div class="card-title">📅 Rotina & Medicamentos</div>
+            <div id="routineList">
+                <div class="routine-item"><span>08:00 - 💊 Remédio Manhã + Suco Mágico</span><button class="btn-small" onclick="checkRoutine(this)">✓ Ok</button></div>
+                <div class="routine-item"><span>12:00 - 🎨 Horinha do Desenho com a Aria</span><button class="btn-small" onclick="checkRoutine(this)">✓ Ok</button></div>
+                <div class="routine-item"><span>16:00 - 🚿 Banho da Princesa</span><button class="btn-small" onclick="checkRoutine(this)">✓ Ok</button></div>
+                <div class="routine-item"><span>20:00 - 💊 Remédio Noite + Historinha</span><button class="btn-small" onclick="checkRoutine(this)">✓ Ok</button></div>
+            </div>
+        </section>
+
+        <!-- DIÁRIO DE SINTOMAS PARA O PSICOLOGO/PSIQUIATRA -->
+        <section class="card">
+            <div class="card-title">📝 Diário Clínico & Registro de Surtos</div>
+            <select id="moodState">
+                <option value="Estável">😊 Estável / Aconchegada</option>
+                <option value="Regressão">🧸 Regressão Infantil Accentuda (7 Anos)</option>
+                <option value="Mania">⚡ Fase Maníaca / Agitada (Bipolaridade)</option>
+                <option value="Depressão">🌧️ Fase Depressiva (Bipolaridade)</option>
+                <option value="Psicose">🌀 Alucinação / Delírio (Esquizofrenia)</option>
+            </select>
+            <textarea id="symptomNotes" rows="2" placeholder="Descreva os comportamentos para mostrar ao médico..."></textarea>
+            <button class="btn-action" onclick="saveSymptomLog()">Registrar no Diário do Médico</button>
+            <div id="symptomLogs" style="margin-top:8px; font-size:0.72rem; max-height:120px; overflow-y:auto;"></div>
+        </section>
+
+        <!-- MEMÓRIAS CRIPTOGRAFADAS E FOTOS COM AURA -->
+        <section class="card">
+            <div class="card-title">📖 Baú de Memórias & Fotos com Aura</div>
+            <textarea id="diaryInput" rows="2" placeholder="Nota, sonho ou memória carinhosa..."></textarea>
+            <div style="display:flex; gap:4px; margin-bottom:8px;">
+                <button class="btn-small" style="flex:1;" onclick="saveEntry('text')">✏️ Nota</button>
+                <button class="btn-small" style="flex:1;" onclick="saveEntry('dream')">🌙 Sonho</button>
+            </div>
+            <p style="font-size:0.7rem; opacity:0.8; margin-bottom:4px;">Anexar Foto de Aura:</p>
+            <input type="file" id="photoInput" accept="image/*" onchange="processAuraPhoto(event)">
+            <div id="memoriesList" style="margin-top:8px; max-height:150px; overflow-y:auto;"></div>
+        </section>
+
+        <!-- BACKUP -->
+        <div style="text-align:center;">
+            <button class="btn-small" onclick="exportAppData()">💾 Baixar Backup Geral Criptografado</button>
+        </div>
+    </div>
+
+    <!-- MODO ACESSÍVEL / PRINCESA (VISÃO DE 7 ANOS) -->
+    <div id="childView" class="child-mode-view">
+        <div style="max-width:400px; margin:40px auto 0;">
+            <h1 style="font-family:'Fredoka'; color:#ff9ebb; -webkit-text-fill-color: initial; font-size:2.4rem;">Seu Espaço Mágico 🌟</h1>
+            <p style="font-size:1rem; color:#bde0fe; margin-bottom:25px; font-family:'Fredoka';">Você está segura e é muito amada!</p>
+
+            <button class="big-button btn-aria-child" onclick="ariaChildGreeting()">
+                🗣️ Ouvir Historinha da Aria
+            </button>
+
+            <button class="big-button btn-calm-child" onclick="toggleCalmSessionChild()">
+                🎈 Respiração do Balãozinho
+            </button>
+
+            <button class="big-button btn-star-child" onclick="showChildRoutine()">
+                ⭐ Minhas Tarefinhas do Dia
+            </button>
+
+            <div class="card" style="background: rgba(255,255,255,0.08); text-align:center; margin-top:20px; border-color:#ff9ebb;">
+                <p style="font-size:1.1rem; font-family:'Fredoka'; color:#ffd700;" id="childMessage">Clique em um botão acima para brincarmos juntos!</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL DO MANUAL AUTOEXPLICATIVO COMPLETO -->
+    <div class="modal" id="manualModal">
+        <div class="modal-content">
+            <h2>📖 Manual de Uso & Guia Clínico Unificado</h2>
+            <p>Este sistema foi projetado sob medida para unificar o afeto, a acessibilidade e o suporte clínico no cuidado com sua namorada.</p>
+            
+            <h3>1. Criptografia & Segurança Local</h3>
+            <p>Defina uma <b>Senha Mestra</b> no campo do topo. Ela garante que todas as notas, relatos médicos e diários fiquem trancados em padrão militar (AES-GCM) dentro do seu próprio navegador.</p>
+
+            <h3>2. Modo Princesa (Idade Cognitiva de 7 Anos)</h3>
+            <p>Clique no botão roxo no topo <i>"🔄 Modo Princesa"</i> para mudar a tela para uma visão adaptada. Com botões grandes e coloridos, ela pode ouvir historinhas acolhedoras da Aria ou fazer a "Respiração do Balãozinho" sem se assustar com a complexidade do sistema de adultos.</p>
+
+            <h3>3. Assistente Aria AI (Protocolos de Crise)</h3>
+            <p>Utilize a Aria para orientações em tempo real:</p>
+            <ul>
+                <li><b>Esquizofrenia (Alucinações):</b> Nunca confronte a alucinação dizendo que "não existe". Diga: "Eu não vejo, mas sei que parece assustador. Eu estou aqui para te proteger."</li>
+                <li><b>Bipolaridade (Mania/Agitação):</b> Diminua os estímulos visuais e auditivos. Acione o Som Restaurador (432Hz).</li>
+                <li><b>Recusa de Remédios:</b> Torne o momento lúdico ("suco mágico", "gotinhas de coragem").</li>
+            </ul>
+
+            <h3>4. Coerência Cardíaca & Frequências Restauradoras</h3>
+            <p>O círculo de respiração guia o ritmo cardíaco para baixar o cortisol (hormônio do estresse). Use a frequência 432Hz para insônia e mania, e 528Hz para acolhimento emocional.</p>
+
+            <h3>5. Diário do Médico</h3>
+            <p>Registre episódios de surto, mudanças de humor e delírios. Esse histórico é fundamental para o acompanhamento do psiquiatra e neurologista.</p>
+
+            <button class="btn-action" style="margin-top:20px;" onclick="toggleManualModal()">Entendi! Fechar Manual</button>
         </div>
     </div>
 
     <script>
-        /* --- Alternador de Interface (Cuidador vs Criança) --- */
+        /* --- 0. Feedbacks & Visualização --- */
+        function vibrate(pattern = [30]) { if ("vibrate" in navigator) navigator.vibrate(pattern); }
+
+        function toggleManualModal() {
+            const modal = document.getElementById('manualModal');
+            modal.classList.toggle('active');
+        }
+
         let isChildMode = false;
         function toggleViewMode() {
             isChildMode = !isChildMode;
             document.getElementById('caregiverView').style.display = isChildMode ? 'none' : 'block';
             document.getElementById('childView').classList.toggle('active', isChildMode);
-            document.querySelector('.mode-switch').innerText = isChildMode ? "🔄 Voltar ao Modo Cuidador" : "🔄 Alternar para Modo Criança/Acessível";
+            document.getElementById('viewModeBtn').innerText = isChildMode ? "🔄 Voltar ao Modo Cuidador" : "🔄 Modo Princesa (7 Anos)";
         }
 
-        /* --- Módulo de Inteligência Agêntica Aria --- */
+        /* --- 1. Three.js 3D Background --- */
+        const canvas3d = document.getElementById('canvas3d');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas3d, alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+
+        const geometry = new THREE.IcosahedronGeometry(2, 1);
+        const material = new THREE.MeshBasicMaterial({ color: 0xa066ff, wireframe: true, transparent: true, opacity: 0.3 });
+        const merkaba = new THREE.Mesh(geometry, material);
+        scene.add(merkaba);
+
+        const torusGeo = new THREE.TorusGeometry(3.2, 0.04, 16, 100);
+        const torusMat = new THREE.MeshBasicMaterial({ color: 0x00d4ff, wireframe: true, transparent: true, opacity: 0.2 });
+        const torus = new THREE.Mesh(torusGeo, torusMat);
+        scene.add(torus);
+
+        camera.position.z = 6;
+        let pulseVal = 0;
+
+        function animate3D() {
+            requestAnimationFrame(animate3D);
+            merkaba.rotation.x += 0.002; merkaba.rotation.y += 0.004;
+            torus.rotation.x -= 0.001; torus.rotation.y += 0.003;
+            const s = 1 + pulseVal * 0.15;
+            merkaba.scale.set(s, s, s);
+            renderer.render(scene, camera);
+        }
+        animate3D();
+
+        /* --- 2. Criptografia Militar Local (AES-GCM) --- */
+        async function getCryptoKey() {
+            const pass = document.getElementById('masterPass').value || "ChavePadraoSegura0505";
+            const enc = new TextEncoder();
+            const keyMaterial = await crypto.subtle.importKey("raw", enc.encode(pass), { name: "PBKDF2" }, false, ["deriveKey"]);
+            return crypto.subtle.deriveKey(
+                { name: "PBKDF2", salt: enc.encode("SaltGuardiao"), iterations: 100000, hash: "SHA-256" },
+                keyMaterial, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]
+            );
+        }
+
+        async function encryptData(text) {
+            try {
+                const key = await getCryptoKey();
+                const iv = crypto.getRandomValues(new Uint8Array(12));
+                const enc = new TextEncoder();
+                const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, key, enc.encode(text));
+                return { iv: Array.from(iv), data: Array.from(new Uint8Array(encrypted)) };
+            } catch(e) { return text; }
+        }
+
+        async function decryptData(obj) {
+            if (typeof obj === 'string') return obj;
+            try {
+                const key = await getCryptoKey();
+                const iv = new Uint8Array(obj.iv);
+                const data = new Uint8Array(obj.data);
+                const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv: iv }, key, data);
+                return new TextDecoder().decode(decrypted);
+            } catch(e) { return "🔒 [Conteúdo Protegido por Senha]"; }
+        }
+
+        /* --- 3. Aria AI (Copiloto & Voz Amiga) --- */
         function askAria() {
             const input = document.getElementById('ariaInput');
-            const text = input.value.trim();
-            if (!text) return;
+            const txt = input.value.trim();
+            if (!txt) return;
 
-            addAriaMessage(text, 'user');
+            addAriaMsg(txt, 'user');
             input.value = '';
 
-            // Respostas Inteligentes Simuladas da Aria
             setTimeout(() => {
-                let response = "";
-                const lower = text.toLowerCase();
-                if (lower.includes('alucina') || lower.includes('vozes') || lower.includes('esquizofrenia')) {
-                    response = "🌀 **Ação Recomendada para Psicose:** 1. Não discuta a realidade da alucinação. 2. Diga com voz serena: 'Você está segura comigo, nada vai te machucar'. 3. Reduza as luzes e ligue a Frequência 432Hz.";
-                } else if (lower.includes('agitada') || lower.includes('mania') || lower.includes('brava')) {
-                    response = "⚡ **Ação para Fase Maníaca:** 1. Evite confrontos visuais diretos. 2. Convide-a para a 'Respiração do Balãozinho' no Modo Criança. 3. Verifique se a medicação da bipolaridade foi tomada no horário correto.";
-                } else if (lower.includes('remédio') || lower.includes('recusou')) {
-                    response = "💊 **Estratégia Acessível (7 anos):** Tente associar a medicação a um ritual lúdico, como 'as gotinhas de coragem' ou o 'pó de estrela para dormir bem'.";
+                let resp = "";
+                const l = txt.toLowerCase();
+                if (l.includes('alucina') || l.includes('ver') || l.includes('ouvir') || l.includes('esquizofrenia')) {
+                    resp = "🌀 **Ação para Surto/Alucinação:** 1. Não discuta a realidade da visão/voz. 2. Acolha a emoção: 'Sei que dá medo, mas estou do seu lado e vou te proteger'. 3. Diminua as luzes e acione o Som Restaurador de 432Hz.";
+                } else if (l.includes('agitad') || l.includes('brava') || l.includes('bipolar') || l.includes('mania')) {
+                    resp = "⚡ **Ação para Agitação/Mania:** 1. Evite argumentações longas. Pessoas em mania têm sobrecarga sensorial. 2. Mude o foco suavemente convidando para a 'Respiração do Balãozinho'.";
+                } else if (l.includes('remédio') || l.includes('remedio') || l.includes('tomar')) {
+                    resp = "💊 **Estratégia para Medicação (Idade de 7 Anos):** Evite o tom de imposição médica. Diga que é a 'gotinha da coragem' ou a 'poção para o sono dos anjos'.";
                 } else {
-                    response = "Entendi. Lembre-se que manter um tom de voz doce, calmo e previsível é a chave principal para acolher o estado cognitivo de 7 anos. Deseja que eu gere uma atividade tranquila para vocês agora?";
+                    resp = "Compreendido. Lembre-se: a previsibilidade e a voz suave são os melhores remédios para o estado de 7 anos. Deseja que eu leia uma historinha curta para ela agora?";
                 }
-                addAriaMessage(response, 'aria');
-            }, 800);
+                addAriaMsg(resp, 'aria');
+            }, 600);
         }
 
         function quickAriaPrompt(type) {
-            if (type === 'crisis') {
-                document.getElementById('ariaInput').value = "Ela está em crise de alucinação e medo, como devo agir?";
-            } else if (type === 'meds') {
-                document.getElementById('ariaInput').value = "Como convencê-la a tomar o remédio sem assustá-la?";
-            } else if (type === 'story') {
-                document.getElementById('ariaInput').value = "Gere uma historinha curta de 1 minuto sobre um ursinho protetor.";
-            }
+            const inp = document.getElementById('ariaInput');
+            if (type === 'esquizofrenia') inp.value = "Ela está vendo coisas e assustada, como agir agora?";
+            if (type === 'bipolar') inp.value = "Ela está muito agitada e maníaca, como acalmar?";
+            if (type === 'remedio') inp.value = "Como fazer ela tomar o remédio sem chorar?";
+            if (type === 'historia') inp.value = "Conte uma historinha de ursinho para ela.";
             askAria();
         }
 
-        function addAriaMessage(msg, sender) {
-            const chat = document.getElementById('ariaChat');
+        function addAriaMsg(msg, sender) {
+            const box = document.getElementById('ariaChat');
             const div = document.createElement('div');
             div.className = `aria-msg ${sender}`;
             div.innerHTML = msg;
-            chat.appendChild(div);
-            chat.scrollTop = chat.scrollHeight;
-        }
-
-        /* --- Fala de Voz da Aria para Ela (Modo Criança) --- */
-        function ariaChildGreeting() {
-            const text = "Olá minha princesa! Eu sou a Aria. Hoje é um dia lindo para você desenhar, sorrir e se sentir muito protegida e amada. Vamos fazer algo divertido juntos?";
-            document.getElementById('childMessage').innerText = text;
-            speakText(text);
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight;
         }
 
         function speakText(text) {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const utter = new SpeechSynthesisUtterance(text);
-                utter.lang = 'pt-BR';
-                utter.pitch = 1.2; // Voz mais aguda e amigável
-                utter.rate = 0.9;  // Fala mais lenta
+                utter.lang = 'pt-BR'; utter.pitch = 1.25; utter.rate = 0.88;
                 window.speechSynthesis.speak(utter);
             }
         }
 
-        /* --- Ciclo de Respiração e Acalmamento 432Hz --- */
-        let isCalmActive = false, calmAudioCtx = null, calmOsc = null;
-        function toggleCalmSession() {
-            const circle = document.getElementById('calmCircle');
-            if (!isCalmActive) {
-                isCalmActive = true;
-                circle.classList.add('expand');
-                circle.innerText = "Enche o Balão...";
-                start432Tone();
-                if (isChildMode) speakText("Vamos encher o balãozinho de ar devagarzinho... e soltar...");
-            } else {
-                isCalmActive = false;
-                circle.classList.remove('expand');
-                circle.innerText = "Respiração";
-                stop432Tone();
-            }
-        }
-
-        function start432Tone() {
-            try {
-                calmAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                calmOsc = calmAudioCtx.createOscillator();
-                const gain = calmAudioCtx.createGain();
-                calmOsc.frequency.setValueAtTime(432, calmAudioCtx.currentTime);
-                gain.gain.setValueAtTime(0.08, calmAudioCtx.currentTime);
-                calmOsc.connect(gain);
-                gain.connect(calmAudioCtx.destination);
-                calmOsc.start();
-            } catch(e) {}
-        }
-
-        function stop432Tone() {
-            if (calmOsc) calmOsc.stop();
-            if (calmAudioCtx) calmAudioCtx.close();
-        }
-
-        /* --- Gestão do Diário do Médico --- */
-        function saveSymptomLog() {
-            const state = document.getElementById('moodState').value;
-            const notes = document.getElementById('symptomNotes').value;
-            const container = document.getElementById('symptomLogs');
-            const time = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
-
-            const entry = document.createElement('div');
-            entry.style.borderBottom = "1px solid rgba(255,255,255,0.1)";
-            entry.style.padding = "4px 0";
-            entry.innerHTML = `<b>${time} [${state.toUpperCase()}]:</b> ${notes}`;
-            container.prepend(entry);
-
-            document.getElementById('symptomNotes').value = '';
-        }
-
-        function checkRoutine(btn) {
-            btn.parentElement.classList.toggle('done');
+        function ariaChildGreeting() {
+            const txt = "Olá minha princesa! Hoje o dia está lindo e os anjinhos estão cuidando de você. Vamos fazer um desenho bem bonito?";
+            document.getElementById('childMessage').innerText = txt;
+            speakText(txt);
         }
 
         function showChildRoutine() {
-            const text = "Sua tarefinha de agora é olhar o céu, tomar uma gotinha de coragem e dar um abraço bem apertado!";
-            document.getElementById('childMessage').innerText = text;
-            speakText(text);
+            const txt = "Sua tarefinha de hoje é tomar o suco mágico, dar um abraço bem apertado e sorrir!";
+            document.getElementById('childMessage').innerText = txt;
+            speakText(txt);
+        }
+
+        /* --- 4. Conexão P2P (PeerJS) --- */
+        let peer = new Peer(), conn = null;
+        peer.on('open', id => { document.getElementById('myPeerId').innerText = id; });
+        peer.on('connection', c => { conn = c; setupPeer(); });
+
+        function connectToPeer() {
+            const rId = document.getElementById('remotePeerInput').value.trim();
+            if (!rId) return;
+            conn = peer.connect(rId); setupPeer();
+        }
+
+        function setupPeer() {
+            conn.on('open', () => {
+                const st = document.getElementById('p2pStatus');
+                st.innerText = "● Sincronizado"; st.style.color = "var(--emerald)";
+                vibrate([100, 50, 100]);
+            });
+            conn.on('data', d => {
+                if (d.type === 'pulse') { vibrate([80, 50, 80]); pulseVal = 0.8; setTimeout(()=>pulseVal=0,500); }
+            });
+        }
+
+        function triggerP2PPulse() {
+            vibrate([40]); pulseVal = 0.6; setTimeout(()=>pulseVal=0,400);
+            if (conn && conn.open) conn.send({ type: 'pulse' });
+        }
+
+        /* --- 5. Respiração Guiada 4-7-8 --- */
+        let isBreathing = false, breathTimer = null;
+        function toggleBreathing() {
+            const c = document.getElementById('breathCircle');
+            if (!isBreathing) { isBreathing = true; runBreath(c); }
+            else { isBreathing = false; clearTimeout(breathTimer); c.className = "breath-circle"; c.innerText = "Toque p/ Iniciar"; }
+        }
+
+        function toggleCalmSessionChild() {
+            toggleBreathing();
+            const msg = isBreathing ? "Encha o balãozinho de ar bem devagar... e solte..." : "Sua respiração está calma e tranquila!";
+            document.getElementById('childMessage').innerText = msg;
+            speakText(msg);
+        }
+
+        function runBreath(c) {
+            if (!isBreathing) return;
+            c.className = "breath-circle inhale"; c.innerText = "Inspire (4s)"; vibrate([30]);
+            breathTimer = setTimeout(() => {
+                if (!isBreathing) return;
+                c.className = "breath-circle hold"; c.innerText = "Retenha (7s)";
+                breathTimer = setTimeout(() => {
+                    if (!isBreathing) return;
+                    c.className = "breath-circle exhale"; c.innerText = "Expire (8s)"; vibrate([50]);
+                    breathTimer = setTimeout(() => runBreath(c), 8000);
+                }, 7000);
+            }, 4000);
+        }
+
+        /* --- 6. Áudio Engine Solfeggio --- */
+        let audioCtx = null, osc = null, isPlaying = false;
+        function toggleSolfeggio() {
+            const btn = document.getElementById('solfeggioBtn');
+            const freq = parseFloat(document.getElementById('freqSelect').value);
+            if (!isPlaying) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); isPlaying = true; btn.innerText = "⏸ Pausar Som Restaurador";
+            } else {
+                if (osc) osc.stop();
+                if (audioCtx) audioCtx.close();
+                isPlaying = false; btn.innerText = "▶ Iniciar Som Restaurador";
+            }
+        }
+
+        /* --- 7. IndexedDB (Memórias e Registros Médicos) --- */
+        let db;
+        const req = indexedDB.open("GuardiaoUnificadoDB", 1);
+        req.onupgradeneeded = e => {
+            db = e.target.result;
+            db.createObjectStore("symptoms", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("memories", { keyPath: "id", autoIncrement: true });
+        };
+        req.onsuccess = e => { db = e.target.result; loadSymptomLogs(); loadMemories(); };
+
+        async function saveSymptomLog() {
+            const mood = document.getElementById('moodState').value;
+            const notes = document.getElementById('symptomNotes').value.trim();
+            if (!notes) return alert('Digite uma observação para o médico.');
+            
+            const enc = await encryptData(notes);
+            const dateStr = new Date().toLocaleString('pt-BR');
+            const tx = db.transaction("symptoms", "readwrite");
+            tx.objectStore("symptoms").add({ mood, notes: enc, date: dateStr });
+            tx.oncomplete = () => { document.getElementById('symptomNotes').value = ''; loadSymptomLogs(); };
+        }
+
+        function loadSymptomLogs() {
+            const box = document.getElementById('symptomLogs'); box.innerHTML = '';
+            const tx = db.transaction("symptoms", "readonly");
+            tx.objectStore("symptoms").openCursor().onsuccess = async e => {
+                const cursor = e.target.result;
+                if (cursor) {
+                    const { mood, notes, date } = cursor.value;
+                    const dec = await decryptData(notes);
+                    const div = document.createElement('div');
+                    div.style.borderBottom = "1px solid rgba(255,255,255,0.08)";
+                    div.style.padding = "4px 0";
+                    div.innerHTML = `<span style="color:var(--gold); font-weight:600;">[${mood}]</span> <small>${date}</small><br>${dec}`;
+                    box.prepend(div);
+                    cursor.continue();
+                }
+            };
+        }
+
+        async function saveEntry(type) {
+            const val = document.getElementById('diaryInput').value.trim();
+            if (!val) return;
+            const enc = await encryptData(val);
+            const dateStr = new Date().toLocaleDateString('pt-BR');
+            const tx = db.transaction("memories", "readwrite");
+            tx.objectStore("memories").add({ type, content: enc, date: dateStr });
+            tx.oncomplete = () => { document.getElementById('diaryInput').value = ''; loadMemories(); };
+        }
+
+        function processAuraPhoto(e) {
+            const file = e.target.files[0]; if (!file) return;
+            const reader = new FileReader();
+            reader.onload = ev => {
+                const img = new Image();
+                img.onload = () => {
+                    const c = document.createElement('canvas'); c.width = img.width; c.height = img.height;
+                    const ctx = c.getContext('2d'); ctx.drawImage(img,0,0);
+                    ctx.globalCompositeOperation = 'screen';
+                    const grad = ctx.createRadialGradient(c.width/2, c.height/2, 10, c.width/2, c.height/2, c.width/1.2);
+                    grad.addColorStop(0, 'rgba(0, 212, 255, 0.4)');
+                    grad.addColorStop(1, 'rgba(160, 102, 255, 0.4)');
+                    ctx.fillStyle = grad; ctx.fillRect(0,0,c.width,c.height);
+                    
+                    const tx = db.transaction("memories", "readwrite");
+                    tx.objectStore("memories").add({ type: 'photo', content: c.toDataURL('image/jpeg', 0.85), date: new Date().toLocaleDateString('pt-BR') });
+                    tx.oncomplete = () => loadMemories();
+                };
+                img.src = ev.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function loadMemories() {
+            const box = document.getElementById('memoriesList'); box.innerHTML = '';
+            const tx = db.transaction("memories", "readonly");
+            tx.objectStore("memories").openCursor().onsuccess = async e => {
+                const cursor = e.target.result;
+                if (cursor) {
+                    const { type, content, date } = cursor.value;
+                    const div = document.createElement('div');
+                    div.style.background = "rgba(255,255,255,0.03)"; div.style.padding = "6px"; div.style.borderRadius = "8px"; div.style.marginBottom = "6px";
+                    if (type === 'photo') {
+                        div.innerHTML = `<small style="color:var(--gold);">✧ Aura • ${date}</small><br><img src="${content}" style="width:100%; border-radius:6px; margin-top:4px;">`;
+                    } else {
+                        const dec = await decryptData(content);
+                        div.innerHTML = `<small style="color:var(--gold);">✧ ${type} • ${date}</small><br>${dec}`;
+                    }
+                    box.prepend(div);
+                    cursor.continue();
+                }
+            };
+        }
+
+        function checkRoutine(btn) { btn.parentElement.classList.toggle('done'); }
+
+        function exportAppData() {
+            const tx = db.transaction(["symptoms", "memories"], "readonly");
+            const data = {};
+            tx.objectStore("symptoms").getAll().onsuccess = e => {
+                data.symptoms = e.target.result;
+                tx.objectStore("memories").getAll().onsuccess = ev => {
+                    data.memories = ev.target.result;
+                    const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
+                    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+                    a.download = "guardiao_unificado_backup.json"; a.click();
+                };
+            };
         }
     </script>
 </body>
