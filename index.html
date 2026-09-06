@@ -1,531 +1,122 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aria Central - Terminal Híbrido</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root {
-      --primary: #00f0ff;
-      --secondary: #b026ff;
-      --gold: #ffb800;
-      --bg-dark: #030712;
-      --terminal-green: #0f0;
-    }
-
-    body {
-      background-color: var(--bg-dark);
-      /* Efeito de malha de pontos (dot matrix) sutil no fundo */
-      background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-      background-size: 24px 24px;
-      color: #ffffff;
-      overflow-x: hidden;
-      font-family: 'Inter', system-ui, sans-serif;
-    }
-
-    /* Animação do gradiente de fundo */
-    .bg-aurora {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      background: radial-gradient(circle at 50% 0%, rgba(176, 38, 255, 0.15), transparent 50%),
-                  radial-gradient(circle at 0% 50%, rgba(0, 240, 255, 0.1), transparent 50%);
-      z-index: -1;
-      pointer-events: none;
-    }
-
-    .glass-card {
-      background: rgba(10, 15, 25, 0.7);
-      border: 1px solid rgba(0, 240, 255, 0.15);
-      backdrop-filter: blur(20px);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.8);
-    }
-    
-    .text-gradient {
-      background: linear-gradient(135deg, #fff, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .tag-glow {
-      background: rgba(0, 240, 255, 0.05);
-      border: 1px solid rgba(0, 240, 255, 0.3);
-      color: var(--primary);
-      text-shadow: 0 0 8px rgba(0, 240, 255, 0.4);
-    }
-
-    .animate-fade-in {
-      animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      opacity: 0;
-      transform: translateY(20px);
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .btn-filtro.ativo {
-      background: rgba(176, 38, 255, 0.2);
-      border-color: var(--secondary);
-      box-shadow: 0 0 15px rgba(176, 38, 255, 0.4);
-      color: #fff;
-    }
-
-    /* Efeito de Tremor (Erro) */
-    .shake {
-      animation: shake 0.4s cubic-bezier(.36,.07,.19,.97) both;
-    }
-    @keyframes shake {
-      10%, 90% { transform: translate3d(-2px, 0, 0); }
-      20%, 80% { transform: translate3d(3px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-5px, 0, 0); }
-      40%, 60% { transform: translate3d(5px, 0, 0); }
-    }
-
-    /* Scanner Ciberpunk */
-    .scanline {
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 3px;
-      background: var(--primary);
-      box-shadow: 0 0 15px var(--primary);
-      opacity: 0.7;
-      animation: scan 2.5s ease-in-out infinite alternate;
-      pointer-events: none;
-    }
-    @keyframes scan {
-      0% { top: 0%; opacity: 0; }
-      10% { opacity: 1; }
-      90% { opacity: 1; }
-      100% { top: 100%; opacity: 0; }
-    }
-
-    /* Cursor piscando para o Terminal da Aria */
-    .cursor-blink::after {
-      content: '█';
-      animation: blink 1s step-start infinite;
-      color: var(--primary);
-      margin-left: 4px;
-    }
-    @keyframes blink { 50% { opacity: 0; } }
-
-    /* Terminal Font */
-    .font-terminal {
-      font-family: 'Courier New', Courier, monospace;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Autenticação</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 350px;
+        }
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 15px;
+            position: relative; /* Necessário para posicionar o ícone dentro do campo */
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            padding-right: 40px; /* Evita que o texto fique embaixo do ícone */
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            top: 32px; /* Alinha verticalmente com o campo de input */
+            cursor: pointer;
+            background: none;
+            border: none;
+            font-size: 18px;
+            color: #666;
+        }
+        .btn-auth {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .btn-auth:hover {
+            background-color: #0056b3;
+        }
+        .forgot-password {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-<body class="min-h-screen flex flex-col">
-  <div class="bg-aurora"></div>
+<body>
 
-  <!-- Navbar -->
-  <nav class="border-b border-white/5 bg-black/40 backdrop-blur-2xl sticky top-0 z-40 p-4 shadow-2xl">
-    <div class="max-w-7xl mx-auto flex justify-between items-center">
-      <div class="flex items-center gap-4">
-        <div class="w-10 h-10 rounded-lg bg-gradient-to-br from-[var(--secondary)] to-[var(--primary)] flex items-center justify-center shadow-[0_0_20px_rgba(0,240,255,0.4)] relative overflow-hidden group">
-          <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition"></div>
-          <svg class="w-6 h-6 text-white relative z-10" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-        </div>
-        <div>
-          <h1 class="text-xl font-bold tracking-widest text-white">ARIA<span class="text-[var(--primary)]">.OS</span></h1>
-          <p class="text-[8px] tracking-[0.3em] text-gray-400 uppercase">Core v3.1 Online</p>
-        </div>
-      </div>
-      <div class="hidden md:flex space-x-6 text-[10px] font-bold tracking-[3px] text-gray-500">
-        <span class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-[var(--primary)] animate-pulse"></div> REDE SEGURA</span>
-        <span class="flex items-center gap-2"><div class="w-2 h-2 rounded-full bg-emerald-500"></div> HIERARQUIA ATIVA</span>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Main Content -->
-  <section class="py-12 px-4 flex-grow relative z-10">
-    <div class="max-w-7xl mx-auto">
-      <div class="mb-16 text-center">
-        <h2 class="text-3xl md:text-5xl font-extrabold text-gradient mb-4">Módulos do Sistema</h2>
-        <p class="text-gray-400 text-sm tracking-[2px] font-mono">SELECIONE O SUBSISTEMA PARA INICIAR O HANDSHAKE</p>
-        
-        <div class="max-w-xl mx-auto mt-8 relative group">
-          <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-            <svg class="w-5 h-5 text-gray-500 group-focus-within:text-[var(--primary)] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-          </div>
-          <input type="text" id="barra-busca" placeholder="Filtrar por nome ou tecnologia..." class="w-full pl-12 pr-4 py-4 rounded-xl glass-card text-white placeholder-gray-600 focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition-all text-sm font-mono tracking-wide">
-        </div>
-
-        <div class="flex flex-wrap justify-center gap-3 mt-8" id="container-filtros"></div>
-      </div>
-
-      <div id="grid-projetos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- JS Renderiza Aqui -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Modal de Autenticação Dupla -->
-  <div id="modal-seguranca" class="fixed inset-0 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-500 bg-black/90 backdrop-blur-2xl">
-    <div class="glass-card p-1 rounded-2xl max-w-lg w-full mx-4 transform scale-95 transition-transform duration-500 relative overflow-hidden" id="modal-content">
-      
-      <!-- Borda brilhante interna -->
-      <div class="absolute inset-0 border border-white/10 rounded-2xl pointer-events-none"></div>
-      
-      <!-- Linha de Scanner -->
-      <div class="scanline hidden" id="scanline"></div>
-
-      <div class="bg-[#030712] rounded-xl p-8 relative z-10">
-        <button onclick="fecharModal()" class="absolute top-5 right-5 text-gray-600 hover:text-white transition">
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-        </button>
-
-        <!-- Status Icon -->
-        <div class="flex justify-center mb-6">
-          <div class="w-16 h-16 rounded-xl bg-black flex items-center justify-center border border-[var(--primary)] shadow-[0_0_30px_rgba(0,240,255,0.2)] transform rotate-45 transition-all duration-500" id="icone-status">
-            <svg class="w-8 h-8 text-[var(--primary)] -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-          </div>
+<div class="login-container">
+    <h2>Login</h2>
+    <form action="#" method="POST" id="loginForm">
+        <div class="input-group">
+            <label for="login">Usuário ou E-mail</label>
+            <input type="text" id="login" name="login" required placeholder="Digite seu login">
         </div>
         
-        <h2 class="text-2xl font-bold text-white text-center mb-1 tracking-wider">Aria Security</h2>
-        <div class="flex flex-col items-center gap-2 mb-6">
-          <p id="nome-modulo-modal" class="text-[var(--gold)] text-xs font-mono tracking-[2px] uppercase">Alvo: N/A</p>
-          <span id="nivel-exigido-modal" class="bg-gray-900 border border-gray-700 text-gray-400 text-[9px] font-bold px-3 py-1 rounded uppercase tracking-widest shadow-inner">Nível: N/A</span>
-        </div>
-        
-        <!-- Terminal Interativo da Aria -->
-        <div class="bg-black border border-white/10 rounded-lg p-4 mb-6 h-28 overflow-hidden relative shadow-inner">
-          <div class="absolute top-0 left-0 w-full h-full bg-[url('https://www.transparenttextures.com/patterns/stardust.png')] opacity-10 pointer-events-none"></div>
-          <div class="text-xs font-terminal leading-relaxed" id="terminal-aria">
-            <!-- Texto digitado via JS -->
-          </div>
-        </div>
-        
-        <!-- Inputs -->
-        <div class="mb-6 relative">
-          <input type="password" id="input-senha" placeholder="INSIRA A CHAVE..." class="w-full bg-black/50 border border-white/20 rounded-lg px-4 py-4 text-center text-white tracking-[0.5em] focus:outline-none focus:border-[var(--primary)] focus:shadow-[0_0_15px_rgba(0,240,255,0.3)] transition font-mono text-lg" autocomplete="off">
+        <div class="input-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required placeholder="Digite sua senha">
+            <button type="button" id="togglePassword" class="toggle-password" aria-label="Mostrar ou ocultar senha">👁️</button>
         </div>
 
-        <button id="btn-validar" onclick="processarAutenticacao()" class="w-full bg-white/5 hover:bg-[var(--primary)]/20 text-white font-mono font-bold py-4 rounded-lg transition-all duration-300 border border-white/10 hover:border-[var(--primary)] hover:text-[var(--primary)] uppercase tracking-[3px] text-sm group relative overflow-hidden">
-          <span class="relative z-10">Processar</span>
-          <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-[shimmer_1.5s_infinite]"></div>
-        </button>
-      </div>
-    </div>
-  </div>
+        <button type="submit" class="btn-auth">Autenticar</button>
+        <a href="#" class="forgot-password">Esqueci minha senha</a>
+    </form>
+</div>
 
-  <style>
-    @keyframes shimmer { 100% { transform: translateX(100%); } }
-  </style>
+<script>
+    const togglePasswordButton = document.querySelector('#togglePassword');
+    const passwordInput = document.querySelector('#senha');
 
-  <script>
-    // ==========================================
-    // 1. BANCO DE DADOS HIERÁRQUICO (FAMÍLIA)
-    // ==========================================
-    const tabelaUsuarios = {
-      "aria2026": { nome: "Criador (Admin)", role: "admin", saudacao: "Bem-vindo de volta, Senhor. Controle absoluto restabelecido." },
-      "amor2026": { nome: "Meu Amor", role: "namorada", saudacao: "Olá, meu bem. Protocolos de afeto e memórias carregados com sucesso." },
-      "mae2026":  { nome: "Mãe", role: "familia", saudacao: "Olá, mãe. Ambiente seguro ativado. É muito bom ter você aqui." },
-      "pai2026":  { nome: "Pai", role: "familia", saudacao: "Olá, pai. Acesso aos utilitários e registros familiares concedido." }
-    };
-
-    // ==========================================
-    // 2. BANCO DE PROJETOS & SENHAS DE MÓDULO
-    // ==========================================
-    const todosOsProjetos = [
-      { 
-        id: 1, 
-        titulo: "O Balão de Emoções", 
-        categoria: "Emoções", 
-        descricao: "Espaço interativo em 3D para alívio e processamento emocional conjunto.", 
-        tecnologias: ["Three.js", "WebGL", "Física 3D"], 
-        link: "balao.html", 
-        imagem: "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=800&h=500&fit=crop",
-        nivelRotulo: "Nível 4: Aberto",
-        senhaProjeto: "balao123", // Senha etapa 1
-        cargosPermitidos: ["admin", "namorada", "familia"] // Cargos etapa 2
-      },
-      { 
-        id: 2, 
-        titulo: "Nossa Frequência", 
-        categoria: "Emoções", 
-        descricao: "Sincronização de batimentos, frequências de cura (432Hz) e respiração.", 
-        tecnologias: ["Web Audio API", "Sinc. WebSocket"], 
-        link: "frequencia.html", 
-        imagem: "https://images.unsplash.com/photo-1518241353330-0f797f6cceea?w=800&h=500&fit=crop",
-        nivelRotulo: "Nível 2: Restrito",
-        senhaProjeto: "frequencia123",
-        cargosPermitidos: ["admin", "namorada"]
-      },
-      { 
-        id: 3, 
-        titulo: "Projeto Guardião", 
-        categoria: "Saúde", 
-        descricao: "Diário criptografado para telemetria de métricas de saúde da família.", 
-        tecnologias: ["Chart.js", "IndexedDB"], 
-        link: "guardiao.html", 
-        imagem: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=500&fit=crop",
-        nivelRotulo: "Nível 3: Familiar",
-        senhaProjeto: "saude123",
-        cargosPermitidos: ["admin", "familia"]
-      },
-      { 
-        id: 4, 
-        titulo: "Cápsula do Tempo", 
-        categoria: "Memórias", 
-        descricao: "Arquivos selados digitalmente com gatilhos temporais para o futuro.", 
-        tecnologias: ["Time-Locks", "AES-256"], 
-        link: "capsula.html", 
-        imagem: "https://images.unsplash.com/photo-1501139083538-0139583c060f?w=800&h=500&fit=crop",
-        nivelRotulo: "Nível 2: Restrito",
-        senhaProjeto: "tempo123",
-        cargosPermitidos: ["admin", "namorada", "familia"]
-      },
-      { 
-        id: 5, 
-        titulo: "Acervo de Herança", 
-        categoria: "Memórias", 
-        descricao: "Repositório mestre para documentos vitais, legados e histórias da família.", 
-        tecnologias: ["Cloud Encrypted", "Smart Contracts"], 
-        link: "heranca.html", 
-        imagem: "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&h=500&fit=crop",
-        nivelRotulo: "Nível 3: Familiar",
-        senhaProjeto: "acervo123",
-        cargosPermitidos: ["admin", "familia"]
-      },
-      { 
-        id: 6, 
-        titulo: "Núcleo Aria AI", 
-        categoria: "Sistema", 
-        descricao: "Controle central do sistema, NLP e gerenciamento de rede neural.", 
-        tecnologias: ["Python Backend", "LLM"], 
-        link: "aria.html", 
-        imagem: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&h=500&fit=crop",
-        nivelRotulo: "Nível 1: Máximo",
-        senhaProjeto: "nucleo123",
-        cargosPermitidos: ["admin"]
-      }
-    ];
-
-    // ==========================================
-    // 3. RENDERIZAÇÃO DA INTERFACE
-    // ==========================================
-    const gridProjetos = document.getElementById('grid-projetos');
-    const containerFiltros = document.getElementById('container-filtros');
-    const categorias = ['Todos', 'Emoções', 'Saúde', 'Memórias', 'Sistema'];
-    let filtroAtual = 'Todos';
-
-    function inicializarFiltros() {
-      containerFiltros.innerHTML = categorias.map(cat => `
-        <button onclick="aplicarFiltro('${cat}', this)" class="btn-filtro ${cat === 'Todos' ? 'ativo' : ''} px-4 py-2 rounded-lg border border-white/10 text-[10px] font-bold tracking-widest text-gray-400 hover:text-white uppercase bg-black/40 transition">
-          ${cat}
-        </button>
-      `).join('');
-    }
-
-    function renderizarProjetos(lista) {
-      gridProjetos.innerHTML = ''; 
-      if (lista.length === 0) {
-        gridProjetos.innerHTML = `<div class="col-span-full text-center py-10"><p class="text-gray-500 font-mono">Nenhum subsistema correspondente.</p></div>`;
-        return;
-      }
-
-      lista.forEach((projeto, index) => {
-        const tagsHtml = projeto.tecnologias.map(tech => `<span class="tag-glow text-[10px] font-mono px-2 py-1 rounded uppercase tracking-wider">${tech}</span>`).join('');
+    togglePasswordButton.addEventListener('click', function () {
+        // Verifica o tipo atual do campo e alterna
+        const currentType = passwordInput.getAttribute('type');
+        const newType = currentType === 'password' ? 'text' : 'password';
         
-        let corBadge = "text-gray-400 border-gray-600 bg-gray-900";
-        if(projeto.nivelRotulo.includes("1")) corBadge = "text-red-400 border-red-500/50 bg-red-900/30";
-        else if(projeto.nivelRotulo.includes("2")) corBadge = "text-purple-400 border-purple-500/50 bg-purple-900/30";
-        else if(projeto.nivelRotulo.includes("3")) corBadge = "text-emerald-400 border-emerald-500/50 bg-emerald-900/30";
-        else corBadge = "text-[var(--primary)] border-[var(--primary)]/50 bg-[var(--primary)]/10";
-
-        const delay = index * 100;
-        const card = `
-          <div class="glass-card rounded-xl overflow-hidden hover:border-[var(--primary)]/50 transition-all duration-300 flex flex-col h-full animate-fade-in group" style="animation-delay: ${delay}ms;">
-            <div class="h-40 overflow-hidden relative">
-              <div class="absolute inset-0 bg-gradient-to-b from-transparent to-[#0a0f19] z-10"></div>
-              <img src="${projeto.imagem}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 opacity-60 group-hover:opacity-100" />
-              <div class="absolute top-3 right-3 z-20 border ${corBadge} px-2 py-1 rounded backdrop-blur-md">
-                <span class="text-[9px] font-bold tracking-[2px] uppercase">${projeto.nivelRotulo}</span>
-              </div>
-            </div>
-            <div class="p-6 flex flex-col flex-grow relative z-20 bg-[#0a0f19]">
-              <p class="text-[10px] text-gray-500 font-mono mb-2 tracking-[0.2em] uppercase">${projeto.categoria}</p>
-              <h3 class="text-xl font-bold text-white mb-2">${projeto.titulo}</h3>
-              <p class="text-gray-400 text-sm mb-6 flex-grow leading-relaxed">${projeto.descricao}</p>
-              <div class="flex flex-wrap gap-2 mb-6">${tagsHtml}</div>
-              
-              <button onclick="iniciarProtocoloSeguranca(${projeto.id})" class="w-full bg-white/5 hover:bg-white/10 text-white font-mono text-xs font-bold py-3 rounded border border-white/10 hover:border-[var(--primary)] transition flex justify-center items-center gap-2 group/btn">
-                <svg class="w-4 h-4 text-gray-400 group-hover/btn:text-[var(--primary)] transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                INICIAR ACESSO
-              </button>
-            </div>
-          </div>
-        `;
-        gridProjetos.innerHTML += card;
-      });
-    }
-
-    // ==========================================
-    // 4. LÓGICA DO MODAL & MÁQUINA DE ESTADOS
-    // ==========================================
-    const modal = document.getElementById('modal-seguranca');
-    const modalContent = document.getElementById('modal-content');
-    const inputSenha = document.getElementById('input-senha');
-    const nomeModuloModal = document.getElementById('nome-modulo-modal');
-    const nivelExigidoModal = document.getElementById('nivel-exigido-modal');
-    const iconeStatus = document.getElementById('icone-status');
-    const terminalAria = document.getElementById('terminal-aria');
-    const scanline = document.getElementById('scanline');
-    
-    let projetoSelecionado = null;
-    let etapaAtual = 1; 
-    let typingTimeout = null;
-
-    // Função de efeito de digitação da IA
-    function escreverTerminal(textoHTML, resetar = true) {
-      if (resetar) terminalAria.innerHTML = '<span class="cursor-blink"></span>';
-      
-      clearTimeout(typingTimeout);
-      
-      // Remover tags HTML temporariamente para digitar o texto limpo, 
-      // ou injetar diretamente para evitar quebra de tags. 
-      // Para simplicidade e estilo, injetamos diretamente com o cursor no final.
-      terminalAria.innerHTML = `<div class="text-gray-300">${textoHTML}</div><span class="cursor-blink inline-block w-2 h-4 bg-[var(--primary)] ml-1 align-middle"></span>`;
-    }
-
-    function iniciarProtocoloSeguranca(idProjeto) {
-      projetoSelecionado = todosOsProjetos.find(p => p.id === idProjeto);
-      etapaAtual = 1;
-      
-      nomeModuloModal.innerText = `DESTINO: ${projetoSelecionado.titulo}`;
-      
-      // Cor do Nível no Modal
-      nivelExigidoModal.innerText = `REQUISITO: ${projetoSelecionado.nivelRotulo}`;
-      nivelExigidoModal.className = `border text-[9px] font-bold px-2 py-1 rounded uppercase tracking-[0.2em] shadow-inner ${
-        projetoSelecionado.nivelRotulo.includes("1") ? "bg-red-900/20 border-red-500/50 text-red-400" :
-        projetoSelecionado.nivelRotulo.includes("2") ? "bg-purple-900/20 border-purple-500/50 text-purple-400" :
-        projetoSelecionado.nivelRotulo.includes("3") ? "bg-emerald-900/20 border-emerald-500/50 text-emerald-400" :
-        "bg-blue-900/20 border-blue-500/50 text-blue-400"
-      }`;
-      
-      resetarUIModal();
-      
-      escreverTerminal("> Iniciando Handshake Criptográfico...<br>> Estabelecendo conexão segura.<br>> <span class='text-[var(--primary)] font-bold'>[ETAPA 1/2]</span> Insira a chave do subsistema.");
-      
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      modalContent.classList.remove('scale-95');
-      
-      setTimeout(() => inputSenha.focus(), 400);
-    }
-
-    function fecharModal() {
-      modal.classList.add('opacity-0', 'pointer-events-none');
-      modalContent.classList.add('scale-95');
-      scanline.classList.add('hidden');
-    }
-
-    function resetarUIModal() {
-      inputSenha.value = ''; 
-      inputSenha.type = 'password';
-      inputSenha.placeholder = "INSIRA A CHAVE DO MÓDULO...";
-      inputSenha.style.display = 'block';
-      document.getElementById('btn-validar').style.display = 'block';
-      
-      iconeStatus.innerHTML = `<svg class="w-8 h-8 text-[var(--primary)] -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>`;
-      iconeStatus.className = "w-16 h-16 rounded-xl bg-black flex items-center justify-center border border-[var(--primary)] shadow-[0_0_30px_rgba(0,240,255,0.2)] transform rotate-45 transition-all duration-500";
-      scanline.classList.add('hidden');
-    }
-
-    function animarErro(mensagem) {
-      iconeStatus.innerHTML = `<svg class="w-8 h-8 text-red-500 -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`;
-      iconeStatus.className = "w-16 h-16 rounded-xl bg-red-950/50 flex items-center justify-center border border-red-500 shadow-[0_0_30px_rgba(239,68,68,0.3)] transform rotate-45 transition-all duration-300";
-      
-      modalContent.classList.remove('shake');
-      void modalContent.offsetWidth; 
-      modalContent.classList.add('shake');
-      
-      escreverTerminal(`> <span class="text-red-400 font-bold">[ERRO]</span> ${mensagem}<br>> Acesso negado. Tente novamente.`);
-      inputSenha.value = '';
-      inputSenha.focus();
-    }
-
-    function processarAutenticacao() {
-      const valorDigitado = inputSenha.value.trim();
-      if (!valorDigitado) return;
-
-      if (etapaAtual === 1) {
-        // --- ETAPA 1: SENHA DO PROJETO ---
-        if (valorDigitado === projetoSelecionado.senhaProjeto) {
-          etapaAtual = 2;
-          inputSenha.value = '';
-          inputSenha.placeholder = "INSIRA SUA IDENTIDADE HIERÁRQUICA...";
-          scanline.classList.remove('hidden'); 
-          
-          escreverTerminal("> Chave de módulo validada.<br>> Iniciando scanner de hierarquia...<br>> <span class='text-[var(--gold)] font-bold'>[ETAPA 2/2]</span> Aria solicita identificação pessoal do usuário.");
-          
-          iconeStatus.innerHTML = `<svg class="w-8 h-8 text-[var(--gold)] -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>`;
-          iconeStatus.className = "w-16 h-16 rounded-xl bg-yellow-950/30 flex items-center justify-center border border-[var(--gold)] shadow-[0_0_30px_rgba(255,184,0,0.3)] transform rotate-45 transition-all duration-300";
-        } else {
-          animarErro("Chave do subsistema incorreta.");
-        }
-
-      } else if (etapaAtual === 2) {
-        // --- ETAPA 2: IDENTIDADE FAMILIAR ---
-        const usuarioLogado = tabelaUsuarios[valorDigitado];
-
-        if (!usuarioLogado) {
-          animarErro("Identidade desconhecida. Tentativa registrada.");
-          return;
-        }
-
-        if (projetoSelecionado.cargosPermitidos.includes(usuarioLogado.role)) {
-          // SUCESSO TOTAL
-          scanline.classList.add('hidden');
-          iconeStatus.innerHTML = `<svg class="w-8 h-8 text-emerald-400 -rotate-45" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
-          iconeStatus.className = "w-16 h-16 rounded-xl bg-emerald-950/50 flex items-center justify-center border border-emerald-400 shadow-[0_0_40px_rgba(16,185,129,0.5)] transform rotate-45 scale-110 transition-all duration-500";
-          
-          inputSenha.style.display = 'none';
-          document.getElementById('btn-validar').style.display = 'none';
-
-          escreverTerminal(`> Identidade confirmada: <span class="text-emerald-400 font-bold">[${usuarioLogado.nome.toUpperCase()}]</span><br>> Aria: <i>"${usuarioLogado.saudacao}"</i><br>> <span class="text-emerald-400">Desbloqueando acesso e redirecionando...</span>`);
-          
-          setTimeout(() => {
-            // window.location.href = projetoSelecionado.link; // <- Ative no projeto real
-            alert(`[SIMULAÇÃO] Aria redirecionando ${usuarioLogado.nome} para ${projetoSelecionado.link}...`);
-            fecharModal();
-          }, 3500);
-
-        } else {
-          // TEM IDENTIDADE, MAS NÃO TEM PERMISSÃO
-          animarErro(`Usuário [${usuarioLogado.nome.toUpperCase()}] possui nível hierárquico (${usuarioLogado.role.toUpperCase()}), insuficiente para este módulo.`);
-        }
-      }
-    }
-
-    inputSenha.addEventListener('keypress', function (e) {
-      if (e.key === 'Enter') processarAutenticacao();
+        passwordInput.setAttribute('type', newType);
+        
+        // Altera o ícone visualmente para indicar o estado
+        this.textContent = newType === 'password' ? '👁️' : '🙈';
     });
+</script>
 
-    // ==========================================
-    // 5. FILTROS E BUSCA
-    // ==========================================
-    function aplicarFiltro(categoria, btn) {
-      filtroAtual = categoria;
-      document.querySelectorAll('.btn-filtro').forEach(b => b.classList.remove('ativo'));
-      btn.classList.add('ativo');
-      filtrar();
-    }
-
-    function filtrar() {
-      const termo = document.getElementById('barra-busca').value.toLowerCase();
-      const filtrados = todosOsProjetos.filter(p => {
-        const catOk = filtroAtual === 'Todos' || p.categoria === filtroAtual;
-        const termoOk = p.titulo.toLowerCase().includes(termo) || p.tecnologias.some(t => t.toLowerCase().includes(termo));
-        return catOk && termoOk;
-      });
-      renderizarProjetos(filtrados);
-    }
-
-    document.getElementById('barra-busca').addEventListener('input', filtrar);
-    
-    // Iniciar
-    inicializarFiltros();
-    renderizarProjetos(todosOsProjetos);
-  </script>
 </body>
 </html>
