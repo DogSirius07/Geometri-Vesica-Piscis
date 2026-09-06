@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#050a14">
-    <title># Guardião & Nossa Frequência com Aria AI — Sistema Unificado</title>
+    <title>Nossa Frequência & # Guardião — Sistema Unificado Protegido</title>
     
     <!-- Fontes Google & Bibliotecas CDN -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -21,7 +21,7 @@
             --emerald: #00f5d4;
             --danger: #ff4d6d;
             --deep-night: #050a14;
-            --glass: rgba(15, 20, 35, 0.88);
+            --glass: rgba(15, 20, 35, 0.94);
             --border-glow: rgba(160, 102, 255, 0.4);
         }
 
@@ -44,11 +44,11 @@
             padding: 6px 12px; border-radius: 20px; font-size: 0.72rem; cursor: pointer; font-weight: 600;
         }
 
-        .container { position: relative; z-index: 1; max-width: 500px; margin: 60px auto 40px; padding: 15px; display: flex; flex-direction: column; gap: 16px; }
+        .container { position: relative; z-index: 1; max-width: 520px; margin: 60px auto 40px; padding: 15px; display: flex; flex-direction: column; gap: 16px; }
 
         header { text-align: center; margin-bottom: 5px; }
-        .vesica-logo { width: 85px; height: 85px; margin: 0 auto 5px; filter: drop-shadow(0 0 15px var(--aura-blue)); cursor: pointer; }
-        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; background: linear-gradient(135deg, #fff, var(--aura-blue), var(--aura-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .vesica-logo { width: 90px; height: 90px; margin: 0 auto 5px; filter: drop-shadow(0 0 15px var(--aura-blue)); cursor: pointer; }
+        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.3rem; background: linear-gradient(135deg, #fff, var(--aura-blue), var(--aura-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         p.subtitle { font-size: 0.72rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
 
         .card {
@@ -58,8 +58,8 @@
 
         .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--gold); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
 
-        /* MODO ACESSÍVEL / PRINCESA (7 ANOS) */
-        .child-mode-view { display: none; background: #120924; min-height: 100vh; padding: 20px; text-align: center; }
+        /* MODO PRINCESA (7 ANOS) */
+        .child-mode-view { display: none; background: #120924; min-height: 100vh; padding: 20px; text-align: center; position: relative; z-index: 10; }
         .child-mode-view.active { display: block; }
         .big-button {
             width: 100%; padding: 22px; margin-bottom: 14px; border-radius: 24px; border: none;
@@ -73,7 +73,7 @@
         .btn-star-child { background: linear-gradient(135deg, #c0fdff, #deb8f5); color: #240046; }
 
         /* CHAT DA ARIA AI */
-        .aria-chat-box { background: rgba(0,0,0,0.5); border-radius: 12px; padding: 10px; height: 180px; overflow-y: auto; margin-bottom: 10px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.1); }
+        .aria-chat-box { background: rgba(0,0,0,0.5); border-radius: 12px; padding: 10px; height: 190px; overflow-y: auto; margin-bottom: 10px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.1); }
         .aria-msg { margin-bottom: 8px; padding: 8px 12px; border-radius: 10px; max-width: 88%; line-height: 1.4; }
         .aria-msg.aria { background: rgba(0, 212, 255, 0.15); border: 1px solid var(--aura-blue); color: #e0f7ff; }
         .aria-msg.user { background: rgba(160, 102, 255, 0.2); border: 1px solid var(--aura-purple); margin-left: auto; text-align: right; }
@@ -81,7 +81,7 @@
         /* FORMULÁRIOS & ELEMENTOS */
         input, select, textarea { width: 100%; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid var(--aura-purple); padding: 10px; border-radius: 8px; outline: none; font-size: 0.82rem; margin-bottom: 8px; font-family: inherit; }
         .btn-action { background: linear-gradient(135deg, var(--aura-purple), var(--aura-blue)); border: none; color: white; padding: 11px; border-radius: 10px; cursor: pointer; font-weight: 600; width: 100%; font-size: 0.88rem; }
-        .btn-small { background: rgba(255, 215, 0, 0.12); border: 1px solid var(--gold); color: var(--gold); padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.7rem; margin: 2px; }
+        .btn-small { background: rgba(255, 215, 0, 0.12); border: 1px solid var(--gold); color: var(--gold); padding: 6px 10px; border-radius: 6px; cursor: pointer; font-size: 0.72rem; margin: 2px; }
 
         /* Círculo de Respiração */
         .breath-circle { width: 110px; height: 110px; border-radius: 50%; border: 2px solid var(--aura-blue); margin: 10px auto; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; text-align: center; transition: transform 4s ease-in-out, border-color 1s ease; }
@@ -92,12 +92,15 @@
         .routine-item { display: flex; align-items: center; justify-content: space-between; background: rgba(255,255,255,0.04); padding: 8px 10px; border-radius: 8px; margin-bottom: 6px; font-size: 0.8rem; }
         .routine-item.done { opacity: 0.4; text-decoration: line-through; }
 
-        /* Modal do Manual */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 20, 0.96); z-index: 200; display: none; padding: 20px; overflow-y: auto; }
+        /* Modais */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 20, 0.96); z-index: 300; display: none; padding: 20px; overflow-y: auto; }
         .modal.active { display: block; }
-        .modal-content { max-width: 600px; margin: 40px auto; background: var(--glass); border: 1px solid var(--gold); padding: 20px; border-radius: 20px; font-size: 0.85rem; line-height: 1.6; }
+        .modal-content { max-width: 500px; margin: 60px auto; background: var(--glass); border: 1px solid var(--gold); padding: 22px; border-radius: 20px; font-size: 0.85rem; line-height: 1.6; text-align: center; }
         .modal-content h2 { font-family: 'Cormorant Garamond'; color: var(--gold); font-size: 1.8rem; margin-bottom: 10px; }
-        .modal-content h3 { color: var(--aura-blue); margin-top: 15px; font-size: 1.1rem; }
+        .pin-input { font-size: 1.5rem; text-align: center; letter-spacing: 8px; font-weight: bold; width: 180px; margin: 15px auto; }
+        
+        .badge-list { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+        .badge { background: rgba(0,212,255,0.1); border: 1px solid var(--aura-blue); padding: 3px 8px; border-radius: 12px; font-size: 0.68rem; color: var(--aura-blue); }
     </style>
 </head>
 <body>
@@ -107,11 +110,12 @@
 
     <!-- Barra de Controle Superior -->
     <div class="top-bar">
-        <button class="btn-top" onclick="toggleManualModal()">📖 Manual & Guia Completo</button>
-        <button class="btn-top" style="border-color:var(--aura-purple); color:var(--aura-purple);" onclick="toggleViewMode()" id="viewModeBtn">🔄 Modo Princesa (7 Anos)</button>
+        <button class="btn-top" onclick="toggleManualModal()">📖 Manual & Proteção</button>
+        <button class="btn-top" style="border-color:var(--danger); color:var(--danger);" onclick="lockSystemNow()">🔒 Trancar</button>
+        <button class="btn-top" style="border-color:var(--aura-purple); color:var(--aura-purple);" onclick="requestModeSwitch()" id="viewModeBtn">🔄 Modo Princesa (7 Anos)</button>
     </div>
 
-    <!-- MODO CUIDADOR (PAINEL COMPLETO DO ACOMPANHANTE) -->
+    <!-- TELA PRINCIPAL: MODO CUIDADOR / NOSSA FREQUÊNCIA -->
     <div id="caregiverView" class="container">
 
         <header>
@@ -121,41 +125,68 @@
                 <path d="M 100 51 A 60 60 0 0 1 100 149 A 60 60 0 0 1 100 51 Z" fill="rgba(255,217,0,0.18)" stroke="#ffd700" stroke-width="1.8"/>
                 <text x="100" y="107" font-family="Cormorant Garamond" font-size="24" fill="#ffd700" text-anchor="middle" font-weight="600">05</text>
             </svg>
-            <h1># Guardião & Nossa Frequência</h1>
-            <p class="subtitle">SISTEMA UNIFICADO DE CUIDADO PERPÉTUO & ARIA AI</p>
+            <h1>Nossa Frequência</h1>
+            <p class="subtitle">SISTEMA # GUARDIÃO & INTELIGÊNCIA ARIA AI</p>
         </header>
 
-        <!-- Banner Criptografia -->
-        <div class="card" style="padding: 10px; border-color: var(--gold);">
-            <p style="font-size:0.72rem; color: var(--gold); margin-bottom: 4px;">🔐 Senha Mestra (Criptografia Local AES-GCM):</p>
-            <input type="password" id="masterPass" placeholder="Digite sua senha de segurança local..." style="margin-bottom:0;">
-        </div>
+        <!-- GERENCIADOR DE SENHAS & CRIPTOGRAFIA -->
+        <section class="card" style="border-color: var(--gold);">
+            <div class="card-title">
+                <span>🔑 Acesso & Proteção Multi-PIN</span>
+                <span class="badge">Senha Principal: 120697</span>
+            </div>
+            <p style="font-size:0.72rem; color: #ccc; margin-bottom:6px;">Senhas ativas no sistema:</p>
+            <div class="badge-list" id="activePinsList"></div>
+            
+            <div style="display:flex; gap:6px; margin-top:8px;">
+                <input type="password" id="newPinInput" placeholder="Cadastrar nova senha..." style="margin-bottom:0;" maxlength="8">
+                <button class="btn-small" style="white-space:nowrap;" onclick="addCustomPin()">+ Add Senha</button>
+            </div>
+        </section>
 
-        <!-- ARIA AI ASSISTANT (COPILOTO DO CUIDADOR) -->
+        <!-- MOTOR DE ÁUDIO "NOSSA FREQUÊNCIA" -->
+        <section class="card">
+            <div class="card-title">✨ Gerador de Frequências & Ruído Marrom</div>
+            <label style="font-size:0.72rem; color:var(--gold);">Frequências Solfeggio & Ruídos Calmantes:</label>
+            <select id="freqSelect" onchange="updateAudioEngine()">
+                <option value="432">432 Hz — Harmonia Profunda & Redução de Ansiedade</option>
+                <option value="528">528 Hz — Regeneração, Paz & Clareza Mental</option>
+                <option value="639">639 Hz — Conexão Afetiva & Acolhimento</option>
+                <option value="852">852 Hz — Intuição & Desaceleração de Pensamentos</option>
+                <option value="963">963 Hz — Estado Iluminado & Sono Tranquilo</option>
+                <option value="binaural_delta">Binaural Delta (2 Hz) — Sono Profundo & Crise</option>
+                <option value="binaural_theta">Binaural Theta (6 Hz) — Relaxamento Espiritual</option>
+                <option value="brown_noise">🟤 Ruído Marrom (Brown Noise) — Mente Calma</option>
+            </select>
+
+            <button class="btn-action" id="solfeggioBtn" onclick="toggleAudioEngine()">▶ Tocar Frequência de Cura</button>
+        </section>
+
+        <!-- ARIA AI ASSISTANT -->
         <section class="card">
             <div class="card-title">
-                <span>🤖 Aria AI — Agente Assistente de Cuidado</span>
+                <span>🤖 Aria AI — Protocolos de Cuidado</span>
                 <span style="font-size:0.68rem; color:var(--emerald);">● Ativa</span>
             </div>
             <div class="aria-chat-box" id="ariaChat">
-                <div class="aria-msg aria">Olá! Eu sou a Aria. Estou sincronizada com os protocolos de crise para esquizofrenia, bipolaridade e suporte de desenvolvimento infantil (7 anos). Como posso te orientar agora?</div>
+                <div class="aria-msg aria">Olá! Eu sou a Aria. Estou sincronizada com os protocolos de esquizofrenia, bipolaridade e cuidado de 7 anos. Como posso ajudar agora?</div>
             </div>
             <div style="display:flex; gap:5px;">
-                <input type="text" id="ariaInput" placeholder="Ex: Ela está assustada vendo coisas. O que fazer?" style="margin-bottom:0;">
+                <input type="text" id="ariaInput" placeholder="Ex: Ela está vendo coisas ou assustada..." style="margin-bottom:0;">
                 <button class="btn-action" style="width:auto; padding:0 15px;" onclick="askAria()">Enviar</button>
             </div>
             <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:8px;">
                 <button class="btn-small" onclick="quickAriaPrompt('esquizofrenia')">🌀 Alucinação / Surto</button>
                 <button class="btn-small" onclick="quickAriaPrompt('bipolar')">⚡ Agitação / Mania</button>
-                <button class="btn-small" onclick="quickAriaPrompt('remedio')">💊 Recusa de Medicação</button>
+                <button class="btn-small" onclick="quickAriaPrompt('remedio')">💊 Recusa de Remédio</button>
                 <button class="btn-small" onclick="quickAriaPrompt('historia')">📖 Historinha de 7 Anos</button>
             </div>
         </section>
 
-        <!-- CONEXÃO P2P & PULSO SENSORIAL -->
+        <!-- CONEXÃO P2P -->
         <section class="card">
             <div class="card-title">
-                <span>📡 Conexão P2P à Distância</span>
+                <span>📡 Conexão P2P (Toque Cardíaco à Distância)</span>
                 <span id="p2pStatus" style="font-size:0.68rem; color:var(--danger);">● Desconectado</span>
             </div>
             <p style="font-size:0.72rem; opacity:0.8; margin-bottom:6px;">Seu Código de Pareamento: <b id="myPeerId" style="color:var(--aura-blue);">Gerando...</b></p>
@@ -165,32 +196,18 @@
             </div>
         </section>
 
-        <!-- ASTRONOMIA & COERÊNCIA CARDÍACA -->
+        <!-- COERÊNCIA CARDÍACA -->
         <section class="card">
             <div class="card-title">
-                <span>✦ Sintonia Astral & Respiração</span>
-                <span id="moonPhase" style="font-size:0.75rem; color:var(--aura-blue);">Lua...</span>
+                <span>✦ Sintonia Astral & Respiração Guiada</span>
             </div>
             <div class="breath-circle" id="breathCircle">Toque p/ Iniciar</div>
             <button class="btn-action" onclick="toggleBreathing()">🫁 Iniciar Coerência Cardíaca (4-7-8)</button>
         </section>
 
-        <!-- SINTETIZADOR DE ÁUDIO CIRCADIANO -->
+        <!-- ROTINA -->
         <section class="card">
-            <div class="card-title">✨ Áudio Engine & Solfeggio</div>
-            <p id="circadianRec" style="font-size:0.72rem; color:var(--emerald); margin-bottom:6px;"></p>
-            <select id="freqSelect">
-                <option value="432">432 Hz — Calma Profunda & Harmonia</option>
-                <option value="528">528 Hz — Regeneração & Paz</option>
-                <option value="639">639 Hz — Conexão & Afeto</option>
-                <option value="852">852 Hz — Intuição & Clareza</option>
-            </select>
-            <button class="btn-action" id="solfeggioBtn" onclick="toggleSolfeggio()">▶ Iniciar Som Restaurador</button>
-        </section>
-
-        <!-- ROTINA DE MEDICAÇÃO E CUIDADOS (7 ANOS) -->
-        <section class="card">
-            <div class="card-title">📅 Rotina & Medicamentos</div>
+            <div class="card-title">📅 Rotina & Medicamentos do Dia</div>
             <div id="routineList">
                 <div class="routine-item"><span>08:00 - 💊 Remédio Manhã + Suco Mágico</span><button class="btn-small" onclick="checkRoutine(this)">✓ Ok</button></div>
                 <div class="routine-item"><span>12:00 - 🎨 Horinha do Desenho com a Aria</span><button class="btn-small" onclick="checkRoutine(this)">✓ Ok</button></div>
@@ -199,9 +216,9 @@
             </div>
         </section>
 
-        <!-- DIÁRIO DE SINTOMAS PARA O PSICOLOGO/PSIQUIATRA -->
+        <!-- DIÁRIO CLÍNICO COM ESCALA DE INTENSIDADE -->
         <section class="card">
-            <div class="card-title">📝 Diário Clínico & Registro de Surtos</div>
+            <div class="card-title">📝 Diário Clínico & Nível de Sintoma</div>
             <select id="moodState">
                 <option value="Estável">😊 Estável / Aconchegada</option>
                 <option value="Regressão">🧸 Regressão Infantil Accentuda (7 Anos)</option>
@@ -209,12 +226,17 @@
                 <option value="Depressão">🌧️ Fase Depressiva (Bipolaridade)</option>
                 <option value="Psicose">🌀 Alucinação / Delírio (Esquizofrenia)</option>
             </select>
-            <textarea id="symptomNotes" rows="2" placeholder="Descreva os comportamentos para mostrar ao médico..."></textarea>
+            
+            <label style="font-size:0.72rem; color:var(--gold);">Intensidade da Crise/Comportamento (1 a 10): <b id="intensityVal">5</b></label>
+            <input type="range" min="1" max="10" value="5" id="intensitySlider" oninput="document.getElementById('intensityVal').innerText = this.value">
+
+            <textarea id="symptomNotes" rows="2" placeholder="Descreva os fatos para apresentar ao médico..."></textarea>
             <button class="btn-action" onclick="saveSymptomLog()">Registrar no Diário do Médico</button>
+            <button class="btn-small" style="width:100%; margin-top:6px;" onclick="generateDoctorReport()">📄 Gerar Relatório Formatado para o Médico</button>
             <div id="symptomLogs" style="margin-top:8px; font-size:0.72rem; max-height:120px; overflow-y:auto;"></div>
         </section>
 
-        <!-- MEMÓRIAS CRIPTOGRAFADAS E FOTOS COM AURA -->
+        <!-- MEMÓRIAS & FOTOS -->
         <section class="card">
             <div class="card-title">📖 Baú de Memórias & Fotos com Aura</div>
             <textarea id="diaryInput" rows="2" placeholder="Nota, sonho ou memória carinhosa..."></textarea>
@@ -227,9 +249,8 @@
             <div id="memoriesList" style="margin-top:8px; max-height:150px; overflow-y:auto;"></div>
         </section>
 
-        <!-- BACKUP -->
         <div style="text-align:center;">
-            <button class="btn-small" onclick="exportAppData()">💾 Baixar Backup Geral Criptografado</button>
+            <button class="btn-small" onclick="exportAppData()">💾 Baixar Backup Criptografado</button>
         </div>
     </div>
 
@@ -257,52 +278,104 @@
         </div>
     </div>
 
-    <!-- MODAL DO MANUAL AUTOEXPLICATIVO COMPLETO -->
-    <div class="modal" id="manualModal">
+    <!-- MODAL DE VALIDAÇÃO DE SENHA / PIN -->
+    <div class="modal" id="pinModal">
         <div class="modal-content">
-            <h2>📖 Manual de Uso & Guia Clínico Unificado</h2>
-            <p>Este sistema foi projetado sob medida para unificar o afeto, a acessibilidade e o suporte clínico no cuidado com sua namorada.</p>
-            
-            <h3>1. Criptografia & Segurança Local</h3>
-            <p>Defina uma <b>Senha Mestra</b> no campo do topo. Ela garante que todas as notas, relatos médicos e diários fiquem trancados em padrão militar (AES-GCM) dentro do seu próprio navegador.</p>
+            <h2>🛡️ Proteção do Guardião</h2>
+            <p style="color:var(--aura-blue);">Digite qualquer uma das senhas ativas para liberar o painel:</p>
+            <input type="password" id="pinInput" class="pin-input" placeholder="••••••" maxlength="8">
+            <div style="display:flex; gap:8px; margin-top:10px;">
+                <button class="btn-action" onclick="verifyPinAndSwitch()">Desbloquear</button>
+                <button class="btn-small" style="background:rgba(255,255,255,0.1); border:none; color:#fff;" onclick="closePinModal()">Cancelar</button>
+            </div>
+            <p id="pinError" style="color:var(--danger); font-size:0.75rem; margin-top:8px; display:none;">Senha Incorreta!</p>
+        </div>
+    </div>
 
-            <h3>2. Modo Princesa (Idade Cognitiva de 7 Anos)</h3>
-            <p>Clique no botão roxo no topo <i>"🔄 Modo Princesa"</i> para mudar a tela para uma visão adaptada. Com botões grandes e coloridos, ela pode ouvir historinhas acolhedoras da Aria ou fazer a "Respiração do Balãozinho" sem se assustar com a complexidade do sistema de adultos.</p>
-
-            <h3>3. Assistente Aria AI (Protocolos de Crise)</h3>
-            <p>Utilize a Aria para orientações em tempo real:</p>
-            <ul>
-                <li><b>Esquizofrenia (Alucinações):</b> Nunca confronte a alucinação dizendo que "não existe". Diga: "Eu não vejo, mas sei que parece assustador. Eu estou aqui para te proteger."</li>
-                <li><b>Bipolaridade (Mania/Agitação):</b> Diminua os estímulos visuais e auditivos. Acione o Som Restaurador (432Hz).</li>
-                <li><b>Recusa de Remédios:</b> Torne o momento lúdico ("suco mágico", "gotinhas de coragem").</li>
-            </ul>
-
-            <h3>4. Coerência Cardíaca & Frequências Restauradoras</h3>
-            <p>O círculo de respiração guia o ritmo cardíaco para baixar o cortisol (hormônio do estresse). Use a frequência 432Hz para insônia e mania, e 528Hz para acolhimento emocional.</p>
-
-            <h3>5. Diário do Médico</h3>
-            <p>Registre episódios de surto, mudanças de humor e delírios. Esse histórico é fundamental para o acompanhamento do psiquiatra e neurologista.</p>
-
-            <button class="btn-action" style="margin-top:20px;" onclick="toggleManualModal()">Entendi! Fechar Manual</button>
+    <!-- MODAL DO MANUAL COMPLETO -->
+    <div class="modal" id="manualModal">
+        <div class="modal-content" style="text-align:left;">
+            <h2>📖 Manual & Proteção do Sistema</h2>
+            <p><b>1. Senhas Cadastradas:</b> A senha padrão principal é <code>120697</code>. Você pode adicionar novas senhas no painel para que outros cuidadores autorizados entrem.</p>
+            <p><b>2. Bloqueio Instantâneo:</b> Clique em <b>"Trancar"</b> no topo da tela para bloquear a interface imediatamente.</p>
+            <p><b>3. Criptografia Militar:</b> Todos os registros clínicos são protegidos por chave AES-GCM local no seu navegador.</p>
+            <button class="btn-action" style="margin-top:20px;" onclick="toggleManualModal()">Fechar Manual</button>
         </div>
     </div>
 
     <script>
-        /* --- 0. Feedbacks & Visualização --- */
-        function vibrate(pattern = [30]) { if ("vibrate" in navigator) navigator.vibrate(pattern); }
+        /* --- 0. Sistema de Senhas Múltiplas e Segurança --- */
+        let activePins = ['120697', '280598', '050526']; // Senha principal e secundárias
+        let isChildMode = false;
 
-        function toggleManualModal() {
-            const modal = document.getElementById('manualModal');
-            modal.classList.toggle('active');
+        function loadPins() {
+            const saved = localStorage.getItem('guardiao_pins');
+            if (saved) activePins = JSON.parse(saved);
+            renderPinBadges();
         }
 
-        let isChildMode = false;
-        function toggleViewMode() {
-            isChildMode = !isChildMode;
+        function renderPinBadges() {
+            const box = document.getElementById('activePinsList');
+            box.innerHTML = activePins.map(p => `<span class="badge">••••${p.slice(-2)}</span>`).join('');
+        }
+
+        function addCustomPin() {
+            const input = document.getElementById('newPinInput');
+            const pin = input.value.trim();
+            if (pin.length < 4) return alert('A senha precisa ter pelo menos 4 dígitos.');
+            if (!activePins.includes(pin)) {
+                activePins.push(pin);
+                localStorage.setItem('guardiao_pins', JSON.stringify(activePins));
+                renderPinBadges();
+                input.value = '';
+                alert('Nova senha cadastrada com sucesso!');
+            }
+        }
+
+        function requestModeSwitch() {
+            if (!isChildMode) {
+                switchView(true);
+            } else {
+                openPinModal();
+            }
+        }
+
+        function lockSystemNow() {
+            openPinModal();
+        }
+
+        function openPinModal() {
+            document.getElementById('pinInput').value = '';
+            document.getElementById('pinError').style.display = 'none';
+            document.getElementById('pinModal').classList.add('active');
+        }
+
+        function verifyPinAndSwitch() {
+            const entered = document.getElementById('pinInput').value.trim();
+            if (activePins.includes(entered)) {
+                closePinModal();
+                switchView(false);
+            } else {
+                document.getElementById('pinError').style.display = 'block';
+            }
+        }
+
+        function closePinModal() {
+            document.getElementById('pinModal').classList.remove('active');
+        }
+
+        function switchView(toChild) {
+            isChildMode = toChild;
             document.getElementById('caregiverView').style.display = isChildMode ? 'none' : 'block';
             document.getElementById('childView').classList.toggle('active', isChildMode);
-            document.getElementById('viewModeBtn').innerText = isChildMode ? "🔄 Voltar ao Modo Cuidador" : "🔄 Modo Princesa (7 Anos)";
+            document.getElementById('viewModeBtn').innerText = isChildMode ? "🔒 Sair do Modo Princesa" : "🔄 Modo Princesa (7 Anos)";
         }
+
+        function toggleManualModal() {
+            document.getElementById('manualModal').classList.toggle('active');
+        }
+
+        function vibrate(pattern = [30]) { if ("vibrate" in navigator) navigator.vibrate(pattern); }
 
         /* --- 1. Three.js 3D Background --- */
         const canvas3d = document.getElementById('canvas3d');
@@ -312,12 +385,12 @@
         renderer.setSize(window.innerWidth, window.innerHeight);
 
         const geometry = new THREE.IcosahedronGeometry(2, 1);
-        const material = new THREE.MeshBasicMaterial({ color: 0xa066ff, wireframe: true, transparent: true, opacity: 0.3 });
+        const material = new THREE.MeshBasicMaterial({ color: 0xa066ff, wireframe: true, transparent: true, opacity: 0.35 });
         const merkaba = new THREE.Mesh(geometry, material);
         scene.add(merkaba);
 
         const torusGeo = new THREE.TorusGeometry(3.2, 0.04, 16, 100);
-        const torusMat = new THREE.MeshBasicMaterial({ color: 0x00d4ff, wireframe: true, transparent: true, opacity: 0.2 });
+        const torusMat = new THREE.MeshBasicMaterial({ color: 0x00d4ff, wireframe: true, transparent: true, opacity: 0.25 });
         const torus = new THREE.Mesh(torusGeo, torusMat);
         scene.add(torus);
 
@@ -334,13 +407,97 @@
         }
         animate3D();
 
-        /* --- 2. Criptografia Militar Local (AES-GCM) --- */
+        /* --- 2. Motor de Áudio Avançado (Solfeggio, Binaural e Ruído Marrom) --- */
+        let audioCtx = null, osc1 = null, osc2 = null, isAudioPlaying = false, noiseNode = null;
+
+        function toggleAudioEngine() {
+            const btn = document.getElementById('solfeggioBtn');
+            if (!isAudioPlaying) {
+                startAudioEngine();
+                btn.innerText = "⏸ Pausar Som Restaurador";
+                isAudioPlaying = true;
+            } else {
+                stopAudioEngine();
+                btn.innerText = "▶ Tocar Frequência de Cura";
+                isAudioPlaying = false;
+            }
+        }
+
+        function startAudioEngine() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const val = document.getElementById('freqSelect').value;
+
+            if (val === 'brown_noise') {
+                // Gerador de Ruído Marrom
+                const bufferSize = audioCtx.sampleRate * 2;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                let lastOut = 0.0;
+                for (let i = 0; i < bufferSize; i++) {
+                    const white = Math.random() * 2 - 1;
+                    data[i] = (lastOut + (0.02 * white)) / 1.02;
+                    lastOut = data[i];
+                    data[i] *= 3.5;
+                }
+                noiseNode = audioCtx.createBufferSource();
+                noiseNode.buffer = buffer;
+                noiseNode.loop = true;
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+                noiseNode.connect(gain);
+                gain.connect(audioCtx.destination);
+                noiseNode.start();
+            } else if (val.startsWith('binaural')) {
+                // Batimentos Binaurais
+                const baseFreq = 200;
+                const diff = val === 'binaural_delta' ? 2 : 6;
+                
+                osc1 = audioCtx.createOscillator();
+                osc2 = audioCtx.createOscillator();
+                
+                osc1.frequency.setValueAtTime(baseFreq, audioCtx.currentTime);
+                osc2.frequency.setValueAtTime(baseFreq + diff, audioCtx.currentTime);
+
+                const gain = audioCtx.createGain();
+                gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
+
+                osc1.connect(gain); osc2.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc1.start(); osc2.start();
+            } else {
+                // Frequência Solfeggio pura
+                const freq = parseFloat(val);
+                osc1 = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc1.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+                osc1.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc1.start();
+            }
+        }
+
+        function stopAudioEngine() {
+            if (osc1) { try { osc1.stop(); } catch(e){} }
+            if (osc2) { try { osc2.stop(); } catch(e){} }
+            if (noiseNode) { try { noiseNode.stop(); } catch(e){} }
+            if (audioCtx) { try { audioCtx.close(); } catch(e){} }
+        }
+
+        function updateAudioEngine() {
+            if (isAudioPlaying) {
+                stopAudioEngine();
+                startAudioEngine();
+            }
+        }
+
+        /* --- 3. Criptografia AES-GCM --- */
         async function getCryptoKey() {
-            const pass = document.getElementById('masterPass').value || "ChavePadraoSegura0505";
+            const pass = activePins[0] || "120697";
             const enc = new TextEncoder();
             const keyMaterial = await crypto.subtle.importKey("raw", enc.encode(pass), { name: "PBKDF2" }, false, ["deriveKey"]);
             return crypto.subtle.deriveKey(
-                { name: "PBKDF2", salt: enc.encode("SaltGuardiao"), iterations: 100000, hash: "SHA-256" },
+                { name: "PBKDF2", salt: enc.encode("SaltGuardiao120697"), iterations: 100000, hash: "SHA-256" },
                 keyMaterial, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]
             );
         }
@@ -363,10 +520,10 @@
                 const data = new Uint8Array(obj.data);
                 const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv: iv }, key, data);
                 return new TextDecoder().decode(decrypted);
-            } catch(e) { return "🔒 [Conteúdo Protegido por Senha]"; }
+            } catch(e) { return "🔒 [Dado Criptografado]"; }
         }
 
-        /* --- 3. Aria AI (Copiloto & Voz Amiga) --- */
+        /* --- 4. Aria AI Assistant --- */
         function askAria() {
             const input = document.getElementById('ariaInput');
             const txt = input.value.trim();
@@ -379,24 +536,24 @@
                 let resp = "";
                 const l = txt.toLowerCase();
                 if (l.includes('alucina') || l.includes('ver') || l.includes('ouvir') || l.includes('esquizofrenia')) {
-                    resp = "🌀 **Ação para Surto/Alucinação:** 1. Não discuta a realidade da visão/voz. 2. Acolha a emoção: 'Sei que dá medo, mas estou do seu lado e vou te proteger'. 3. Diminua as luzes e acione o Som Restaurador de 432Hz.";
+                    resp = "🌀 **Manejo de Alucinação:** 1. Valide o sentimento sem confirmar a visão ('Entendo que isso assusta, estou aqui'). 2. Ligue o Ruído Marrom ou a Frequência de 432Hz. 3. Leve-a para o Modo Princesa.";
                 } else if (l.includes('agitad') || l.includes('brava') || l.includes('bipolar') || l.includes('mania')) {
-                    resp = "⚡ **Ação para Agitação/Mania:** 1. Evite argumentações longas. Pessoas em mania têm sobrecarga sensorial. 2. Mude o foco suavemente convidando para a 'Respiração do Balãozinho'.";
+                    resp = "⚡ **Manejo de Mania/Agitação:** 1. Fale baixo e com pausas longas. 2. Convide para a 'Respiração do Balãozinho'. 3. Evite questionar a lógica no momento da agitação.";
                 } else if (l.includes('remédio') || l.includes('remedio') || l.includes('tomar')) {
-                    resp = "💊 **Estratégia para Medicação (Idade de 7 Anos):** Evite o tom de imposição médica. Diga que é a 'gotinha da coragem' ou a 'poção para o sono dos anjos'.";
+                    resp = "💊 **Manejo de Medicação (7 Anos):** Apresente o remédio como a 'gotinha da proteção' e ofereça com a bebida favorita dela em um copo colorido.";
                 } else {
-                    resp = "Compreendido. Lembre-se: a previsibilidade e a voz suave são os melhores remédios para o estado de 7 anos. Deseja que eu leia uma historinha curta para ela agora?";
+                    resp = "Compreendido! Lembre-se: O amor, a previsibilidade dos horários e o tom de voz calmo são as ferramentas mais poderosas.";
                 }
                 addAriaMsg(resp, 'aria');
-            }, 600);
+            }, 500);
         }
 
         function quickAriaPrompt(type) {
             const inp = document.getElementById('ariaInput');
-            if (type === 'esquizofrenia') inp.value = "Ela está vendo coisas e assustada, como agir agora?";
-            if (type === 'bipolar') inp.value = "Ela está muito agitada e maníaca, como acalmar?";
-            if (type === 'remedio') inp.value = "Como fazer ela tomar o remédio sem chorar?";
-            if (type === 'historia') inp.value = "Conte uma historinha de ursinho para ela.";
+            if (type === 'esquizofrenia') inp.value = "Ela está com alucinação visual/auditiva, o que fazer?";
+            if (type === 'bipolar') inp.value = "Como controlar um pico de mania/agitação?";
+            if (type === 'remedio') inp.value = "Como dar a medicação sem gerar confronto?";
+            if (type === 'historia') inp.value = "Conte uma historinha calmante de ursinho.";
             askAria();
         }
 
@@ -413,24 +570,24 @@
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
                 const utter = new SpeechSynthesisUtterance(text);
-                utter.lang = 'pt-BR'; utter.pitch = 1.25; utter.rate = 0.88;
+                utter.lang = 'pt-BR'; utter.pitch = 1.2; utter.rate = 0.85;
                 window.speechSynthesis.speak(utter);
             }
         }
 
         function ariaChildGreeting() {
-            const txt = "Olá minha princesa! Hoje o dia está lindo e os anjinhos estão cuidando de você. Vamos fazer um desenho bem bonito?";
+            const txt = "Olá minha princesa! Hoje o dia está mágico e você está super protegida. Vamos respirar bem fundo?";
             document.getElementById('childMessage').innerText = txt;
             speakText(txt);
         }
 
         function showChildRoutine() {
-            const txt = "Sua tarefinha de hoje é tomar o suco mágico, dar um abraço bem apertado e sorrir!";
+            const txt = "Sua tarefinha agora é dar um abraço bem forte e sorrir!";
             document.getElementById('childMessage').innerText = txt;
             speakText(txt);
         }
 
-        /* --- 4. Conexão P2P (PeerJS) --- */
+        /* --- 5. PeerJS P2P --- */
         let peer = new Peer(), conn = null;
         peer.on('open', id => { document.getElementById('myPeerId').innerText = id; });
         peer.on('connection', c => { conn = c; setupPeer(); });
@@ -457,7 +614,7 @@
             if (conn && conn.open) conn.send({ type: 'pulse' });
         }
 
-        /* --- 5. Respiração Guiada 4-7-8 --- */
+        /* --- 6. Respiração Guiada --- */
         let isBreathing = false, breathTimer = null;
         function toggleBreathing() {
             const c = document.getElementById('breathCircle');
@@ -486,42 +643,24 @@
             }, 4000);
         }
 
-        /* --- 6. Áudio Engine Solfeggio --- */
-        let audioCtx = null, osc = null, isPlaying = false;
-        function toggleSolfeggio() {
-            const btn = document.getElementById('solfeggioBtn');
-            const freq = parseFloat(document.getElementById('freqSelect').value);
-            if (!isPlaying) {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
-                osc.connect(gain); gain.connect(audioCtx.destination);
-                osc.start(); isPlaying = true; btn.innerText = "⏸ Pausar Som Restaurador";
-            } else {
-                if (osc) osc.stop();
-                if (audioCtx) audioCtx.close();
-                isPlaying = false; btn.innerText = "▶ Iniciar Som Restaurador";
-            }
-        }
-
-        /* --- 7. IndexedDB (Memórias e Registros Médicos) --- */
+        /* --- 7. Banco de Dados Local (IndexedDB) & Relatórios --- */
         let db;
-        const req = indexedDB.open("GuardiaoUnificadoDB", 1);
+        const req = indexedDB.open("GuardiaoUnificadoDB", 2);
         req.onupgradeneeded = e => {
             db = e.target.result;
-            db.createObjectStore("symptoms", { keyPath: "id", autoIncrement: true });
-            db.createObjectStore("memories", { keyPath: "id", autoIncrement: true });
+            if(!db.objectStoreNames.contains("symptoms")) db.createObjectStore("symptoms", { keyPath: "id", autoIncrement: true });
+            if(!db.objectStoreNames.contains("memories")) db.createObjectStore("memories", { keyPath: "id", autoIncrement: true });
         };
-        req.onsuccess = e => { db = e.target.result; loadSymptomLogs(); loadMemories(); };
+        req.onsuccess = e => { db = e.target.result; loadSymptomLogs(); loadMemories(); loadPins(); };
 
         async function saveSymptomLog() {
             const mood = document.getElementById('moodState').value;
+            const intensity = document.getElementById('intensitySlider').value;
             const notes = document.getElementById('symptomNotes').value.trim();
-            if (!notes) return alert('Digite uma observação para o médico.');
-            
-            const enc = await encryptData(notes);
+            if (!notes) return alert('Digite uma observação.');
+
+            const fullText = `[Intensidade: ${intensity}/10] ${notes}`;
+            const enc = await encryptData(fullText);
             const dateStr = new Date().toLocaleString('pt-BR');
             const tx = db.transaction("symptoms", "readwrite");
             tx.objectStore("symptoms").add({ mood, notes: enc, date: dateStr });
@@ -542,6 +681,24 @@
                     div.innerHTML = `<span style="color:var(--gold); font-weight:600;">[${mood}]</span> <small>${date}</small><br>${dec}`;
                     box.prepend(div);
                     cursor.continue();
+                }
+            };
+        }
+
+        function generateDoctorReport() {
+            const tx = db.transaction("symptoms", "readonly");
+            let report = "--- RELATÓRIO CLÍNICO DE ACOMPANHAMENTO ---\n\n";
+            tx.objectStore("symptoms").openCursor().onsuccess = async e => {
+                const cursor = e.target.result;
+                if (cursor) {
+                    const { mood, notes, date } = cursor.value;
+                    const dec = await decryptData(notes);
+                    report += `• Data: ${date}\n  Estado: ${mood}\n  Observação: ${dec}\n\n`;
+                    cursor.continue();
+                } else {
+                    const blob = new Blob([report], { type: 'text/plain;charset=utf-8' });
+                    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
+                    a.download = "relatorio_medico_guardiao.txt"; a.click();
                 }
             };
         }
@@ -611,7 +768,7 @@
                     data.memories = ev.target.result;
                     const blob = new Blob([JSON.stringify(data)], { type: 'application/json' });
                     const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-                    a.download = "guardiao_unificado_backup.json"; a.click();
+                    a.download = "guardiao_frequencia_backup.json"; a.click();
                 };
             };
         }
