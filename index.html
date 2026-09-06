@@ -5,20 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#050a14">
     <link rel="manifest" href="manifest.json">
-    <title>Nossa Frequência — v6.0 Arquetípica</title>
+    <title>Nossa Frequência — v7.0 Omega</title>
     
+    <!-- Fontes & Bibliotecas CDN -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
+
     <style>
         :root {
             --aura-blue: #00d4ff;
             --aura-purple: #a066ff;
             --gold: #ffd700;
             --deep-night: #050a14;
-            --glass: rgba(15, 20, 35, 0.90);
+            --glass: rgba(15, 20, 35, 0.88);
             --border-glow: rgba(160, 102, 255, 0.4);
+            --emerald: #00ffaa;
         }
 
         * {
@@ -40,7 +44,7 @@
             align-items: center;
         }
 
-        canvas#starsCanvas {
+        #canvas3d {
             position: fixed;
             top: 0; left: 0;
             width: 100vw; height: 100vh;
@@ -57,7 +61,7 @@
             display: flex;
             flex-direction: column;
             gap: 20px;
-            margin-bottom: 50px;
+            margin-bottom: 60px;
         }
 
         header {
@@ -66,7 +70,7 @@
         }
 
         .vesica-logo {
-            width: 100px; height: 100px;
+            width: 110px; height: 110px;
             margin: 0 auto 10px;
             filter: drop-shadow(0 0 15px var(--aura-blue));
             animation: pulseAura 4s infinite alternate ease-in-out;
@@ -75,12 +79,12 @@
 
         @keyframes pulseAura {
             0% { filter: drop-shadow(0 0 8px var(--aura-blue)); transform: scale(0.98); }
-            100% { filter: drop-shadow(0 0 22px var(--aura-purple)); transform: scale(1.04); }
+            100% { filter: drop-shadow(0 0 25px var(--aura-purple)); transform: scale(1.05); }
         }
 
         h1 {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.4rem;
+            font-size: 2.5rem;
             letter-spacing: 2px;
             background: linear-gradient(135deg, #fff, var(--aura-blue), var(--aura-purple));
             -webkit-background-clip: text;
@@ -93,16 +97,6 @@
             letter-spacing: 3px;
             text-transform: uppercase;
             opacity: 0.85;
-        }
-
-        #pwaInstallBanner {
-            display: none;
-            background: linear-gradient(135deg, rgba(160, 102, 255, 0.25), rgba(0, 212, 255, 0.25));
-            border: 1px solid var(--aura-blue);
-            border-radius: 14px;
-            padding: 12px 16px;
-            align-items: center;
-            justify-content: space-between;
         }
 
         .card {
@@ -154,37 +148,26 @@
             text-transform: uppercase;
         }
 
-        /* Biorritmo Bars */
-        .bio-container {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin: 10px 0;
-        }
-
-        .bio-row {
+        /* Coerência Cardíaca Widget */
+        .breath-circle {
+            width: 120px; height: 120px;
+            border-radius: 50%;
+            border: 2px solid var(--aura-blue);
+            margin: 15px auto;
             display: flex;
             align-items: center;
-            justify-content: space-between;
-            font-size: 0.75rem;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: #fff;
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
+            transition: transform 4s ease-in-out, border-color 1s ease;
         }
 
-        .bio-bar-bg {
-            width: 60%;
-            height: 8px;
-            background: rgba(255,255,255,0.1);
-            border-radius: 4px;
-            overflow: hidden;
-        }
+        .breath-circle.inhale { transform: scale(1.4); border-color: var(--emerald); }
+        .breath-circle.hold { transform: scale(1.4); border-color: var(--gold); }
+        .breath-circle.exhale { transform: scale(0.9); border-color: var(--aura-purple); }
 
-        .bio-bar-fill {
-            height: 100%;
-            background: linear-gradient(90deg, var(--aura-blue), var(--aura-purple));
-            border-radius: 4px;
-            transition: width 0.5s ease;
-        }
-
-        select, input[type="text"], textarea {
+        select, input[type="text"], input[type="datetime-local"], input[type="password"], textarea {
             width: 100%;
             background: rgba(0,0,0,0.5);
             color: #fff;
@@ -219,52 +202,27 @@
             padding: 8px 14px;
             border-radius: 6px;
             cursor: pointer;
-            margin: 4px;
+            margin: 4px 0;
             font-size: 0.72rem;
         }
-
-        .station-btn {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(160, 102, 255, 0.2);
-            color: white;
-            padding: 12px 16px;
-            border-radius: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            margin-bottom: 8px;
-        }
-
-        #youtube-player-container {
-            width: 100%; height: 0;
-            overflow: hidden;
-            border-radius: 12px;
-            transition: height 0.4s ease, margin-top 0.4s ease;
-        }
-
-        #youtube-player-container.active {
-            height: 200px;
-            margin-top: 12px;
-        }
-
-        iframe { width: 100%; height: 100%; border: none; }
 
         .tab-bar {
             display: flex;
             gap: 6px;
             margin-top: 10px;
+            overflow-x: auto;
         }
 
         .tab-btn {
             flex: 1;
-            padding: 6px;
+            padding: 6px 10px;
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
             color: #fff;
             border-radius: 6px;
-            font-size: 0.72rem;
+            font-size: 0.7rem;
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .tab-btn.active {
@@ -277,7 +235,7 @@
             flex-direction: column;
             gap: 10px;
             margin-top: 12px;
-            max-height: 220px;
+            max-height: 250px;
             overflow-y: auto;
         }
 
@@ -295,10 +253,11 @@
             margin-bottom: 4px;
         }
 
-        .note-card .text {
-            font-size: 0.82rem;
-            line-height: 1.4;
-            white-space: pre-wrap;
+        .aura-img {
+            width: 100%;
+            border-radius: 8px;
+            margin-top: 6px;
+            border: 1px solid var(--aura-blue);
         }
 
         .btn-record.recording {
@@ -325,7 +284,7 @@
         .modal {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(5, 10, 20, 0.92);
+            background: rgba(5, 10, 20, 0.94);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -344,57 +303,64 @@
             border-radius: 20px;
             text-align: center;
             width: 85%;
-            max-width: 320px;
+            max-width: 340px;
         }
 
-        input[type="password"] {
-            width: 100%;
-            padding: 12px;
-            margin: 15px 0;
+        .peer-box {
+            background: rgba(0, 212, 255, 0.08);
+            border: 1px dashed var(--aura-blue);
+            padding: 10px;
             border-radius: 8px;
-            border: 1px solid var(--aura-purple);
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            text-align: center;
-            font-size: 1.3rem;
-            letter-spacing: 6px;
-            outline: none;
-        }
-
-        .dev-tools {
-            border-top: 1px dashed rgba(255,255,255,0.1);
-            padding-top: 12px;
-            text-align: center;
+            font-size: 0.75rem;
+            margin-bottom: 10px;
+            word-break: break-all;
         }
     </style>
 </head>
 <body>
 
-    <canvas id="starsCanvas"></canvas>
+    <!-- Canvas 3D Three.js -->
+    <canvas id="canvas3d"></canvas>
 
     <div class="app-container">
-        <!-- Banner PWA -->
-        <div id="pwaInstallBanner">
-            <span style="font-size: 0.8rem; color: #fff;">Instalar App na Tela Inicial?</span>
-            <button class="btn-small" onclick="installPWA()">Instalar</button>
+
+        <!-- Banner Chave Criptográfica -->
+        <div id="cryptoBanner" class="card" style="padding: 12px; border-color: var(--gold);">
+            <p style="font-size:0.75rem; color: var(--gold); margin-bottom: 6px;">🔐 Criptografia Militar de Ponta a Ponta</p>
+            <input type="password" id="masterPass" placeholder="Digite sua Senha Mestra..." style="margin-bottom:0;">
         </div>
 
         <header>
-            <svg class="vesica-logo" onclick="triggerTelepathicPulse(event)" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="vesica-logo" onclick="triggerP2PPulse()" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="75" cy="100" r="60" stroke="#00d4ff" stroke-width="2.5" opacity="0.85"/>
                 <circle cx="125" cy="100" r="60" stroke="#a066ff" stroke-width="2.5" opacity="0.85"/>
                 <path d="M 100 51 A 60 60 0 0 1 100 149 A 60 60 0 0 1 100 51 Z" fill="rgba(255,217,0,0.18)" stroke="#ffd700" stroke-width="1.8"/>
                 <text x="100" y="107" font-family="Cormorant Garamond" font-size="24" fill="#ffd700" text-anchor="middle" font-weight="600">05</text>
             </svg>
             <h1>Nossa Frequência</h1>
-            <p class="subtitle">Portal Vibracional & Sagrado</p>
+            <p class="subtitle">v7.0 — Portal Arquetípico Omega</p>
         </header>
 
-        <!-- Tempo Real de União & Biorritmo -->
+        <!-- Redes P2P & Pulso Háptico -->
         <section class="card">
             <div class="card-title">
-                <span>✦ Sintonia Temporal</span>
-                <span id="moonPhase" style="font-size: 0.85rem; color: var(--aura-blue);">🌑 Nova</span>
+                <span>📡 Conectividade P2P</span>
+                <span id="p2pStatus" style="font-size:0.7rem; color:#ff6b81;">● Desconectado</span>
+            </div>
+            <div class="peer-box">
+                Seu Código de Sintonia: <b id="myPeerId">Gerando...</b>
+            </div>
+            <div style="display:flex; gap:6px;">
+                <input type="text" id="remotePeerInput" placeholder="Código do seu Par..." style="margin-bottom:0;">
+                <button class="btn-small" onclick="connectToPeer()">Conectar</button>
+            </div>
+        </section>
+
+        <!-- Tempo Real & Coerência Cardíaca -->
+        <section class="card">
+            <div class="card-title">
+                <span>✦ Sintonia Temporal & Astral</span>
+                <span id="moonPhase" style="font-size: 0.8rem; color: var(--aura-blue);">Calculando...</span>
             </div>
             
             <div class="live-timer">
@@ -404,285 +370,293 @@
                 <div class="timer-unit"><div class="num" id="tSecs">0</div><div class="label">Seg</div></div>
             </div>
 
-            <!-- Biorritmo Diário -->
-            <div class="bio-container">
-                <div class="bio-row">
-                    <span>Sintonia Emocional</span>
-                    <div class="bio-bar-bg"><div class="bio-bar-fill" id="bioEmocional"></div></div>
-                </div>
-                <div class="bio-row">
-                    <span>Sintonia Física</span>
-                    <div class="bio-bar-bg"><div class="bio-bar-fill" id="bioFisico"></div></div>
-                </div>
-                <div class="bio-row">
-                    <span>Sintonia Intelectual</span>
-                    <div class="bio-bar-bg"><div class="bio-bar-fill" id="bioIntelectual"></div></div>
-                </div>
+            <!-- Coerência Cardíaca -->
+            <div style="text-align:center; margin-top:10px;">
+                <p style="font-size:0.75rem; opacity:0.8;">Coerência Cardíaca (Técnica 4-7-8)</p>
+                <div class="breath-circle" id="breathCircle">Toque p/ Iniciar</div>
+                <button class="btn-small" onclick="toggleBreathing()">🫁 Alternar Guiamento</button>
             </div>
-
-            <button class="btn-action" style="margin-top:8px;" onclick="triggerTelepathicPulse(event)">💫 Enviar Ondas de Pulso</button>
         </section>
 
-        <!-- Solfeggio & Gerador Ambience Avançado -->
+        <!-- Sintetizador Sonoro Circadiano -->
         <section class="card">
-            <div class="card-title">✨ Laboratório Sonoro (Solfeggio & Binaural)</div>
+            <div class="card-title">✨ Áudio Engine Circadiano</div>
             
+            <p id="circadianRecommendation" style="font-size:0.72rem; color:var(--emerald); margin-bottom:8px;"></p>
+
             <select id="freqSelect">
                 <option value="528">528 Hz — Amor & Transformação</option>
                 <option value="432">432 Hz — Harmonia Universal</option>
-                <option value="639">639 Hz — Relacionamentos & Conexão</option>
+                <option value="639">639 Hz — Conexão & Relacionamentos</option>
+                <option value="852">852 Hz — Intuição & Despertar Espiritual</option>
             </select>
 
             <select id="ambientSelect">
                 <option value="none">Sem Som Ambiente</option>
-                <option value="rain">Som de Chuva Suave</option>
-                <option value="waves">Ondas do Mar</option>
-                <option value="pink">Ruído Rosa Celestial</option>
+                <option value="rain">Chuva Celestial Suave</option>
+                <option value="waves">Ondas do Mar Quântico</option>
+                <option value="pink">Ruído Rosa Cósmico</option>
             </select>
-            
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <select id="meditationTimer" style="margin-bottom:0; width:50%;">
-                    <option value="0">Livre</option>
-                    <option value="3">3 min</option>
-                    <option value="5">5 min</option>
-                    <option value="10">10 min</option>
-                </select>
-                <button class="btn-small" id="solfeggioBtn" style="width:45%;" onclick="toggleSolfeggio()">▶ Iniciar Áudio</button>
-            </div>
-            <p id="timerCountdown" style="font-size:0.75rem; color:var(--aura-blue); text-align:center; margin-top:6px; display:none;"></p>
+
+            <button class="btn-action" id="solfeggioBtn" onclick="toggleSolfeggio()">▶ Iniciar Áudio Circadiano</button>
         </section>
 
-        <!-- Baú das Memórias (Unificado com Filtro) -->
+        <!-- Baú de Memórias, Voz, Sonhos & Fotos com Aura -->
         <section class="card">
-            <div class="card-title">📖 Baú de Memórias & Voz</div>
+            <div class="card-title">📖 Baú do Espaço-Tempo</div>
             
-            <textarea id="diaryInput" rows="2" placeholder="Escreva uma nota sagrada..."></textarea>
-            <div style="display:flex; gap:8px; margin-top:4px;">
-                <button class="btn-small" style="flex:1;" onclick="saveDiaryEntry()">✏️ Salvar Nota</button>
-                <button class="btn-small btn-record" id="recordBtn" style="flex:1;" onclick="toggleRecording()">● Gravar Voz</button>
+            <textarea id="diaryInput" rows="2" placeholder="Escreva uma nota, sonho ou segredo..."></textarea>
+            
+            <div style="display:flex; gap:6px; flex-wrap:wrap; margin-bottom:8px;">
+                <button class="btn-small" style="flex:1;" onclick="saveEntry('text')">✏️ Nota</button>
+                <button class="btn-small" style="flex:1;" onclick="saveEntry('dream')">🌙 Sonho</button>
+                <button class="btn-small btn-record" id="recordBtn" style="flex:1;" onclick="toggleRecording()">● Voz</button>
+            </div>
+
+            <!-- Upload com Filtro de Aura -->
+            <div style="border-top: 1px dashed rgba(255,255,255,0.1); padding-top:8px;">
+                <p style="font-size:0.72rem; opacity:0.8; margin-bottom:4px;">Anexar Foto com Filtro de Aura:</p>
+                <input type="file" id="photoInput" accept="image/*" onchange="processAuraPhoto(event)">
             </div>
 
             <div class="tab-bar">
                 <button class="tab-btn active" id="tabAll" onclick="filterMemories('all')">Todos</button>
-                <button class="tab-btn" id="tabText" onclick="filterMemories('text')">Notas</button>
-                <button class="tab-btn" id="tabAudio" onclick="filterMemories('audio')">Áudios</button>
+                <button class="tab-btn" onclick="filterMemories('text')">Notas</button>
+                <button class="tab-btn" onclick="filterMemories('dream')">Sonhos</button>
+                <button class="tab-btn" onclick="filterMemories('audio')">Áudios</button>
+                <button class="tab-btn" onclick="filterMemories('photo')">Auras</button>
             </div>
 
             <div class="notes-list" id="memoriesList"></div>
         </section>
 
-        <!-- Sinastria Numerológica -->
+        <!-- Cápsula do Tempo Criptografada -->
         <section class="card">
-            <div class="card-title">🔮 Sinastria Vibracional</div>
-            <div style="display:flex; gap:8px; margin-bottom:8px;">
-                <input type="text" id="name1" placeholder="Seu Nome">
-                <input type="text" id="name2" placeholder="Nome do Par">
-            </div>
-            <button class="btn-small" style="width:100%;" onclick="calculateSynastry()">Calcular Sintonia</button>
-            <p id="synastryResult" style="font-size:0.8rem; text-align:center; color:var(--gold); margin-top:8px; font-style:italic;"></p>
+            <div class="card-title">⏳ Cápsula do Tempo</div>
+            <p style="font-size:0.72rem; opacity:0.8; margin-bottom:8px;">Envie uma mensagem selada para abrir no futuro:</p>
+            <textarea id="capsuleInput" rows="2" placeholder="Mensagem para o futuro..."></textarea>
+            <input type="datetime-local" id="capsuleUnlockDate">
+            <button class="btn-action" onclick="saveTimeCapsule()">🔒 Trancar Cápsula</button>
+            <div class="notes-list" id="capsulesList" style="margin-top:10px;"></div>
         </section>
 
-        <!-- Estações Protegidas -->
+        <!-- Notificações de Presença -->
         <section class="card">
-            <div class="card-title">📻 Estações Protegidas</div>
-            <div class="station-btn" onclick="selectStation('0505', 'https://www.youtube.com/embed/jfKfPfyJRdk?autoplay=1')">
-                <span>✧ Frequência Amor Padrão</span>
-                <span style="color:var(--gold); font-size:0.85rem;">🔒 0505</span>
-            </div>
-            <div class="station-btn" onclick="selectStation('1206', 'https://www.youtube.com/embed/5qap5aO4i9A?autoplay=1')">
-                <span>✧ O Pedido Especial</span>
-                <span style="color:var(--gold); font-size:0.85rem;">🔒 1206</span>
-            </div>
-
-            <div id="youtube-player-container">
-                <iframe id="ytPlayer" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-            </div>
+            <div class="card-title">🔔 Lembretes de Presença</div>
+            <p style="font-size:0.72rem; opacity:0.8; margin-bottom:8px;">Ative momentos guiados diários no celular:</p>
+            <button class="btn-small" style="width:100%;" onclick="requestNotificationPermission()">Ativar Micro-momentos de Presença</button>
         </section>
 
-        <!-- Oráculo Diário -->
-        <section class="card">
-            <div class="card-title">🔮 Oráculo Diário</div>
-            <div style="text-align:center;">
-                <p id="oracleMessage" style="font-family:'Cormorant Garamond', serif; font-size:1.15rem; min-height:45px;">"Toque para sintonizar a carta do dia..."</p>
-                <button class="btn-action" style="margin-top:8px;" onclick="drawOracleCard()">Tirar Carta</button>
-            </div>
-        </section>
-
-        <!-- Dev, Backup & Restauração -->
-        <div class="dev-tools">
-            <p style="opacity:0.6; margin-bottom: 6px; font-size:0.75rem;">Backup & Utilitários PWA</p>
-            <button class="btn-small" onclick="exportAppData()">💾 Exportar Backup</button>
+        <!-- Utilitários PWA e Backup -->
+        <div style="text-align:center; opacity:0.7; font-size:0.75rem; margin-top:10px;">
+            <button class="btn-small" onclick="exportAppData()">💾 Exportar Backup Criptografado</button>
             <button class="btn-small" onclick="document.getElementById('importFile').click()">📂 Importar Backup</button>
             <input type="file" id="importFile" style="display:none;" accept=".json" onchange="importAppData(event)">
-            <br>
-            <button class="btn-small" onclick="generateAndDownloadIcon(192)">Icon 192px</button>
-            <button class="btn-small" onclick="generateAndDownloadIcon(512)">Icon 512px</button>
         </div>
-    </div>
 
-    <!-- Modal de Senha -->
-    <div class="modal" id="passwordModal">
-        <div class="modal-content">
-            <h3 style="font-family:'Cormorant Garamond'; color:var(--gold); font-size:1.6rem;">Frequência Protegida</h3>
-            <p style="font-size:0.8rem; opacity:0.8; margin-top:5px;">Digite a senha da estação:</p>
-            <input type="password" id="passInput" maxlength="4" placeholder="••••">
-            <button class="btn-action" onclick="unlockStation()">Desbloquear</button>
-        </div>
     </div>
 
     <script>
-        /* --- 0. Vibração e Feedback --- */
+        /* --- 0. Feedback Háptico --- */
         function vibrateDevice(pattern = [30]) {
             if ("vibrate" in navigator) navigator.vibrate(pattern);
         }
 
-        function triggerTelepathicPulse(e) {
-            vibrateDevice([50, 40, 80]);
-            const x = e ? (e.clientX || window.innerWidth / 2) : window.innerWidth / 2;
-            const y = e ? (e.clientY || window.innerHeight / 2) : window.innerHeight / 2;
-            
-            for (let i = 0; i < 25; i++) {
-                touchParticles.push({
-                    x: x, y: y,
-                    vx: (Math.random() - 0.5) * 8,
-                    vy: (Math.random() - 0.5) * 8,
-                    radius: Math.random() * 4 + 2,
-                    alpha: 1
-                });
-            }
+        /* --- 1. Geometria Sagrada 3D em Tempo Real (Three.js) --- */
+        const canvas3d = document.getElementById('canvas3d');
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ canvas: canvas3d, alpha: true, antialias: true });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+        // Objeto Merkaba (Icosaedro & Torus)
+        const geometry = new THREE.IcosahedronGeometry(2, 1);
+        const material = new THREE.MeshBasicMaterial({ color: 0xa066ff, wireframe: true, transparent: true, opacity: 0.35 });
+        const merkaba = new THREE.Mesh(geometry, material);
+        scene.add(merkaba);
+
+        const torusGeo = new THREE.TorusGeometry(3.5, 0.05, 16, 100);
+        const torusMat = new THREE.MeshBasicMaterial({ color: 0x00d4ff, wireframe: true, transparent: true, opacity: 0.25 });
+        const torus = new THREE.Mesh(torusGeo, torusMat);
+        scene.add(torus);
+
+        camera.position.z = 6;
+
+        let audioPulseVal = 0;
+        function animate3D() {
+            requestAnimationFrame(animate3D);
+            merkaba.rotation.x += 0.003;
+            merkaba.rotation.y += 0.005;
+            torus.rotation.x -= 0.002;
+            torus.rotation.y += 0.004;
+
+            const scale = 1 + audioPulseVal * 0.2;
+            merkaba.scale.set(scale, scale, scale);
+
+            renderer.render(scene, camera);
+        }
+        animate3D();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        /* --- 2. Criptografia Militar Local (Web Crypto API AES-GCM) --- */
+        async function getCryptoKey() {
+            const pass = document.getElementById('masterPass').value || "ChavePadraoVibracional0505";
+            const enc = new TextEncoder();
+            const keyMaterial = await crypto.subtle.importKey("raw", enc.encode(pass), { name: "PBKDF2" }, false, ["deriveKey"]);
+            return crypto.subtle.deriveKey(
+                { name: "PBKDF2", salt: enc.encode("NossaFrequenciaSalt"), iterations: 100000, hash: "SHA-256" },
+                keyMaterial, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]
+            );
         }
 
-        /* --- 1. Canvas Constelação Dinâmica --- */
-        const canvas = document.getElementById('starsCanvas');
-        const ctx = canvas.getContext('2d');
-        let stars = [], touchParticles = [], audioLevel = 0;
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
+        async function encryptData(text) {
+            try {
+                const key = await getCryptoKey();
+                const iv = crypto.getRandomValues(new Uint8Array(12));
+                const enc = new TextEncoder();
+                const encrypted = await crypto.subtle.encrypt({ name: "AES-GCM", iv: iv }, key, enc.encode(text));
+                return { iv: Array.from(iv), data: Array.from(new Uint8Array(encrypted)) };
+            } catch(e) { return text; }
         }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
 
-        for (let i = 0; i < 90; i++) {
-            stars.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.4,
-                vy: (Math.random() - 0.5) * 0.4,
-                radius: Math.random() * 1.8 + 1,
-                alpha: Math.random()
+        async function decryptData(obj) {
+            if (typeof obj === 'string') return obj;
+            try {
+                const key = await getCryptoKey();
+                const iv = new Uint8Array(obj.iv);
+                const data = new Uint8Array(obj.data);
+                const decrypted = await crypto.subtle.decrypt({ name: "AES-GCM", iv: iv }, key, data);
+                return new TextDecoder().decode(decrypted);
+            } catch(e) { return "🔒 [Conteúdo Protegido por Senha Mestra]"; }
+        }
+
+        /* --- 3. Conexão P2P (PeerJS) --- */
+        let peer = new Peer(), conn = null;
+        peer.on('open', id => { document.getElementById('myPeerId').innerText = id; });
+        peer.on('connection', c => {
+            conn = c; setupPeerEvents();
+        });
+
+        function connectToPeer() {
+            const remoteId = document.getElementById('remotePeerInput').value.trim();
+            if (!remoteId) return;
+            conn = peer.connect(remoteId);
+            setupPeerEvents();
+        }
+
+        function setupPeerEvents() {
+            conn.on('open', () => {
+                document.getElementById('p2pStatus').innerText = "● Sincronizado";
+                document.getElementById('p2pStatus').style.color = "var(--emerald)";
+                vibrateDevice([100, 50, 100]);
             });
-        }
-
-        function drawStars() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            for (let i = 0; i < stars.length; i++) {
-                let s1 = stars[i];
-                s1.x += s1.vx; s1.y += s1.vy;
-                if (s1.x < 0 || s1.x > canvas.width) s1.vx *= -1;
-                if (s1.y < 0 || s1.y > canvas.height) s1.vy *= -1;
-
-                ctx.beginPath();
-                ctx.arc(s1.x, s1.y, s1.radius + audioLevel * 2, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(255, 255, 255, ${s1.alpha})`;
-                ctx.fill();
-
-                for (let j = i + 1; j < stars.length; j++) {
-                    let s2 = stars[j];
-                    let dist = Math.hypot(s1.x - s2.x, s1.y - s2.y);
-                    if (dist < 90) {
-                        ctx.beginPath();
-                        ctx.moveTo(s1.x, s1.y);
-                        ctx.lineTo(s2.x, s2.y);
-                        ctx.strokeStyle = `rgba(160, 102, 255, ${0.2 * (1 - dist / 90)})`;
-                        ctx.lineWidth = 0.6;
-                        ctx.stroke();
-                    }
+            conn.on('data', data => {
+                if (data.type === 'pulse') {
+                    vibrateDevice([60, 40, 90]);
+                    audioPulseVal = 0.8;
+                    setTimeout(() => audioPulseVal = 0, 500);
                 }
-            }
-
-            touchParticles.forEach((p, i) => {
-                ctx.beginPath();
-                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(0, 212, 255, ${p.alpha})`;
-                ctx.fill();
-                p.x += p.vx; p.y += p.vy; p.alpha -= 0.02;
-                if (p.alpha <= 0) touchParticles.splice(i, 1);
             });
-
-            requestAnimationFrame(drawStars);
         }
-        drawStars();
 
-        /* --- 2. Contador & Biorritmo --- */
+        function triggerP2PPulse() {
+            vibrateDevice([40]);
+            audioPulseVal = 0.6;
+            setTimeout(() => audioPulseVal = 0, 400);
+            if (conn && conn.open) conn.send({ type: 'pulse' });
+        }
+
+        /* --- 4. Fase Lunar Astral & Timer --- */
         const startDate = new Date('2023-05-05T00:00:00');
 
-        function updateTimerAndBiorhythm() {
+        function getMoonPhase(date) {
+            let year = date.getFullYear(), month = date.getMonth() + 1, day = date.getDate();
+            if (month < 3) { year--; month += 12; }
+            month++;
+            let c = 3.6525 * year, e = 30.6 * month, jd = c + e + day - 694039.09;
+            jd /= 29.5305882;
+            let b = parseInt(jd);
+            jd -= b;
+            let phase = Math.round(jd * 8);
+            if (phase >= 8) phase = 0;
+            const phases = ["🌑 Nova", "🌒 Crescente", "🌓 Quarto Crescente", "🌔 Gibosa", "🌕 Cheia", "🌖 Minguante", "🌗 Quarto Minguante", "🌘 Minguante"];
+            return phases[phase];
+        }
+
+        function updateLiveStats() {
             const now = new Date();
             const diffMs = now - startDate;
-            const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diffMs / (1000 * 60 * 60)) % 24);
-            const mins = Math.floor((diffMs / (1000 * 60)) % 60);
-            const secs = Math.floor((diffMs / 1000) % 60);
+            document.getElementById('tDays').innerText = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            document.getElementById('tHours').innerText = String(Math.floor((diffMs / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+            document.getElementById('tMins').innerText = String(Math.floor((diffMs / (1000 * 60)) % 60)).padStart(2, '0');
+            document.getElementById('tSecs').innerText = String(Math.floor((diffMs / 1000) % 60)).padStart(2, '0');
 
-            document.getElementById('tDays').innerText = days;
-            document.getElementById('tHours').innerText = String(hours).padStart(2, '0');
-            document.getElementById('tMins').innerText = String(mins).padStart(2, '0');
-            document.getElementById('tSecs').innerText = String(secs).padStart(2, '0');
+            document.getElementById('moonPhase').innerText = getMoonPhase(now);
 
-            // Cálculo Biorritmo em porcentagem
-            const emo = Math.abs(Math.sin((days % 28) / 28 * Math.PI * 2)) * 100;
-            const fis = Math.abs(Math.sin((days % 23) / 23 * Math.PI * 2)) * 100;
-            const intel = Math.abs(Math.sin((days % 33) / 33 * Math.PI * 2)) * 100;
-
-            document.getElementById('bioEmocional').style.width = `${Math.max(20, emo)}%`;
-            document.getElementById('bioFisico').style.width = `${Math.max(20, fis)}%`;
-            document.getElementById('bioIntelectual').style.width = `${Math.max(20, intel)}%`;
+            // Recomendador Circadiano
+            const hour = now.getHours();
+            const rec = document.getElementById('circadianRecommendation');
+            if (hour >= 22 || hour < 6) rec.innerText = "💡 Circadiano: Frequência 432 Hz + Ondas para Sono Profundo";
+            else if (hour >= 6 && hour < 12) rec.innerText = "💡 Circadiano: Frequência 528 Hz para Despertar e Foco";
+            else rec.innerText = "💡 Circadiano: Frequência 639 Hz para Harmonizar o Dia";
         }
-        setInterval(updateTimerAndBiorhythm, 1000);
-        updateTimerAndBiorhythm();
+        setInterval(updateLiveStats, 1000);
+        updateLiveStats();
 
-        /* --- 3. Áudio Engine Avançado (Solfeggio + Ambience) --- */
-        let audioCtx = null, osc = null, gainNode = null, ambientNode = null, isPlayingSolfeggio = false, meditationInterval = null;
-
-        function createAmbientSound(type, ctx) {
-            const bufferSize = ctx.sampleRate * 2;
-            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
-            const data = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-
-            const noise = ctx.createBufferSource();
-            noise.buffer = buffer; noise.loop = true;
-
-            const filter = ctx.createBiquadFilter();
-            const gain = ctx.createGain();
-
-            if (type === 'rain') {
-                filter.type = 'lowpass'; filter.frequency.value = 700;
-                gain.gain.value = 0.05;
-            } else if (type === 'waves') {
-                filter.type = 'bandpass'; filter.frequency.value = 400;
-                gain.gain.value = 0.08;
-            } else if (type === 'pink') {
-                filter.type = 'lowpass'; filter.frequency.value = 1200;
-                gain.gain.value = 0.03;
+        /* --- 5. Coerência Cardíaca 4-7-8 --- */
+        let isBreathing = false, breathTimer = null;
+        function toggleBreathing() {
+            const circle = document.getElementById('breathCircle');
+            if (!isBreathing) {
+                isBreathing = true;
+                runBreathCycle(circle);
+            } else {
+                isBreathing = false;
+                clearTimeout(breathTimer);
+                circle.className = "breath-circle";
+                circle.innerText = "Toque p/ Iniciar";
             }
-
-            noise.connect(filter); filter.connect(gain);
-            return { noise, gain };
         }
 
+        function runBreathCycle(circle) {
+            if (!isBreathing) return;
+            circle.className = "breath-circle inhale";
+            circle.innerText = "Inspire (4s)";
+            vibrateDevice([30]);
+
+            breathTimer = setTimeout(() => {
+                if (!isBreathing) return;
+                circle.className = "breath-circle hold";
+                circle.innerText = "Retenha (7s)";
+                
+                breathTimer = setTimeout(() => {
+                    if (!isBreathing) return;
+                    circle.className = "breath-circle exhale";
+                    circle.innerText = "Expire (8s)";
+                    vibrateDevice([50]);
+
+                    breathTimer = setTimeout(() => {
+                        runBreathCycle(circle);
+                    }, 8000);
+                }, 7000);
+            }, 4000);
+        }
+
+        /* --- 6. Áudio Engine Avançado --- */
+        let audioCtx = null, osc = null, gainNode = null, isPlaying = false;
         function toggleSolfeggio() {
-            vibrateDevice([25]);
+            vibrateDevice([30]);
             const btn = document.getElementById('solfeggioBtn');
             const freq = parseFloat(document.getElementById('freqSelect').value);
-            const ambientType = document.getElementById('ambientSelect').value;
-            const medMinutes = parseInt(document.getElementById('meditationTimer').value);
-            const timerLabel = document.getElementById('timerCountdown');
 
-            if (!isPlayingSolfeggio) {
+            if (!isPlaying) {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 osc = audioCtx.createOscillator();
                 gainNode = audioCtx.createGain();
@@ -696,74 +670,50 @@
                 gainNode.connect(audioCtx.destination);
                 osc.start();
 
-                if (ambientType !== 'none') {
-                    ambientNode = createAmbientSound(ambientType, audioCtx);
-                    ambientNode.gain.connect(audioCtx.destination);
-                    ambientNode.noise.start();
-                }
-
-                isPlayingSolfeggio = true;
+                isPlaying = true;
                 btn.innerText = "⏸ Pausar Áudio";
-                audioLevel = 0.5;
-
-                if (medMinutes > 0) {
-                    let totalSeconds = medMinutes * 60;
-                    timerLabel.style.display = 'block';
-                    meditationInterval = setInterval(() => {
-                        totalSeconds--;
-                        const m = Math.floor(totalSeconds / 60);
-                        const s = totalSeconds % 60;
-                        timerLabel.innerText = `Restante: ${m}:${String(s).padStart(2, '0')}`;
-                        if (totalSeconds <= 0) {
-                            clearInterval(meditationInterval);
-                            toggleSolfeggio();
-                        }
-                    }, 1000);
-                }
+                audioPulseVal = 0.5;
             } else {
-                if (meditationInterval) clearInterval(meditationInterval);
-                timerLabel.style.display = 'none';
-
                 gainNode.gain.linearRampToValueAtTime(0, audioCtx.currentTime + 1);
                 setTimeout(() => {
                     if (audioCtx) audioCtx.close();
-                    isPlayingSolfeggio = false;
-                    btn.innerText = "▶ Iniciar Áudio";
-                    audioLevel = 0;
+                    isPlaying = false;
+                    btn.innerText = "▶ Iniciar Áudio Circadiano";
+                    audioPulseVal = 0;
                 }, 1000);
             }
         }
 
-        /* --- 4. Banco de Dados IndexedDB v6 --- */
+        /* --- 7. Banco de Dados IndexedDB (v7) --- */
         let db;
-        const request = indexedDB.open("NossaFrequenciaDBv6", 1);
+        const request = indexedDB.open("NossaFrequenciaDBv7", 1);
         request.onupgradeneeded = e => {
             db = e.target.result;
             db.createObjectStore("memories", { keyPath: "id", autoIncrement: true });
+            db.createObjectStore("capsules", { keyPath: "id", autoIncrement: true });
         };
-        request.onsuccess = e => { db = e.target.result; loadMemories('all'); };
+        request.onsuccess = e => { db = e.target.result; loadMemories('all'); loadCapsules(); };
 
         let currentFilter = 'all';
         function filterMemories(type) {
             currentFilter = type;
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            if (type === 'all') document.getElementById('tabAll').classList.add('active');
-            if (type === 'text') document.getElementById('tabText').classList.add('active');
-            if (type === 'audio') document.getElementById('tabAudio').classList.add('active');
             loadMemories(type);
         }
 
-        function saveDiaryEntry() {
+        async function saveEntry(type) {
             const input = document.getElementById('diaryInput');
             if (!input.value.trim()) return;
             vibrateDevice([30]);
 
-            const tx = db.transaction("memories", "readwrite");
+            const encryptedContent = await encryptData(input.value.trim());
             const dateStr = new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' });
-            tx.objectStore("memories").add({ type: 'text', content: input.value.trim(), date: dateStr });
+            
+            const tx = db.transaction("memories", "readwrite");
+            tx.objectStore("memories").add({ type: type, content: encryptedContent, date: dateStr });
             tx.oncomplete = () => { input.value = ''; loadMemories(currentFilter); };
         }
 
+        /* Gravador de Voz */
         let mediaRecorder, audioChunks = [], isRecording = false;
         async function toggleRecording() {
             vibrateDevice([35]);
@@ -790,33 +740,73 @@
                 mediaRecorder.stop();
                 isRecording = false;
                 btn.classList.remove('recording');
-                btn.innerText = "● Gravar Voz";
+                btn.innerText = "● Voz";
             }
         }
 
-        function loadMemories(filter) {
+        /* Processador de Fotos com Filtro de Aura */
+        function processAuraPhoto(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = event => {
+                const img = new Image();
+                img.onload = () => {
+                    const c = document.createElement('canvas');
+                    c.width = img.width; c.height = img.height;
+                    const ctx = c.getContext('2d');
+                    ctx.drawImage(img, 0, 0);
+
+                    // Efeito de Aura Cobre
+                    ctx.globalCompositeOperation = 'screen';
+                    const grad = ctx.createRadialGradient(c.width/2, c.height/2, 10, c.width/2, c.height/2, c.width/1.2);
+                    grad.addColorStop(0, 'rgba(0, 212, 255, 0.4)');
+                    grad.addColorStop(1, 'rgba(160, 102, 255, 0.4)');
+                    ctx.fillStyle = grad;
+                    ctx.fillRect(0, 0, c.width, c.height);
+
+                    const auraDataUrl = c.toDataURL('image/jpeg', 0.85);
+                    const tx = db.transaction("memories", "readwrite");
+                    const dateStr = new Date().toLocaleDateString('pt-BR', { day:'2-digit', month:'2-digit' });
+                    tx.objectStore("memories").add({ type: 'photo', content: auraDataUrl, date: dateStr });
+                    tx.oncomplete = () => loadMemories(currentFilter);
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function loadMemories(filter) {
             const container = document.getElementById('memoriesList');
             container.innerHTML = '';
             const tx = db.transaction("memories", "readonly");
 
-            tx.objectStore("memories").openCursor().onsuccess = e => {
+            tx.objectStore("memories").openCursor().onsuccess = async e => {
                 const cursor = e.target.result;
                 if (cursor) {
                     const { id, type, content, date } = cursor.value;
                     if (filter === 'all' || filter === type) {
                         const item = document.createElement('div');
                         item.className = 'note-card';
-                        if (type === 'text') {
+
+                        if (type === 'text' || type === 'dream') {
+                            const decText = await decryptData(content);
                             item.innerHTML = `
-                                <div class="date">✧ Nota • ${date}</div>
-                                <div class="text">${content}</div>
+                                <div class="date">✧ ${type === 'dream' ? 'Sonho' : 'Nota'} • ${date}</div>
+                                <div style="font-size:0.82rem; white-space:pre-wrap;">${decText}</div>
                                 <button class="btn-del" style="position:absolute; top:8px; right:8px;" onclick="deleteMemory(${id})">🗑️</button>
                             `;
-                        } else {
+                        } else if (type === 'audio') {
                             const url = (content instanceof Blob) ? URL.createObjectURL(content) : content;
                             item.innerHTML = `
                                 <div class="date">✧ Voz • ${date}</div>
                                 <audio controls src="${url}"></audio>
+                                <button class="btn-del" style="position:absolute; top:8px; right:8px;" onclick="deleteMemory(${id})">🗑️</button>
+                            `;
+                        } else if (type === 'photo') {
+                            item.innerHTML = `
+                                <div class="date">✧ Aura Capturada • ${date}</div>
+                                <img src="${content}" class="aura-img">
                                 <button class="btn-del" style="position:absolute; top:8px; right:8px;" onclick="deleteMemory(${id})">🗑️</button>
                             `;
                         }
@@ -833,68 +823,70 @@
             tx.oncomplete = () => loadMemories(currentFilter);
         }
 
-        /* --- 5. Sinastria & Oráculo --- */
-        function calculateSynastry() {
-            vibrateDevice([30]);
-            const n1 = document.getElementById('name1').value.toLowerCase().replace(/[^a-z]/g, '');
-            const n2 = document.getElementById('name2').value.toLowerCase().replace(/[^a-z]/g, '');
-            if (!n1 || !n2) return;
+        /* --- 8. Cápsulas do Tempo --- */
+        async function saveTimeCapsule() {
+            const input = document.getElementById('capsuleInput');
+            const unlockInput = document.getElementById('capsuleUnlockDate');
+            if (!input.value.trim() || !unlockInput.value) return alert('Preencha a mensagem e a data!');
 
-            let sum = 0;
-            for (let char of (n1 + n2)) sum += char.charCodeAt(0) - 96;
-            let val = (sum % 9) || 9;
-
-            const meanings = {
-                1: "Vibração 1: Liderança Espiritual & União Divina",
-                2: "Vibração 2: Harmonia Perfeita, Paz & Intuição",
-                3: "Vibração 3: Alegria, Criatividade & Expansão do Amor",
-                4: "Vibração 4: Estabilidade, Estrutura & Raízes Sagradas",
-                5: "Vibração 5: Liberdade Espiritual & Paixão Transformadora",
-                6: "Vibração 6: Cura, Proteção Sagrada & Família",
-                7: "Vibração 7: Conexão Mística de Almas Antigas",
-                8: "Vibração 8: Prosperidade, Força e Poder Conjunto",
-                9: "Vibração 9: Amor Incondicional & Elevação"
+            const enc = await encryptData(input.value.trim());
+            const tx = db.transaction("capsules", "readwrite");
+            tx.objectStore("capsules").add({
+                content: enc,
+                unlockDate: new Date(unlockInput.value).getTime()
+            });
+            tx.oncomplete = () => {
+                input.value = ''; unlockInput.value = '';
+                loadCapsules();
             };
-
-            document.getElementById('synastryResult').innerText = meanings[val];
         }
 
-        const oracleCards = [
-            "Onde quer que o universo nos leve, nossa frequência ressoa na mesma vibração.",
-            "A geometria do nosso encontro já estava desenhada nas estrelas.",
-            "Amor não é um ponto de chegada, é a própria órbita que percorremos juntos.",
-            "Sua presença transforma o ruído do mundo em harmonia pura."
-        ];
-        function drawOracleCard() {
-            vibrateDevice([25]);
-            document.getElementById('oracleMessage').innerText = `"${oracleCards[Math.floor(Math.random() * oracleCards.length)]}"`;
+        function loadCapsules() {
+            const container = document.getElementById('capsulesList');
+            container.innerHTML = '';
+            const tx = db.transaction("capsules", "readonly");
+            const now = new Date().getTime();
+
+            tx.objectStore("capsules").openCursor().onsuccess = async e => {
+                const cursor = e.target.result;
+                if (cursor) {
+                    const { id, content, unlockDate } = cursor.value;
+                    const item = document.createElement('div');
+                    item.className = 'note-card';
+
+                    if (now >= unlockDate) {
+                        const dec = await decryptData(content);
+                        item.innerHTML = `<div class="date" style="color:var(--emerald);">🔓 Desbloqueado!</div><div>${dec}</div>`;
+                    } else {
+                        const dateStr = new Date(unlockDate).toLocaleString('pt-BR');
+                        item.innerHTML = `<div class="date">🔒 Trancado até ${dateStr}</div><div style="opacity:0.5;">Conteúdo selado no tempo...</div>`;
+                    }
+                    container.prepend(item);
+                    cursor.continue();
+                }
+            };
         }
 
-        /* --- 6. Estações & Player --- */
-        let pendingUrl = '', requiredPass = '';
-        function selectStation(code, url) {
-            requiredPass = code; pendingUrl = url;
-            document.getElementById('passwordModal').classList.add('open');
-        }
-        function unlockStation() {
-            if (document.getElementById('passInput').value === requiredPass) {
-                document.getElementById('passwordModal').classList.remove('open');
-                document.getElementById('ytPlayer').src = pendingUrl;
-                document.getElementById('youtube-player-container').classList.add('active');
-            } else alert('Código incorreto!');
+        /* --- 9. Notificações de Presença --- */
+        function requestNotificationPermission() {
+            if ("Notification" in window) {
+                Notification.requestPermission().then(permission => {
+                    if (permission === "granted") {
+                        new Notification("Nossa Frequência", { body: "Sintonia de presença ativada com sucesso. 🌟" });
+                    }
+                });
+            }
         }
 
-        /* --- 7. Backup & Restauração --- */
+        /* --- 10. Backup & Restauração --- */
         function exportAppData() {
             const tx = db.transaction(["memories"], "readonly");
             tx.objectStore("memories").getAll().onsuccess = e => {
                 const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(e.target.result));
-                const downloadAnchor = document.createElement('a');
-                downloadAnchor.setAttribute("href", dataStr);
-                downloadAnchor.setAttribute("download", "nossa_frequencia_v6_backup.json");
-                document.body.appendChild(downloadAnchor);
-                downloadAnchor.click();
-                downloadAnchor.remove();
+                const a = document.createElement('a');
+                a.setAttribute("href", dataStr);
+                a.setAttribute("download", "nossa_frequencia_v7_backup.json");
+                document.body.appendChild(a); a.click(); a.remove();
             };
         }
 
@@ -907,60 +899,11 @@
                     const data = JSON.parse(e.target.result);
                     const tx = db.transaction(["memories"], "readwrite");
                     const store = tx.objectStore("memories");
-                    data.forEach(item => {
-                        delete item.id;
-                        store.add(item);
-                    });
-                    tx.oncomplete = () => {
-                        alert("Backup importado com sucesso!");
-                        loadMemories(currentFilter);
-                    };
-                } catch(err) { alert("Erro ao importar o arquivo."); }
+                    data.forEach(item => { delete item.id; store.add(item); });
+                    tx.oncomplete = () => { alert("Backup importado com sucesso!"); loadMemories(currentFilter); };
+                } catch(err) { alert("Erro ao importar backup."); }
             };
             reader.readAsText(file);
-        }
-
-        /* --- 8. Utilitários PWA --- */
-        let deferredPrompt;
-        window.addEventListener('beforeinstallprompt', e => {
-            e.preventDefault(); deferredPrompt = e;
-            document.getElementById('pwaInstallBanner').style.display = 'flex';
-        });
-        function installPWA() {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                deferredPrompt.userChoice.then(() => {
-                    document.getElementById('pwaInstallBanner').style.display = 'none';
-                });
-            }
-        }
-
-        function generateAndDownloadIcon(size) {
-            const iconCanvas = document.createElement('canvas');
-            iconCanvas.width = size; iconCanvas.height = size;
-            const ictx = iconCanvas.getContext('2d');
-            ictx.fillStyle = '#050a14'; ictx.fillRect(0, 0, size, size);
-
-            const center = size / 2, radius = size * 0.3, offset = size * 0.12;
-            ictx.beginPath(); ictx.arc(center - offset, center, radius, 0, Math.PI * 2);
-            ictx.strokeStyle = '#00d4ff'; ictx.lineWidth = size * 0.015; ictx.stroke();
-
-            ictx.beginPath(); ictx.arc(center + offset, center, radius, 0, Math.PI * 2);
-            ictx.strokeStyle = '#a066ff'; ictx.lineWidth = size * 0.015; ictx.stroke();
-
-            ictx.fillStyle = '#ffd700';
-            ictx.font = `bold ${size * 0.18}px 'Cormorant Garamond', serif`;
-            ictx.textAlign = 'center'; ictx.textBaseline = 'middle';
-            ictx.fillText('05', center, center);
-
-            const link = document.createElement('a');
-            link.download = `icon-${size}.png`;
-            link.href = iconCanvas.toDataURL('image/png');
-            link.click();
-        }
-
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('sw.js').catch(() => {});
         }
     </script>
 </body>
