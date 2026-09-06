@@ -1,596 +1,125 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#050a14">
-    <title>Nossa Frequência & Guardião</title>
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <!-- Bibliotecas Externas -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <style>
-        /* === VARIÁVEIS E CORES === */
-        :root {
-            --aura-blue: #00d4ff; --aura-purple: #a066ff; --gold: #ffd700;
-            --emerald: #00f5d4; --danger: #ff4d6d; --pink-balloon: #ff85a1;
-            --deep-night: #050a14; --glass: rgba(15, 20, 35, 0.94);
-            --border-glow: rgba(160, 102, 255, 0.4);
-        }
-
-        /* === RESET E BODY === */
-        * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; -webkit-tap-highlight-color: transparent; }
-        body { background-color: var(--deep-night); color: #ffffff; font-family: 'Montserrat', sans-serif; min-height: 100vh; overflow-x: hidden; transition: filter 1.5s ease; }
-        body.calm-mode { filter: brightness(0.5) contrast(0.9); }
-
-        /* === FUNDO 3D === */
-        #canvas3d { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 0; pointer-events: none; }
-
-        /* === TOP BAR === */
-        .top-bar { position: fixed; top: 0; left: 0; width: 100%; z-index: 100; background: rgba(5, 10, 20, 0.95); border-bottom: 1px solid var(--border-glow); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(10px); }
-        .btn-top { background: rgba(255, 215, 0, 0.12); border: 1px solid var(--gold); color: var(--gold); padding: 8px 16px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: 600; transition: 0.3s; }
-        .btn-top:active { transform: scale(0.95); }
-
-        /* === CABEÇALHO GLOBAL === */
-        .global-header { position: relative; z-index: 1; margin: 80px auto 10px; text-align: center; }
-        .vesica-logo { width: 80px; height: 80px; margin: 0 auto 8px; filter: drop-shadow(0 0 15px var(--aura-blue)); cursor: pointer; }
-        h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; background: linear-gradient(135deg, #fff, var(--aura-blue), var(--aura-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        p.subtitle { font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
-
-        /* === CONTAINERS E CARDS === */
-        .container { position: relative; z-index: 1; width: 92%; max-width: 540px; margin: 0 auto 40px; padding: 10px; display: flex; flex-direction: column; gap: 16px; }
-        .card { background: var(--glass); border: 1px solid var(--border-glow); border-radius: 18px; padding: 18px; backdrop-filter: blur(16px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.7); }
-        .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--gold); margin-bottom: 12px; }
-
-        /* === INPUTS E BOTÕES === */
-        input, select, textarea { width: 100%; background: rgba(0,0,0,0.5); color: #fff; border: 1px solid var(--aura-purple); padding: 12px; border-radius: 10px; outline: none; font-size: 0.9rem; margin-bottom: 10px; font-family: inherit; }
-        .btn-action { background: linear-gradient(135deg, var(--aura-purple), var(--aura-blue)); border: none; color: white; padding: 12px; border-radius: 10px; cursor: pointer; font-weight: 600; width: 100%; font-size: 0.9rem; margin-bottom: 8px; transition: 0.2s; }
-        .btn-action:active { transform: scale(0.98); filter: brightness(1.2); }
-        .btn-calm { background: linear-gradient(135deg, #00f5d4, #00d4ff); color: #050a14; font-weight: 700; border: none; padding: 14px; border-radius: 12px; cursor: pointer; width: 100%; font-size: 1rem; box-shadow: 0 0 15px rgba(0, 245, 212, 0.4); }
-        .btn-small { background: rgba(255, 215, 0, 0.12); border: 1px solid var(--gold); color: var(--gold); padding: 10px 12px; border-radius: 8px; cursor: pointer; font-size: 0.85rem; margin: 4px 0; width: 100%; font-weight: 600;}
-
-        /* === ARIA CHAT === */
-        .aria-chat-box { background: rgba(0,0,0,0.5); border-radius: 12px; padding: 12px; height: 180px; overflow-y: auto; margin-bottom: 10px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.1); }
-        .aria-msg { margin-bottom: 8px; padding: 8px 12px; border-radius: 10px; max-width: 88%; line-height: 1.4; animation: fadeInMsg 0.3s ease; }
-        .aria-msg.aria { background: rgba(0, 212, 255, 0.15); border: 1px solid var(--aura-blue); color: #e0f7ff; }
-        .aria-msg.user { background: rgba(160, 102, 255, 0.2); border: 1px solid var(--aura-purple); margin-left: auto; text-align: right; }
-
-        @keyframes fadeInMsg { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-
-        /* === RESPIRAÇÃO E TIMER === */
-        .breathe-container { display: flex; flex-direction: column; align-items: center; justify-content: center; margin: 20px 0; }
-        .breathe-circle { width: 100px; height: 100px; border-radius: 50%; background: radial-gradient(circle, var(--emerald) 0%, transparent 70%); animation: breathe 10s infinite ease-in-out; display: flex; align-items: center; justify-content: center; }
-        .breathe-text { font-weight: bold; color: #fff; text-shadow: 0 0 5px #000; z-index: 2; position: absolute; }
-        @keyframes breathe { 0% { transform: scale(1); opacity: 0.4; } 40% { transform: scale(1.8); opacity: 1; } 60% { transform: scale(1.8); opacity: 1; } 100% { transform: scale(1); opacity: 0.4; } }
-
-        .timer-box { text-align: center; font-size: 1.5rem; font-family: 'Cormorant Garamond', serif; color: var(--pink-balloon); text-shadow: 0 0 10px rgba(255, 133, 161, 0.5); margin: 10px 0; }
-        
-        .timeline { border-left: 2px solid var(--aura-purple); padding-left: 15px; margin-top: 15px; font-size: 0.85rem; }
-        .timeline-item { margin-bottom: 15px; position: relative; }
-        .timeline-item::before { content: ''; position: absolute; left: -21px; top: 4px; width: 10px; height: 10px; background: var(--aura-blue); border-radius: 50%; }
-
-        /* === MODAL & UTILS === */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(5, 10, 20, 0.96); z-index: 300; display: none; padding: 20px; overflow-y: auto; backdrop-filter: blur(5px); }
-        .modal.active { display: flex; align-items: center; justify-content: center; animation: fadeIn 0.3s ease; }
-        .modal-content { width: 100%; max-width: 360px; background: var(--glass); border: 1px solid var(--gold); padding: 25px; border-radius: 20px; font-size: 0.88rem; text-align: center; }
-        .pin-input { font-size: 1.8rem; text-align: center; letter-spacing: 10px; font-weight: bold; margin: 15px 0; }
-        
-        .hidden-menu { display: none !important; }
-        .fade-in { animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Meu Portfólio</title>
+  
+  <!-- Importando o Tailwind CSS direto da nuvem (Sem instalação) -->
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="bg-gray-100 font-sans">
 
-    <!-- Fundo 3D -->
-    <canvas id="canvas3d"></canvas>
+  <!-- ================= MENU (NAVBAR) ================= -->
+  <nav class="bg-gray-900 text-white p-4 shadow-lg sticky top-0 z-50">
+    <div class="max-w-6xl mx-auto flex justify-between items-center">
+      <a href="#" class="text-2xl font-bold tracking-wider text-blue-400">
+        MeuPortfólio.
+      </a>
+      
+      <!-- Menu Desktop -->
+      <div class="hidden md:flex space-x-6">
+        <a href="#" class="hover:text-blue-400 transition">Início</a>
+        <a href="#projetos" class="hover:text-blue-400 transition">Projetos</a>
+        <a href="#sobre" class="hover:text-blue-400 transition">Sobre</a>
+      </div>
 
-    <!-- Barra Superior -->
-    <div class="top-bar">
-        <span style="font-family:'Cormorant Garamond'; color:var(--gold); font-size:1.15rem; font-weight:bold;">✦ Nossa Frequência</span>
-        <div>
-            <button class="btn-top" id="lockBtn" style="display:none; border-color:var(--danger); color:var(--danger);" onclick="lockSystem()">🔒 Sair</button>
-            <button class="btn-top" id="accessBtn" onclick="openPinModal()">🔑 Restrito</button>
+      <!-- Botão Menu Mobile -->
+      <button id="menu-btn" class="md:hidden text-white focus:outline-none text-2xl">
+        ☰
+      </button>
+    </div>
+
+    <!-- Menu Mobile Retrátil -->
+    <div id="mobile-menu" class="hidden md:hidden mt-4 space-y-2 flex-col items-center pb-4">
+      <a href="#" class="block py-2 hover:text-blue-400 text-center w-full">Início</a>
+      <a href="#projetos" class="block py-2 hover:text-blue-400 text-center w-full">Projetos</a>
+      <a href="#sobre" class="block py-2 hover:text-blue-400 text-center w-full">Sobre</a>
+    </div>
+  </nav>
+
+  <!-- ================= PÁGINA DE PROJETOS ================= -->
+  <section id="projetos" class="min-h-screen py-16 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-12 text-center">
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Meus Projetos</h1>
+        <p class="text-gray-600">
+          Uma coleção dos meus trabalhos anteriores e desenvolvimentos recentes.
+        </p>
+      </div>
+
+      <!-- Onde os projetos aparecerão dinamicamente -->
+      <div id="grid-projetos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <!-- Os cards serão injetados aqui pelo JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LÓGICA JAVASCRIPT ================= -->
+  <script>
+    // 1. Lógica para abrir/fechar o menu no celular
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    menuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+      mobileMenu.classList.toggle('flex');
+    });
+
+    // 2. Seus Dados de Projetos (Adicione os antigos aqui!)
+    const projetos = [
+      {
+        titulo: "Projeto Moderno 1",
+        descricao: "Este é o modelo do seu novo projeto, com design atualizado.",
+        tecnologias: ["HTML", "Tailwind CDN", "JS Puro"],
+        link: "#",
+        imagem: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop"
+      },
+      {
+        titulo: "Projeto Antigo (Reimaginado)",
+        descricao: "Descrição do seu projeto das frequências anteriores.",
+        tecnologias: ["HTML", "CSS", "Lógica"],
+        link: "#",
+        imagem: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=600&h=400&fit=crop"
+      },
+      {
+        titulo: "Sistema de Frequência",
+        descricao: "Projeto desenvolvido na disciplina anterior.",
+        tecnologias: ["JavaScript", "DOM", "CSS"],
+        link: "#",
+        imagem: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop"
+      }
+    ];
+
+    // 3. Renderizar os projetos na tela automaticamente
+    const gridProjetos = document.getElementById('grid-projetos');
+
+    projetos.forEach(projeto => {
+      // Gera as tags de tecnologia
+      const tagsHtml = projeto.tecnologias.map(tech => 
+        `<span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">${tech}</span>`
+      ).join('');
+
+      // Cria o HTML do Card
+      const cardHtml = `
+        <div class="bg-white rounded-xl shadow-md hover:shadow-2xl transition duration-300 overflow-hidden transform hover:-translate-y-2">
+          <img src="${projeto.imagem}" alt="${projeto.titulo}" class="w-full h-48 object-cover" />
+          <div class="p-6">
+            <h3 class="text-2xl font-bold text-gray-800 mb-2">${projeto.titulo}</h3>
+            <p class="text-gray-600 mb-4 h-12 overflow-hidden">${projeto.descricao}</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              ${tagsHtml}
+            </div>
+            <a href="${projeto.link}" class="inline-block bg-blue-600 text-white font-medium px-4 py-2 rounded hover:bg-blue-700 transition">
+              Ver Projeto Completo &rarr;
+            </a>
+          </div>
         </div>
-    </div>
+      `;
 
-    <!-- Cabeçalho Principal -->
-    <div class="global-header">
-        <svg class="vesica-logo" onclick="openPinModal()" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <circle cx="75" cy="100" r="60" stroke="#00d4ff" stroke-width="2.5" opacity="0.85"/>
-            <circle cx="125" cy="100" r="60" stroke="#a066ff" stroke-width="2.5" opacity="0.85"/>
-            <path d="M 100 51 A 60 60 0 0 1 100 149 A 60 60 0 0 1 100 51 Z" fill="rgba(255,217,0,0.18)" stroke="#ffd700" stroke-width="1.8"/>
-        </svg>
-        <h1 id="mainTitle">Nossa História</h1>
-        <p class="subtitle" id="mainSubtitle">ACERVO DE PROJETOS ESPECIAIS</p>
-    </div>
-
-    <!-- ================= MODULOS DO SISTEMA ================= -->
-
-    <!-- 1. ACERVO (PÚBLICO) -->
-    <div id="acervoView" class="container fade-in">
-        <section class="card" style="border-color: var(--aura-purple);">
-            <div class="card-title" style="color: #fff;">🕰️ Nosso Baú de Projetos</div>
-            <p style="font-size:0.8rem; margin-bottom:12px; color:#ccc;">Versões originais e criações especiais que desenvolvi para você.</p>
-            <button class="btn-small" style="border-color:var(--aura-blue); color:var(--aura-blue);" onclick="alert('Projeto Guardião: Preservado com sucesso.')">🛡️ Projeto Guardião (V 1.0)</button>
-            <button class="btn-small" style="border-color:var(--aura-purple); color:#d4a0ff;" onclick="alert('Projeto Aria: Versão original arquivada.')">🤖 Projeto Aria (Clássica)</button>
-            
-            <div class="timeline">
-                <div class="timeline-item"><b>O Início</b><br><span style="color:#aaa; font-size:0.75rem;">Onde tudo começou, nossa primeira faísca.</span></div>
-                <div class="timeline-item"><b>O Balão</b><br><span style="color:#aaa; font-size:0.75rem;">Um espaço para soltar ansiedades ao vento.</span></div>
-                <div class="timeline-item"><b>Sistema Atual</b><br><span style="color:#aaa; font-size:0.75rem;">A integração de todas as nossas frequências.</span></div>
-            </div>
-        </section>
-    </div>
-
-    <!-- 2. NOSSO TEMPO (NAMORADA 050526) -->
-    <div id="namoradaExtraView" class="container hidden-menu fade-in">
-        <section class="card" style="border-color: var(--pink-balloon);">
-            <div class="card-title" style="color: var(--pink-balloon);">⏳ Nosso Tempo</div>
-            <div id="relationshipTimer" class="timer-box">Carregando...</div>
-            <p style="font-size:0.75rem; text-align:center; color:#ccc;">Desde o primeiro dia.</p>
-        </section>
-
-        <section class="card">
-            <div class="card-title">✉️ Cápsula do Tempo</div>
-            <p style="font-size:0.8rem; margin-bottom:10px;">Escreva algo e tranque até uma data futura.</p>
-            <textarea id="capsuleMsg" rows="3" placeholder="Sua mensagem secreta..."></textarea>
-            <input type="date" id="capsuleDate">
-            <button class="btn-action" onclick="saveCapsule()">Trancar Cápsula 🔒</button>
-            <div id="capsuleStatus" style="margin-top:10px; font-size:0.8rem; color:var(--gold);"></div>
-        </section>
-    </div>
-
-    <!-- 3. BALÃO (NAMORADA 050526) -->
-    <div id="balaoView" class="container hidden-menu fade-in">
-        <section class="card" style="border-color: var(--pink-balloon);">
-            <div class="card-title" style="color: var(--pink-balloon);">🎈 Balão de Emoções</div>
-            <input type="text" id="balloonText" placeholder="O que você quer soltar hoje?">
-            <button class="btn-action" style="background: linear-gradient(135deg, var(--pink-balloon), var(--aura-purple));" onclick="releaseBalloon()">Soltar Balão no Céu</button>
-            <div id="balloonHistory" style="margin-top:10px; font-size:0.75rem; max-height:100px; overflow-y:auto; color:#ccc;"></div>
-        </section>
-    </div>
-
-    <!-- 4. FREQUÊNCIAS E ACOLHIMENTO (MÃE 150850) -->
-    <div id="frequenciaView" class="container hidden-menu fade-in">
-        <section id="calmModule" class="card hidden-menu" style="border-color: var(--emerald);">
-            <div class="card-title" style="color: var(--emerald);">🌿 Modo Acolhimento</div>
-            <button class="btn-calm" onclick="triggerQuickCalm()">✨ BOTÃO DE CALMA IMEDIATA</button>
-            
-            <div id="breatheVisual" style="display:none;" class="breathe-container">
-                <span style="font-size:0.85rem; margin-bottom:10px;">Siga o círculo com a respiração:</span>
-                <div style="position:relative; display:flex; justify-content:center; align-items:center; height:120px; width:100%;">
-                    <div class="breathe-circle"></div>
-                    <span class="breathe-text">Inspire / Expire</span>
-                </div>
-            </div>
-        </section>
-
-        <section class="card">
-            <div class="card-title">✨ Frequências</div>
-            <select id="freqSelect" onchange="updateAudioEngine()">
-                <option value="432">432 Hz — Paz & Redução de Ansiedade</option>
-                <option value="528">528 Hz — Regeneração Mental</option>
-                <option value="brown_noise">🟤 Ruído Marrom — Calma Profunda</option>
-            </select>
-            <button class="btn-action" id="solfeggioBtn" onclick="toggleAudioEngine()">▶ Iniciar Áudio</button>
-        </section>
-    </div>
-
-    <!-- 5. MODO GUARDIÃO (PAI 280598) -->
-    <div id="guardiaoView" class="container hidden-menu fade-in">
-        <section class="card">
-            <div class="card-title">🩺 Diário de Saúde</div>
-            <div style="display:flex; gap:10px;">
-                <input type="number" id="glucoseInput" placeholder="Glicose (mg/dL)">
-                <input type="text" id="bpInput" placeholder="P.A. (ex: 12/8)">
-            </div>
-            <button class="btn-action" onclick="saveHealthData()">Registrar Saúde</button>
-            
-            <!-- Canvas do Gráfico -->
-            <div style="background: rgba(0,0,0,0.3); border-radius:10px; padding:10px; margin-top:15px; height: 180px;">
-                <canvas id="healthChart"></canvas>
-            </div>
-            
-            <div id="healthLogs" style="margin-top:15px; font-size:0.75rem; max-height:100px; overflow-y:auto; color:#ccc;"></div>
-            <button class="btn-small" style="margin-top:10px;" onclick="exportLogsToTxt()">📄 Baixar Relatório Médico</button>
-        </section>
-    </div>
-
-    <!-- 6. ADMIN CENTRAL (VOCÊ 120697) -->
-    <div id="adminPrimaryMenu" class="container hidden-menu fade-in">
-        <section class="card" style="border-color: var(--gold);">
-            <div class="card-title">⚙️ Painel Central Admin</div>
-            <p style="font-size:0.8rem; margin-bottom:10px;">Acesso irrestrito ao banco de dados local.</p>
-            <button class="btn-small" onclick="viewAllLogsAdmin()">Visualizar Logs do Sistema</button>
-            <div id="adminLogView" style="margin-top:10px; font-size:0.75rem; color:var(--emerald); max-height:150px; overflow-y:auto; display:none; background:rgba(0,0,0,0.5); padding:10px; border-radius:8px;"></div>
-        </section>
-    </div>
-
-    <!-- 7. ARIA AI (ASSISTENTE) -->
-    <div id="ariaView" class="container hidden-menu fade-in">
-        <section class="card">
-            <div class="card-title">🤖 Aria AI</div>
-            <div class="aria-chat-box" id="ariaChat"><div class="aria-msg aria">Aria conectada. Como posso ajudar?</div></div>
-            <div style="display:flex; gap:6px;">
-                <input type="text" id="ariaInput" placeholder="Sua mensagem..." style="margin-bottom:0;">
-                <button class="btn-action" style="width:auto; padding:0 16px;" onclick="askAria()">Enviar</button>
-            </div>
-        </section>
-    </div>
-
-    <!-- MODAL DE SENHA -->
-    <div class="modal" id="pinModal">
-        <div class="modal-content">
-            <h2>🛡️ Identificação</h2>
-            <input type="password" id="pinInput" class="pin-input" placeholder="••••••" maxlength="8" inputmode="numeric" autocomplete="off">
-            <div style="display:flex; gap:10px; margin-top:10px;">
-                <button class="btn-action" onclick="verifyAccess()">Entrar</button>
-                <button class="btn-small" style="background:rgba(255,255,255,0.1); border:none; color:#fff;" onclick="closePinModal()">Cancelar</button>
-            </div>
-            <p id="pinError" style="color:var(--danger); font-size:0.8rem; margin-top:10px; display:none;">Acesso Negado</p>
-        </div>
-    </div>
-
-    <!-- ================= SCRIPTS ================= -->
-    <script>
-        // === 1. CONFIGURAÇÕES E CREDENCIAIS ===
-        const PASSWORDS = { PRIMARY: '120697', SECONDARY: '280598', GIRLFRIEND: '050526', MOTHER: '150850' };
-        
-        // DATA DO NAMORO (ANO-MÊS-DIA). Altere aqui!
-        const START_DATE = new Date('2023-01-01T00:00:00'); 
-
-        const ARIA_RESPONSES = {
-            PRIMARY: ["Aria: Sistemas operacionais rodando perfeitamente.", "Aria: Logs salvos no LocalStorage."],
-            SECONDARY: ["Aria: Registro de saúde guardado com sucesso.", "Aria: Fique de olho na hidratação hoje."],
-            GIRLFRIEND: ["Aria: Que bom ter você aqui! 💖", "Aria: Seu balão chegou nas nuvens."],
-            MOTHER: ["Aria: Respire devagar. Tudo no seu tempo.", "Aria: Frequência de cura ativada para você."]
-        };
-
-        let currentRole = null;
-        let timerInterval = null;
-        let glucoseChartInstance = null;
-
-        // === 2. GERENCIAMENTO DE ROTAS E ACESSO ===
-        const pinInput = document.getElementById('pinInput');
-        pinInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); verifyAccess(); } });
-        
-        function openPinModal() { 
-            pinInput.value = ''; 
-            document.getElementById('pinError').style.display = 'none'; 
-            document.getElementById('pinModal').classList.add('active'); 
-            setTimeout(() => pinInput.focus(), 100); 
-        }
-        
-        function closePinModal() { document.getElementById('pinModal').classList.remove('active'); }
-
-        function verifyAccess() {
-            const entered = pinInput.value.trim(); 
-            closePinModal();
-            
-            if (entered === PASSWORDS.PRIMARY) currentRole = 'PRIMARY';
-            else if (entered === PASSWORDS.SECONDARY) currentRole = 'SECONDARY';
-            else if (entered === PASSWORDS.GIRLFRIEND) currentRole = 'GIRLFRIEND';
-            else if (entered === PASSWORDS.MOTHER) currentRole = 'MOTHER';
-            else { document.getElementById('pinError').style.display = 'block'; openPinModal(); return; }
-            
-            unlockView();
-        }
-
-        function unlockView() {
-            // Esconde tudo primeiro
-            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden-menu'));
-            document.getElementById('calmModule').classList.add('hidden-menu');
-            
-            // Troca botões
-            document.getElementById('lockBtn').style.display = 'inline-block';
-            document.getElementById('accessBtn').style.display = 'none';
-
-            const title = document.getElementById('mainTitle');
-            const subtitle = document.getElementById('mainSubtitle');
-
-            // Roteamento de acordo com a Hierarquia
-            if (currentRole === 'PRIMARY') {
-                title.innerText = 'Modo Guardião'; subtitle.innerText = 'CONTROLE ADMINISTRATIVO';
-                ['adminPrimaryMenu','acervoView', 'namoradaExtraView', 'balaoView', 'frequenciaView', 'guardiaoView', 'ariaView'].forEach(id => document.getElementById(id).classList.remove('hidden-menu'));
-                document.getElementById('calmModule').classList.remove('hidden-menu');
-            } 
-            else if (currentRole === 'SECONDARY') {
-                title.innerText = 'Modo Guardião'; subtitle.innerText = 'MONITORAMENTO DE SAÚDE';
-                ['guardiaoView', 'ariaView'].forEach(id => document.getElementById(id).classList.remove('hidden-menu'));
-            } 
-            else if (currentRole === 'GIRLFRIEND') {
-                title.innerText = 'Nosso Espaço'; subtitle.innerText = 'SINTONIA E CUIDADO';
-                ['acervoView', 'namoradaExtraView', 'balaoView', 'frequenciaView', 'ariaView'].forEach(id => document.getElementById(id).classList.remove('hidden-menu'));
-            } 
-            else if (currentRole === 'MOTHER') {
-                title.innerText = 'Nossa Frequência'; subtitle.innerText = 'MODO ACOLHIMENTO';
-                ['frequenciaView'].forEach(id => document.getElementById(id).classList.remove('hidden-menu'));
-                document.getElementById('calmModule').classList.remove('hidden-menu');
-            }
-            
-            loadDashboardData();
-        }
-
-        function lockSystem() {
-            currentRole = null; 
-            
-            // Resetar visuais e áudios
-            document.body.classList.remove('calm-mode');
-            document.getElementById('breatheVisual').style.display = 'none';
-            stopAudioEngine();
-            if(timerInterval) clearInterval(timerInterval);
-            
-            // Resetar Textos
-            document.getElementById('mainTitle').innerText = 'Nossa História';
-            document.getElementById('mainSubtitle').innerText = 'ACERVO DE PROJETOS ESPECIAIS';
-            
-            // Mostrar apenas Acervo
-            document.querySelectorAll('.container').forEach(c => c.classList.add('hidden-menu'));
-            document.getElementById('acervoView').classList.remove('hidden-menu');
-            
-            // Trocar botões
-            document.getElementById('lockBtn').style.display = 'none';
-            document.getElementById('accessBtn').style.display = 'inline-block';
-        }
-
-        // === 3. BANCO DE DADOS (LOCALSTORAGE) E CARREGAMENTO ===
-        function saveStorage(key, data) {
-            const current = JSON.parse(localStorage.getItem(key) || '[]');
-            current.unshift(data); // Salva o mais novo no início
-            localStorage.setItem(key, JSON.stringify(current));
-        }
-
-        function loadDashboardData() {
-            // Relógio e Cápsula (Namorada/Admin)
-            if(currentRole === 'GIRLFRIEND' || currentRole === 'PRIMARY') {
-                startTimer();
-                checkCapsule();
-                const bLogs = JSON.parse(localStorage.getItem('balloon_logs') || '[]');
-                document.getElementById('balloonHistory').innerHTML = bLogs.map(i => `<div>🎈 <b>[${i.date}]</b> "${i.txt}"</div>`).join('');
-            }
-
-            // Histórico de Saúde e Gráfico (Pai/Admin)
-            if(currentRole === 'SECONDARY' || currentRole === 'PRIMARY') {
-                const logs = JSON.parse(localStorage.getItem('health_logs') || '[]');
-                document.getElementById('healthLogs').innerHTML = logs.map(i => `<div>🩺 <b>[${i.date}]</b> Glicose: ${i.glicose} | P.A: ${i.pa}</div>`).join('');
-                
-                // Aguarda um milissegundo para garantir que o canvas não está 'display: none' antes de renderizar
-                setTimeout(() => updateChart(logs), 50); 
-            }
-        }
-
-        // === 4. FUNÇÕES ESPECÍFICAS DOS MÓDULOS ===
-
-        // Namorada: Timer
-        function startTimer() {
-            if(timerInterval) clearInterval(timerInterval);
-            timerInterval = setInterval(() => {
-                const diff = new Date() - START_DATE;
-                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-                const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-                const m = Math.floor((diff / 1000 / 60) % 60);
-                document.getElementById('relationshipTimer').innerText = `${d}d ${h}h ${m}m`;
-            }, 1000);
-        }
-
-        // Namorada: Cápsula
-        function saveCapsule() {
-            const txt = document.getElementById('capsuleMsg').value;
-            const date = document.getElementById('capsuleDate').value;
-            if(!txt || !date) return alert('Preencha a mensagem e a data!');
-            localStorage.setItem('time_capsule', JSON.stringify({ msg: txt, unlockDate: date }));
-            document.getElementById('capsuleMsg').value = '';
-            checkCapsule();
-        }
-
-        function checkCapsule() {
-            const cap = JSON.parse(localStorage.getItem('time_capsule'));
-            const statusDiv = document.getElementById('capsuleStatus');
-            if(!cap) { statusDiv.innerText = "Nenhuma cápsula guardada."; return; }
-            
-            const today = new Date().toISOString().split('T')[0];
-            if(today >= cap.unlockDate) {
-                statusDiv.innerHTML = `<span style="color:var(--emerald);">🔓 Cápsula Aberta:</span> "${cap.msg}"`;
-            } else {
-                statusDiv.innerText = `🔒 Trancada até: ${cap.unlockDate.split('-').reverse().join('/')}`;
-            }
-        }
-
-        // Pai: Saúde e Gráfico
-        function saveHealthData() {
-            const gli = document.getElementById('glucoseInput').value || '--';
-            const pa = document.getElementById('bpInput').value || '--';
-            if(gli === '--' && pa === '--') return;
-            const now = new Date();
-            const timeString = now.toLocaleDateString('pt-BR') + ' ' + now.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
-            saveStorage('health_logs', { glicose: gli, pa: pa, date: timeString });
-            
-            document.getElementById('glucoseInput').value = ''; 
-            document.getElementById('bpInput').value = '';
-            loadDashboardData();
-        }
-
-        function updateChart(logs) {
-            const ctx = document.getElementById('healthChart').getContext('2d');
-            
-            // Pegar até 7 registros válidos (com número) e inverter para ficar da esquerda(antigo) pra direita(novo)
-            const validLogs = logs.filter(l => l.glicose && l.glicose !== '--').slice(0, 7).reverse();
-            
-            const labels = validLogs.map(l => l.date.split(' ')[0]);
-            const data = validLogs.map(l => parseFloat(l.glicose));
-
-            if(glucoseChartInstance) glucoseChartInstance.destroy();
-            
-            glucoseChartInstance = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [{
-                        label: 'Glicemia', data: data,
-                        borderColor: '#00d4ff', backgroundColor: 'rgba(0, 212, 255, 0.2)',
-                        borderWidth: 2, pointRadius: 4, fill: true, tension: 0.3
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { display: false } },
-                    scales: { 
-                        x: { ticks: { color: '#ccc', font:{size:9} } }, 
-                        y: { ticks: { color: '#ccc', font:{size:10} } } 
-                    }
-                }
-            });
-        }
-
-        function exportLogsToTxt() {
-            const logs = JSON.parse(localStorage.getItem('health_logs') || '[]');
-            let txt = "RELATÓRIO DE SAÚDE - GUARDIAO\n================================\n\n";
-            logs.forEach(l => { txt += `Data/Hora: ${l.date} | Glicemia: ${l.glicose} | P.A: ${l.pa}\n`; });
-            const blob = new Blob([txt], { type: "text/plain" });
-            const link = document.createElement("a"); link.href = URL.createObjectURL(blob);
-            link.download = "Relatorio_Saude.txt"; link.click();
-        }
-
-        // Mãe: Acolhimento
-        function triggerQuickCalm() {
-            document.body.classList.add('calm-mode');
-            document.getElementById('breatheVisual').style.display = 'flex';
-            document.getElementById('freqSelect').value = 'brown_noise';
-            if (!isAudioPlaying) toggleAudioEngine();
-        }
-
-        // Admin Central
-        function viewAllLogsAdmin() {
-            const view = document.getElementById('adminLogView');
-            view.style.display = 'block'; 
-            
-            const health = JSON.parse(localStorage.getItem('health_logs') || '[]');
-            const balloons = JSON.parse(localStorage.getItem('balloon_logs') || '[]');
-            const cap = JSON.parse(localStorage.getItem('time_capsule') || '{}');
-
-            let html = `<b>🩺 Registros de Saúde:</b> ${health.length}<br>`;
-            let html2 = `<br><b>🎈 Balões Soltos:</b> ${balloons.length}<br>`;
-            let html3 = `<br><b>✉️ Status da Cápsula:</b> ${cap.unlockDate ? cap.unlockDate : 'Nenhuma'}<br>`;
-            
-            view.innerHTML = html + html2 + html3;
-        }
-
-        // Aria AI & Balão
-        function releaseBalloon() {
-            const txt = document.getElementById('balloonText').value.trim(); if(!txt) return;
-            saveStorage('balloon_logs', { txt, date: new Date().toLocaleTimeString('pt-BR', {hour: '2-digit', minute:'2-digit'}) });
-            create3DBalloon(); 
-            document.getElementById('balloonText').value = ''; 
-            loadDashboardData();
-        }
-
-        function askAria() {
-            const inp = document.getElementById('ariaInput'); 
-            const txt = inp.value.trim(); if (!txt) return;
-            const box = document.getElementById('ariaChat'); 
-            
-            box.innerHTML += `<div class="aria-msg user">${txt}</div>`; 
-            inp.value = '';
-            
-            setTimeout(() => {
-                const replies = ARIA_RESPONSES[currentRole] || ["Aria: Estou processando."];
-                box.innerHTML += `<div class="aria-msg aria">${replies[Math.floor(Math.random() * replies.length)]}</div>`;
-                box.scrollTop = box.scrollHeight; // Rola pro fim
-            }, 400);
-        }
-
-        // === 5. MOTOR DE ÁUDIO (WEB AUDIO API) ===
-        let audioCtx = null, osc1 = null, isAudioPlaying = false, noiseNode = null;
-        
-        function toggleAudioEngine() {
-            const btn = document.getElementById('solfeggioBtn');
-            if (!isAudioPlaying) { startAudioEngine(); btn.innerText = "⏸ Pausar Áudio"; isAudioPlaying = true; } 
-            else { stopAudioEngine(); btn.innerText = "▶ Iniciar Áudio"; isAudioPlaying = false; }
-        }
-        
-        function startAudioEngine() {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            const val = document.getElementById('freqSelect').value;
-            
-            if (val === 'brown_noise') {
-                const bufferSize = audioCtx.sampleRate * 2; const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-                const data = buffer.getChannelData(0); let lastOut = 0.0;
-                for (let i = 0; i < bufferSize; i++) { const white = Math.random() * 2 - 1; data[i] = (lastOut + (0.02 * white)) / 1.02; lastOut = data[i]; data[i] *= 3.5; }
-                noiseNode = audioCtx.createBufferSource(); noiseNode.buffer = buffer; noiseNode.loop = true;
-                const gain = audioCtx.createGain(); gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
-                noiseNode.connect(gain); gain.connect(audioCtx.destination); noiseNode.start();
-            } else {
-                osc1 = audioCtx.createOscillator(); const gain = audioCtx.createGain();
-                osc1.frequency.setValueAtTime(parseFloat(val), audioCtx.currentTime);
-                gain.gain.setValueAtTime(0.06, audioCtx.currentTime); osc1.connect(gain); gain.connect(audioCtx.destination); osc1.start();
-            }
-        }
-        
-        function stopAudioEngine() {
-            if (osc1) { try { osc1.stop(); osc1.disconnect(); } catch(e){} }
-            if (noiseNode) { try { noiseNode.stop(); noiseNode.disconnect(); } catch(e){} }
-            if (audioCtx) { try { audioCtx.close(); } catch(e){} }
-            document.getElementById('solfeggioBtn').innerText = "▶ Iniciar Áudio";
-            isAudioPlaying = false;
-        }
-        
-        function updateAudioEngine() { if (isAudioPlaying) { stopAudioEngine(); startAudioEngine(); } }
-
-        // === 6. MOTOR 3D (THREE.JS) ===
-        const canvas3d = document.getElementById('canvas3d'); 
-        const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ canvas: canvas3d, alpha: true }); 
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        
-        // Forma geométrica de fundo
-        const geometry = new THREE.IcosahedronGeometry(2, 1);
-        const material = new THREE.MeshBasicMaterial({ color: 0xa066ff, wireframe: true, transparent: true, opacity: 0.2 });
-        const mesh = new THREE.Mesh(geometry, material); 
-        scene.add(mesh); camera.position.z = 5;
-        
-        const activeBalloons = [];
-
-        function create3DBalloon() {
-            const group = new THREE.Group(); 
-            const balloonGeo = new THREE.SphereGeometry(0.4, 16, 16); 
-            balloonGeo.scale(1, 1.25, 1);
-            const balloonMat = new THREE.MeshBasicMaterial({ color: 0xff85a1, wireframe: true });
-            const balloonMesh = new THREE.Mesh(balloonGeo, balloonMat); 
-            group.add(balloonMesh);
-            group.position.set((Math.random() - 0.5) * 3, -3, 2); 
-            scene.add(group); 
-            activeBalloons.push({ group, speed: 0.02 + Math.random() * 0.01 });
-        }
-
-        function animate() {
-            requestAnimationFrame(animate); 
-            mesh.rotation.x += 0.002; mesh.rotation.y += 0.003;
-            
-            // Animando balões
-            activeBalloons.forEach((b, index) => {
-                b.group.position.y += b.speed; 
-                b.group.position.x += Math.sin(b.group.position.y * 2) * 0.005;
-                if (b.group.position.y > 5) { scene.remove(b.group); activeBalloons.splice(index, 1); }
-            }); 
-            
-            renderer.render(scene, camera);
-        }
-        animate();
-
-        // Responsividade do Fundo 3D
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
-
-    </script>
+      // Insere o card na página
+      gridProjetos.innerHTML += cardHtml;
+    });
+  </script>
 </body>
 </html>
