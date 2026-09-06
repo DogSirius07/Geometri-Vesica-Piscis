@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aria Central - Ecossistema Completo & Nosso Amor v12.0</title>
+    <title>Aria Central - Ecossistema Completo & Nosso Amor v12.1</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -36,7 +36,7 @@
     <div id="loginScreen" class="w-full max-w-md p-8 bg-white dark:bg-[#0a0f19] border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl dark:shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-xl transition-all">
         <div class="text-center mb-8">
             <h1 class="text-2xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-cyan-500 to-purple-600">ARIA<span class="text-pink-400">.OS</span></h1>
-            <p class="text-xs font-mono text-gray-500 mt-1 uppercase tracking-wider">Versão Definitiva v12.0</p>
+            <p class="text-xs font-mono text-gray-500 mt-1 uppercase tracking-wider">Versão Definitiva v12.1</p>
         </div>
 
         <form id="loginForm" class="space-y-5" novalidate>
@@ -55,6 +55,10 @@
                 <input type="password" id="senha" name="senha" required placeholder="••••••••" class="w-full px-4 py-3 pr-12 bg-gray-50 dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-xl text-sm focus:outline-none focus:border-pink-500 font-mono">
                 <button type="button" id="togglePassword" class="absolute right-3 top-9 text-gray-500 hover:text-pink-400 transition" aria-label="Mostrar ou ocultar senha">👁️</button>
                 <div id="errorMessage" class="text-red-500 text-xs font-mono mt-2 hidden"></div>
+            </div>
+
+            <div class="flex items-center justify-between text-xs font-mono">
+                <button type="button" id="btnRecuperarSenha" class="text-cyan-400 hover:underline">Esqueceu a senha?</button>
             </div>
 
             <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-pink-500 via-cyan-500 to-purple-600 text-white font-mono text-xs font-bold uppercase tracking-[2px] rounded-xl hover:opacity-95 shadow-lg shadow-pink-500/20 transition active:scale-[0.98]">
@@ -80,7 +84,7 @@
             </div>
         </div>
 
-        <!-- Navegação por Abas (Amor + Ferramentas) -->
+        <!-- Navegação por Abas -->
         <div class="flex flex-wrap gap-1.5 mb-6 border-b border-gray-200 dark:border-white/10 pb-4">
             <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-pink-500 text-white" data-target="tab-amor">💖 Nosso Amor</button>
             <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-resumo">📊 Geral</button>
@@ -94,7 +98,7 @@
             <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-balaozinho">💭 Balãozinho</button>
         </div>
 
-        <!-- ABA 1: Nosso Amor (Foco Especial para a Namorada) -->
+        <!-- ABA 1: Nosso Amor -->
         <div id="tab-amor" class="tab-content space-y-6">
             <div class="p-6 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-cyan-500/10 border border-pink-500/30 rounded-xl text-center space-y-4">
                 <h3 class="font-mono font-bold text-pink-400 text-lg">✨ Vinícius & Andressa ✨</h3>
@@ -128,8 +132,8 @@
                 </div>
                 <div class="p-6 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl flex flex-col justify-between">
                     <div>
-                        <h3 class="font-mono font-bold text-purple-400 text-sm mb-2">💡 Aria.OS v12.0 Unificada</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Ecossistema completo reunindo o módulo de amor, mural, tarefas, finanças, galeria e ferramentas avançadas.</p>
+                        <h3 class="font-mono font-bold text-purple-400 text-sm mb-2">💡 Aria.OS v12.1 Unificada</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Ecossistema completo reunindo o módulo de amor, mural, tarefas, finanças, galeria e recuperação de senha.</p>
                     </div>
                 </div>
             </div>
@@ -259,13 +263,13 @@
 
     </div>
 
-    <!-- Script v12.0 Unificado -->
+    <!-- Script v12.1 Unificado -->
     <script>
         const tabelaUsuarios = {
-            'vinicius': { senha: '22062026', nome: 'Vinícius', role: 'Admin' },
-            'andressa': { senha: 'amor2026password', nome: 'Andressa', role: 'Membro' },
-            'dirceu': { senha: 'dirceu2026password', nome: 'Dirceu', role: 'Membro' },
-            'edina': { senha: 'edina2026password', nome: 'Édina', role: 'Membro' }
+            'vinicius': { senha: '22062026', nome: 'Vinícius', role: 'Admin', dica: 'Data especial do casal (DDMMAAAA)' },
+            'andressa': { senha: 'amor2026password', nome: 'Andressa', role: 'Membro', dica: 'Palavra amor + ano + password' },
+            'dirceu': { senha: 'dirceu2026password', nome: 'Dirceu', role: 'Membro', dica: 'Nome + ano + password' },
+            'edina': { senha: 'edina2026password', nome: 'Édina', role: 'Membro', dica: 'Nome + ano + password' }
         };
 
         let usuarioLogado = null;
@@ -288,6 +292,15 @@
         const passwordInput = document.getElementById('senha');
         document.getElementById('togglePassword').addEventListener('click', () => {
             passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
+        });
+
+        // Botão Recuperar Senha
+        document.getElementById('btnRecuperarSenha').addEventListener('click', () => {
+            const userKey = document.getElementById('usuario').value;
+            const usuarioObj = tabelaUsuarios[userKey];
+            if (usuarioObj) {
+                alert(`🔑 Dica de Segurança para [${usuarioObj.nome}]:\n\n"${usuarioObj.dica}"\n\nSenha atual: ${usuarioObj.senha}`);
+            }
         });
 
         // Abas
@@ -383,7 +396,6 @@
 
         function iniciarContadorAmor() {
             const contadorEl = document.getElementById('contadorAmor');
-            // Data de início do namoro (exemplo ajustável)
             const inicioNamoro = new Date('2025-01-01T00:00:00');
             setInterval(() => {
                 const agora = new Date();
@@ -407,7 +419,6 @@
             mostrarToast('Recado de amor atualizado! 💖');
         });
 
-        // Recados, Tarefas, Finanças, etc.
         function carregarRecados() {
             const recados = JSON.parse(localStorage.getItem('aria_recados_v12')) || [{ autor: 'Vinícius', texto: 'Bem-vindos ao nosso ecossistema unificado!' }];
             const lista = document.getElementById('recadosList');
