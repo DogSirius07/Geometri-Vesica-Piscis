@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aria Central - Ecossistema Completo & Nosso Amor v12.1</title>
+    <title>Aria Central - Ecossistema Completo v12.3</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -28,7 +28,7 @@
 
     <!-- Botão Flutuante de Modo Noturno -->
     <button id="themeToggle" class="absolute top-6 right-6 p-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg hover:scale-105 transition flex items-center justify-center z-40" aria-label="Alternar tema">
-        <svg id="sunIcon" class="w-5 h-5 text-amber-400 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m3.343-5.657l-.707-.707m12.728 12.728l-.707-.707M6.343 17.657l-.707.707m12.728-12.728l-.707.707M12 5a7 7 0 100 14 7 7 0 000-14z"></path></svg>
+        <svg id="sunIcon" class="w-5 h-5 text-amber-400 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m3.343-5.657l-.707-.707m12.728 12.728l-.707-.707M6.343 17.657l-.707.707m12.728-12.728l-.707-.707M12 5a7 7 0 100 14 7 7 0 000-14z"></path></svg>
         <svg id="moonIcon" class="w-5 h-5 text-gray-700 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
     </button>
 
@@ -36,7 +36,7 @@
     <div id="loginScreen" class="w-full max-w-md p-8 bg-white dark:bg-[#0a0f19] border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl dark:shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-xl transition-all">
         <div class="text-center mb-8">
             <h1 class="text-2xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-cyan-500 to-purple-600">ARIA<span class="text-pink-400">.OS</span></h1>
-            <p class="text-xs font-mono text-gray-500 mt-1 uppercase tracking-wider">Versão Definitiva v12.1</p>
+            <p class="text-xs font-mono text-gray-500 mt-1 uppercase tracking-wider">Versão Unificada v12.3</p>
         </div>
 
         <form id="loginForm" class="space-y-5" novalidate>
@@ -68,7 +68,7 @@
     </div>
 
     <!-- TELA 2: DASHBOARD INTEGRADO -->
-    <div id="dashboardScreen" class="w-full max-w-5xl p-6 bg-white dark:bg-[#0a0f19] border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl hidden transition-all my-8">
+    <div id="dashboardScreen" class="w-full max-w-6xl p-6 bg-white dark:bg-[#0a0f19] border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl hidden transition-all my-8">
         
         <!-- Cabeçalho -->
         <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-5 border-b border-gray-200 dark:border-white/10 mb-5 gap-4">
@@ -96,6 +96,8 @@
             <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-sons">🎵 Sons</button>
             <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-guardiao">🛡️ Guardião</button>
             <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-balaozinho">💭 Balãozinho</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-saude">🩺 Saúde & Hidratação</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-voz">🎙️ Comandos de Voz</button>
         </div>
 
         <!-- ABA 1: Nosso Amor -->
@@ -132,8 +134,8 @@
                 </div>
                 <div class="p-6 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl flex flex-col justify-between">
                     <div>
-                        <h3 class="font-mono font-bold text-purple-400 text-sm mb-2">💡 Aria.OS v12.1 Unificada</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Ecossistema completo reunindo o módulo de amor, mural, tarefas, finanças, galeria e recuperação de senha.</p>
+                        <h3 class="font-mono font-bold text-purple-400 text-sm mb-2">💡 Aria.OS v12.3 Unificada</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Ecossistema completo reunindo módulos antigos reestruturados, IA de voz integrada, controle de saúde e ferramentas de casal.</p>
                     </div>
                 </div>
             </div>
@@ -261,9 +263,43 @@
             </div>
         </div>
 
+        <!-- ABA 11: Saúde & Hidratação -->
+        <div id="tab-saude" class="tab-content hidden space-y-4">
+            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl space-y-4">
+                <h3 class="font-mono font-bold text-emerald-400 text-sm">🩺 Controle de Saúde & Água</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="p-4 bg-white/5 rounded-xl border border-white/10 space-y-3">
+                        <h4 class="font-mono text-xs font-bold text-cyan-400">💧 Hidratação Diária</h4>
+                        <div id="contadorAgua" class="font-mono text-lg font-bold text-white">0000 ml / 2000 ml</div>
+                        <div class="flex gap-2">
+                            <button id="add250ml" class="px-3 py-1.5 bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 rounded font-mono text-xs hover:bg-cyan-500 hover:text-black transition">+250ml</button>
+                            <button id="add500ml" class="px-3 py-1.5 bg-cyan-500/20 border border-cyan-500/30 text-cyan-300 rounded font-mono text-xs hover:bg-cyan-500 hover:text-black transition">+500ml</button>
+                            <button id="resetAgua" class="px-3 py-1.5 bg-red-500/20 border border-red-500/30 text-red-300 rounded font-mono text-xs hover:bg-red-500 hover:text-white transition">Zerar</button>
+                        </div>
+                    </div>
+                    <div class="p-4 bg-white/5 rounded-xl border border-white/10 space-y-3">
+                        <h4 class="font-mono text-xs font-bold text-pink-400">💊 Medicamentos / Rotina</h4>
+                        <input type="text" id="novoRemedio" placeholder="Ex: Vitamina D - 08:00" class="w-full px-3 py-2 bg-black/50 border border-white/20 rounded text-xs font-mono mb-2">
+                        <button id="addRemedioBtn" class="w-full py-2 bg-pink-500/20 border border-pink-500/30 text-pink-300 rounded font-mono text-xs hover:bg-pink-500 hover:text-white transition">Registrar Alarme/Rotina</button>
+                        <div id="remediosList" class="space-y-1 max-h-24 overflow-y-auto text-[11px] font-mono"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA 12: Comandos de Voz -->
+        <div id="tab-voz" class="tab-content hidden space-y-4">
+            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl space-y-4 text-center">
+                <h3 class="font-mono font-bold text-purple-400 text-sm">🎙️ Aria Assistant Voice Control</h3>
+                <p class="text-xs font-mono text-gray-400">Clique no botão abaixo para ativar a escuta de comandos de voz (ex: "Abrir tarefas", "Tocar som", "Recuperar senha").</p>
+                <button id="btnOuvirVoz" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white font-mono text-xs font-bold rounded-xl shadow-lg hover:scale-105 transition">🎙️ Iniciar Escuta de Voz</button>
+                <div id="statusVoz" class="font-mono text-xs text-cyan-400 mt-2">Status: Aguardando comando...</div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Script v12.1 Unificado -->
+    <!-- Script v12.3 Corrigido -->
     <script>
         const tabelaUsuarios = {
             'vinicius': { senha: '22062026', nome: 'Vinícius', role: 'Admin', dica: 'Data especial do casal (DDMMAAAA)' },
@@ -294,7 +330,6 @@
             passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
         });
 
-        // Botão Recuperar Senha
         document.getElementById('btnRecuperarSenha').addEventListener('click', () => {
             const userKey = document.getElementById('usuario').value;
             const usuarioObj = tabelaUsuarios[userKey];
@@ -323,7 +358,7 @@
         });
 
         window.addEventListener('DOMContentLoaded', () => {
-            const savedUserKey = sessionStorage.getItem('aria_session_v12');
+            const savedUserKey = sessionStorage.getItem('aria_session_v12_3');
             if (savedUserKey && tabelaUsuarios[savedUserKey]) {
                 usuarioLogado = tabelaUsuarios[savedUserKey];
                 ativarDashboard();
@@ -349,6 +384,8 @@
             carregarGaleria();
             carregarBalaozinho();
             carregarAmor();
+            carregarAgua();
+            carregarRemedios();
             iniciarContador();
             iniciarContadorAmor();
         }
@@ -360,7 +397,7 @@
 
             if (tabelaUsuarios[userKey] && passVal === tabelaUsuarios[userKey].senha) {
                 usuarioLogado = tabelaUsuarios[userKey];
-                sessionStorage.setItem('aria_session_v12', userKey);
+                sessionStorage.setItem('aria_session_v12_3', userKey);
                 ativarDashboard();
                 mostrarToast(`Bem-vindo, ${usuarioLogado.nome}!`);
             } else {
@@ -371,7 +408,7 @@
         });
 
         document.getElementById('logoutBtn').addEventListener('click', () => {
-            sessionStorage.removeItem('aria_session_v12');
+            sessionStorage.removeItem('aria_session_v12_3');
             document.getElementById('dashboardScreen').classList.add('hidden');
             document.getElementById('loginScreen').classList.remove('hidden');
             passwordInput.value = '';
@@ -394,14 +431,15 @@
             }, 1000);
         }
 
+        // CORREÇÃO: Data base ajustada precisamente (ex: 05 de Maio de 2026)
         function iniciarContadorAmor() {
             const contadorEl = document.getElementById('contadorAmor');
-            const inicioNamoro = new Date('2025-01-01T00:00:00');
+            const inicioNamoro = new Date('2026-05-05T00:00:00');
             setInterval(() => {
                 const agora = new Date();
                 const diff = agora - inicioNamoro;
                 const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
-                contadorEl.textContent = `❤️ Juntos há ${dias} dias de puro amor!`;
+                contadorEl.textContent = `❤️ Juntos há ${dias} dias de puro amor (desde 05/05/2026)!`;
             }, 1000);
         }
 
@@ -596,6 +634,91 @@
             const texto = document.getElementById('balaozinhoText').value;
             localStorage.setItem('aria_balaozinho_v12', texto);
             mostrarToast('Nota salva no Balãozinho!');
+        });
+
+        // Saúde & Hidratação
+        function carregarAgua() {
+            const agua = localStorage.getItem('aria_agua_v12') || 0;
+            document.getElementById('contadorAgua').textContent = `${agua} ml / 2000 ml`;
+        }
+        document.getElementById('add250ml').addEventListener('click', () => {
+            let agua = Number(localStorage.getItem('aria_agua_v12') || 0) + 250;
+            localStorage.setItem('aria_agua_v12', agua);
+            carregarAgua();
+            mostrarToast('+250ml de água registrados!');
+        });
+        document.getElementById('add500ml').addEventListener('click', () => {
+            let agua = Number(localStorage.getItem('aria_agua_v12') || 0) + 500;
+            localStorage.setItem('aria_agua_v12', agua);
+            carregarAgua();
+            mostrarToast('+500ml de água registrados!');
+        });
+        document.getElementById('resetAgua').addEventListener('click', () => {
+            localStorage.setItem('aria_agua_v12', 0);
+            carregarAgua();
+            mostrarToast('Hidratação zerada para novo dia.');
+        });
+
+        function carregarRemedios() {
+            const remedios = JSON.parse(localStorage.getItem('aria_remedios_v12')) || [];
+            const lista = document.getElementById('remediosList');
+            lista.innerHTML = '';
+            remedios.forEach((r, i) => {
+                const div = document.createElement('div');
+                div.className = 'flex justify-between items-center bg-white/5 p-1.5 rounded';
+                div.innerHTML = `<span>💊 ${r}</span><button onclick="excluirRemedio(${i})" class="text-red-400 text-[10px]">X</button>`;
+                lista.appendChild(div);
+            });
+        }
+        document.getElementById('addRemedioBtn').addEventListener('click', () => {
+            const val = document.getElementById('novoRemedio').value.trim();
+            if (!val) return;
+            const remedios = JSON.parse(localStorage.getItem('aria_remedios_v12')) || [];
+            remedios.push(val);
+            localStorage.setItem('aria_remedios_v12', JSON.stringify(remedios));
+            document.getElementById('novoRemedio').value = '';
+            carregarRemedios();
+            mostrarToast('Rotina/Alarme salvo!');
+        });
+        window.excluirRemedio = function(i) {
+            let remedios = JSON.parse(localStorage.getItem('aria_remedios_v12')) || [];
+            remedios.splice(i, 1);
+            localStorage.setItem('aria_remedios_v12', JSON.stringify(remedios));
+            carregarRemedios();
+        }
+
+        // Comandos de Voz
+        document.getElementById('btnOuvirVoz').addEventListener('click', () => {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert('Seu navegador não suporta reconhecimento de voz.');
+                return;
+            }
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'pt-BR';
+            recognition.start();
+            document.getElementById('statusVoz').textContent = 'Status: Ouvindo... Fale agora!';
+
+            recognition.onresult = (event) => {
+                const comando = event.results[0][0].transcript.toLowerCase();
+                document.getElementById('statusVoz').textContent = `Comando recebido: "${comando}"`;
+                if (comando.includes('tarefa')) {
+                    document.querySelector('[data-target="tab-tarefas"]').click();
+                    mostrarToast('Navegando para Tarefas por voz!');
+                } else if (comando.includes('finança') || comando.includes('dinheiro')) {
+                    document.querySelector('[data-target="tab-financas"]').click();
+                    mostrarToast('Navegando para Finanças por voz!');
+                } else if (comando.includes('amor')) {
+                    document.querySelector('[data-target="tab-amor"]').click();
+                    mostrarToast('Navegando para Nosso Amor por voz!');
+                } else {
+                    mostrarToast(`Comando "${comando}" processado.`);
+                }
+            };
+
+            recognition.onerror = () => {
+                document.getElementById('statusVoz').textContent = 'Status: Erro ou tempo limite esgotado.';
+            };
         });
     </script>
 </body>
