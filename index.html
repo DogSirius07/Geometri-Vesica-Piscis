@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aria Central - Sistema Integrado</title>
+    <title>Aria Central - Ecossistema v5.0</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -12,230 +12,374 @@
             theme: {
                 extend: {
                     colors: {
-                        brand: {
-                            cyan: '#00f0ff',
-                            purple: '#b026ff',
-                            dark: '#030712'
-                        }
+                        brand: { cyan: '#00f0ff', purple: '#b026ff', dark: '#030712' }
                     }
                 }
             }
         }
     </script>
 </head>
-<body class="bg-gray-50 dark:bg-[#030712] text-gray-900 dark:text-gray-100 min-h-screen flex items-center justify-center transition-colors duration-300 relative selection:bg-cyan-500 selection:text-black">
+<body class="bg-gray-50 dark:bg-[#030712] text-gray-900 dark:text-gray-100 min-h-screen flex items-center justify-center transition-colors duration-300 relative selection:bg-cyan-500 selection:text-black p-4">
 
-    <!-- Botão Flutuante de Modo Noturno / Claro -->
-    <button id="themeToggle" class="absolute top-6 right-6 p-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg hover:scale-105 transition flex items-center justify-center z-50" aria-label="Alternar tema">
+    <!-- Notificação Flutuante (Toast) -->
+    <div id="toastNotification" class="fixed top-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-cyan-500 text-black font-mono text-xs font-bold rounded-lg shadow-xl opacity-0 pointer-events-none transition-all duration-300 z-50">
+        Ação realizada com sucesso!
+    </div>
+
+    <!-- Botão Flutuante de Modo Noturno -->
+    <button id="themeToggle" class="absolute top-6 right-6 p-3 rounded-full bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 shadow-lg hover:scale-105 transition flex items-center justify-center z-40" aria-label="Alternar tema">
         <svg id="sunIcon" class="w-5 h-5 text-amber-400 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m3.343-5.657l-.707-.707m12.728 12.728l-.707-.707M6.343 17.657l-.707.707m12.728-12.728l-.707.707M12 5a7 7 0 100 14 7 7 0 000-14z"></path></svg>
         <svg id="moonIcon" class="w-5 h-5 text-gray-700 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
     </button>
 
     <!-- TELA 1: LOGIN -->
     <div id="loginScreen" class="w-full max-w-md p-8 bg-white dark:bg-[#0a0f19] border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl dark:shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-xl transition-all">
-        
         <div class="text-center mb-8">
             <h1 class="text-2xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-600">ARIA<span class="text-cyan-400">.OS</span></h1>
-            <p class="text-xs font-mono text-gray-500 mt-1 uppercase tracking-wider">Painel Integrado de Acesso</p>
+            <p class="text-xs font-mono text-gray-500 mt-1 uppercase tracking-wider">Ecossistema Familiar v5.0</p>
         </div>
 
         <form id="loginForm" class="space-y-5" novalidate>
             <div>
                 <label for="usuario" class="block text-xs font-mono uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-2">Selecione o Usuário</label>
-                <select id="usuario" name="usuario" class="w-full px-4 py-3 bg-gray-50 dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-xl text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition font-mono">
-                    <option value="admin">Criador (Você)</option>
-                    <option value="namorada">Namorada</option>
-                    <option value="sogro">Sogro</option>
-                    <option value="sogra">Sogra</option>
+                <select id="usuario" name="usuario" class="w-full px-4 py-3 bg-gray-50 dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-xl text-sm focus:outline-none focus:border-cyan-500 font-mono">
+                    <option value="vinicius">Vinícius (Criador)</option>
+                    <option value="andressa">Andressa (Namorada)</option>
+                    <option value="dirceu">Dirceu (Sogro)</option>
+                    <option value="edina">Édina (Sogra)</option>
                 </select>
             </div>
             
             <div class="relative">
                 <label for="senha" class="block text-xs font-mono uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-2">Chave de Acesso</label>
-                <input type="password" id="senha" name="senha" required placeholder="••••••••" class="w-full px-4 py-3 pr-12 bg-gray-50 dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-xl text-sm focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition font-mono">
-                
-                <button type="button" id="togglePassword" class="absolute right-3 top-9 text-gray-500 hover:text-cyan-400 transition" aria-label="Mostrar ou ocultar senha">
-                    👁️
-                </button>
-                
+                <input type="password" id="senha" name="senha" required placeholder="••••••••" class="w-full px-4 py-3 pr-12 bg-gray-50 dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-xl text-sm focus:outline-none focus:border-cyan-500 font-mono">
+                <button type="button" id="togglePassword" class="absolute right-3 top-9 text-gray-500 hover:text-cyan-400 transition" aria-label="Mostrar ou ocultar senha">👁️</button>
                 <div id="errorMessage" class="text-red-500 text-xs font-mono mt-2 hidden"></div>
             </div>
 
             <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-mono text-xs font-bold uppercase tracking-[2px] rounded-xl hover:opacity-95 shadow-lg shadow-cyan-500/20 transition active:scale-[0.98]">
-                Autenticar Sistema
+                Entrar no Sistema
             </button>
         </form>
     </div>
 
-    <!-- TELA 2: DASHBOARD / MÓDULOS (Oculto inicialmente) -->
-    <div id="dashboardScreen" class="w-full max-w-4xl p-8 bg-white dark:bg-[#0a0f19] border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl hidden transition-all my-8">
-        <div class="flex justify-between items-center pb-6 border-b border-gray-200 dark:border-white/10 mb-6">
+    <!-- TELA 2: DASHBOARD MULTI-MODULAR (Oculto inicialmente) -->
+    <div id="dashboardScreen" class="w-full max-w-5xl p-8 bg-white dark:bg-[#0a0f19] border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl hidden transition-all my-8">
+        
+        <!-- Cabeçalho do Dashboard -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 border-b border-gray-200 dark:border-white/10 mb-6 gap-4">
             <div>
                 <h2 id="welcomeUser" class="text-xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-600">Bem-vindo</h2>
-                <p class="text-xs font-mono text-gray-400 mt-0.5">Sessão Autenticada com Sucesso</p>
+                <p id="roleDescription" class="text-xs font-mono text-gray-400 mt-0.5">Sessão Autenticada</p>
             </div>
-            <button id="logoutBtn" class="px-4 py-2 border border-red-500/50 text-red-500 hover:bg-red-500 hover:text-white text-xs font-mono rounded-lg transition">
-                Encerrar Sessão
-            </button>
+            <div class="flex items-center gap-3">
+                <span id="badgeAdmin" class="hidden px-3 py-1 bg-purple-500/10 border border-purple-500/30 text-purple-400 text-[10px] font-mono rounded-full uppercase tracking-wider">Acesso Master</span>
+                <button id="logoutBtn" class="px-4 py-2 border border-red-500/50 text-red-500 hover:bg-red-500 hover:text-white text-xs font-mono rounded-lg transition">
+                    Sair
+                </button>
+            </div>
         </div>
 
-        <!-- Abas de Navegação dos Novos Módulos -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <!-- Módulo 1: Mural de Recados -->
-            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl flex flex-col justify-between">
-                <div>
-                    <h3 class="font-mono font-bold text-cyan-400 text-sm mb-2 flex items-center gap-2">💬 Mural Compartilhado</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Deixe recados rápidos ou avisos importantes para o grupo.</p>
-                    <div id="recadosList" class="space-y-2 mb-4 max-h-36 overflow-y-auto text-xs font-mono">
-                        <div class="p-2 bg-white dark:bg-white/5 rounded border border-gray-200 dark:border-white/10">
-                            <span class="text-cyan-400 font-bold">Admin:</span> Sistema reestruturado com sucesso.
-                        </div>
+        <!-- Navegação por Abas (Tabs) -->
+        <div class="flex flex-wrap gap-2 mb-6 border-b border-gray-200 dark:border-white/10 pb-4">
+            <button class="tab-btn px-4 py-2 rounded-lg font-mono text-xs font-bold transition bg-cyan-500 text-black" data-target="tab-resumo">📊 Visão Geral</button>
+            <button class="tab-btn px-4 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-recados">💬 Mural</button>
+            <button class="tab-btn px-4 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-tarefas">📋 Tarefas</button>
+            <button class="tab-btn px-4 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-financas">💰 Finanças</button>
+        </div>
+
+        <!-- CONTEÚDO DAS ABAS -->
+
+        <!-- Aba 1: Visão Geral & Contagem Regressiva -->
+        <div id="tab-resumo" class="tab-content space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="p-6 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl">
+                    <h3 class="font-mono font-bold text-cyan-400 text-sm mb-3">⏳ Próximo Encontro em Família</h3>
+                    <div id="countdownTimer" class="text-2xl font-mono font-extrabold text-gray-800 dark:text-white mb-2">Carregando...</div>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">Domingo às 13:00 - Almoço Integrado</p>
+                </div>
+                <div class="p-6 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl flex flex-col justify-between">
+                    <div>
+                        <h3 class="font-mono font-bold text-purple-400 text-sm mb-2">💡 Central Aria.OS</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Sistema otimizado para a comunicação fluida entre Vinícius, Andressa, Dirceu e Édina. Aproveite os módulos integrados.</p>
                     </div>
                 </div>
+            </div>
+        </div>
+
+        <!-- Aba 2: Mural de Recados -->
+        <div id="tab-recados" class="tab-content hidden space-y-4">
+            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl">
+                <h3 class="font-mono font-bold text-cyan-400 text-sm mb-3">💬 Mural de Avisos</h3>
+                <div id="recadosList" class="space-y-2 mb-4 max-h-60 overflow-y-auto text-xs font-mono pr-1"></div>
                 <div class="flex gap-2">
-                    <input type="text" id="novoRecado" placeholder="Novo recado..." class="w-full px-3 py-2 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-cyan-500">
-                    <button id="addRecadoBtn" class="px-3 py-2 bg-cyan-500 text-black font-bold text-xs rounded-lg hover:bg-cyan-400 transition">Enviar</button>
+                    <input type="text" id="novoRecado" placeholder="Escrever recado para o grupo..." class="w-full px-4 py-2.5 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-cyan-500">
+                    <button id="addRecadoBtn" class="px-5 py-2.5 bg-cyan-500 text-black font-bold text-xs rounded-lg hover:bg-cyan-400 transition">Enviar</button>
                 </div>
-            </div>
-
-            <!-- Módulo 2: Agenda / Compromissos -->
-            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl flex flex-col justify-between">
-                <div>
-                    <h3 class="font-mono font-bold text-purple-400 text-sm mb-2 flex items-center gap-2">📅 Próximos Eventos</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Acompanhe jantares, reuniões e encontros programados.</p>
-                    <ul class="space-y-2 text-xs font-mono text-gray-400">
-                        <li class="p-2 bg-white dark:bg-white/5 rounded border border-gray-200 dark:border-white/10 flex justify-between">
-                            <span>Almoço em Família</span>
-                            <span class="text-cyan-400">Domingo</span>
-                        </li>
-                        <li class="p-2 bg-white dark:bg-white/5 rounded border border-gray-200 dark:border-white/10 flex justify-between">
-                            <span>Reunião de Planejamento</span>
-                            <span class="text-purple-400">Quarta</span>
-                        </li>
-                    </ul>
-                </div>
-                <div class="text-xs font-mono text-gray-500 text-center pt-4">Módulo Sincronizado</div>
-            </div>
-
-            <!-- Módulo 3: Status do Projeto -->
-            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl flex flex-col justify-between">
-                <div>
-                    <h3 class="font-mono font-bold text-emerald-400 text-sm mb-2 flex items-center gap-2">⚡ Status do Sistema</h3>
-                    <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">Integridade de criptografia e chaves ativas.</p>
-                    <div class="space-y-2 text-xs font-mono">
-                        <div class="flex justify-between p-2 bg-white dark:bg-white/5 rounded border border-gray-200 dark:border-white/10">
-                            <span>Segurança:</span>
-                            <span class="text-emerald-400 font-bold">Ativa (8+ chars)</span>
-                        </div>
-                        <div class="flex justify-between p-2 bg-white dark:bg-white/5 rounded border border-gray-200 dark:border-white/10">
-                            <span>Perfis:</span>
-                            <span class="text-cyan-400 font-bold">4 Ativos</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="text-xs font-mono text-gray-500 text-center pt-4">Versão 2.5 Reestruturada</div>
             </div>
         </div>
+
+        <!-- Aba 3: Tarefas -->
+        <div id="tab-tarefas" class="tab-content hidden space-y-4">
+            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl">
+                <h3 class="font-mono font-bold text-purple-400 text-sm mb-3">📋 Tarefas e Pendências</h3>
+                <div id="taskList" class="space-y-2 mb-4 max-h-60 overflow-y-auto text-xs font-mono pr-1"></div>
+                <div class="flex gap-2">
+                    <input type="text" id="novaTarefa" placeholder="Nova tarefa..." class="w-full px-4 py-2.5 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-purple-500">
+                    <button id="addTarefaBtn" class="px-5 py-2.5 bg-purple-500 text-white font-bold text-xs rounded-lg hover:bg-purple-400 transition">Adicionar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aba 4: Finanças Compartilhadas -->
+        <div id="tab-financas" class="tab-content hidden space-y-4">
+            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+                    <h3 class="font-mono font-bold text-emerald-400 text-sm">💰 Registro de Despesas</h3>
+                    <div id="totalGasto" class="font-mono text-xs text-gray-400">Total: R$ 0,00</div>
+                </div>
+                <div id="financasList" class="space-y-2 mb-4 max-h-50 overflow-y-auto text-xs font-mono pr-1"></div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
+                    <input type="text" id="descricaoGasto" placeholder="Descrição (ex: Compras)" class="px-4 py-2.5 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-emerald-500">
+                    <input type="number" id="valorGasto" placeholder="Valor (R$)" step="0.01" class="px-4 py-2.5 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-emerald-500">
+                    <button id="addGastoBtn" class="px-5 py-2.5 bg-emerald-500 text-black font-bold text-xs rounded-lg hover:bg-emerald-400 transition">Registrar Gasto</button>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Script de Autenticação, Tema e Novos Módulos -->
+    <!-- Script Principal v5.0 -->
     <script>
-        // Base de Usuários e Chaves Corretas
+        // Mapeamento exato com os nomes atualizados
         const tabelaUsuarios = {
-            'admin': { senha: 'aria2026password', nome: 'Criador (Você)' },
-            'namorada': { senha: 'amor2026password', nome: 'Minha Namorada' },
-            'sogro': { senha: 'sogro2026password', nome: 'Sogro' },
-            'sogra': { senha: 'sogra2026password', nome: 'Sogra' }
+            'vinicius': { senha: 'aria2026password', nome: 'Vinícius (Criador)', role: 'Admin' },
+            'andressa': { senha: 'amor2026password', nome: 'Andressa (Namorada)', role: 'Membro' },
+            'dirceu': { senha: 'dirceu2026password', nome: 'Dirceu (Sogro)', role: 'Membro' },
+            'edina': { senha: 'edina2026password', nome: 'Édina (Sogra)', role: 'Membro' }
         };
 
-        // Lógica do Modo Noturno / Claro
-        const themeToggleBtn = document.getElementById('themeToggle');
-        const htmlElement = document.documentElement;
+        let usuarioLogado = null;
 
-        themeToggleBtn.addEventListener('click', () => {
-            if (htmlElement.classList.contains('dark')) {
-                htmlElement.classList.remove('dark');
-            } else {
-                htmlElement.classList.add('dark');
-            }
+        // Função de Notificação Toast
+        function mostrarToast(mensagem) {
+            const toast = document.getElementById('toastNotification');
+            toast.textContent = mensagem;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+
+        // Modo Noturno
+        document.getElementById('themeToggle').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
         });
 
-        // Alternar Visibilidade da Senha
-        const togglePasswordBtn = document.getElementById('togglePassword');
+        // Visibilidade Senha
         const passwordInput = document.getElementById('senha');
-
-        togglePasswordBtn.addEventListener('click', () => {
-            const currentType = passwordInput.getAttribute('type');
-            const newType = currentType === 'password' ? 'text' : 'password';
-            passwordInput.setAttribute('type', newType);
-            togglePasswordBtn.textContent = newType === 'password' ? '👁️' : '🙈';
+        document.getElementById('togglePassword').addEventListener('click', () => {
+            const isPass = passwordInput.type === 'password';
+            passwordInput.type = isPass ? 'text' : 'password';
         });
 
-        // Autenticação e Transição para o Dashboard
+        // Alternância de Abas
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                tabBtns.forEach(b => {
+                    b.classList.remove('bg-cyan-500', 'text-black');
+                    b.classList.add('bg-gray-100', 'dark:bg-white/5', 'text-gray-600', 'dark:text-gray-300');
+                });
+                btn.classList.remove('bg-gray-100', 'dark:bg-white/5', 'text-gray-600', 'dark:text-gray-300');
+                btn.classList.add('bg-cyan-500', 'text-black');
+
+                const targetId = btn.getAttribute('data-target');
+                tabContents.forEach(c => c.classList.add('hidden'));
+                document.getElementById(targetId).classList.remove('hidden');
+            });
+        });
+
+        // Login
         const loginForm = document.getElementById('loginForm');
         const loginScreen = document.getElementById('loginScreen');
         const dashboardScreen = document.getElementById('dashboardScreen');
         const errorMessage = document.getElementById('errorMessage');
-        const welcomeUser = document.getElementById('welcomeUser');
-        const selectUsuario = document.getElementById('usuario');
 
         loginForm.addEventListener('submit', (e) => {
             e.preventDefault();
-            const usuarioSelecionado = selectUsuario.value;
-            const senhaValor = passwordInput.value;
+            const userKey = document.getElementById('usuario').value;
+            const passVal = passwordInput.value;
 
-            // Validação de segurança (mínimo de 8 caracteres)
-            if (senhaValor.length < 8) {
+            if (passVal.length < 8) {
                 passwordInput.classList.add('border-red-500');
                 errorMessage.textContent = 'A chave deve ter pelo menos 8 caracteres.';
                 errorMessage.style.display = 'block';
-                passwordInput.focus();
                 return;
             }
 
-            // Validação de credencial correta
-            const dadosUsuario = tabelaUsuarios[usuarioSelecionado];
-            if (dadosUsuario && senhaValor === dadosUsuario.senha) {
-                // Sucesso: Esconde login e mostra dashboard
+            if (tabelaUsuarios[userKey] && passVal === tabelaUsuarios[userKey].senha) {
+                usuarioLogado = tabelaUsuarios[userKey];
                 loginScreen.classList.add('hidden');
                 dashboardScreen.classList.remove('hidden');
-                welcomeUser.textContent = `Painel de Controle — ${dadosUsuario.nome}`;
+                document.getElementById('welcomeUser').textContent = `Painel — ${usuarioLogado.nome}`;
+                document.getElementById('roleDescription').textContent = `Sessão ativa para ${usuarioLogado.nome}`;
+                
+                if (usuarioLogado.role === 'Admin') {
+                    document.getElementById('badgeAdmin').classList.remove('hidden');
+                } else {
+                    document.getElementById('badgeAdmin').classList.add('hidden');
+                }
+
+                carregarRecados();
+                carregarTarefas();
+                carregarFinancas();
+                iniciarContador();
+                mostrarToast(`Bem-vindo, ${usuarioLogado.nome.split(' ')[0]}!`);
             } else {
-                // Erro de chave incorreta
                 passwordInput.classList.add('border-red-500');
-                errorMessage.textContent = 'Chave de acesso incorreta para este usuário.';
+                errorMessage.textContent = 'Chave de acesso incorreta.';
                 errorMessage.style.display = 'block';
-                passwordInput.focus();
             }
         });
 
-        // Botão de Sair / Logout
         document.getElementById('logoutBtn').addEventListener('click', () => {
             dashboardScreen.classList.add('hidden');
             loginScreen.classList.remove('hidden');
             passwordInput.value = '';
             errorMessage.style.display = 'none';
-            passwordInput.classList.remove('border-red-500');
         });
 
-        // Interatividade do Mural de Recados
-        const addRecadoBtn = document.getElementById('addRecadoBtn');
-        const novoRecadoInput = document.getElementById('novoRecado');
-        const recadosList = document.getElementById('recadosList');
+        // Contagem Regressiva
+        function iniciarContador() {
+            const timerEl = document.getElementById('countdownTimer');
+            const target = new Date();
+            target.setDate(target.getDate() + (7 + 0 - target.getDay()) % 7);
+            target.setHours(13, 0, 0);
 
-        addRecadoBtn.addEventListener('click', () => {
-            const texto = novoRecadoInput.value.trim();
-            if (texto) {
-                const usuarioNome = tabelaUsuarios[selectUsuario.value].nama || 'Usuário';
-                const novoItem = document.createElement('div');
-                novoItem.className = 'p-2 bg-white dark:bg-white/5 rounded border border-gray-200 dark:border-white/10';
-                novoItem.innerHTML = `<span class="text-purple-400 font-bold">Novo:</span> ${texto}`;
-                recadosList.prepend(novoItem);
-                novoRecadoInput.value = '';
+            setInterval(() => {
+                const now = new Date();
+                const diff = target - now;
+                if (diff <= 0) {
+                    timerEl.textContent = 'Acontecendo agora!';
+                    return;
+                }
+                const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
+                const minutos = Math.floor((diff / 1000 / 60) % 60);
+                timerEl.textContent = `${dias}d ${horas}h ${minutos}m restantes`;
+            }, 1000);
+        }
+
+        // Mural de Recados
+        function carregarRecados() {
+            const recados = JSON.parse(localStorage.getItem('aria_recados_v5')) || [
+                { autor: 'Vinícius', texto: 'Sistema v5.0 atualizado para todos!' }
+            ];
+            const lista = document.getElementById('recadosList');
+            lista.innerHTML = '';
+            recados.forEach(r => {
+                const div = document.createElement('div');
+                div.className = 'p-3 bg-white dark:bg-white/5 rounded border border-gray-200 dark:border-white/10 flex justify-between items-center';
+                div.innerHTML = `<div><span class="text-cyan-400 font-bold">${r.autor}:</span> ${r.texto}</div>`;
+                lista.appendChild(div);
+            });
+        }
+
+        document.getElementById('addRecadoBtn').addEventListener('click', () => {
+            const input = document.getElementById('novoRecado');
+            if (!input.value.trim()) return;
+            const recados = JSON.parse(localStorage.getItem('aria_recados_v5')) || [];
+            recados.unshift({ autor: usuarioLogado.nome.split(' ')[0], texto: input.value.trim() });
+            localStorage.setItem('aria_recados_v5', JSON.stringify(recados));
+            input.value = '';
+            carregarRecados();
+            mostrarToast('Recado publicado!');
+        });
+
+        // Tarefas
+        function carregarTarefas() {
+            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v5')) || [
+                { texto: 'Organizar próximo almoço', concluida: false }
+            ];
+            const lista = document.getElementById('taskList');
+            lista.innerHTML = '';
+            tarefas.forEach((t, index) => {
+                const div = document.createElement('div');
+                div.className = 'p-3 bg-white dark:bg-white/5 rounded border border-gray-200 dark:border-white/10 flex justify-between items-center';
+                div.innerHTML = `
+                    <span class="${t.concluida ? 'line-through text-gray-500' : ''}">${t.texto}</span>
+                    <button onclick="alternarTarefa(${index})" class="text-[10px] px-2.5 py-1 rounded bg-purple-500/20 text-purple-400 hover:bg-purple-500 hover:text-white transition">${t.concluida ? 'Feito' : 'Pendente'}</button>
+                `;
+                lista.appendChild(div);
+            });
+        }
+
+        document.getElementById('addTarefaBtn').addEventListener('click', () => {
+            const input = document.getElementById('novaTarefa');
+            if (!input.value.trim()) return;
+            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v5')) || [];
+            tarefas.push({ texto: input.value.trim(), concluida: false });
+            localStorage.setItem('aria_tarefas_v5', JSON.stringify(tarefas));
+            input.value = '';
+            carregarTarefas();
+            mostrarToast('Tarefa adicionada!');
+        });
+
+        window.alternarTarefa = function(index) {
+            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v5')) || [];
+            tarefas[index].concluida = !tarefas[index].concluida;
+            localStorage.setItem('aria_tarefas_v5', JSON.stringify(tarefas));
+            carregarTarefas();
+        };
+
+        // Finanças
+        function carregarFinancas() {
+            const financas = JSON.parse(localStorage.getItem('aria_financas_v5')) || [];
+            const lista = document.getElementById('financasList');
+            lista.innerHTML = '';
+            let total = 0;
+
+            if (financas.length === 0) {
+                lista.innerHTML = '<div class="text-gray-500 text-center py-2">Nenhuma despesa registrada.</div>';
             }
+
+            financas.forEach(f => {
+                total += Number(f.valor);
+                const div = document.createElement('div');
+                div.className = 'p-3 bg-white dark:bg-white/5 rounded border border-gray-200 dark:border-white/10 flex justify-between items-center';
+                div.innerHTML = `
+                    <div><span class="text-emerald-400 font-bold">${f.autor}:</span> ${f.descricao}</div>
+                    <span class="font-bold text-gray-200">R$ ${Number(f.valor).toFixed(2)}</span>
+                `;
+                lista.appendChild(div);
+            });
+
+            document.getElementById('totalGasto').textContent = `Total: R$ ${total.toFixed(2)}`;
+        }
+
+        document.getElementById('addGastoBtn').addEventListener('click', () => {
+            const descInput = document.getElementById('descricaoGasto');
+            const valInput = document.getElementById('valorGasto');
+            if (!descInput.value.trim() || !valInput.value) return;
+
+            const financas = JSON.parse(localStorage.getItem('aria_financas_v5')) || [];
+            financas.push({
+                autor: usuarioLogado.nome.split(' ')[0],
+                descricao: descInput.value.trim(),
+                valor: parseFloat(valInput.value)
+            });
+            localStorage.setItem('aria_financas_v5', JSON.stringify(financas));
+            descInput.value = '';
+            valInput.value = '';
+            carregarFinancas();
+            mostrarToast('Despesa registrada!');
         });
 
-        // Remove erro ao digitar
         passwordInput.addEventListener('input', () => {
             if (passwordInput.value.length >= 8) {
                 passwordInput.classList.remove('border-red-500');
