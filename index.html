@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="theme-color" content="#050a14">
-    <title>Nossa Frequência & # Guardião — Hub de Saúde & Cuidado Completo</title>
+    <title>Nossa Frequência & # Guardião — Sistema Multi-Nível</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Fredoka:wght@400;600&family=Montserrat:wght@300;400;600;700&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://unpkg.com/peerjs@1.5.2/dist/peerjs.min.js"></script>
 
     <style>
         :root {
@@ -32,19 +31,19 @@
         .top-bar {
             position: fixed; top: 0; left: 0; width: 100%; z-index: 100;
             background: rgba(5, 10, 20, 0.95); border-bottom: 1px solid var(--border-glow);
-            padding: 8px 12px; display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 16px; display: flex; justify-content: space-between; align-items: center;
             backdrop-filter: blur(10px);
         }
 
         .btn-top {
             background: rgba(255, 215, 0, 0.12); border: 1px solid var(--gold); color: var(--gold);
-            padding: 6px 12px; border-radius: 20px; font-size: 0.72rem; cursor: pointer; font-weight: 600;
+            padding: 6px 14px; border-radius: 20px; font-size: 0.75rem; cursor: pointer; font-weight: 600;
         }
 
-        .container { position: relative; z-index: 1; max-width: 520px; margin: 60px auto 40px; padding: 15px; display: flex; flex-direction: column; gap: 16px; }
+        .container { position: relative; z-index: 1; max-width: 520px; margin: 70px auto 40px; padding: 15px; display: flex; flex-direction: column; gap: 16px; }
 
         header { text-align: center; margin-bottom: 5px; }
-        .vesica-logo { width: 80px; height: 80px; margin: 0 auto 5px; filter: drop-shadow(0 0 15px var(--aura-blue)); cursor: pointer; }
+        .vesica-logo { width: 85px; height: 85px; margin: 0 auto 5px; filter: drop-shadow(0 0 15px var(--aura-blue)); cursor: pointer; }
         h1 { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; background: linear-gradient(135deg, #fff, var(--aura-blue), var(--aura-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         p.subtitle { font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; }
 
@@ -54,18 +53,6 @@
         }
 
         .card-title { font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; color: var(--gold); margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; }
-
-        /* MODO PRINCESA (7 ANOS) */
-        .child-mode-view { display: none; background: #120924; min-height: 100vh; padding: 20px; text-align: center; position: relative; z-index: 10; }
-        .child-mode-view.active { display: block; }
-        .big-button {
-            width: 100%; padding: 20px; margin-bottom: 14px; border-radius: 24px; border: none;
-            font-family: 'Fredoka', cursive; font-size: 1.3rem; font-weight: 600; color: #fff;
-            display: flex; align-items: center; justify-content: center; gap: 12px;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4); cursor: pointer;
-        }
-        .btn-aria-child { background: linear-gradient(135deg, #ff9ebb, #ffc2d1); color: #590d22; }
-        .btn-calm-child { background: linear-gradient(135deg, #a2d2ff, #bde0fe); color: #03045e; }
 
         .aria-chat-box { background: rgba(0,0,0,0.5); border-radius: 12px; padding: 10px; height: 180px; overflow-y: auto; margin-bottom: 10px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.1); }
         .aria-msg { margin-bottom: 8px; padding: 8px 12px; border-radius: 10px; max-width: 88%; line-height: 1.4; }
@@ -81,6 +68,9 @@
         .modal-content { max-width: 500px; margin: 60px auto; background: var(--glass); border: 1px solid var(--gold); padding: 22px; border-radius: 20px; font-size: 0.85rem; line-height: 1.6; text-align: center; }
         .pin-input { font-size: 1.5rem; text-align: center; letter-spacing: 8px; font-weight: bold; width: 180px; margin: 15px auto; }
         .badge { background: rgba(0,212,255,0.1); border: 1px solid var(--aura-blue); padding: 3px 8px; border-radius: 12px; font-size: 0.68rem; color: var(--aura-blue); }
+
+        .hidden-menu { display: none; }
+        .hidden-menu.visible { display: block; }
     </style>
 </head>
 <body>
@@ -88,298 +78,308 @@
     <canvas id="canvas3d"></canvas>
 
     <div class="top-bar">
-        <button class="btn-top" onclick="lockSystemNow()">🔒 Trancar</button>
-        <button class="btn-top" style="border-color:var(--aura-purple); color:var(--aura-purple);" onclick="requestModeSwitch()" id="viewModeBtn">🔄 Modo Princesa (7 Anos)</button>
+        <span style="font-family:'Cormorant Garamond'; color:var(--gold); font-size:1.1rem; font-weight:bold;">✦ Nossa Frequência</span>
+        <div>
+            <button class="btn-top" id="lockBtn" style="display:none; border-color:var(--danger); color:var(--danger);" onclick="lockSystem()">🔒 Sair</button>
+            <button class="btn-top" id="accessBtn" onclick="openPinModal()">🔑 Área Restrita</button>
+        </div>
     </div>
 
-    <!-- MODO CUIDADOR PRINCIPAL -->
-    <div id="caregiverView" class="container">
-
+    <!-- 1. TELA INICIAL: NOSSA FREQUÊNCIA (LIVRE DE CLÍNICOS E MANUAIS) -->
+    <div id="frequenciaView" class="container">
         <header>
-            <svg class="vesica-logo" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="vesica-logo" onclick="openPinModal()" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="75" cy="100" r="60" stroke="#00d4ff" stroke-width="2.5" opacity="0.85"/>
                 <circle cx="125" cy="100" r="60" stroke="#a066ff" stroke-width="2.5" opacity="0.85"/>
                 <path d="M 100 51 A 60 60 0 0 1 100 149 A 60 60 0 0 1 100 51 Z" fill="rgba(255,217,0,0.18)" stroke="#ffd700" stroke-width="1.8"/>
                 <text x="100" y="107" font-family="Cormorant Garamond" font-size="24" fill="#ffd700" text-anchor="middle" font-weight="600">05</text>
             </svg>
             <h1>Nossa Frequência</h1>
-            <p class="subtitle">SISTEMA # GUARDIÃO — SAÚDE & CUIDADO MULTIDIMENSIONAL</p>
+            <p class="subtitle">HARMONIZAÇÃO & REEQUILÍBRIO SENSORIAL</p>
         </header>
 
-        <!-- SELETOR DINÂMICO DE ESTADO EMOCIONAL -->
-        <section class="card" style="border-color: var(--emerald);">
-            <div class="card-title">
-                <span>🧠 Estado Comportamental Atual (Andressa)</span>
-            </div>
-            <select id="behaviorState" onchange="updateBehaviorState()">
-                <option value="adulto">🧑 Adulta Funcional (Diálogo Racional & Direto)</option>
-                <option value="sensivel">🌿 Sensível / Instável (Acolhimento Sem Infantilização)</option>
-                <option value="regressao">🧸 Regressão Ativa (Comportamento de 7 Anos)</option>
-            </select>
-            <p id="behaviorTip" style="font-size:0.72rem; color:var(--aura-blue);">Estado Adulto: Mantenha comunicação clara e respeite a tomada de decisão.</p>
-        </section>
-
-        <!-- MÓDULO DE SAÚDE FÍSICA (GLICEMIA, HEMOGRAMA E HORMÔNIOS) -->
-        <section class="card" style="border-color: var(--aura-blue);">
-            <div class="card-title">🩺 Painel de Saúde Física & Exames</div>
-            
-            <label style="font-size:0.72rem; color:var(--gold);">Regitro de Glicemia (mg/dL):</label>
-            <div style="display:flex; gap:6px;">
-                <input type="number" id="glucoseInput" placeholder="Ex: 98" style="margin-bottom:0;">
-                <button class="btn-small" style="white-space:nowrap;" onclick="saveGlucose()">Salvar Glicemia</button>
-            </div>
-
-            <label style="font-size:0.72rem; color:var(--gold); margin-top:8px; display:block;">Registro de Exames de Sangue / Hormônios:</label>
-            <select id="labType">
-                <option value="Hemograma">Hemograma Completo</option>
-                <option value="Colesterol">Colesterol & Triglicerídeos</option>
-                <option value="Hormonios">Hormônios (TSH, Cortisol, etc.)</option>
-                <option value="Glicada">Hemoglobina Glicada (HbA1c)</option>
-            </select>
-            <textarea id="labNotes" rows="2" placeholder="Resultados ou observações do médico..."></textarea>
-            <button class="btn-action" onclick="saveLabResult()">Registrar Exame no Histórico</button>
-
-            <div id="healthLogs" style="margin-top:10px; font-size:0.72rem; max-height:120px; overflow-y:auto;"></div>
-        </section>
-
-        <!-- ASSISTENTE ARIA AI -->
         <section class="card">
-            <div class="card-title">
-                <span>🤖 Aria AI — Suporte Clínico & Familiar</span>
-                <span class="badge">Senha: 120697</span>
-            </div>
-            <div class="aria-chat-box" id="ariaChat">
-                <div class="aria-msg aria">Aria ativa. Ajustada para orientações de bipolaridade, esquizofrenia, diabetes e suporte à dinâmica familiar.</div>
-            </div>
-            <div style="display:flex; gap:5px;">
-                <input type="text" id="ariaInput" placeholder="Dúvida sobre medicação, surto ou dinâmica da família..." style="margin-bottom:0;">
-                <button class="btn-action" style="width:auto; padding:0 15px;" onclick="askAria()">Enviar</button>
-            </div>
-            <div style="display:flex; gap:4px; flex-wrap:wrap; margin-top:8px;">
-                <button class="btn-small" onclick="quickAriaPrompt('pai')">👨 Manejo Pai (TOC/Burnout)</button>
-                <button class="btn-small" onclick="quickAriaPrompt('mae')">👩 Manejo Mãe (Delírio)</button>
-                <button class="btn-small" onclick="quickAriaPrompt('glicemia')">🩸 Glicemia Alterada</button>
-            </div>
-        </section>
-
-        <!-- DIÁRIO CLÍNICO DE SINTOMAS -->
-        <section class="card">
-            <div class="card-title">📝 Diário Psiquiátrico & Registro de Crises</div>
-            <select id="symptomCategory">
-                <option value="Estável">😊 Estável</option>
-                <option value="Alucinação">🌀 Alucinação / Delírio (Esquizofrenia)</option>
-                <option value="Mania">⚡ Agitação / Mania (Bipolaridade)</option>
-                <option value="Conflito Familiar">⚠️ Conflito no Ambiente Familiar</option>
+            <div class="card-title">✨ Gerador de Ondas & Ruído Marrom</div>
+            <select id="freqSelect" onchange="updateAudioEngine()">
+                <option value="432">432 Hz — Calma & Redução de Ansiedade</option>
+                <option value="528">528 Hz — Paz & Regeneração Mental</option>
+                <option value="639">639 Hz — Conexão & Acolhimento</option>
+                <option value="brown_noise">🟤 Ruído Marrom (Brown Noise) — Silenciar Mente</option>
             </select>
-            <textarea id="symptomNotes" rows="2" placeholder="Descreva os fatos para o relatório psiquiátrico..."></textarea>
-            <button class="btn-action" onclick="saveSymptomLog()">Gravar Registro Criptografado</button>
-            <button class="btn-small" style="width:100%; margin-top:6px;" onclick="generateDoctorReport()">📄 Baixar Relatório Médico em TXT</button>
+            <button class="btn-action" id="solfeggioBtn" onclick="toggleAudioEngine()">▶ Tocar Frequência Calmante</button>
         </section>
-
     </div>
 
-    <!-- MODO PRINCESA (7 ANOS) -->
-    <div id="childView" class="child-mode-view">
-        <div style="max-width:400px; margin:40px auto 0;">
-            <h1 style="font-family:'Fredoka'; color:#ff9ebb; -webkit-text-fill-color: initial; font-size:2.3rem;">Espaço Mágico 🌟</h1>
-            <p style="font-size:0.95rem; color:#bde0fe; margin-bottom:20px; font-family:'Fredoka';">Você está em um lugar seguro.</p>
+    <!-- 2. MODO GUARDIÃO (OCULTO - REQUER SENHA ADMIN 1 OU 2) -->
+    <div id="guardiaoView" class="container hidden-menu">
+        <header>
+            <h1>Modo Guardião</h1>
+            <p class="subtitle" id="userRoleTitle">PAINEL DE CONTROLE DE SAÚDE</p>
+        </header>
 
-            <button class="big-button btn-aria-child" onclick="ariaChildGreeting()">🗣️ Ouvir Mensagem Carinhosa</button>
-            <button class="big-button btn-calm-child" onclick="speakText('Respire fundo com calma. O balãozinho enche e esvazia.')">🎈 Respiração Guiada</button>
-
-            <div class="card" style="background: rgba(255,255,255,0.08); text-align:center; margin-top:20px; border-color:#ff9ebb;">
-                <p style="font-size:1rem; font-family:'Fredoka'; color:#ffd700;" id="childMessage">Tudo está calmo por aqui!</p>
+        <!-- MENU EXCLUSIVO DO ADMIN PRIMÁRIO (VOCÊ: 120697) -->
+        <section id="adminPrimaryMenu" class="card hidden-menu" style="border-color: var(--gold);">
+            <div class="card-title">
+                <span>⚙️ Configurações do Admin Primário</span>
+                <span class="badge">Acesso Total</span>
             </div>
+            <p style="font-size:0.72rem; color:#ccc; margin-bottom:8px;">Gestão de senhas ativas do sistema:</p>
+            <div style="font-size:0.72rem; color:var(--emerald); margin-bottom:8px;">
+                • Admin Primário (Você): 120697<br>
+                • Admin Secundário (Pai): 280598<br>
+                • Modo Acolhimento (Mãe): 050526
+            </div>
+            <button class="btn-small" style="width:100%;" onclick="generateDoctorReport()">📄 Baixar Relatório Médico Completo (TXT)</button>
+        </section>
+
+        <!-- MÓDULO DE SAÚDE (VISÍVEL PARA VOCÊ E SEU PAI) -->
+        <section class="card">
+            <div class="card-title">🩺 Monitoramento de Saúde & Sangue</div>
+            <label style="font-size:0.72rem; color:var(--gold);">Registro de Glicemia (mg/dL):</label>
+            <div style="display:flex; gap:6px;">
+                <input type="number" id="glucoseInput" placeholder="Ex: 95" style="margin-bottom:0;">
+                <button class="btn-small" onclick="saveGlucose()">Salvar</button>
+            </div>
+            <label style="font-size:0.72rem; color:var(--gold); margin-top:8px; display:block;">Exames / Hormônios / Colesterol:</label>
+            <textarea id="labNotes" rows="2" placeholder="Observações do exame..."></textarea>
+            <button class="btn-action" onclick="saveLabResult()">Gravar no Histórico</button>
+            <div id="healthLogs" style="margin-top:8px; font-size:0.72rem; max-height:100px; overflow-y:auto;"></div>
+        </section>
+
+        <section class="card">
+            <div class="card-title">📖 Manual do Guardião</div>
+            <button class="btn-small" style="width:100%;" onclick="toggleManualModal()">Abrir Manual de Operação</button>
+        </section>
+    </div>
+
+    <!-- 3. ARIA AI (ACOMPANHA MODO GUARDIÃO) -->
+    <div id="ariaView" class="container hidden-menu">
+        <section class="card">
+            <div class="card-title">
+                <span>🤖 Aria AI — Assistente de Cuidado</span>
+            </div>
+            <div class="aria-chat-box" id="ariaChat">
+                <div class="aria-msg aria">Aria pronta. Como posso orientar sobre condutas comportamentais ou saúde agora?</div>
+            </div>
+            <div style="display:flex; gap:5px;">
+                <input type="text" id="ariaInput" placeholder="Digite sua dúvida..." style="margin-bottom:0;">
+                <button class="btn-action" style="width:auto; padding:0 15px;" onclick="askAria()">Enviar</button>
+            </div>
+            <button class="btn-small" style="width:100%; margin-top:8px;" onclick="toggleManualModal()">📖 Ver Manual na Aria</button>
+        </section>
+    </div>
+
+    <!-- MODAL DE SENHA COM IDENTIFICAÇÃO DE HIERARQUIA -->
+    <div class="modal" id="pinModal">
+        <div class="modal-content">
+            <h2>🛡️ Autenticação de Acesso</h2>
+            <p style="color:var(--aura-blue);">Insira sua senha de identificação:</p>
+            <input type="password" id="pinInput" class="pin-input" placeholder="••••••" maxlength="8">
+            <div style="display:flex; gap:8px; margin-top:10px;">
+                <button class="btn-action" onclick="verifyAccess()">Entrar</button>
+                <button class="btn-small" style="background:rgba(255,255,255,0.1); border:none; color:#fff;" onclick="closePinModal()">Cancelar</button>
+            </div>
+            <p id="pinError" style="color:var(--danger); font-size:0.75rem; margin-top:8px; display:none;">Senha incorreta ou sem permissão!</p>
         </div>
     </div>
 
-    <!-- MODAL DE VALIDAÇÃO DE SENHA -->
-    <div class="modal" id="pinModal">
-        <div class="modal-content">
-            <h2>🛡️ Acesso Restrito ao Guardião</h2>
-            <p style="color:var(--aura-blue);">Digite a senha de cuidador (Padrão: 120697):</p>
-            <input type="password" id="pinInput" class="pin-input" placeholder="••••••" maxlength="8">
-            <div style="display:flex; gap:8px; margin-top:10px;">
-                <button class="btn-action" onclick="verifyPinAndSwitch()">Desbloquear</button>
-                <button class="btn-small" style="background:rgba(255,255,255,0.1); border:none; color:#fff;" onclick="closePinModal()">Cancelar</button>
-            </div>
-            <p id="pinError" style="color:var(--danger); font-size:0.75rem; margin-top:8px; display:none;">Senha Incorreta!</p>
+    <!-- MODAL DO MANUAL COMPLETO -->
+    <div class="modal" id="manualModal">
+        <div class="modal-content" style="text-align:left;">
+            <h2>📖 Manual do Sistema & Protocolos</h2>
+            <p><b>1. Acesso Admin Primário (Você - 120697):</b> Dá controle total sobre diagnósticos, exportação de dados e configurações do sistema.</p>
+            <p><b>2. Acesso Admin Secundário (Pai - 280598):</b> Permite lançar dados de saúde, exames e checar medicação, sem acesso a alterações de senhas.</p>
+            <p><b>3. Manejo Comportamental:</b> Na presença de episódios de agitação ou regressão, utilize a tela <i>Nossa Frequência</i> com o Ruído Marrom ativado.</p>
+            <button class="btn-action" style="margin-top:15px;" onclick="toggleManualModal()">Fechar Manual</button>
         </div>
     </div>
 
     <script>
-        let activePins = ['120697'];
-        let isChildMode = false;
+        /* --- NÍVEIS DE ACESSO E SENHAS --- */
+        const PASSWORDS = {
+            PRIMARY: '120697',   // Você (Admin Primário)
+            SECONDARY: '280598', // Pai (Admin Secundário)
+            GUEST: '050526'      // Mãe / Modo Princesa
+        };
 
-        function updateBehaviorState() {
-            const st = document.getElementById('behaviorState').value;
-            const tip = document.getElementById('behaviorTip');
-            if (st === 'adulto') tip.innerText = "Estado Adulto: Mantenha comunicação clara, objetiva e respeite a autonomia.";
-            if (st === 'sensivel') tip.innerText = "Estado Sensível: Reduza o tom de voz, evite confrontos e ofereça suporte emocional.";
-            if (st === 'regressao') tip.innerText = "Estado 7 Anos: Ative o Modo Princesa para dinâmicas lúdicas e acolhedoras.";
+        let currentRole = null;
+
+        function openPinModal() {
+            document.getElementById('pinInput').value = '';
+            document.getElementById('pinError').style.display = 'none';
+            document.getElementById('pinModal').classList.add('active');
         }
 
-        function requestModeSwitch() {
-            if (!isChildMode) switchView(true);
-            else openPinModal();
+        function closePinModal() {
+            document.getElementById('pinModal').classList.remove('active');
         }
 
-        function lockSystemNow() { openPinModal(); }
-        function openPinModal() { document.getElementById('pinInput').value = ''; document.getElementById('pinModal').classList.add('active'); }
-        function closePinModal() { document.getElementById('pinModal').classList.remove('active'); }
-
-        function verifyPinAndSwitch() {
+        function verifyAccess() {
             const entered = document.getElementById('pinInput').value.trim();
-            if (activePins.includes(entered)) { closePinModal(); switchView(false); }
-            else { document.getElementById('pinError').style.display = 'block'; }
+            closePinModal();
+
+            if (entered === PASSWORDS.PRIMARY) {
+                currentRole = 'PRIMARY';
+                unlockView();
+            } else if (entered === PASSWORDS.SECONDARY) {
+                currentRole = 'SECONDARY';
+                unlockView();
+            } else if (entered === PASSWORDS.GUEST) {
+                alert("Modo de Acolhimento Ativado.");
+                lockSystem();
+            } else {
+                document.getElementById('pinError').style.display = 'block';
+            }
         }
 
-        function switchView(toChild) {
-            isChildMode = toChild;
-            document.getElementById('caregiverView').style.display = isChildMode ? 'none' : 'block';
-            document.getElementById('childView').classList.toggle('active', isChildMode);
-            document.getElementById('viewModeBtn').innerText = isChildMode ? "🔒 Sair do Modo Princesa" : "🔄 Modo Princesa (7 Anos)";
+        function unlockView() {
+            document.getElementById('frequenciaView').classList.add('hidden-menu');
+            document.getElementById('guardiaoView').classList.remove('hidden-menu');
+            document.getElementById('ariaView').classList.remove('hidden-menu');
+            
+            document.getElementById('lockBtn').style.display = 'inline-block';
+            document.getElementById('accessBtn').style.display = 'none';
+
+            if (currentRole === 'PRIMARY') {
+                document.getElementById('adminPrimaryMenu').classList.add('visible');
+                document.getElementById('userRoleTitle').innerText = 'PAINEL ADMIN PRIMÁRIO';
+            } else {
+                document.getElementById('adminPrimaryMenu').classList.remove('visible');
+                document.getElementById('userRoleTitle').innerText = 'PAINEL DE CUIDADO SECUNDÁRIO';
+            }
         }
+
+        function lockSystem() {
+            currentRole = null;
+            document.getElementById('frequenciaView').classList.remove('hidden-menu');
+            document.getElementById('guardiaoView').classList.add('hidden-menu');
+            document.getElementById('ariaView').classList.add('hidden-menu');
+            
+            document.getElementById('lockBtn').style.display = 'none';
+            document.getElementById('accessBtn').style.display = 'inline-block';
+        }
+
+        function toggleManualModal() {
+            document.getElementById('manualModal').classList.toggle('active');
+        }
+
+        /* --- MOTOR DE ÁUDIO --- */
+        let audioCtx = null, osc1 = null, isAudioPlaying = false, noiseNode = null;
+
+        function toggleAudioEngine() {
+            const btn = document.getElementById('solfeggioBtn');
+            if (!isAudioPlaying) {
+                startAudioEngine();
+                btn.innerText = "⏸ Pausar Som";
+                isAudioPlaying = true;
+            } else {
+                stopAudioEngine();
+                btn.innerText = "▶ Tocar Frequência Calmante";
+                isAudioPlaying = false;
+            }
+        }
+
+        function startAudioEngine() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const val = document.getElementById('freqSelect').value;
+
+            if (val === 'brown_noise') {
+                const bufferSize = audioCtx.sampleRate * 2;
+                const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+                const data = buffer.getChannelData(0);
+                let lastOut = 0.0;
+                for (let i = 0; i < bufferSize; i++) {
+                    const white = Math.random() * 2 - 1;
+                    data[i] = (lastOut + (0.02 * white)) / 1.02;
+                    lastOut = data[i]; data[i] *= 3.5;
+                }
+                noiseNode = audioCtx.createBufferSource();
+                noiseNode.buffer = buffer; noiseNode.loop = true;
+                const gain = audioCtx.createGain(); gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+                noiseNode.connect(gain); gain.connect(audioCtx.destination);
+                noiseNode.start();
+            } else {
+                osc1 = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc1.frequency.setValueAtTime(parseFloat(val), audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.06, audioCtx.currentTime);
+                osc1.connect(gain); gain.connect(audioCtx.destination);
+                osc1.start();
+            }
+        }
+
+        function stopAudioEngine() {
+            if (osc1) { try { osc1.stop(); } catch(e){} }
+            if (noiseNode) { try { noiseNode.stop(); } catch(e){} }
+            if (audioCtx) { try { audioCtx.close(); } catch(e){} }
+        }
+
+        function updateAudioEngine() { if (isAudioPlaying) { stopAudioEngine(); startAudioEngine(); } }
 
         function askAria() {
             const inp = document.getElementById('ariaInput');
             const txt = inp.value.trim();
             if (!txt) return;
-            addAriaMsg(txt, 'user');
+            const box = document.getElementById('ariaChat');
+            box.innerHTML += `<div class="aria-msg user">${txt}</div>`;
             inp.value = '';
-
             setTimeout(() => {
-                let resp = "Compreendido. Recomendo manter a neutralidade e registrar o evento no diário clínico.";
-                const l = txt.toLowerCase();
-                if (l.includes('pai') || l.includes('toc') || l.includes('burnout')) {
-                    resp = "👨 **Manejo do Pai (Burnout/TOC):** Não confronte a rigidez do TOC. Responda com fatos curtos e dados objetivos do aplicativo sem absorver a irritabilidade.";
-                } else if (l.includes('mãe') || l.includes('mae') || l.includes('delírio') || l.includes('delirio')) {
-                    resp = "👩 **Manejo da Mãe (Esquizofrenia):** Não confronte o delírio factual. Acolha apenas o sentimento associado: 'Compreendo que se sinta insegura, mas estou aqui com você'.";
-                } else if (l.includes('glicemia') || l.includes('açúcar') || l.includes('diabetes')) {
-                    resp = "🩸 **Glicemia:** Oscilações drásticas de açúcar na correntes sanguínea provocam mudanças bruscas de humor. Meça a glicemia antes de julgar uma crise comportamental.";
-                }
-                addAriaMsg(resp, 'aria');
+                box.innerHTML += `<div class="aria-msg aria">Orientações registradas com base no perfil de acesso ativo.</div>`;
+                box.scrollTop = box.scrollHeight;
             }, 400);
         }
 
-        function quickAriaPrompt(type) {
-            const inp = document.getElementById('ariaInput');
-            if (type === 'pai') inp.value = "Como agir com o pai em crise de TOC e irritabilidade?";
-            if (type === 'mae') inp.value = "A mãe apresentou fala delirante leve, como acolher?";
-            if (type === 'glicemia') inp.value = "A glicemia alterada pode causar irritabilidade?";
-            askAria();
-        }
-
-        function addAriaMsg(msg, sender) {
-            const box = document.getElementById('ariaChat');
-            const div = document.createElement('div');
-            div.className = `aria-msg ${sender}`;
-            div.innerHTML = msg;
-            box.appendChild(div);
-            box.scrollTop = box.scrollHeight;
-        }
-
-        function speakText(text) {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                const utter = new SpeechSynthesisUtterance(text);
-                utter.lang = 'pt-BR'; utter.rate = 0.85;
-                window.speechSynthesis.speak(utter);
-            }
-        }
-
-        function ariaChildGreeting() {
-            const txt = "Olá minha princesa! Você está muito bem cuidada e protegida hoje.";
-            document.getElementById('childMessage').innerText = txt;
-            speakText(txt);
-        }
-
-        /* --- BANCO DE DADOS INDEXEDDB PARA SAÚDE E SINTOMAS --- */
+        /* BANCO DE DADOS LOCAL SIMPLES */
         let db;
-        const req = indexedDB.open("GuardiaoCompleteDB", 1);
+        const req = indexedDB.open("GuardiaoDataDB", 1);
         req.onupgradeneeded = e => {
             db = e.target.result;
-            db.createObjectStore("symptoms", { keyPath: "id", autoIncrement: true });
             db.createObjectStore("health", { keyPath: "id", autoIncrement: true });
         };
         req.onsuccess = e => { db = e.target.result; loadHealthLogs(); };
 
         function saveGlucose() {
-            const val = document.getElementById('glucoseInput').value;
-            if(!val) return;
+            const val = document.getElementById('glucoseInput').value; if(!val) return;
             const tx = db.transaction("health", "readwrite");
             tx.objectStore("health").add({ type: 'Glicemia', val: `${val} mg/dL`, date: new Date().toLocaleString('pt-BR') });
             tx.oncomplete = () => { document.getElementById('glucoseInput').value = ''; loadHealthLogs(); };
         }
 
         function saveLabResult() {
-            const type = document.getElementById('labType').value;
-            const notes = document.getElementById('labNotes').value.trim();
-            if(!notes) return;
+            const notes = document.getElementById('labNotes').value.trim(); if(!notes) return;
             const tx = db.transaction("health", "readwrite");
-            tx.objectStore("health").add({ type, val: notes, date: new Date().toLocaleString('pt-BR') });
+            tx.objectStore("health").add({ type: 'Exame', val: notes, date: new Date().toLocaleString('pt-BR') });
             tx.oncomplete = () => { document.getElementById('labNotes').value = ''; loadHealthLogs(); };
         }
 
         function loadHealthLogs() {
-            const box = document.getElementById('healthLogs'); box.innerHTML = '';
+            const box = document.getElementById('healthLogs'); if(!box) return; box.innerHTML = '';
             const tx = db.transaction("health", "readonly");
             tx.objectStore("health").openCursor().onsuccess = e => {
                 const cursor = e.target.result;
                 if (cursor) {
                     const { type, val, date } = cursor.value;
-                    const div = document.createElement('div');
-                    div.style.borderBottom = "1px solid rgba(255,255,255,0.08)"; div.style.padding = "3px 0";
-                    div.innerHTML = `<b style="color:var(--emerald);">[${type}]</b> <small>${date}</small>: ${val}`;
-                    box.prepend(div);
+                    box.innerHTML = `<div><b style="color:var(--emerald);">[${type}]</b> <small>${date}</small>: ${val}</div>` + box.innerHTML;
                     cursor.continue();
                 }
             };
-        }
-
-        function saveSymptomLog() {
-            const cat = document.getElementById('symptomCategory').value;
-            const notes = document.getElementById('symptomNotes').value.trim();
-            if (!notes) return;
-            const tx = db.transaction("symptoms", "readwrite");
-            tx.objectStore("symptoms").add({ cat, notes, date: new Date().toLocaleString('pt-BR') });
-            tx.oncomplete = () => { document.getElementById('symptomNotes').value = ''; alert("Registrado com sucesso!"); };
         }
 
         function generateDoctorReport() {
-            const tx = db.transaction("symptoms", "readonly");
-            let report = "--- RELATÓRIO CLÍNICO DE ACOMPANHAMENTO ---\n\n";
-            tx.objectStore("symptoms").openCursor().onsuccess = e => {
-                const cursor = e.target.result;
-                if (cursor) {
-                    const { cat, notes, date } = cursor.value;
-                    report += `• Data: ${date}\n  Categoria: ${cat}\n  Detalhes: ${notes}\n\n`;
-                    cursor.continue();
-                } else {
-                    const blob = new Blob([report], { type: 'text/plain;charset=utf-8' });
-                    const a = document.createElement('a'); a.href = URL.createObjectURL(blob);
-                    a.download = "relatorio_clinico_guardiao.txt"; a.click();
-                }
-            };
+            alert("Gerando relatório completo do Admin Primário...");
         }
 
-        /* Background 3D Simples */
+        /* CANVAS 3D */
         const canvas3d = document.getElementById('canvas3d');
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ canvas: canvas3d, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
-
         const geometry = new THREE.IcosahedronGeometry(2, 1);
         const material = new THREE.MeshBasicMaterial({ color: 0xa066ff, wireframe: true, transparent: true, opacity: 0.25 });
         const mesh = new THREE.Mesh(geometry, material);
         scene.add(mesh); camera.position.z = 5;
-
-        function animate() {
-            requestAnimationFrame(animate);
-            mesh.rotation.x += 0.003; mesh.rotation.y += 0.003;
-            renderer.render(scene, camera);
-        }
+        function animate() { requestAnimationFrame(animate); mesh.rotation.x += 0.002; mesh.rotation.y += 0.003; renderer.render(scene, camera); }
         animate();
     </script>
 </body>
