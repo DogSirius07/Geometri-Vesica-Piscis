@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "titulo": "Calculadora de Frequência",
+    "descricao": "Sistema desenvolvido para calcular a frequência dos alunos automaticamente.",
+    "tecnologias": ["JavaScript", "HTML", "CSS"],
+    "link": "#",
+    "imagem": "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop"
+  },
+  {
+    "id": 2,
+    "titulo": "Portfólio Antigo",
+    "descricao": "A primeira versão do meu portfólio acadêmico.",
+    "tecnologias": ["HTML", "Bootstrap"],
+    "link": "#",
+    "imagem": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop"
+  },
+  {
+    "id": 3,
+    "titulo": "Dashboard Moderno",
+    "descricao": "Painel de controle com gráficos interativos.",
+    "tecnologias": ["React", "Tailwind"],
+    "link": "#",
+    "imagem": "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&h=400&fit=crop"
+  }
+]
