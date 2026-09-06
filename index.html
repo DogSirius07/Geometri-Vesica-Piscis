@@ -56,31 +56,71 @@
         </div>
       </div>
 
-      <!-- Grid Vazio (Preenchido pelo JS) -->
+      <!-- Grid dos Projetos -->
       <div id="grid-projetos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <p class="text-gray-400 col-span-full text-center">Iniciando sistemas da Aria...</p>
+        <!-- Preenchido pelo JavaScript -->
       </div>
     </div>
   </section>
 
   <!-- Lógica Dinâmica -->
   <script>
-    let todosOsProjetos = [];
+    // Agora o banco de dados está direto aqui no código, então não tem como o navegador bloquear!
+    const todosOsProjetos = [
+      {
+        id: 1,
+        titulo: "O Balão de Emoções",
+        descricao: "Um espaço interativo em 3D para soltar ansiedades e pensamentos ao vento. Módulo especial para alívio emocional.",
+        tecnologias: ["Three.js", "Animação 3D", "JavaScript"],
+        link: "#",
+        imagem: "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=600&h=400&fit=crop"
+      },
+      {
+        id: 2,
+        titulo: "Nossa Frequência",
+        descricao: "Módulo de acolhimento com frequências de cura (432Hz, 528Hz, Ruído Marrom) e respiração guiada.",
+        tecnologias: ["Web Audio API", "CSS Animations"],
+        link: "#",
+        imagem: "https://images.unsplash.com/photo-1518241353330-0f797f6cceea?w=600&h=400&fit=crop"
+      },
+      {
+        id: 3,
+        titulo: "Projeto Guardião",
+        descricao: "Diário de saúde para monitoramento de glicemia e pressão arterial com geração de gráficos dinâmicos e exportação de logs.",
+        tecnologias: ["Chart.js", "LocalStorage", "Exportação TXT"],
+        link: "#",
+        imagem: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=600&h=400&fit=crop"
+      },
+      {
+        id: 4,
+        titulo: "Projeto Aria AI",
+        descricao: "Assistente virtual integrada ao sistema com respostas personalizadas dependendo do nível de acesso (Guardião, Namorada, Mãe).",
+        tecnologias: ["Inteligência Lógica", "DOM Manipulation"],
+        link: "#",
+        imagem: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=600&h=400&fit=crop"
+      },
+      {
+        id: 5,
+        titulo: "Cápsula do Tempo",
+        descricao: "Sistema de mensagens secretas que só podem ser abertas em datas futuras, integrado a um relógio de relacionamento.",
+        tecnologias: ["JavaScript Dates", "LocalStorage"],
+        link: "#",
+        imagem: "https://images.unsplash.com/photo-1501139083538-0139583c060f?w=600&h=400&fit=crop"
+      },
+      {
+        id: 6,
+        titulo: "Controle de Acesso Restrito",
+        descricao: "Painel central do sistema com bloqueio por senhas específicas que liberam módulos diferentes dependendo de quem acessa.",
+        tecnologias: ["Segurança Lógica", "Renderização Condicional"],
+        link: "#",
+        imagem: "https://images.unsplash.com/photo-1510511459019-5d26af37f394?w=600&h=400&fit=crop"
+      }
+    ];
+
     const gridProjetos = document.getElementById('grid-projetos');
     const barraBusca = document.getElementById('barra-busca');
 
-    // 1. Função que busca os dados no arquivo JSON
-    async function carregarProjetos() {
-      try {
-        const resposta = await fetch('projetos.json');
-        todosOsProjetos = await resposta.json();
-        renderizarProjetos(todosOsProjetos);
-      } catch (erro) {
-        gridProjetos.innerHTML = `<p class="text-red-400 col-span-full text-center">Falha ao carregar o banco de dados local. Verifique o arquivo projetos.json.</p>`;
-      }
-    }
-
-    // 2. Função que desenha os projetos na tela
+    // Função que desenha os projetos na tela
     function renderizarProjetos(listaDeProjetos) {
       gridProjetos.innerHTML = ''; // Limpa a tela
 
@@ -95,13 +135,13 @@
         ).join('');
 
         const card = `
-          <div class="glass-card rounded-2xl overflow-hidden hover:shadow-[0_0_20px_rgba(160,102,255,0.3)] transition duration-300 transform hover:-translate-y-1">
+          <div class="glass-card rounded-2xl overflow-hidden hover:shadow-[0_0_20px_rgba(160,102,255,0.3)] transition duration-300 transform hover:-translate-y-1 flex flex-col h-full">
             <img src="${projeto.imagem}" alt="${projeto.titulo}" class="w-full h-48 object-cover opacity-80 hover:opacity-100 transition" />
-            <div class="p-6">
+            <div class="p-6 flex flex-col flex-grow">
               <h3 class="text-xl font-serif font-bold text-[#ffd700] mb-3">${projeto.titulo}</h3>
-              <p class="text-gray-300 mb-5 h-16 overflow-hidden text-sm leading-relaxed">${projeto.descricao}</p>
+              <p class="text-gray-300 mb-5 flex-grow text-sm leading-relaxed">${projeto.descricao}</p>
               <div class="flex flex-wrap gap-2 mb-6">${tagsHtml}</div>
-              <button onclick="alert('Sistema Guardião: Acesso restrito via senha no sistema principal.')" class="w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white font-bold py-3 rounded-xl hover:scale-[0.98] transition">
+              <button onclick="alert('Sistema Guardião: Acesso restrito via senha no sistema principal.')" class="mt-auto w-full bg-gradient-to-r from-purple-600 to-blue-500 text-white font-bold py-3 rounded-xl hover:scale-[0.98] transition">
                 Acessar Módulo
               </button>
             </div>
@@ -111,7 +151,7 @@
       });
     }
 
-    // 3. Evento de Filtro Dinâmico
+    // Evento de Filtro Dinâmico
     barraBusca.addEventListener('input', (evento) => {
       const termoDigitado = evento.target.value.toLowerCase();
       
@@ -125,8 +165,8 @@
       renderizarProjetos(projetosFiltrados);
     });
 
-    // Inicia o carregamento
-    carregarProjetos();
+    // Inicia o carregamento assim que a página abre
+    renderizarProjetos(todosOsProjetos);
   </script>
 </body>
 </html>
