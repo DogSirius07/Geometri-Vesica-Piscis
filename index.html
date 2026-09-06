@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aria Central - Ecossistema v7.0</title>
+    <title>Aria Central - Ecossistema v8.0</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -36,17 +36,17 @@
     <div id="loginScreen" class="w-full max-w-md p-8 bg-white dark:bg-[#0a0f19] border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl dark:shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-xl transition-all">
         <div class="text-center mb-8">
             <h1 class="text-2xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-600">ARIA<span class="text-cyan-400">.OS</span></h1>
-            <p class="text-xs font-mono text-gray-500 mt-1 uppercase tracking-wider">Ecossistema Familiar v7.0</p>
+            <p class="text-xs font-mono text-gray-500 mt-1 uppercase tracking-wider">Ecossistema Familiar v8.0</p>
         </div>
 
         <form id="loginForm" class="space-y-5" novalidate>
             <div>
                 <label for="usuario" class="block text-xs font-mono uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-2">Selecione o Usuário</label>
                 <select id="usuario" name="usuario" class="w-full px-4 py-3 bg-gray-50 dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-xl text-sm focus:outline-none focus:border-cyan-500 font-mono">
-                    <option value="vinicius">Vinícius (Criador)</option>
-                    <option value="andressa">Andressa (Namorada)</option>
-                    <option value="dirceu">Dirceu (Sogro)</option>
-                    <option value="edina">Édina (Sogra)</option>
+                    <option value="vinicius">Vinícius</option>
+                    <option value="andressa">Andressa</option>
+                    <option value="dirceu">Dirceu</option>
+                    <option value="edina">Édina</option>
                 </select>
             </div>
             
@@ -100,8 +100,8 @@
                 </div>
                 <div class="p-6 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl flex flex-col justify-between">
                     <div>
-                        <h3 class="font-mono font-bold text-purple-400 text-sm mb-2">💡 Central Aria.OS v7.0</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Painel familiar unificado para Vinícius, Andressa, Dirceu e Édina, agora com suporte a exclusão e filtros avançados.</p>
+                        <h3 class="font-mono font-bold text-purple-400 text-sm mb-2">💡 Central Aria.OS v8.0</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Painel familiar unificado para Vinícius, Andressa, Dirceu e Édina.</p>
                     </div>
                 </div>
             </div>
@@ -164,10 +164,10 @@
 
     </div>
 
-    <!-- Script Principal v7.0 -->
+    <!-- Script Principal v8.0 -->
     <script>
         const tabelaUsuarios = {
-            'vinicius': { senha: 'aria2206', nome: 'Vinícius', role: 'Admin' },
+            'vinicius': { senha: '22062026', nome: 'Vinícius', role: 'Admin' },
             'andressa': { senha: 'amor2026password', nome: 'Andressa', role: 'Membro' },
             'dirceu': { senha: 'dirceu2026password', nome: 'Dirceu', role: 'Membro' },
             'edina': { senha: 'edina2026password', nome: 'Édina', role: 'Membro' }
@@ -253,18 +253,11 @@
             const userKey = document.getElementById('usuario').value;
             const passVal = passwordInput.value;
 
-            if (passVal.length < 8) {
-                passwordInput.classList.add('border-red-500');
-                errorMessage.textContent = 'A chave deve ter pelo menos 8 caracteres.';
-                errorMessage.style.display = 'block';
-                return;
-            }
-
             if (tabelaUsuarios[userKey] && passVal === tabelaUsuarios[userKey].senha) {
                 usuarioLogado = tabelaUsuarios[userKey];
                 sessionStorage.setItem('aria_session_user', userKey);
                 ativarDashboard();
-                mostrarToast(`Bem-vindo, ${usuarioLogado.nome.split(' ')[0]}!`);
+                mostrarToast(`Bem-vindo, ${usuarioLogado.nome}!`);
             } else {
                 passwordInput.classList.add('border-red-500');
                 errorMessage.textContent = 'Chave de acesso incorreta.';
@@ -303,8 +296,8 @@
 
         // Recados
         function carregarRecados() {
-            const recados = JSON.parse(localStorage.getItem('aria_recados_v7')) || [
-                { autor: 'Vinícius', texto: 'Sistema v7.0 com exclusão e filtros!' }
+            const recados = JSON.parse(localStorage.getItem('aria_recados_v8')) || [
+                { autor: 'Vinícius', texto: 'Sistema v8.0 atualizado com sucesso!' }
             ];
             const lista = document.getElementById('recadosList');
             lista.innerHTML = '';
@@ -322,25 +315,25 @@
         document.getElementById('addRecadoBtn').addEventListener('click', () => {
             const input = document.getElementById('novoRecado');
             if (!input.value.trim()) return;
-            const recados = JSON.parse(localStorage.getItem('aria_recados_v7')) || [];
-            recados.unshift({ autor: usuarioLogado.nome.split(' ')[0], texto: input.value.trim() });
-            localStorage.setItem('aria_recados_v7', JSON.stringify(recados));
+            const recados = JSON.parse(localStorage.getItem('aria_recados_v8')) || [];
+            recados.unshift({ autor: usuarioLogado.nome, texto: input.value.trim() });
+            localStorage.setItem('aria_recados_v8', JSON.stringify(recados));
             input.value = '';
             carregarRecados();
             mostrarToast('Recado publicado!');
         });
 
         window.excluirRecado = function(index) {
-            const recados = JSON.parse(localStorage.getItem('aria_recados_v7')) || [];
+            const recados = JSON.parse(localStorage.getItem('aria_recados_v8')) || [];
             recados.splice(index, 1);
-            localStorage.setItem('aria_recados_v7', JSON.stringify(recados));
+            localStorage.setItem('aria_recados_v8', JSON.stringify(recados));
             carregarRecados();
             mostrarToast('Recado excluído.');
         };
 
         // Tarefas
         function carregarTarefas() {
-            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v7')) || [
+            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v8')) || [
                 { texto: 'Organizar próximo almoço', concluida: false }
             ];
             const lista = document.getElementById('taskList');
@@ -362,34 +355,34 @@
         document.getElementById('addTarefaBtn').addEventListener('click', () => {
             const input = document.getElementById('novaTarefa');
             if (!input.value.trim()) return;
-            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v7')) || [];
+            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v8')) || [];
             tarefas.push({ texto: input.value.trim(), concluida: false });
-            localStorage.setItem('aria_tarefas_v7', JSON.stringify(tarefas));
+            localStorage.setItem('aria_tarefas_v8', JSON.stringify(tarefas));
             input.value = '';
             carregarTarefas();
             mostrarToast('Tarefa adicionada!');
         });
 
         window.alternarTarefa = function(index) {
-            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v7')) || [];
+            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v8')) || [];
             tarefas[index].concluida = !tarefas[index].concluida;
-            localStorage.setItem('aria_tarefas_v7', JSON.stringify(tarefas));
+            localStorage.setItem('aria_tarefas_v8', JSON.stringify(tarefas));
             carregarTarefas();
         };
 
         window.excluirTarefa = function(index) {
-            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v7')) || [];
+            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v8')) || [];
             tarefas.splice(index, 1);
-            localStorage.setItem('aria_tarefas_v7', JSON.stringify(tarefas));
+            localStorage.setItem('aria_tarefas_v8', JSON.stringify(tarefas));
             carregarTarefas();
             mostrarToast('Tarefa excluída.');
         };
 
-        // Finanças com Filtros por Autor
+        // Finanças
         document.getElementById('filtroAutor').addEventListener('change', carregarFinancas);
 
         function carregarFinancas() {
-            const financas = JSON.parse(localStorage.getItem('aria_financas_v7')) || [];
+            const financas = JSON.parse(localStorage.getItem('aria_financas_v8')) || [];
             const filtro = document.getElementById('filtroAutor').value;
             const lista = document.getElementById('financasList');
             lista.innerHTML = '';
@@ -405,7 +398,6 @@
             }
 
             financasFiltradas.forEach((f) => {
-                // Índice real no array completo para exclusão correta
                 const realIndex = financas.indexOf(f);
                 total += Number(f.valor);
                 
@@ -433,14 +425,14 @@
             const catInput = document.getElementById('categoriaGasto');
             if (!descInput.value.trim() || !valInput.value) return;
 
-            const financas = JSON.parse(localStorage.getItem('aria_financas_v7')) || [];
+            const financas = JSON.parse(localStorage.getItem('aria_financas_v8')) || [];
             financas.push({
-                autor: usuarioLogado.nome.split(' ')[0],
+                autor: usuarioLogado.nome,
                 descricao: descInput.value.trim(),
                 valor: parseFloat(valInput.value),
                 categoria: catInput.value
             });
-            localStorage.setItem('aria_financas_v7', JSON.stringify(financas));
+            localStorage.setItem('aria_financas_v8', JSON.stringify(financas));
             descInput.value = '';
             valInput.value = '';
             carregarFinancas();
@@ -448,18 +440,16 @@
         });
 
         window.excluirGasto = function(index) {
-            const financas = JSON.parse(localStorage.getItem('aria_financas_v7')) || [];
+            const financas = JSON.parse(localStorage.getItem('aria_financas_v8')) || [];
             financas.splice(index, 1);
-            localStorage.setItem('aria_financas_v7', JSON.stringify(financas));
+            localStorage.setItem('aria_financas_v8', JSON.stringify(financas));
             carregarFinancas();
             mostrarToast('Despesa excluída.');
         };
 
         passwordInput.addEventListener('input', () => {
-            if (passwordInput.value.length >= 8) {
-                passwordInput.classList.remove('border-red-500');
-                errorMessage.style.display = 'none';
-            }
+            passwordInput.classList.remove('border-red-500');
+            errorMessage.style.display = 'none';
         });
     </script>
 </body>
