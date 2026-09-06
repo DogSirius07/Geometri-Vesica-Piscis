@@ -1,17 +1,36 @@
-function unlockStation(id) {
-    const messages = {
-        'sons': "Qual o dia em que nossa história começou? (Ex: 0505)",
-        'pedido': "Qual o destino de quem ama? (Dica: A data de hoje sem espaços)"
-    };
+/* RESPOSTAS DINÂMICAS DA ARIA POR PERFIL DE ACESSO */
+const ARIA_RESPONSES = {
+    PRIMARY: [
+        "Aria [Admin]: Todos os sistemas ativos. Logs de exames e relatórios disponíveis.",
+        "Aria [Admin]: Permissões elevadas confirmadas. O que deseja configurar?"
+    ],
+    SECONDARY: [
+        "Aria [Cuidado]: Registro salvo. Lembre-se de verificar a medição de glicemia após as refeições.",
+        "Aria [Cuidado]: Dica de rotina: Mantenha os horários dos medicamentos sincronizados."
+    ],
+    GIRLFRIEND: [
+        "Aria [Carinho]: Seu pensamento foi colocado no balão e levado com carinho. Estou aqui com você!",
+        "Aria [Carinho]: Que tal colocarmos uma frequência calmante de 528 Hz para relaxar agora?"
+    ],
+    MOTHER: [
+        "Aria [Acolhimento]: O ambiente está calmo e protegido. Respire fundo e relaxe.",
+        "Aria [Acolhimento]: Tudo está em paz por aqui."
+    ]
+};
 
-    const pass = prompt(messages[id]);
-
-    // Define senhas diferentes para cada estação se desejar
-    if(id === 'sons' && pass === "0505") {
-        document.getElementById(id).style.display = "block";
-    } else if(id === 'pedido' && (pass === "0506" || pass === "0505")) {
-        document.getElementById(id).style.display = "block";
-    } else {
-        alert("Ainda não é a hora, ou a chave está incorreta...");
-    }
+function askAria() {
+    const inp = document.getElementById('ariaInput');
+    const txt = inp.value.trim();
+    if (!txt) return;
+    
+    const box = document.getElementById('ariaChat');
+    box.innerHTML += `<div class="aria-msg user">${txt}</div>`;
+    inp.value = '';
+    
+    setTimeout(() => {
+        const options = ARIA_RESPONSES[currentRole] || ["Aria: Estou pronta para ajudar."];
+        const randomReply = options[Math.floor(Math.random() * options.length)];
+        box.innerHTML += `<div class="aria-msg aria">${randomReply}</div>`;
+        box.scrollTop = box.scrollHeight;
+    }, 400);
 }
