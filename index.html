@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aria Central - Ecossistema v5.0</title>
+    <title>Aria Central - Ecossistema v6.0</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -36,7 +36,7 @@
     <div id="loginScreen" class="w-full max-w-md p-8 bg-white dark:bg-[#0a0f19] border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl dark:shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-xl transition-all">
         <div class="text-center mb-8">
             <h1 class="text-2xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-600">ARIA<span class="text-cyan-400">.OS</span></h1>
-            <p class="text-xs font-mono text-gray-500 mt-1 uppercase tracking-wider">Ecossistema Familiar v5.0</p>
+            <p class="text-xs font-mono text-gray-500 mt-1 uppercase tracking-wider">Ecossistema Familiar v6.0</p>
         </div>
 
         <form id="loginForm" class="space-y-5" novalidate>
@@ -100,8 +100,8 @@
                 </div>
                 <div class="p-6 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl flex flex-col justify-between">
                     <div>
-                        <h3 class="font-mono font-bold text-purple-400 text-sm mb-2">💡 Central Aria.OS</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Sistema otimizado para a comunicação fluida entre Vinícius, Andressa, Dirceu e Édina. Aproveite os módulos integrados.</p>
+                        <h3 class="font-mono font-bold text-purple-400 text-sm mb-2">💡 Central Aria.OS v6.0</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Ecossistema síncrono para Vinícius, Andressa, Dirceu e Édina com persistência segura de sessão.</p>
                     </div>
                 </div>
             </div>
@@ -131,7 +131,7 @@
             </div>
         </div>
 
-        <!-- Aba 4: Finanças Compartilhadas -->
+        <!-- Aba 4: Finanças Compartilhadas com Categorias -->
         <div id="tab-financas" class="tab-content hidden space-y-4">
             <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl">
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
@@ -139,19 +139,24 @@
                     <div id="totalGasto" class="font-mono text-xs text-gray-400">Total: R$ 0,00</div>
                 </div>
                 <div id="financasList" class="space-y-2 mb-4 max-h-50 overflow-y-auto text-xs font-mono pr-1"></div>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-2">
-                    <input type="text" id="descricaoGasto" placeholder="Descrição (ex: Compras)" class="px-4 py-2.5 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-emerald-500">
-                    <input type="number" id="valorGasto" placeholder="Valor (R$)" step="0.01" class="px-4 py-2.5 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-emerald-500">
-                    <button id="addGastoBtn" class="px-5 py-2.5 bg-emerald-500 text-black font-bold text-xs rounded-lg hover:bg-emerald-400 transition">Registrar Gasto</button>
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+                    <input type="text" id="descricaoGasto" placeholder="Descrição (ex: Supermercado)" class="px-3 py-2.5 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-emerald-500">
+                    <input type="number" id="valorGasto" placeholder="Valor (R$)" step="0.01" class="px-3 py-2.5 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-emerald-500">
+                    <select id="categoriaGasto" class="px-3 py-2.5 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-emerald-500">
+                        <option value="Alimentação">Alimentação</option>
+                        <option value="Lazer">Lazer</option>
+                        <option value="Compras">Compras</option>
+                        <option value="Outros">Outros</option>
+                    </select>
+                    <button id="addGastoBtn" class="px-4 py-2.5 bg-emerald-500 text-black font-bold text-xs rounded-lg hover:bg-emerald-400 transition">Adicionar</button>
                 </div>
             </div>
         </div>
 
     </div>
 
-    <!-- Script Principal v5.0 -->
+    <!-- Script Principal v6.0 -->
     <script>
-        // Mapeamento exato com os nomes atualizados
         const tabelaUsuarios = {
             'vinicius': { senha: 'aria2026password', nome: 'Vinícius (Criador)', role: 'Admin' },
             'andressa': { senha: 'amor2026password', nome: 'Andressa (Namorada)', role: 'Membro' },
@@ -161,7 +166,6 @@
 
         let usuarioLogado = null;
 
-        // Função de Notificação Toast
         function mostrarToast(mensagem) {
             const toast = document.getElementById('toastNotification');
             toast.textContent = mensagem;
@@ -185,7 +189,7 @@
             passwordInput.type = isPass ? 'text' : 'password';
         });
 
-        // Alternância de Abas
+        // Abas
         const tabBtns = document.querySelectorAll('.tab-btn');
         const tabContents = document.querySelectorAll('.tab-content');
 
@@ -204,10 +208,35 @@
             });
         });
 
+        // Verificar Sessão Ativa ao Carregar (SessionStorage)
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedUserKey = sessionStorage.getItem('aria_session_user');
+            if (savedUserKey && tabelaUsuarios[savedUserKey]) {
+                usuarioLogado = tabelaUsuarios[savedUserKey];
+                ativarDashboard();
+            }
+        });
+
+        function ativarDashboard() {
+            document.getElementById('loginScreen').classList.add('hidden');
+            document.getElementById('dashboardScreen').classList.remove('hidden');
+            document.getElementById('welcomeUser').textContent = `Painel — ${usuarioLogado.nome}`;
+            document.getElementById('roleDescription').textContent = `Sessão ativa para ${usuarioLogado.nome}`;
+            
+            if (usuarioLogado.role === 'Admin') {
+                document.getElementById('badgeAdmin').classList.remove('hidden');
+            } else {
+                document.getElementById('badgeAdmin').classList.add('hidden');
+            }
+
+            carregarRecados();
+            carregarTarefas();
+            carregarFinancas();
+            iniciarContador();
+        }
+
         // Login
         const loginForm = document.getElementById('loginForm');
-        const loginScreen = document.getElementById('loginScreen');
-        const dashboardScreen = document.getElementById('dashboardScreen');
         const errorMessage = document.getElementById('errorMessage');
 
         loginForm.addEventListener('submit', (e) => {
@@ -224,21 +253,8 @@
 
             if (tabelaUsuarios[userKey] && passVal === tabelaUsuarios[userKey].senha) {
                 usuarioLogado = tabelaUsuarios[userKey];
-                loginScreen.classList.add('hidden');
-                dashboardScreen.classList.remove('hidden');
-                document.getElementById('welcomeUser').textContent = `Painel — ${usuarioLogado.nome}`;
-                document.getElementById('roleDescription').textContent = `Sessão ativa para ${usuarioLogado.nome}`;
-                
-                if (usuarioLogado.role === 'Admin') {
-                    document.getElementById('badgeAdmin').classList.remove('hidden');
-                } else {
-                    document.getElementById('badgeAdmin').classList.add('hidden');
-                }
-
-                carregarRecados();
-                carregarTarefas();
-                carregarFinancas();
-                iniciarContador();
+                sessionStorage.setItem('aria_session_user', userKey);
+                ativarDashboard();
                 mostrarToast(`Bem-vindo, ${usuarioLogado.nome.split(' ')[0]}!`);
             } else {
                 passwordInput.classList.add('border-red-500');
@@ -248,13 +264,14 @@
         });
 
         document.getElementById('logoutBtn').addEventListener('click', () => {
-            dashboardScreen.classList.add('hidden');
-            loginScreen.classList.remove('hidden');
+            sessionStorage.removeItem('aria_session_user');
+            document.getElementById('dashboardScreen').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
             passwordInput.value = '';
             errorMessage.style.display = 'none';
         });
 
-        // Contagem Regressiva
+        // Contador
         function iniciarContador() {
             const timerEl = document.getElementById('countdownTimer');
             const target = new Date();
@@ -275,10 +292,10 @@
             }, 1000);
         }
 
-        // Mural de Recados
+        // Recados
         function carregarRecados() {
-            const recados = JSON.parse(localStorage.getItem('aria_recados_v5')) || [
-                { autor: 'Vinícius', texto: 'Sistema v5.0 atualizado para todos!' }
+            const recados = JSON.parse(localStorage.getItem('aria_recados_v6')) || [
+                { autor: 'Vinícius', texto: 'Sistema v6.0 com sessão persistente ativada!' }
             ];
             const lista = document.getElementById('recadosList');
             lista.innerHTML = '';
@@ -293,9 +310,9 @@
         document.getElementById('addRecadoBtn').addEventListener('click', () => {
             const input = document.getElementById('novoRecado');
             if (!input.value.trim()) return;
-            const recados = JSON.parse(localStorage.getItem('aria_recados_v5')) || [];
+            const recados = JSON.parse(localStorage.getItem('aria_recados_v6')) || [];
             recados.unshift({ autor: usuarioLogado.nome.split(' ')[0], texto: input.value.trim() });
-            localStorage.setItem('aria_recados_v5', JSON.stringify(recados));
+            localStorage.setItem('aria_recados_v6', JSON.stringify(recados));
             input.value = '';
             carregarRecados();
             mostrarToast('Recado publicado!');
@@ -303,7 +320,7 @@
 
         // Tarefas
         function carregarTarefas() {
-            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v5')) || [
+            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v6')) || [
                 { texto: 'Organizar próximo almoço', concluida: false }
             ];
             const lista = document.getElementById('taskList');
@@ -322,24 +339,24 @@
         document.getElementById('addTarefaBtn').addEventListener('click', () => {
             const input = document.getElementById('novaTarefa');
             if (!input.value.trim()) return;
-            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v5')) || [];
+            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v6')) || [];
             tarefas.push({ texto: input.value.trim(), concluida: false });
-            localStorage.setItem('aria_tarefas_v5', JSON.stringify(tarefas));
+            localStorage.setItem('aria_tarefas_v6', JSON.stringify(tarefas));
             input.value = '';
             carregarTarefas();
             mostrarToast('Tarefa adicionada!');
         });
 
         window.alternarTarefa = function(index) {
-            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v5')) || [];
+            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v6')) || [];
             tarefas[index].concluida = !tarefas[index].concluida;
-            localStorage.setItem('aria_tarefas_v5', JSON.stringify(tarefas));
+            localStorage.setItem('aria_tarefas_v6', JSON.stringify(tarefas));
             carregarTarefas();
         };
 
-        // Finanças
+        // Finanças com Categorias
         function carregarFinancas() {
-            const financas = JSON.parse(localStorage.getItem('aria_financas_v5')) || [];
+            const financas = JSON.parse(localStorage.getItem('aria_financas_v6')) || [];
             const lista = document.getElementById('financasList');
             lista.innerHTML = '';
             let total = 0;
@@ -353,7 +370,10 @@
                 const div = document.createElement('div');
                 div.className = 'p-3 bg-white dark:bg-white/5 rounded border border-gray-200 dark:border-white/10 flex justify-between items-center';
                 div.innerHTML = `
-                    <div><span class="text-emerald-400 font-bold">${f.autor}:</span> ${f.descricao}</div>
+                    <div>
+                        <span class="text-emerald-400 font-bold">${f.autor}:</span> ${f.descricao} 
+                        <span class="text-[10px] ml-2 px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">${f.categoria}</span>
+                    </div>
                     <span class="font-bold text-gray-200">R$ ${Number(f.valor).toFixed(2)}</span>
                 `;
                 lista.appendChild(div);
@@ -365,15 +385,17 @@
         document.getElementById('addGastoBtn').addEventListener('click', () => {
             const descInput = document.getElementById('descricaoGasto');
             const valInput = document.getElementById('valorGasto');
+            const catInput = document.getElementById('categoriaGasto');
             if (!descInput.value.trim() || !valInput.value) return;
 
-            const financas = JSON.parse(localStorage.getItem('aria_financas_v5')) || [];
+            const financas = JSON.parse(localStorage.getItem('aria_financas_v6')) || [];
             financas.push({
                 autor: usuarioLogado.nome.split(' ')[0],
                 descricao: descInput.value.trim(),
-                valor: parseFloat(valInput.value)
+                valor: parseFloat(valInput.value),
+                categoria: catInput.value
             });
-            localStorage.setItem('aria_financas_v5', JSON.stringify(financas));
+            localStorage.setItem('aria_financas_v6', JSON.stringify(financas));
             descInput.value = '';
             valInput.value = '';
             carregarFinancas();
