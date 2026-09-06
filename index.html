@@ -6,170 +6,104 @@
   <title>Meu Portfólio Dinâmico</title>
   <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-50 font-sans text-gray-800 transition-colors duration-300">
+<body class="bg-gray-50 font-sans">
 
-  <!-- ================= MENU DINÂMICO ================= -->
+  <!-- Navbar -->
   <nav class="bg-gray-900 text-white p-4 shadow-lg sticky top-0 z-50">
     <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <button onclick="navegarPara('inicio')" class="text-2xl font-bold tracking-wider text-blue-400">
-        MeuPortfólio.
-      </button>
-      
-      <!-- Menu Desktop -->
+      <a href="#" class="text-2xl font-bold text-blue-400">Portfólio.</a>
       <div class="hidden md:flex space-x-6">
-        <button onclick="navegarPara('inicio')" class="hover:text-blue-400 transition">Início</button>
-        <button onclick="navegarPara('projetos')" class="hover:text-blue-400 transition">Projetos</button>
-        <button onclick="navegarPara('sobre')" class="hover:text-blue-400 transition">Sobre</button>
+        <a href="#" class="hover:text-blue-400">Início</a>
+        <a href="#projetos" class="hover:text-blue-400">Projetos</a>
       </div>
     </div>
   </nav>
 
-  <!-- ================= ÁREA DE CONTEÚDO (Onde a mágica acontece) ================= -->
-  <main id="app-content" class="max-w-6xl mx-auto min-h-screen p-4">
-
-    <!-- PÁGINA: INÍCIO -->
-    <section id="pagina-inicio" class="pagina py-20 text-center animate-fade-in">
-      <h1 class="text-5xl font-extrabold text-gray-900 mb-6">Bem-vindo ao meu espaço</h1>
-      <p class="text-xl text-gray-600 mb-8">Desenvolvendo soluções dinâmicas e modernas.</p>
-      <button onclick="navegarPara('projetos')" class="bg-blue-600 text-white px-8 py-3 rounded-full hover:bg-blue-700 transition">
-        Ver Meus Projetos
-      </button>
-    </section>
-
-    <!-- PÁGINA: PROJETOS -->
-    <section id="pagina-projetos" class="pagina hidden py-10 animate-fade-in">
-      <div class="mb-10 text-center">
+  <!-- Seção de Projetos -->
+  <section id="projetos" class="min-h-screen py-16 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="mb-8 text-center">
         <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Meus Projetos</h1>
         
-        <!-- BARRA DE BUSCA DINÂMICA -->
-        <input 
-          type="text" 
-          id="busca-projetos" 
-          placeholder="Busque por nome ou tecnologia (ex: React, CSS)..." 
-          class="mt-4 w-full md:w-1/2 p-3 rounded-lg border border-gray-300 shadow-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500"
-        >
+        <!-- Barra de Busca Dinâmica -->
+        <div class="max-w-md mx-auto mt-6">
+          <input 
+            type="text" 
+            id="barra-busca" 
+            placeholder="Digite uma tecnologia (ex: React, JavaScript)..." 
+            class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+          >
+        </div>
       </div>
 
-      <!-- GRID ONDE OS PROJETOS SERÃO INJETADOS -->
-      <div id="grid-projetos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
-      
-      <!-- MENSAGEM CASO A BUSCA NÃO ENCONTRE NADA -->
-      <p id="mensagem-vazia" class="hidden text-center text-gray-500 mt-10 text-lg">Nenhum projeto encontrado com esse termo.</p>
-    </section>
+      <!-- Grid Vazio (Preenchido pelo JS) -->
+      <div id="grid-projetos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <p class="text-gray-500 col-span-full text-center">Carregando projetos...</p>
+      </div>
+    </div>
+  </section>
 
-    <!-- PÁGINA: SOBRE -->
-    <section id="pagina-sobre" class="pagina hidden py-20 text-center animate-fade-in">
-      <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Sobre Mim</h1>
-      <p class="text-lg text-gray-600 max-w-2xl mx-auto">
-        Sou um desenvolvedor atualizando meus conhecimentos. Este portfólio consolida meus projetos anteriores em uma nova interface, utilizando lógicas dinâmicas de SPA (Single Page Application).
-      </p>
-    </section>
-
-  </main>
-
-  <!-- ================= LÓGICA JAVASCRIPT ================= -->
+  <!-- Lógica Dinâmica -->
   <script>
-    // 1. DADOS DOS PROJETOS (Banco de dados local)
-    const meusProjetos = [
-      {
-        titulo: "Portal Acadêmico",
-        descricao: "Sistema criado nas primeiras frequências para gerenciar notas e alunos.",
-        tecnologias: ["HTML", "CSS", "Bootstrap"],
-        link: "#",
-        imagem: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?w=600&h=400&fit=crop"
-      },
-      {
-        titulo: "App de Finanças",
-        descricao: "Projeto antigo focado em lógica matemática e cálculo de despesas.",
-        tecnologias: ["JavaScript", "Lógica", "DOM"],
-        link: "#",
-        imagem: "https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop"
-      },
-      {
-        titulo: "Portfólio SPA Moderno",
-        descricao: "Este próprio site, rodando sem recarregar páginas e com busca em tempo real.",
-        tecnologias: ["Tailwind", "JavaScript SPA", "Dinâmico"],
-        link: "#",
-        imagem: "https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&h=400&fit=crop"
-      }
-    ];
+    let todosOsProjetos = [];
+    const gridProjetos = document.getElementById('grid-projetos');
+    const barraBusca = document.getElementById('barra-busca');
 
-    // 2. FUNÇÃO DE NAVEGAÇÃO DINÂMICA (SPA)
-    function navegarPara(idPagina) {
-      // Esconde todas as páginas
-      document.querySelectorAll('.pagina').forEach(pag => {
-        pag.classList.add('hidden');
-      });
-      // Mostra apenas a página clicada
-      document.getElementById(`pagina-${idPagina}`).classList.remove('hidden');
-      
-      // Se for a página de projetos, renderiza eles
-      if(idPagina === 'projetos') {
-        renderizarProjetos(meusProjetos);
+    // 1. Função que busca os dados no arquivo JSON
+    async function carregarProjetos() {
+      try {
+        const resposta = await fetch('projetos.json');
+        todosOsProjetos = await resposta.json();
+        renderizarProjetos(todosOsProjetos);
+      } catch (erro) {
+        gridProjetos.innerHTML = `<p class="text-red-500 col-span-full text-center">Erro ao carregar os projetos. Verifique se o arquivo projetos.json existe.</p>`;
       }
     }
 
-    // 3. FUNÇÃO PARA RENDERIZAR OS PROJETOS
+    // 2. Função que desenha os projetos na tela
     function renderizarProjetos(listaDeProjetos) {
-      const grid = document.getElementById('grid-projetos');
-      const msgVazia = document.getElementById('mensagem-vazia');
-      grid.innerHTML = ''; // Limpa a tela antes de desenhar
+      gridProjetos.innerHTML = ''; // Limpa a tela
 
       if (listaDeProjetos.length === 0) {
-        msgVazia.classList.remove('hidden');
-      } else {
-        msgVazia.classList.add('hidden');
-        
-        listaDeProjetos.forEach(projeto => {
-          const tagsHtml = projeto.tecnologias.map(tech => 
-            `<span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">${tech}</span>`
-          ).join('');
-
-          const cardHtml = `
-            <div class="bg-white rounded-xl shadow-sm hover:shadow-xl transition-all duration-300 overflow-hidden border border-gray-100">
-              <img src="${projeto.imagem}" class="w-full h-48 object-cover hover:scale-105 transition-transform duration-500" />
-              <div class="p-6">
-                <h3 class="text-xl font-bold text-gray-800 mb-2">${projeto.titulo}</h3>
-                <p class="text-gray-600 text-sm mb-4 h-10 overflow-hidden">${projeto.descricao}</p>
-                <div class="flex flex-wrap gap-2 mb-4">${tagsHtml}</div>
-                <a href="${projeto.link}" class="text-blue-600 font-semibold hover:text-blue-800 transition">
-                  Explorar Projeto &rarr;
-                </a>
-              </div>
-            </div>
-          `;
-          grid.innerHTML += cardHtml;
-        });
+        gridProjetos.innerHTML = `<p class="text-gray-500 col-span-full text-center">Nenhum projeto encontrado.</p>`;
+        return;
       }
+
+      listaDeProjetos.forEach(projeto => {
+        const tagsHtml = projeto.tecnologias.map(tech => 
+          `<span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded">${tech}</span>`
+        ).join('');
+
+        const card = `
+          <div class="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden">
+            <img src="${projeto.imagem}" alt="${projeto.titulo}" class="w-full h-48 object-cover" />
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-800 mb-2">${projeto.titulo}</h3>
+              <p class="text-gray-600 mb-4 h-12 overflow-hidden text-sm">${projeto.descricao}</p>
+              <div class="flex flex-wrap gap-2 mb-4">${tagsHtml}</div>
+              <a href="${projeto.link}" class="text-blue-600 font-semibold hover:underline">Ver Projeto &rarr;</a>
+            </div>
+          </div>
+        `;
+        gridProjetos.innerHTML += card;
+      });
     }
 
-    // 4. SISTEMA DE BUSCA EM TEMPO REAL
-    document.getElementById('busca-projetos').addEventListener('input', function(e) {
-      const termoBusca = e.target.value.toLowerCase();
+    // 3. Evento de Filtro Dinâmico (dispara a cada letra digitada)
+    barraBusca.addEventListener('input', (evento) => {
+      const termoDigitado = evento.target.value.toLowerCase();
       
-      // Filtra pelo título OU pelas tecnologias
-      const projetosFiltrados = meusProjetos.filter(projeto => {
-        const tituloBate = projeto.titulo.toLowerCase().includes(termoBusca);
-        const techBate = projeto.tecnologias.some(tech => tech.toLowerCase().includes(termoBusca));
-        return tituloBate || techBate;
+      const projetosFiltrados = todosOsProjetos.filter(projeto => {
+        const tituloBate = projeto.titulo.toLowerCase().includes(termoDigitado);
+        const tecnologiaBate = projeto.tecnologias.some(tech => tech.toLowerCase().includes(termoDigitado));
+        return tituloBate || tecnologiaBate;
       });
 
       renderizarProjetos(projetosFiltrados);
     });
 
-    // Inicia a aplicação na página Home
-    navegarPara('inicio');
+    // Inicia o carregamento ao abrir a página
+    carregarProjetos();
   </script>
-
-  <!-- CSS Extra para animações -->
-  <style>
-    .animate-fade-in {
-      animation: fadeIn 0.4s ease-in-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-  </style>
 </body>
 </html>
