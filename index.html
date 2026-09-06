@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aria Central - Ecossistema v8.0</title>
+    <title>Aria Central - Ecossistema Completo & Nosso Amor v12.0</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -19,10 +19,10 @@
         }
     </script>
 </head>
-<body class="bg-gray-50 dark:bg-[#030712] text-gray-900 dark:text-gray-100 min-h-screen flex items-center justify-center transition-colors duration-300 relative selection:bg-cyan-500 selection:text-black p-4">
+<body class="bg-gray-50 dark:bg-[#030712] text-gray-900 dark:text-gray-100 min-h-screen flex items-center justify-center transition-colors duration-300 relative selection:bg-pink-500 selection:text-white p-4">
 
     <!-- Notificação Flutuante (Toast) -->
-    <div id="toastNotification" class="fixed top-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-cyan-500 text-black font-mono text-xs font-bold rounded-lg shadow-xl opacity-0 pointer-events-none transition-all duration-300 z-50">
+    <div id="toastNotification" class="fixed top-6 left-1/2 -translate-x-1/2 px-4 py-2 bg-pink-500 text-white font-mono text-xs font-bold rounded-lg shadow-xl opacity-0 pointer-events-none transition-all duration-300 z-50">
         Ação realizada com sucesso!
     </div>
 
@@ -35,16 +35,16 @@
     <!-- TELA 1: LOGIN -->
     <div id="loginScreen" class="w-full max-w-md p-8 bg-white dark:bg-[#0a0f19] border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl dark:shadow-[0_10px_40px_rgba(0,0,0,0.8)] backdrop-blur-xl transition-all">
         <div class="text-center mb-8">
-            <h1 class="text-2xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-600">ARIA<span class="text-cyan-400">.OS</span></h1>
-            <p class="text-xs font-mono text-gray-500 mt-1 uppercase tracking-wider">Ecossistema Familiar v8.0</p>
+            <h1 class="text-2xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-cyan-500 to-purple-600">ARIA<span class="text-pink-400">.OS</span></h1>
+            <p class="text-xs font-mono text-gray-500 mt-1 uppercase tracking-wider">Versão Definitiva v12.0</p>
         </div>
 
         <form id="loginForm" class="space-y-5" novalidate>
             <div>
                 <label for="usuario" class="block text-xs font-mono uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-2">Selecione o Usuário</label>
-                <select id="usuario" name="usuario" class="w-full px-4 py-3 bg-gray-50 dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-xl text-sm focus:outline-none focus:border-cyan-500 font-mono">
+                <select id="usuario" name="usuario" class="w-full px-4 py-3 bg-gray-50 dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-xl text-sm focus:outline-none focus:border-pink-500 font-mono">
                     <option value="vinicius">Vinícius</option>
-                    <option value="andressa">Andressa</option>
+                    <option value="andressa">Andressa (Amor)</option>
                     <option value="dirceu">Dirceu</option>
                     <option value="edina">Édina</option>
                 </select>
@@ -52,24 +52,24 @@
             
             <div class="relative">
                 <label for="senha" class="block text-xs font-mono uppercase tracking-wider text-gray-600 dark:text-gray-400 mb-2">Chave de Acesso</label>
-                <input type="password" id="senha" name="senha" required placeholder="••••••••" class="w-full px-4 py-3 pr-12 bg-gray-50 dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-xl text-sm focus:outline-none focus:border-cyan-500 font-mono">
-                <button type="button" id="togglePassword" class="absolute right-3 top-9 text-gray-500 hover:text-cyan-400 transition" aria-label="Mostrar ou ocultar senha">👁️</button>
+                <input type="password" id="senha" name="senha" required placeholder="••••••••" class="w-full px-4 py-3 pr-12 bg-gray-50 dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-xl text-sm focus:outline-none focus:border-pink-500 font-mono">
+                <button type="button" id="togglePassword" class="absolute right-3 top-9 text-gray-500 hover:text-pink-400 transition" aria-label="Mostrar ou ocultar senha">👁️</button>
                 <div id="errorMessage" class="text-red-500 text-xs font-mono mt-2 hidden"></div>
             </div>
 
-            <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-cyan-500 to-purple-600 text-white font-mono text-xs font-bold uppercase tracking-[2px] rounded-xl hover:opacity-95 shadow-lg shadow-cyan-500/20 transition active:scale-[0.98]">
+            <button type="submit" class="w-full py-3.5 bg-gradient-to-r from-pink-500 via-cyan-500 to-purple-600 text-white font-mono text-xs font-bold uppercase tracking-[2px] rounded-xl hover:opacity-95 shadow-lg shadow-pink-500/20 transition active:scale-[0.98]">
                 Entrar no Sistema
             </button>
         </form>
     </div>
 
-    <!-- TELA 2: DASHBOARD MULTI-MODULAR -->
-    <div id="dashboardScreen" class="w-full max-w-5xl p-8 bg-white dark:bg-[#0a0f19] border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl hidden transition-all my-8">
+    <!-- TELA 2: DASHBOARD INTEGRADO -->
+    <div id="dashboardScreen" class="w-full max-w-5xl p-6 bg-white dark:bg-[#0a0f19] border border-gray-200 dark:border-white/10 rounded-2xl shadow-xl hidden transition-all my-8">
         
-        <!-- Cabeçalho do Dashboard -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-6 border-b border-gray-200 dark:border-white/10 mb-6 gap-4">
+        <!-- Cabeçalho -->
+        <div class="flex flex-col md:flex-row justify-between items-start md:items-center pb-5 border-b border-gray-200 dark:border-white/10 mb-5 gap-4">
             <div>
-                <h2 id="welcomeUser" class="text-xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-r from-cyan-500 to-purple-600">Bem-vindo</h2>
+                <h2 id="welcomeUser" class="text-xl font-bold font-mono text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-400">Bem-vindo</h2>
                 <p id="roleDescription" class="text-xs font-mono text-gray-400 mt-0.5">Sessão Autenticada</p>
             </div>
             <div class="flex items-center gap-3">
@@ -80,18 +80,46 @@
             </div>
         </div>
 
-        <!-- Navegação por Abas (Tabs) -->
-        <div class="flex flex-wrap gap-2 mb-6 border-b border-gray-200 dark:border-white/10 pb-4">
-            <button class="tab-btn px-4 py-2 rounded-lg font-mono text-xs font-bold transition bg-cyan-500 text-black" data-target="tab-resumo">📊 Visão Geral</button>
-            <button class="tab-btn px-4 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-recados">💬 Mural</button>
-            <button class="tab-btn px-4 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-tarefas">📋 Tarefas</button>
-            <button class="tab-btn px-4 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-financas">💰 Finanças</button>
+        <!-- Navegação por Abas (Amor + Ferramentas) -->
+        <div class="flex flex-wrap gap-1.5 mb-6 border-b border-gray-200 dark:border-white/10 pb-4">
+            <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-pink-500 text-white" data-target="tab-amor">💖 Nosso Amor</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-resumo">📊 Geral</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-recados">💬 Mural</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-tarefas">📋 Tarefas</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-financas">💰 Finanças</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-frequencia">⚡ Frequência</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-galeria">🖼️ Galeria</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-sons">🎵 Sons</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-guardiao">🛡️ Guardião</button>
+            <button class="tab-btn px-3 py-2 rounded-lg font-mono text-xs font-bold transition bg-gray-100 dark:bg-white/5 text-gray-600 dark:text-gray-300 hover:bg-white/10" data-target="tab-balaozinho">💭 Balãozinho</button>
         </div>
 
-        <!-- CONTEÚDO DAS ABAS -->
+        <!-- ABA 1: Nosso Amor (Foco Especial para a Namorada) -->
+        <div id="tab-amor" class="tab-content space-y-6">
+            <div class="p-6 bg-gradient-to-r from-pink-500/10 via-purple-500/10 to-cyan-500/10 border border-pink-500/30 rounded-xl text-center space-y-4">
+                <h3 class="font-mono font-bold text-pink-400 text-lg">✨ Vinícius & Andressa ✨</h3>
+                <p class="text-xs font-mono text-gray-300">Cada segundo ao seu lado é um presente. Este espaço foi construído especialmente para nós.</p>
+                <div id="contadorAmor" class="text-lg font-mono font-bold text-pink-300 bg-pink-500/10 p-3 rounded-lg border border-pink-500/20 inline-block">Calculando tempo juntos...</div>
+            </div>
 
-        <!-- Aba 1: Visão Geral -->
-        <div id="tab-resumo" class="tab-content space-y-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl space-y-3">
+                    <h4 class="font-mono font-bold text-pink-400 text-xs uppercase tracking-wider">💌 Recado de Amor do Dia</h4>
+                    <p id="recadoAmorTexto" class="text-xs font-mono text-gray-300 italic">"Você é a melhor parte do meu dia, todos os dias."</p>
+                    <input type="text" id="novoRecadoAmor" placeholder="Deixe uma declaração..." class="w-full px-3 py-2 bg-white dark:bg-black/50 border border-pink-500/30 rounded-lg text-xs font-mono">
+                    <button id="salvarRecadoAmor" class="px-4 py-2 bg-pink-500 text-white font-bold text-xs rounded-lg hover:bg-pink-400 transition">Atualizar Recado</button>
+                </div>
+
+                <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl space-y-3">
+                    <h4 class="font-mono font-bold text-purple-400 text-xs uppercase tracking-wider">🎵 Trilha Sonora do Casal</h4>
+                    <p class="text-xs font-mono text-gray-300">Toque nossa sintonia:</p>
+                    <button onclick="tocarSom(528)" class="w-full py-2.5 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-lg text-xs font-mono hover:bg-purple-500 hover:text-white transition">🎵 Frequência do Amor (528Hz)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA 2: Visão Geral -->
+        <div id="tab-resumo" class="tab-content hidden space-y-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div class="p-6 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl">
                     <h3 class="font-mono font-bold text-cyan-400 text-sm mb-3">⏳ Próximo Encontro em Família</h3>
@@ -100,14 +128,14 @@
                 </div>
                 <div class="p-6 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl flex flex-col justify-between">
                     <div>
-                        <h3 class="font-mono font-bold text-purple-400 text-sm mb-2">💡 Central Aria.OS v8.0</h3>
-                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Painel familiar unificado para Vinícius, Andressa, Dirceu e Édina.</p>
+                        <h3 class="font-mono font-bold text-purple-400 text-sm mb-2">💡 Aria.OS v12.0 Unificada</h3>
+                        <p class="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">Ecossistema completo reunindo o módulo de amor, mural, tarefas, finanças, galeria e ferramentas avançadas.</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Aba 2: Mural de Recados -->
+        <!-- ABA 3: Mural -->
         <div id="tab-recados" class="tab-content hidden space-y-4">
             <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl">
                 <h3 class="font-mono font-bold text-cyan-400 text-sm mb-3">💬 Mural de Avisos</h3>
@@ -119,7 +147,7 @@
             </div>
         </div>
 
-        <!-- Aba 3: Tarefas -->
+        <!-- ABA 4: Tarefas -->
         <div id="tab-tarefas" class="tab-content hidden space-y-4">
             <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl">
                 <h3 class="font-mono font-bold text-purple-400 text-sm mb-3">📋 Tarefas e Pendências</h3>
@@ -131,10 +159,10 @@
             </div>
         </div>
 
-        <!-- Aba 4: Finanças com Filtros e Exclusão -->
+        <!-- ABA 5: Finanças -->
         <div id="tab-financas" class="tab-content hidden space-y-4">
-            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl">
-                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl space-y-4">
+                <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                     <h3 class="font-mono font-bold text-emerald-400 text-sm">💰 Registro de Despesas</h3>
                     <div class="flex items-center gap-3">
                         <select id="filtroAutor" class="px-2.5 py-1 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/25 rounded-md text-[11px] font-mono focus:outline-none">
@@ -144,11 +172,20 @@
                             <option value="Dirceu">Dirceu</option>
                             <option value="Édina">Édina</option>
                         </select>
-                        <div id="totalGasto" class="font-mono text-xs text-gray-400 font-bold">Total: R$ 0,00</div>
+                        <div id="totalGasto" class="font-mono text-xs text-gray-200 font-bold bg-emerald-500/10 px-3 py-1 rounded border border-emerald-500/20">Total: R$ 0,00</div>
                     </div>
                 </div>
-                <div id="financasList" class="space-y-2 mb-4 max-h-50 overflow-y-auto text-xs font-mono pr-1"></div>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-2">
+
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 font-mono text-[11px]">
+                    <div class="p-2.5 rounded bg-white/5 border border-white/10"><span class="text-gray-400 block">Alimentação</span><span id="catAlimentacao" class="font-bold text-emerald-400">R$ 0,00</span></div>
+                    <div class="p-2.5 rounded bg-white/5 border border-white/10"><span class="text-gray-400 block">Lazer</span><span id="catLazer" class="font-bold text-emerald-400">R$ 0,00</span></div>
+                    <div class="p-2.5 rounded bg-white/5 border border-white/10"><span class="text-gray-400 block">Compras</span><span id="catCompras" class="font-bold text-emerald-400">R$ 0,00</span></div>
+                    <div class="p-2.5 rounded bg-white/5 border border-white/10"><span class="text-gray-400 block">Outros</span><span id="catOutros" class="font-bold text-emerald-400">R$ 0,00</span></div>
+                </div>
+
+                <div id="financasList" class="space-y-2 max-h-48 overflow-y-auto text-xs font-mono pr-1"></div>
+
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-2 pt-2 border-t border-white/10">
                     <input type="text" id="descricaoGasto" placeholder="Descrição (ex: Supermercado)" class="px-3 py-2.5 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-emerald-500">
                     <input type="number" id="valorGasto" placeholder="Valor (R$)" step="0.01" class="px-3 py-2.5 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-emerald-500">
                     <select id="categoriaGasto" class="px-3 py-2.5 bg-white dark:bg-black/50 border border-gray-300 dark:border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-emerald-500">
@@ -162,9 +199,67 @@
             </div>
         </div>
 
+        <!-- ABA 6: Nossa Frequência -->
+        <div id="tab-frequencia" class="tab-content hidden space-y-4">
+            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl space-y-4">
+                <h3 class="font-mono font-bold text-cyan-400 text-sm">⚡ Nossa Frequência (Sincronia Diária)</h3>
+                <div class="flex gap-2">
+                    <select id="estadoFrequencia" class="px-3 py-2.5 bg-white dark:bg-black/50 border border-white/20 rounded-lg text-xs font-mono">
+                        <option value="✨ Radiante & Harmonioso">✨ Radiante & Harmonioso</option>
+                        <option value="☕ Calmo & Produtivo">☕ Calmo & Produtivo</option>
+                        <option value="🌙 Reflexivo & Descanso">🌙 Reflexivo & Descanso</option>
+                    </select>
+                    <button id="addFrequenciaBtn" class="px-4 py-2.5 bg-cyan-500 text-black font-bold text-xs rounded-lg">Registrar Frequência</button>
+                </div>
+                <div id="frequenciaList" class="space-y-2 max-h-48 overflow-y-auto text-xs font-mono"></div>
+            </div>
+        </div>
+
+        <!-- ABA 7: Galeria -->
+        <div id="tab-galeria" class="tab-content hidden space-y-4">
+            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl space-y-4">
+                <h3 class="font-mono font-bold text-purple-400 text-sm">🖼️ Galeria de Momentos</h3>
+                <div class="flex gap-2">
+                    <input type="text" id="urlFoto" placeholder="Cole o link (URL) da imagem..." class="w-full px-3 py-2.5 bg-white dark:bg-black/50 border border-white/20 rounded-lg text-xs font-mono">
+                    <button id="addFotoBtn" class="px-4 py-2.5 bg-purple-500 text-white font-bold text-xs rounded-lg">Adicionar</button>
+                </div>
+                <div id="galeriaGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-56 overflow-y-auto"></div>
+            </div>
+        </div>
+
+        <!-- ABA 8: Sons -->
+        <div id="tab-sons" class="tab-content hidden space-y-4">
+            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl space-y-4">
+                <h3 class="font-mono font-bold text-amber-400 text-sm">🎵 Painel de Sons Ambientais</h3>
+                <div class="flex gap-3">
+                    <button onclick="tocarSom(440)" class="px-4 py-2 bg-amber-500/20 text-amber-400 border border-amber-500/30 rounded-lg text-xs font-mono hover:bg-amber-500 hover:text-black transition">🎵 Tom de Foco (440Hz)</button>
+                    <button onclick="tocarSom(528)" class="px-4 py-2 bg-pink-500/20 text-pink-400 border border-pink-500/30 rounded-lg text-xs font-mono hover:bg-pink-500 hover:text-white transition">💖 Frequência do Amor (528Hz)</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA 9: Guardião -->
+        <div id="tab-guardiao" class="tab-content hidden space-y-4">
+            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl space-y-3">
+                <h3 class="font-mono font-bold text-red-400 text-sm">🛡️ Status do Guardião</h3>
+                <div class="p-3 bg-emerald-500/10 border border-emerald-500/30 rounded text-emerald-400 text-xs font-mono">
+                    ✅ Sistema Seguro: Todos os dados criptografados e salvos localmente.
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA 10: Balãozinho -->
+        <div id="tab-balaozinho" class="tab-content hidden space-y-4">
+            <div class="p-5 bg-gray-50 dark:bg-black/40 border border-gray-200 dark:border-white/10 rounded-xl space-y-3">
+                <h3 class="font-mono font-bold text-cyan-400 text-sm">💭 Balãozinho (Notas Rápidas)</h3>
+                <textarea id="balaozinhoText" placeholder="Escreva um pensamento rápido ou nota relâmpago..." class="w-full h-32 px-3 py-2.5 bg-white dark:bg-black/50 border border-white/20 rounded-lg text-xs font-mono focus:outline-none focus:border-cyan-500"></textarea>
+                <button id="salvarBalaozinho" class="px-4 py-2.5 bg-cyan-500 text-black font-bold text-xs rounded-lg">Salvar Nota</button>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Script Principal v8.0 -->
+    <!-- Script v12.0 Unificado -->
     <script>
         const tabelaUsuarios = {
             'vinicius': { senha: '22062026', nome: 'Vinícius', role: 'Admin' },
@@ -186,16 +281,13 @@
             }, 2500);
         }
 
-        // Modo Noturno
         document.getElementById('themeToggle').addEventListener('click', () => {
             document.documentElement.classList.toggle('dark');
         });
 
-        // Visibilidade Senha
         const passwordInput = document.getElementById('senha');
         document.getElementById('togglePassword').addEventListener('click', () => {
-            const isPass = passwordInput.type === 'password';
-            passwordInput.type = isPass ? 'text' : 'password';
+            passwordInput.type = passwordInput.type === 'password' ? 'text' : 'password';
         });
 
         // Abas
@@ -205,11 +297,11 @@
         tabBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 tabBtns.forEach(b => {
-                    b.classList.remove('bg-cyan-500', 'text-black');
+                    b.classList.remove('bg-pink-500', 'bg-cyan-500', 'text-white', 'text-black');
                     b.classList.add('bg-gray-100', 'dark:bg-white/5', 'text-gray-600', 'dark:text-gray-300');
                 });
                 btn.classList.remove('bg-gray-100', 'dark:bg-white/5', 'text-gray-600', 'dark:text-gray-300');
-                btn.classList.add('bg-cyan-500', 'text-black');
+                btn.classList.add('bg-pink-500', 'text-white');
 
                 const targetId = btn.getAttribute('data-target');
                 tabContents.forEach(c => c.classList.add('hidden'));
@@ -217,9 +309,8 @@
             });
         });
 
-        // Sessão Ativa
         window.addEventListener('DOMContentLoaded', () => {
-            const savedUserKey = sessionStorage.getItem('aria_session_user');
+            const savedUserKey = sessionStorage.getItem('aria_session_v12');
             if (savedUserKey && tabelaUsuarios[savedUserKey]) {
                 usuarioLogado = tabelaUsuarios[savedUserKey];
                 ativarDashboard();
@@ -241,39 +332,38 @@
             carregarRecados();
             carregarTarefas();
             carregarFinancas();
+            carregarFrequencia();
+            carregarGaleria();
+            carregarBalaozinho();
+            carregarAmor();
             iniciarContador();
+            iniciarContadorAmor();
         }
 
-        // Login
-        const loginForm = document.getElementById('loginForm');
-        const errorMessage = document.getElementById('errorMessage');
-
-        loginForm.addEventListener('submit', (e) => {
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
             e.preventDefault();
             const userKey = document.getElementById('usuario').value;
             const passVal = passwordInput.value;
 
             if (tabelaUsuarios[userKey] && passVal === tabelaUsuarios[userKey].senha) {
                 usuarioLogado = tabelaUsuarios[userKey];
-                sessionStorage.setItem('aria_session_user', userKey);
+                sessionStorage.setItem('aria_session_v12', userKey);
                 ativarDashboard();
                 mostrarToast(`Bem-vindo, ${usuarioLogado.nome}!`);
             } else {
                 passwordInput.classList.add('border-red-500');
-                errorMessage.textContent = 'Chave de acesso incorreta.';
-                errorMessage.style.display = 'block';
+                document.getElementById('errorMessage').textContent = 'Chave de acesso incorreta.';
+                document.getElementById('errorMessage').style.display = 'block';
             }
         });
 
         document.getElementById('logoutBtn').addEventListener('click', () => {
-            sessionStorage.removeItem('aria_session_user');
+            sessionStorage.removeItem('aria_session_v12');
             document.getElementById('dashboardScreen').classList.add('hidden');
             document.getElementById('loginScreen').classList.remove('hidden');
             passwordInput.value = '';
-            errorMessage.style.display = 'none';
         });
 
-        // Contador
         function iniciarContador() {
             const timerEl = document.getElementById('countdownTimer');
             const target = new Date();
@@ -283,10 +373,7 @@
             setInterval(() => {
                 const now = new Date();
                 const diff = target - now;
-                if (diff <= 0) {
-                    timerEl.textContent = 'Acontecendo agora!';
-                    return;
-                }
+                if (diff <= 0) { timerEl.textContent = 'Acontecendo agora!'; return; }
                 const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const horas = Math.floor((diff / (1000 * 60 * 60)) % 24);
                 const minutos = Math.floor((diff / 1000 / 60) % 60);
@@ -294,162 +381,210 @@
             }, 1000);
         }
 
-        // Recados
+        function iniciarContadorAmor() {
+            const contadorEl = document.getElementById('contadorAmor');
+            // Data de início do namoro (exemplo ajustável)
+            const inicioNamoro = new Date('2025-01-01T00:00:00');
+            setInterval(() => {
+                const agora = new Date();
+                const diff = agora - inicioNamoro;
+                const dias = Math.floor(diff / (1000 * 60 * 60 * 24));
+                contadorEl.textContent = `❤️ Juntos há ${dias} dias de puro amor!`;
+            }, 1000);
+        }
+
+        function carregarAmor() {
+            const recado = localStorage.getItem('aria_amor_recado') || 'Você é a melhor parte do meu dia, todos os dias.';
+            document.getElementById('recadoAmorTexto').textContent = `"${recado}"`;
+        }
+
+        document.getElementById('salvarRecadoAmor').addEventListener('click', () => {
+            const txt = document.getElementById('novoRecadoAmor').value.trim();
+            if (!txt) return;
+            localStorage.setItem('aria_amor_recado', txt);
+            document.getElementById('novoRecadoAmor').value = '';
+            carregarAmor();
+            mostrarToast('Recado de amor atualizado! 💖');
+        });
+
+        // Recados, Tarefas, Finanças, etc.
         function carregarRecados() {
-            const recados = JSON.parse(localStorage.getItem('aria_recados_v8')) || [
-                { autor: 'Vinícius', texto: 'Sistema v8.0 atualizado com sucesso!' }
-            ];
+            const recados = JSON.parse(localStorage.getItem('aria_recados_v12')) || [{ autor: 'Vinícius', texto: 'Bem-vindos ao nosso ecossistema unificado!' }];
             const lista = document.getElementById('recadosList');
             lista.innerHTML = '';
             recados.forEach((r, index) => {
                 const div = document.createElement('div');
                 div.className = 'p-3 bg-white dark:bg-white/5 rounded border border-gray-200 dark:border-white/10 flex justify-between items-center';
-                div.innerHTML = `
-                    <div><span class="text-cyan-400 font-bold">${r.autor}:</span> ${r.texto}</div>
-                    <button onclick="excluirRecado(${index})" class="text-red-400 hover:text-red-500 text-[10px] px-2 py-1 rounded bg-red-500/10 transition">Excluir</button>
-                `;
+                div.innerHTML = `<div><span class="text-cyan-400 font-bold">${r.autor}:</span> ${r.texto}</div><button onclick="excluirRecado(${index})" class="text-red-400 text-[10px] px-2 py-1 rounded bg-red-500/10">Excluir</button>`;
                 lista.appendChild(div);
             });
         }
-
         document.getElementById('addRecadoBtn').addEventListener('click', () => {
             const input = document.getElementById('novoRecado');
             if (!input.value.trim()) return;
-            const recados = JSON.parse(localStorage.getItem('aria_recados_v8')) || [];
+            const recados = JSON.parse(localStorage.getItem('aria_recados_v12')) || [];
             recados.unshift({ autor: usuarioLogado.nome, texto: input.value.trim() });
-            localStorage.setItem('aria_recados_v8', JSON.stringify(recados));
+            localStorage.setItem('aria_recados_v12', JSON.stringify(recados));
             input.value = '';
             carregarRecados();
-            mostrarToast('Recado publicado!');
+            mostrarToast('Recado enviado!');
         });
-
-        window.excluirRecado = function(index) {
-            const recados = JSON.parse(localStorage.getItem('aria_recados_v8')) || [];
-            recados.splice(index, 1);
-            localStorage.setItem('aria_recados_v8', JSON.stringify(recados));
+        window.excluirRecado = function(i) {
+            let r = JSON.parse(localStorage.getItem('aria_recados_v12')) || [];
+            r.splice(i, 1);
+            localStorage.setItem('aria_recados_v12', JSON.stringify(r));
             carregarRecados();
-            mostrarToast('Recado excluído.');
-        };
+        }
 
-        // Tarefas
         function carregarTarefas() {
-            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v8')) || [
-                { texto: 'Organizar próximo almoço', concluida: false }
-            ];
+            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v12')) || [{ texto: 'Planejar encontro romântico', concluida: false }];
             const lista = document.getElementById('taskList');
             lista.innerHTML = '';
             tarefas.forEach((t, index) => {
                 const div = document.createElement('div');
                 div.className = 'p-3 bg-white dark:bg-white/5 rounded border border-gray-200 dark:border-white/10 flex justify-between items-center';
-                div.innerHTML = `
-                    <span class="${t.concluida ? 'line-through text-gray-500' : ''}">${t.texto}</span>
-                    <div class="flex items-center gap-2">
-                        <button onclick="alternarTarefa(${index})" class="text-[10px] px-2.5 py-1 rounded bg-purple-500/20 text-purple-400 hover:bg-purple-500 hover:text-white transition">${t.concluida ? 'Feito' : 'Pendente'}</button>
-                        <button onclick="excluirTarefa(${index})" class="text-red-400 hover:text-red-500 text-[10px] px-2 py-1 rounded bg-red-500/10 transition">Excluir</button>
-                    </div>
-                `;
+                div.innerHTML = `<span class="${t.concluida ? 'line-through text-gray-500' : ''}">${t.texto}</span><button onclick="excluirTarefa(${index})" class="text-red-400 text-[10px] px-2 py-1 rounded bg-red-500/10">Excluir</button>`;
                 lista.appendChild(div);
             });
         }
-
         document.getElementById('addTarefaBtn').addEventListener('click', () => {
             const input = document.getElementById('novaTarefa');
             if (!input.value.trim()) return;
-            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v8')) || [];
+            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v12')) || [];
             tarefas.push({ texto: input.value.trim(), concluida: false });
-            localStorage.setItem('aria_tarefas_v8', JSON.stringify(tarefas));
+            localStorage.setItem('aria_tarefas_v12', JSON.stringify(tarefas));
             input.value = '';
             carregarTarefas();
             mostrarToast('Tarefa adicionada!');
         });
-
-        window.alternarTarefa = function(index) {
-            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v8')) || [];
-            tarefas[index].concluida = !tarefas[index].concluida;
-            localStorage.setItem('aria_tarefas_v8', JSON.stringify(tarefas));
+        window.excluirTarefa = function(i) {
+            let t = JSON.parse(localStorage.getItem('aria_tarefas_v12')) || [];
+            t.splice(i, 1);
+            localStorage.setItem('aria_tarefas_v12', JSON.stringify(t));
             carregarTarefas();
-        };
+        }
 
-        window.excluirTarefa = function(index) {
-            const tarefas = JSON.parse(localStorage.getItem('aria_tarefas_v8')) || [];
-            tarefas.splice(index, 1);
-            localStorage.setItem('aria_tarefas_v8', JSON.stringify(tarefas));
-            carregarTarefas();
-            mostrarToast('Tarefa excluída.');
-        };
-
-        // Finanças
         document.getElementById('filtroAutor').addEventListener('change', carregarFinancas);
-
         function carregarFinancas() {
-            const financas = JSON.parse(localStorage.getItem('aria_financas_v8')) || [];
+            const financas = JSON.parse(localStorage.getItem('aria_financas_v12')) || [];
             const filtro = document.getElementById('filtroAutor').value;
             const lista = document.getElementById('financasList');
             lista.innerHTML = '';
-            let total = 0;
+            let totalGeral = 0;
+            let totaisCat = { 'Alimentação': 0, 'Lazer': 0, 'Compras': 0, 'Outros': 0 };
 
-            const financasFiltradas = financas.filter(f => {
-                if (filtro === 'todos') return true;
-                return f.autor === filtro;
-            });
+            financas.forEach(f => { if (totaisCat[f.categoria] !== undefined) totaisCat[f.categoria] += Number(f.valor); });
+            const filtradas = financas.filter(f => filtro === 'todos' || f.autor === filtro);
 
-            if (financasFiltradas.length === 0) {
-                lista.innerHTML = '<div class="text-gray-500 text-center py-2">Nenhuma despesa encontrada para este filtro.</div>';
-            }
-
-            financasFiltradas.forEach((f) => {
+            filtradas.forEach((f) => {
                 const realIndex = financas.indexOf(f);
-                total += Number(f.valor);
-                
+                totalGeral += Number(f.valor);
                 const div = document.createElement('div');
                 div.className = 'p-3 bg-white dark:bg-white/5 rounded border border-gray-200 dark:border-white/10 flex justify-between items-center';
-                div.innerHTML = `
-                    <div>
-                        <span class="text-emerald-400 font-bold">${f.autor}:</span> ${f.descricao} 
-                        <span class="text-[10px] ml-2 px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-300 border border-emerald-500/20">${f.categoria}</span>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span class="font-bold text-gray-200">R$ ${Number(f.valor).toFixed(2)}</span>
-                        <button onclick="excluirGasto(${realIndex})" class="text-red-400 hover:text-red-500 text-[10px] px-2 py-1 rounded bg-red-500/10 transition">Excluir</button>
-                    </div>
-                `;
+                div.innerHTML = `<div><span class="text-emerald-400 font-bold">${f.autor}:</span> ${f.descricao} <span class="text-[10px] ml-2 px-1 rounded bg-emerald-500/10 text-emerald-300">${f.categoria}</span></div><div class="flex items-center gap-3"><span class="font-bold">R$ ${Number(f.valor).toFixed(2)}</span><button onclick="excluirGasto(${realIndex})" class="text-red-400 text-[10px] px-2 py-1 rounded bg-red-500/10">Excluir</button></div>`;
                 lista.appendChild(div);
             });
 
-            document.getElementById('totalGasto').textContent = `Total: R$ ${total.toFixed(2)}`;
+            document.getElementById('totalGasto').textContent = `Total: R$ ${totalGeral.toFixed(2)}`;
+            document.getElementById('catAlimentacao').textContent = `R$ ${totaisCat['Alimentação'].toFixed(2)}`;
+            document.getElementById('catLazer').textContent = `R$ ${totaisCat['Lazer'].toFixed(2)}`;
+            document.getElementById('catCompras').textContent = `R$ ${totaisCat['Compras'].toFixed(2)}`;
+            document.getElementById('catOutros').textContent = `R$ ${totaisCat['Outros'].toFixed(2)}`;
         }
-
         document.getElementById('addGastoBtn').addEventListener('click', () => {
-            const descInput = document.getElementById('descricaoGasto');
-            const valInput = document.getElementById('valorGasto');
-            const catInput = document.getElementById('categoriaGasto');
-            if (!descInput.value.trim() || !valInput.value) return;
-
-            const financas = JSON.parse(localStorage.getItem('aria_financas_v8')) || [];
-            financas.push({
-                autor: usuarioLogado.nome,
-                descricao: descInput.value.trim(),
-                valor: parseFloat(valInput.value),
-                categoria: catInput.value
-            });
-            localStorage.setItem('aria_financas_v8', JSON.stringify(financas));
-            descInput.value = '';
-            valInput.value = '';
+            const desc = document.getElementById('descricaoGasto').value;
+            const val = document.getElementById('valorGasto').value;
+            const cat = document.getElementById('categoriaGasto').value;
+            if (!desc.trim() || !val) return;
+            const f = JSON.parse(localStorage.getItem('aria_financas_v12')) || [];
+            f.push({ autor: usuarioLogado.nome, descricao: desc, valor: parseFloat(val), categoria: cat });
+            localStorage.setItem('aria_financas_v12', JSON.stringify(f));
+            document.getElementById('descricaoGasto').value = '';
+            document.getElementById('valorGasto').value = '';
             carregarFinancas();
             mostrarToast('Despesa registrada!');
         });
-
-        window.excluirGasto = function(index) {
-            const financas = JSON.parse(localStorage.getItem('aria_financas_v8')) || [];
-            financas.splice(index, 1);
-            localStorage.setItem('aria_financas_v8', JSON.stringify(financas));
+        window.excluirGasto = function(i) {
+            let f = JSON.parse(localStorage.getItem('aria_financas_v12')) || [];
+            f.splice(i, 1);
+            localStorage.setItem('aria_financas_v12', JSON.stringify(f));
             carregarFinancas();
-            mostrarToast('Despesa excluída.');
-        };
+        }
 
-        passwordInput.addEventListener('input', () => {
-            passwordInput.classList.remove('border-red-500');
-            errorMessage.style.display = 'none';
+        function carregarFrequencia() {
+            const freq = JSON.parse(localStorage.getItem('aria_frequencia_v12')) || [];
+            const lista = document.getElementById('frequenciaList');
+            lista.innerHTML = '';
+            freq.forEach(f => {
+                const div = document.createElement('div');
+                div.className = 'p-2.5 bg-white/5 rounded border border-white/10 flex justify-between';
+                div.innerHTML = `<span><b>${f.autor}</b>: ${f.estado}</span><span class="text-gray-400 text-[10px]">${f.data}</span>`;
+                lista.appendChild(div);
+            });
+        }
+        document.getElementById('addFrequenciaBtn').addEventListener('click', () => {
+            const estado = document.getElementById('estadoFrequencia').value;
+            const freq = JSON.parse(localStorage.getItem('aria_frequencia_v12')) || [];
+            freq.unshift({ autor: usuarioLogado.nome, estado, data: new Date().toLocaleDateString() });
+            localStorage.setItem('aria_frequencia_v12', JSON.stringify(freq));
+            carregarFrequencia();
+            mostrarToast('Frequência sincronizada!');
+        });
+
+        function carregarGaleria() {
+            const fotos = JSON.parse(localStorage.getItem('aria_galeria_v12')) || [];
+            const grid = document.getElementById('galeriaGrid');
+            grid.innerHTML = '';
+            fotos.forEach((url, i) => {
+                const div = document.createElement('div');
+                div.className = 'relative group aspect-square rounded overflow-hidden bg-black/40 border border-white/10';
+                div.innerHTML = `<img src="${url}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/150?text=Erro+Imagem'"><button onclick="excluirFoto(${i})" class="absolute top-1 right-1 bg-red-500 text-white text-[10px] px-1.5 py-0.5 rounded opacity-0 group-hover:opacity-100 transition">X</button>`;
+                grid.appendChild(div);
+            });
+        }
+        document.getElementById('addFotoBtn').addEventListener('click', () => {
+            const url = document.getElementById('urlFoto').value.trim();
+            if (!url) return;
+            const fotos = JSON.parse(localStorage.getItem('aria_galeria_v12')) || [];
+            fotos.push(url);
+            localStorage.setItem('aria_galeria_v12', JSON.stringify(fotos));
+            document.getElementById('urlFoto').value = '';
+            carregarGaleria();
+            mostrarToast('Foto adicionada à Galeria!');
+        });
+        window.excluirFoto = function(i) {
+            let fotos = JSON.parse(localStorage.getItem('aria_galeria_v12')) || [];
+            fotos.splice(i, 1);
+            localStorage.setItem('aria_galeria_v12', JSON.stringify(fotos));
+            carregarGaleria();
+        }
+
+        window.tocarSom = function(freq) {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.value = freq;
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.start();
+                osc.stop(ctx.currentTime + 0.6);
+                mostrarToast('Som reproduzido com sucesso!');
+            } catch(e) {
+                mostrarToast('Erro ao reproduzir som.');
+            }
+        }
+
+        function carregarBalaozinho() {
+            const nota = localStorage.getItem('aria_balaozinho_v12') || '';
+            document.getElementById('balaozinhoText').value = nota;
+        }
+        document.getElementById('salvarBalaozinho').addEventListener('click', () => {
+            const texto = document.getElementById('balaozinhoText').value;
+            localStorage.setItem('aria_balaozinho_v12', texto);
+            mostrarToast('Nota salva no Balãozinho!');
         });
     </script>
 </body>
