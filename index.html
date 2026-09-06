@@ -1,493 +1,92 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Aria Central - Projetos Especiais</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    :root {
-      --primary: #00d4ff;
-      --secondary: #a066ff;
-      --gold: #ffd700;
-      --bg-dark: #050a14;
-    }
-
-    body {
-      background: linear-gradient(-45deg, var(--bg-dark), #0f172a, #1a0b2e, var(--bg-dark));
-      background-size: 400% 400%;
-      animation: gradientBG 20s ease infinite;
-      color: #ffffff;
-      overflow-x: hidden;
-      font-family: 'Inter', sans-serif;
-    }
-    
-    @keyframes gradientBG {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
-    }
-
-    .glass-card {
-      background: rgba(15, 20, 35, 0.65);
-      border: 1px solid rgba(160, 102, 255, 0.25);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
-    }
-    
-    .text-gradient {
-      background: linear-gradient(135deg, #fff, var(--primary), var(--secondary));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-    }
-
-    .tag-glow {
-      background: rgba(0, 212, 255, 0.08);
-      border: 1px solid rgba(0, 212, 255, 0.4);
-      color: #e0f7ff;
-      text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
-    }
-
-    .animate-fade-in {
-      animation: fadeIn 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards;
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    @keyframes fadeIn {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .btn-filtro { transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
-    .btn-filtro.ativo {
-      background: rgba(160, 102, 255, 0.25);
-      border-color: var(--secondary);
-      box-shadow: 0 0 20px rgba(160, 102, 255, 0.3);
-      color: #fff;
-    }
-
-    .shake {
-      animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
-    }
-    @keyframes shake {
-      10%, 90% { transform: translate3d(-1px, 0, 0); }
-      20%, 80% { transform: translate3d(2px, 0, 0); }
-      30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
-      40%, 60% { transform: translate3d(4px, 0, 0); }
-    }
-
-    /* Scanline effect para o modal */
-    .scanline {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 4px;
-      background: rgba(0, 212, 255, 0.3);
-      opacity: 0.5;
-      animation: scan 3s linear infinite;
-      pointer-events: none;
-    }
-    @keyframes scan {
-      0% { top: -5%; }
-      100% { top: 105%; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tela de Autenticação</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f4f4f9;
+            margin: 0;
+        }
+        .login-container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            width: 100%;
+            max-width: 350px;
+        }
+        .login-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        .input-group {
+            margin-bottom: 15px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #666;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .btn-auth {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .btn-auth:hover {
+            background-color: #0056b3;
+        }
+        .forgot-password {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #007bff;
+            text-decoration: none;
+        }
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body>
 
-  <nav class="border-b border-purple-900/30 bg-[#050a14]/70 backdrop-blur-xl sticky top-0 z-40 p-4 shadow-lg">
-    <div class="max-w-6xl mx-auto flex justify-between items-center">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-600 to-blue-500 animate-pulse flex items-center justify-center shadow-[0_0_15px_rgba(0,212,255,0.6)]">
-          <div class="w-4 h-4 bg-white rounded-full opacity-80"></div>
+<div class="login-container">
+    <h2>Login</h2>
+    <form action="#" method="POST">
+        <div class="input-group">
+            <label for="login">Usuário ou E-mail</label>
+            <input type="text" id="login" name="login" required placeholder="Digite seu login">
         </div>
-        <a href="#" class="text-2xl font-serif font-bold text-gradient tracking-wider">Aria Central</a>
-      </div>
-      <div class="hidden md:flex space-x-8 text-xs font-bold tracking-[3px] text-gray-400">
-        <a href="#" class="hover:text-white transition drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]">SISTEMAS</a>
-        <a href="#" class="hover:text-[var(--gold)] transition">STATUS: ONLINE</a>
-      </div>
-    </div>
-  </nav>
-
-  <section id="projetos" class="py-12 px-4 flex-grow relative z-10">
-    <div class="max-w-7xl mx-auto">
-      <div class="mb-14 text-center">
-        <h1 class="text-4xl md:text-6xl font-serif font-extrabold text-gradient mb-4 drop-shadow-lg">Diretório de Subsistemas</h1>
-        <p class="text-[var(--primary)] text-xs md:text-sm tracking-[4px] uppercase opacity-90 font-medium">Terminal Principal conectado à IA Aria v2.4 - Controle de Acesso Ativo</p>
         
-        <div class="max-w-2xl mx-auto mt-10">
-          <div class="relative group">
-            <span class="absolute inset-y-0 left-0 pl-4 flex items-center text-purple-400 transition-colors group-focus-within:text-[var(--primary)]">
-              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-            </span>
-            <input type="text" id="barra-busca" placeholder="Consultar registros de módulos..." class="w-full pl-12 pr-5 py-4 rounded-xl glass-card text-white placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-[var(--primary)] transition shadow-inner text-sm tracking-wide bg-black/20">
-          </div>
+        <div class="input-group">
+            <label for="senha">Senha</label>
+            <input type="password" id="senha" name="senha" required placeholder="Digite sua senha">
         </div>
 
-        <div class="flex flex-wrap justify-center gap-4 mt-8" id="container-filtros">
-          <!-- Gerados dinamicamente no JS, mas deixo aqui por estrutura -->
-        </div>
-      </div>
+        <button type="submit" class="btn-auth">Autenticar</button>
+        <a href="#" class="forgot-password">Esqueci minha senha</a>
+    </form>
+</div>
 
-      <div id="grid-projetos" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- Renderizado via JS -->
-      </div>
-    </div>
-  </section>
-
-  <!-- Modal de Segurança - Dupla Autenticação -->
-  <div id="modal-seguranca" class="fixed inset-0 z-50 flex items-center justify-center opacity-0 pointer-events-none transition-all duration-400 bg-black/85 backdrop-blur-xl">
-    <div class="glass-card p-8 rounded-2xl max-w-md w-full mx-4 border-purple-500/40 shadow-[0_0_60px_rgba(160,102,255,0.15)] transform scale-90 transition-transform duration-400 relative overflow-hidden" id="modal-content">
-      
-      <!-- Efeito visual de scanner -->
-      <div class="scanline hidden" id="scanline"></div>
-
-      <button onclick="fecharModal()" class="absolute top-4 right-4 text-gray-500 hover:text-white transition z-20">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-      </button>
-
-      <!-- Cabeçalho do Modal -->
-      <div class="flex justify-center mb-5 relative z-10">
-        <div class="w-20 h-20 rounded-full bg-black/60 flex items-center justify-center border-2 border-[var(--primary)] shadow-[0_0_20px_rgba(0,212,255,0.3)] transition-all duration-300" id="icone-status">
-          <svg class="w-10 h-10 text-[var(--primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-        </div>
-      </div>
-      
-      <h2 class="text-3xl font-serif font-bold text-white text-center mb-1 drop-shadow-md">Aria Security Protocol</h2>
-      <p id="nome-modulo-modal" class="text-[var(--gold)] text-center text-xs font-bold tracking-[3px] mb-3 uppercase">Conectando ao Módulo...</p>
-      
-      <div class="flex justify-center mb-6">
-        <span id="nivel-exigido-modal" class="bg-gray-800/50 border border-gray-600 text-gray-300 text-[10px] font-bold px-3 py-1.5 rounded uppercase tracking-[0.2em] shadow-inner">Nível: N/A</span>
-      </div>
-      
-      <!-- Prompt dinâmico da IA Aria -->
-      <div class="bg-black/40 border border-[var(--primary)]/30 rounded-lg p-4 mb-6 relative">
-        <div class="absolute -top-2 -left-2 w-4 h-4 bg-[var(--primary)] rounded-full blur-sm opacity-50"></div>
-        <p id="prompt-aria" class="text-gray-300 text-center text-sm leading-relaxed font-mono">
-          > Iniciando handshake de segurança... <br>
-          > <span class="text-white">Etapa 1/2:</span> Insira a chave do subsistema.
-        </p>
-      </div>
-      
-      <div class="mb-5 relative z-10">
-        <input type="password" id="input-senha" placeholder="Aguardando input..." class="w-full bg-[#050a14]/80 border border-purple-500/50 rounded-xl px-5 py-4 text-center text-white tracking-[0.4em] focus:outline-none focus:border-[var(--primary)] focus:ring-1 focus:ring-[var(--primary)] transition shadow-inner font-mono text-lg">
-        <p id="msg-erro" class="text-red-400 text-xs text-center mt-3 opacity-0 transition-opacity font-medium tracking-wide">.</p>
-      </div>
-
-      <button id="btn-validar" onclick="processarAutenticacao()" class="w-full bg-gradient-to-r from-purple-700 to-blue-700 hover:from-purple-600 hover:to-blue-600 text-white font-bold py-3.5 rounded-xl transition-all duration-300 hover:shadow-[0_0_20px_rgba(0,212,255,0.5)] transform hover:scale-[1.02] border border-white/10 uppercase tracking-[2px] text-sm relative z-10">
-        Autenticar
-      </button>
-    </div>
-  </div>
-
-  <script>
-    // --- CÉREBRO HIERÁRQUICO (PESSOAS) ---
-    const tabelaUsuarios = {
-      "aria2026": { nome: "Guardião", role: "admin", saudacao: "Criador, todos os sistemas operacionais." },
-      "amor2026": { nome: "Meu Amor", role: "namorada", saudacao: "Bem-vinda, amor." },
-      "mae2026":  { nome: "Mãe", role: "familia", saudacao: "Olá. Ambiente seguro preparado." }
-    };
-
-    // --- BANCO DE DADOS DE PROJETOS (INCLUI SENHA DO PROJETO E HIERARQUIA) ---
-    const todosOsProjetos = [
-      { 
-        id: 1, 
-        titulo: "O Balão de Emoções", 
-        categoria: "Emoções", 
-        descricao: "Espaço interativo em 3D para alívio e processamento emocional.", 
-        tecnologias: ["Three.js", "Física 3D", "WebGL"], 
-        link: "balao.html", 
-        imagem: "https://images.unsplash.com/photo-1507608616759-54f48f0af0ee?w=800&h=500&fit=crop",
-        nivelRotulo: "Nível 4: Livre",
-        senhaProjeto: "balao123", // Senha técnica do projeto
-        cargosPermitidos: ["admin", "namorada", "familia"] // Hierarquia
-      },
-      { 
-        id: 2, 
-        titulo: "Nossa Frequência", 
-        categoria: "Emoções", 
-        descricao: "Sincronização de batimentos, frequências de cura (432Hz) e respiração guiada.", 
-        tecnologias: ["Web Audio API", "Sinc. WebSocket", "Animação SVG"], 
-        link: "frequencia.html", 
-        imagem: "https://images.unsplash.com/photo-1518241353330-0f797f6cceea?w=800&h=500&fit=crop",
-        nivelRotulo: "Nível 2: Restrito",
-        senhaProjeto: "frequencia123",
-        cargosPermitidos: ["admin", "namorada"]
-      },
-      { 
-        id: 3, 
-        titulo: "Projeto Guardião - Saúde", 
-        categoria: "Saúde", 
-        descricao: "Diário criptografado para telemetria de glicemia e pressão arterial.", 
-        tecnologias: ["Chart.js", "IndexedDB", "Crypto API"], 
-        link: "guardiao.html", 
-        imagem: "https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?w=800&h=500&fit=crop",
-        nivelRotulo: "Nível 3: Familiar",
-        senhaProjeto: "saude123",
-        cargosPermitidos: ["admin", "familia"]
-      },
-      { 
-        id: 4, 
-        titulo: "Cápsula do Tempo", 
-        categoria: "Memórias", 
-        descricao: "Arquivos selados digitalmente com gatilhos temporais e chaves assimétricas.", 
-        tecnologias: ["Time-Locks", "AES-256", "Service Workers"], 
-        link: "capsula.html", 
-        imagem: "https://images.unsplash.com/photo-1501139083538-0139583c060f?w=800&h=500&fit=crop",
-        nivelRotulo: "Nível 2: Restrito",
-        senhaProjeto: "tempo123",
-        cargosPermitidos: ["admin", "namorada"]
-      },
-      { 
-        id: 5, 
-        titulo: "Núcleo Aria AI", 
-        categoria: "Sistema", 
-        descricao: "Processamento de linguagem natural, análise de sentimentos e controle central.", 
-        tecnologias: ["LLM", "Redes Neurais", "Python Backend"], 
-        link: "aria.html", 
-        imagem: "https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&h=500&fit=crop",
-        nivelRotulo: "Nível 1: Máximo",
-        senhaProjeto: "nucleo123",
-        cargosPermitidos: ["admin"]
-      },
-      { 
-        id: 6, 
-        titulo: "Painel de Telemetria", 
-        categoria: "Sistema", 
-        descricao: "Logs de acesso em tempo real, firewall e gerenciamento de permissões globais.", 
-        tecnologias: ["React", "WebSockets", "Node.js"], 
-        link: "painel.html", 
-        imagem: "https://images.unsplash.com/photo-1510511459019-5d26af37f394?w=800&h=500&fit=crop",
-        nivelRotulo: "Nível 1: Máximo",
-        senhaProjeto: "painel123",
-        cargosPermitidos: ["admin"]
-      }
-    ];
-
-    // --- RENDERIZAÇÃO DA INTERFACE ---
-    const gridProjetos = document.getElementById('grid-projetos');
-    const barraBusca = document.getElementById('barra-busca');
-    const containerFiltros = document.getElementById('container-filtros');
-    let filtroAtual = 'Todos';
-
-    const categorias = ['Todos', 'Emoções', 'Saúde', 'Memórias', 'Sistema'];
-
-    function inicializarFiltros() {
-      containerFiltros.innerHTML = categorias.map(cat => `
-        <button onclick="aplicarFiltro('${cat}', this)" class="btn-filtro ${cat === 'Todos' ? 'ativo' : ''} px-5 py-2 rounded-full border border-purple-500/30 text-xs font-bold tracking-[1px] text-gray-400 hover:text-white uppercase backdrop-blur-sm bg-black/20">
-          ${cat}
-        </button>
-      `).join('');
-    }
-
-    function renderizarProjetos(lista) {
-      gridProjetos.innerHTML = ''; 
-      if (lista.length === 0) {
-        gridProjetos.innerHTML = `<div class="col-span-full text-center py-16 animate-fade-in"><p class="text-[var(--primary)] text-lg font-mono">> Aria: "Não encontrei registros compatíveis com a busca."</p></div>`;
-        return;
-      }
-
-      lista.forEach((projeto, index) => {
-        const tagsHtml = projeto.tecnologias.map(tech => `<span class="tag-glow text-[9px] font-bold px-2 py-1 rounded-sm uppercase tracking-widest">${tech}</span>`).join('');
-        const delay = index * 100; 
-
-        let corBadge = "text-gray-300 border-gray-500/50 bg-gray-500/20";
-        if(projeto.nivelRotulo.includes("1")) corBadge = "text-red-400 border-red-500/60 bg-red-900/40 shadow-[0_0_10px_rgba(239,68,68,0.4)]";
-        else if(projeto.nivelRotulo.includes("2")) corBadge = "text-pink-400 border-pink-500/60 bg-pink-900/40 shadow-[0_0_10px_rgba(236,72,153,0.4)]";
-        else if(projeto.nivelRotulo.includes("3")) corBadge = "text-emerald-400 border-emerald-500/60 bg-emerald-900/40 shadow-[0_0_10px_rgba(16,185,129,0.4)]";
-        else corBadge = "text-[var(--primary)] border-[var(--primary)]/60 bg-[var(--primary)]/10 shadow-[0_0_10px_rgba(0,212,255,0.4)]";
-
-        const card = `
-          <div class="glass-card rounded-2xl overflow-hidden hover:shadow-[0_0_40px_rgba(160,102,255,0.4)] transition-all duration-500 transform hover:-translate-y-2 flex flex-col h-full animate-fade-in group" style="animation-delay: ${delay}ms;">
-            <div class="relative overflow-hidden h-48">
-              <div class="absolute inset-0 bg-black/40 group-hover:bg-transparent transition-colors duration-500 z-10"></div>
-              <img src="${projeto.imagem}" alt="${projeto.titulo}" class="w-full h-full object-cover group-hover:scale-110 transition duration-700" />
-              <div class="absolute top-4 right-4 backdrop-blur-md px-3 py-1.5 rounded border ${corBadge} z-20">
-                <span class="text-[9px] font-bold tracking-[2px] uppercase">${projeto.nivelRotulo}</span>
-              </div>
-            </div>
-            <div class="p-7 flex flex-col flex-grow relative z-20 bg-gradient-to-t from-[#050a14] via-[#050a14]/90 to-transparent -mt-10">
-              <p class="text-xs text-[var(--secondary)] font-mono mb-1 tracking-widest uppercase opacity-80">${projeto.categoria}</p>
-              <h3 class="text-2xl font-serif font-bold text-[var(--gold)] mb-3 drop-shadow-md">${projeto.titulo}</h3>
-              <p class="text-gray-300 mb-6 flex-grow text-sm leading-relaxed">${projeto.descricao}</p>
-              <div class="flex flex-wrap gap-2 mb-8">${tagsHtml}</div>
-              
-              <button onclick="iniciarProtocoloSeguranca(${projeto.id})" class="mt-auto w-full relative overflow-hidden group/btn bg-white/5 hover:bg-white/10 text-white font-bold py-3 rounded-lg transition-all duration-300 border border-purple-500/30 hover:border-[var(--primary)]">
-                <div class="absolute inset-0 bg-gradient-to-r from-[var(--primary)]/20 to-[var(--secondary)]/20 opacity-0 group-hover/btn:opacity-100 transition-opacity"></div>
-                <span class="relative z-10 flex items-center justify-center gap-2 text-sm tracking-widest uppercase">
-                  <svg class="w-4 h-4 text-[var(--primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
-                  Solicitar Acesso
-                </span>
-              </button>
-            </div>
-          </div>
-        `;
-        gridProjetos.innerHTML += card;
-      });
-    }
-
-    // --- LÓGICA DE DUPLA AUTENTICAÇÃO (MÁQUINA DE ESTADOS) ---
-    const modal = document.getElementById('modal-seguranca');
-    const modalContent = document.getElementById('modal-content');
-    const inputSenha = document.getElementById('input-senha');
-    const msgErro = document.getElementById('msg-erro');
-    const nomeModuloModal = document.getElementById('nome-modulo-modal');
-    const nivelExigidoModal = document.getElementById('nivel-exigido-modal');
-    const iconeStatus = document.getElementById('icone-status');
-    const promptAria = document.getElementById('prompt-aria');
-    const scanline = document.getElementById('scanline');
-    
-    let projetoSelecionado = null;
-    let etapaAtual = 1; // 1: Senha do Projeto, 2: Hierarquia Pessoal
-
-    function iniciarProtocoloSeguranca(idProjeto) {
-      projetoSelecionado = todosOsProjetos.find(p => p.id === idProjeto);
-      etapaAtual = 1;
-      
-      nomeModuloModal.innerText = `Destino: ${projetoSelecionado.titulo}`;
-      
-      // Estilização dinâmica da badge do modal baseada no nível
-      nivelExigidoModal.innerText = `Requisito: ${projetoSelecionado.nivelRotulo}`;
-      nivelExigidoModal.className = `border text-[10px] font-bold px-3 py-1.5 rounded uppercase tracking-[0.2em] shadow-inner ${
-        projetoSelecionado.nivelRotulo.includes("1") ? "bg-red-900/30 border-red-500/50 text-red-300" :
-        projetoSelecionado.nivelRotulo.includes("2") ? "bg-pink-900/30 border-pink-500/50 text-pink-300" :
-        projetoSelecionado.nivelRotulo.includes("3") ? "bg-emerald-900/30 border-emerald-500/50 text-emerald-300" :
-        "bg-blue-900/30 border-blue-500/50 text-blue-300"
-      }`;
-      
-      resetarUIModal();
-      setarPromptAria("> Handshake iniciado...<br>> <span class='text-white'>Etapa 1/2:</span> Insira a chave criptográfica do subsistema.");
-      
-      modal.classList.remove('opacity-0', 'pointer-events-none');
-      modalContent.classList.remove('scale-90');
-      
-      setTimeout(() => inputSenha.focus(), 300);
-    }
-
-    function fecharModal() {
-      modal.classList.add('opacity-0', 'pointer-events-none');
-      modalContent.classList.add('scale-90');
-      scanline.classList.add('hidden');
-    }
-
-    function resetarUIModal() {
-      inputSenha.value = ''; 
-      inputSenha.type = 'password';
-      msgErro.classList.remove('opacity-100');
-      iconeStatus.innerHTML = `<svg class="w-10 h-10 text-[var(--primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>`;
-      iconeStatus.className = "w-20 h-20 rounded-full bg-black/60 flex items-center justify-center border-2 border-[var(--primary)] shadow-[0_0_20px_rgba(0,212,255,0.3)] transition-all duration-300 relative z-10";
-      scanline.classList.add('hidden');
-    }
-
-    function setarPromptAria(texto, cor = "text-gray-300") {
-      promptAria.innerHTML = `<span class="${cor}">${texto}</span>`;
-    }
-
-    function animarErro() {
-      iconeStatus.innerHTML = `<svg class="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>`;
-      iconeStatus.className = "w-20 h-20 rounded-full bg-red-900/20 flex items-center justify-center border-2 border-red-500 shadow-[0_0_30px_rgba(239,68,68,0.5)] transition-all duration-300 relative z-10";
-      
-      modalContent.classList.remove('shake');
-      void modalContent.offsetWidth; 
-      modalContent.classList.add('shake');
-      inputSenha.value = '';
-      inputSenha.focus();
-    }
-
-    function processarAutenticacao() {
-      const valorDigitado = inputSenha.value.trim();
-      
-      if (!valorDigitado) return;
-
-      if (etapaAtual === 1) {
-        // --- ETAPA 1: VERIFICAR SENHA DO PROJETO ---
-        if (valorDigitado === projetoSelecionado.senhaProjeto) {
-          // Sucesso Etapa 1 -> Passar para Etapa 2
-          etapaAtual = 2;
-          inputSenha.value = '';
-          msgErro.classList.remove('opacity-100');
-          scanline.classList.remove('hidden'); // Liga o scanner visual
-          
-          setarPromptAria("> Chave de subsistema aceita. Verificando logs...<br>> <span class='text-[var(--primary)] font-bold'>Etapa 2/2:</span> Aria solicita Credencial Pessoal (Hierarquia).", "text-blue-300");
-          
-          iconeStatus.innerHTML = `<svg class="w-10 h-10 text-[var(--gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>`;
-          iconeStatus.className = "w-20 h-20 rounded-full bg-yellow-900/20 flex items-center justify-center border-2 border-[var(--gold)] shadow-[0_0_30px_rgba(255,215,0,0.4)] transition-all duration-300 relative z-10";
-          
-        } else {
-          animarErro();
-          msgErro.innerText = "ERRO: Chave do subsistema incorreta. Acesso negado.";
-          msgErro.className = "text-red-400 text-xs text-center mt-3 opacity-100 transition-opacity font-bold tracking-wide";
-        }
-
-      } else if (etapaAtual === 2) {
-        // --- ETAPA 2: VERIFICAR PESSOA E HIERARQUIA ---
-        const usuarioLogado = tabelaUsuarios[valorDigitado];
-
-        if (!usuarioLogado) {
-          animarErro();
-          setarPromptAria("> <span class='text-red-400'>ALERTA: Identidade desconhecida.</span> Tentativa de intrusão registrada nos logs centrais.");
-          return;
-        }
-
-        if (projetoSelecionado.cargosPermitidos.includes(usuarioLogado.role)) {
-          // SUCESSO TOTAL!
-          scanline.classList.add('hidden');
-          iconeStatus.innerHTML = `<svg class="w-10 h-10 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>`;
-          iconeStatus.className = "w-20 h-20 rounded-full bg-emerald-900/30 flex items-center justify-center border-2 border-emerald-400 shadow-[0_0_40px_rgba(16,185,129,0.6)] transition-all duration-300 scale-110 relative z-10";
-          
-          setarPromptAria(`> Identidade confirmada: <b>${usuarioLogado.nome}</b><br>> Aria: "${usuarioLogado.saudacao}"<br>> Descriptografando módulo...`, "text-emerald-300");
-          
-          inputSenha.style.display = 'none';
-          document.getElementById('btn-validar').style.display = 'none';
-          
-          setTimeout(() => {
-            // window.location.href = projetoSelecionado.link; // <- Ative para Redirecionar
-            alert(`Aria redirecionando ${usuarioLogado.nome} para ${projetoSelecionado.link}...`);
-            fecharModal();
-            setTimeout(() => { 
-              inputSenha.style.display = 'block'; 
-              document.getElementById('btn-validar').style.display = 'block'; 
-            }, 500);
-          }, 2000);
-
-        } else {
-          // EXISTE, MAS NÃO TEM PERMISSÃO (HIERARQUIA INSUFICIENTE)
-          animarErro();
-          setarPromptAria(`> Identidade: ${usuarioLogado.nome}.<br>> <span class='text-red-400'>ACESSO REJEITADO:</span> Seu nível hierárquico (${usuarioLogado.role.toUpperCase()}) não atende aos requisitos do ${projetoSelecionado.nivelRotulo}.`);
-        }
-      }
-    }
-
-    inputSenha.addEventListener('keypress', function (e) {
-      if (e.key === 'Enter') processarAutenticacao();
-    });
-
-    // Filtros lógicos
-    function aplicarFiltro(categoria, elementoBotao) {
-      filtroAtual = categoria;
-      document.querySelectorAll('.btn-filtro').forEach(btn => btn.classList.remove('ativo'));
-      elementoBotao.classList.add('ativo');
-      filtrarProjetos();
-    }
-
-    function filtrarProjetos() {
-      const termo = barraBusca.value.toLowerCase();
-      const filtrados = todosOsProjetos.filter(projeto => {
-        const bateCat = filtroAtual === 'Todos' || projeto.categoria === filtroAtual;
-        const bateTermo = projeto.titulo.toLowerCase().includes(termo) || 
-                          projeto.tecnologias.some(t => t.toLowerCase().includes(termo)) || 
-                          projeto.descricao.toLowerCase().includes(termo);
-        return bateCat && bateTermo;
-      });
-      renderizarProjetos(filtrados);
-    }
-
-    barraBusca.addEventListener('input', filtrarProjetos);
-    
-    // Inicialização
-    inicializarFiltros();
-    renderizarProjetos(todosOsProjetos);
-  </script>
 </body>
 </html>
