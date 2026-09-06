@@ -29,7 +29,7 @@
         }
         .input-group {
             margin-bottom: 15px;
-            position: relative; /* Necessário para posicionar o ícone dentro do campo */
+            position: relative;
         }
         .input-group label {
             display: block;
@@ -39,20 +39,29 @@
         .input-group input {
             width: 100%;
             padding: 10px;
-            padding-right: 40px; /* Evita que o texto fique embaixo do ícone */
+            padding-right: 40px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
         }
+        .input-group input.error {
+            border-color: #dc3545;
+        }
         .toggle-password {
             position: absolute;
             right: 10px;
-            top: 32px; /* Alinha verticalmente com o campo de input */
+            top: 32px;
             cursor: pointer;
             background: none;
             border: none;
             font-size: 18px;
             color: #666;
+        }
+        .error-message {
+            color: #dc3545;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
         }
         .btn-auth {
             width: 100%;
@@ -95,6 +104,7 @@
             <label for="senha">Senha</label>
             <input type="password" id="senha" name="senha" required placeholder="Digite sua senha">
             <button type="button" id="togglePassword" class="toggle-password" aria-label="Mostrar ou ocultar senha">👁️</button>
+            <div id="errorMessage" class="error-message">A senha deve ter pelo menos 8 caracteres.</div>
         </div>
 
         <button type="submit" class="btn-auth">Autenticar</button>
@@ -103,18 +113,47 @@
 </div>
 
 <script>
+    // Alternar visibilidade da senha
     const togglePasswordButton = document.querySelector('#togglePassword');
     const passwordInput = document.querySelector('#senha');
 
     togglePasswordButton.addEventListener('click', function () {
-        // Verifica o tipo atual do campo e alterna
         const currentType = passwordInput.getAttribute('type');
         const newType = currentType === 'password' ? 'text' : 'password';
         
         passwordInput.setAttribute('type', newType);
-        
-        // Altera o ícone visualmente para indicar o estado
         this.textContent = newType === 'password' ? '👁️' : '🙈';
+    });
+
+    // Validação do formulário no envio
+    const loginForm = document.querySelector('#loginForm');
+    const errorMessage = document.querySelector('#errorMessage');
+
+    loginForm.addEventListener('submit', function (event) {
+        const senhaValor = passwordInput.value;
+
+        // Verifica se a senha tem menos de 8 caracteres
+        if (senhaValor.length < 8) {
+            // Impede o envio do formulário
+            event.preventDefault();
+            
+            // Adiciona classe de erro no input e exibe a mensagem
+            passwordInput.classList.add('error');
+            errorMessage.style.display = 'block';
+            passwordInput.focus();
+        } else {
+            // Remove o erro caso esteja válido
+            passwordInput.classList.remove('error');
+            errorMessage.style.display = 'none';
+        }
+    });
+
+    // Limpa o erro dinamicamente enquanto o usuário digita uma senha válida
+    passwordInput.addEventListener('input', function () {
+        if (passwordInput.value.length >= 8) {
+            passwordInput.classList.remove('error');
+            errorMessage.style.display = 'none';
+        }
     });
 </script>
 
