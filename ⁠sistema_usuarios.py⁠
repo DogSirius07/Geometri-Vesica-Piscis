@@ -1,0 +1,62 @@
+import hashlib
+import os
+
+class Usuario:
+    def __init__(self, nome, senha_padrao="Mudar123", pergunta_secreta="Qual o nome do seu primeiro pet?", resposta_secreta="rex", tema="Padrao"):
+        self.nome = nome
+        self.salt = os.urandom(16)
+        self.senha_hash = self._gerar_hash(senha_padrao, self.salt)
+        self.pergunta_secreta = pergunta_secreta
+        self.resposta_secreta_hash = self._gerar_hash(resposta_secreta.lower().strip(), self.salt)
+        self.tema = tema
+        self.usuarios_criados = []
+
+    def _gerar_hash(self, texto, salt):
+        return hashlib.pbkdf2_hmac('sha256', texto.encode('utf-8'), salt, 100000)
+
+    def alterar_senha(self, senha_atual, nova_senha):
+        if self._gerar_hash(senha_atual, self.salt) == self.senha_hash:
+            self.senha_hash = self._gerar_hash(nova_senha, self.salt)
+            return True
+        return False
+
+    def alterar_resposta_secreta(self, senha, nova_pergunta, nova_resposta):
+        if self._gerar_hash(senha, self.salt) == self.senha_hash:
+            self.pergunta_secreta = nova_pergunta
+            self.resposta_secreta_hash = self._gerar_hash(nova_resposta.lower().strip(), self.salt)
+            return True
+        return False
+
+    def recuperar_senha(self, resposta_fornecida, nova_senha):
+        if self._gerar_hash(resposta_fornecida.lower().strip(), self.salt) == self.resposta_secreta_hash:
+            self.senha_hash = self._gerar_hash(nova_senha, self.salt)
+            return True
+        return False
+
+    def alterar_tema(self, novo_tema):
+        temas_permitidos = ["Padrao", "Rose Gold", "Escuro", "Claro"]
+        if novo_tema in temas_permitidos:
+            self.tema = novo_tema
+            return True
+        return False
+
+    def adicionar_usuario(self, nome_novo, senha_padrao="Mudar123", tema="Padrao"):
+        novo_usuario = Usuario(nome=nome_novo, senha_padrao=senha_padrao, tema=tema)
+        self.usuarios_criados.append(novo_usuario)
+        return novo_usuario
+
+
+class SistemaGerenciamento:
+    def __init__(self):
+        self.base_usuarios = {}
+
+    def cadastrar_mestre(self, nome, senha, tema="Rose Gold"):
+        usuario = Usuario(nome=nome, senha_padrao=senha, tema=tema)
+        self.base_usuarios[nome] = usuario
+        return usuario
+
+    def autenticar(self, nome, senha):
+        usuario = self.base_usuarios.get(nome)
+        if usuario and usuario._gerar_hash(senha, usuario.salt) == usuario.senha_hash:
+            return usuario
+        return None
