@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecossistema Unificado • Versão Suprema Definitiva</title>
+    <title>Ecossistema Unificado • Versão Blindada</title>
     <style>
         :root {
             --bg: #090d16;
@@ -33,7 +33,7 @@
             padding: 24px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
-        h1, h2, h3 { text-align: center; margin-bottom: 12px; }
+        h2 { text-align: center; margin-bottom: 12px; }
         .brand {
             font-size: 10px;
             text-transform: uppercase;
@@ -129,7 +129,7 @@
 <body>
 
 <div class="container" id="app">
-    <div class="brand">✨ Ecossistema Unificado • Versão Suprema Completa ✨</div>
+    <div class="brand">✨ Ecossistema Unificado • Versão Blindada ✨</div>
     <div id="msg" class="msg"></div>
 
     <!-- TELA DE LOGIN -->
@@ -160,7 +160,6 @@
             <div class="section-box">
                 <h3>Bloco de Notas Inteligente</h3>
                 <textarea id="aria-notas" placeholder="Escreva suas anotações..." oninput="salvarDadosGerais()"></textarea>
-                <span style="font-size: 10px; opacity: 0.6; display: block;">Salvamento automático em tempo real.</span>
             </div>
             <div class="section-box">
                 <h3>Metas e Objetivos</h3>
@@ -190,7 +189,7 @@
             <div class="section-box" style="text-align: center;">
                 <h3>❤️ Projeto Nossa Frequência</h3>
                 <p id="freq-contador" style="font-size: 13px; font-weight: bold; color: var(--accent); margin: 6px 0;"></p>
-                <textarea id="freq-recado" placeholder="Mensagens de conexão e carinho..." oninput="salvarDadosGerais()"></textarea>
+                <textarea id="freq-recado" placeholder="Mensagens de conexão..." oninput="salvarDadosGerais()"></textarea>
             </div>
         </div>
 
@@ -198,7 +197,6 @@
         <div id="tab-sintonia" class="tab-content hidden">
             <div class="section-box">
                 <h3>⚡ Projeto Sintonia</h3>
-                <p style="font-size: 11px; opacity: 0.7; margin-bottom: 8px;">Alinhamento de propósitos e frequências ativas.</p>
                 <textarea id="sintonia-notas" placeholder="Diretrizes de sintonia..." oninput="salvarDadosGerais()"></textarea>
             </div>
         </div>
@@ -260,23 +258,38 @@
         "Rose Gold": { bg: "#fdf2f2", card: "#ffffff", text: "#4a3b3c", accent: "#d4a5a5", border: "#e6c5c5" }
     };
 
-    if (!localStorage.getItem('sistema_supremo_db')) {
-        const bancoInicial = {
-            "admin": {
-                senha: "123",
-                tema: "Midnight Blue",
-                notas: "Bem-vindo ao ecossistema supremo unificado.",
-                metas: ["Organizar módulos", "Validar Galeria e Sintonia"],
-                recado: "Frequência ativa e sincronizada.",
-                sintonia: "Alinhamento mental e propósito em alta.",
-                galeria: [{titulo: "Primeiro Registro", url: ""}],
-                log: "Sessão inicial segura criada."
-            }
-        };
-        localStorage.setItem('sistema_supremo_db', JSON.stringify(bancoInicial));
+    // Garante inicialização limpa do banco de dados no localStorage
+    function obterBanco() {
+        let db = localStorage.getItem('sistema_supremo_db_v2');
+        if (!db) {
+            let inicial = {
+                "admin": {
+                    senha: "123",
+                    tema: "Midnight Blue",
+                    notas: "Sistema inicializado com sucesso.",
+                    metas: ["Testar ecossistema"],
+                    recado: "Conexão ativa.",
+                    sintonia: "Alinhado.",
+                    galeria: [],
+                    log: "Criado em modo seguro."
+                }
+            };
+            localStorage.setItem('sistema_supremo_db_v2', JSON.stringify(inicial));
+            return inicial;
+        }
+        try {
+            return JSON.parse(db);
+        } catch (e) {
+            localStorage.removeItem('sistema_supremo_db_v2');
+            return obterBanco();
+        }
     }
 
-    let usuarioAtual = localStorage.getItem('sistema_supremo_user') || null;
+    function salvarBanco(db) {
+        localStorage.setItem('sistema_supremo_db_v2', JSON.stringify(db));
+    }
+
+    let usuarioAtual = localStorage.getItem('sistema_supremo_user_v2') || null;
     let tipoGeometria = 'flor';
 
     function mudarTema(nomeTema) {
@@ -291,6 +304,7 @@
 
     function mostrarMsg(texto, tipo) {
         let m = document.getElementById('msg');
+        if (!m) return;
         m.className = "msg " + tipo;
         m.innerText = texto;
         setTimeout(() => { if(m.innerText === texto) m.innerText = ""; }, 4000);
@@ -298,9 +312,11 @@
 
     function mudarTela(tela) {
         ['view-login', 'view-dashboard', 'view-cadastro'].forEach(id => {
-            document.getElementById(id).classList.add('hidden');
+            let el = document.getElementById(id);
+            if (el) el.classList.add('hidden');
         });
-        document.getElementById('msg').innerText = "";
+        let m = document.getElementById('msg');
+        if (m) m.innerText = "";
 
         if (tela === 'login') {
             document.getElementById('view-login').classList.remove('hidden');
@@ -317,8 +333,10 @@
     function trocarAba(aba) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        document.getElementById('tab-' + aba).classList.remove('hidden');
-        document.getElementById('tb-' + aba).classList.add('active');
+        let tab = document.getElementById('tab-' + aba);
+        let btn = document.getElementById('tb-' + aba);
+        if (tab) tab.classList.remove('hidden');
+        if (btn) btn.classList.add('active');
         if (aba === 'geometria') desenharPadrao(tipoGeometria);
     }
 
@@ -327,14 +345,14 @@
         let p = document.getElementById('login-pass').value;
 
         if (!u || !p) {
-            mostrarMsg("Preencha o usuário e a senha!", "error");
+            mostrarMsg("Preencha o usuário e a senha corretamente!", "error");
             return;
         }
 
-        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        let db = obterBanco();
 
         if (!db[u]) {
-            mostrarMsg("Este usuário não existe!", "error");
+            mostrarMsg("Usuário não encontrado!", "error");
             return;
         }
 
@@ -344,7 +362,7 @@
         }
 
         usuarioAtual = u;
-        localStorage.setItem('sistema_supremo_user', u);
+        localStorage.setItem('sistema_supremo_user_v2', u);
         mudarTela('dashboard');
     }
 
@@ -357,10 +375,10 @@
             return;
         }
 
-        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        let db = obterBanco();
         
         if (db[u]) {
-            mostrarMsg("Este nome de usuário já está em uso!", "error");
+            mostrarMsg("Este nome de usuário já existe!", "error");
             return;
         }
 
@@ -375,13 +393,17 @@
             log: "Conta criada com sucesso." 
         };
         
-        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
+        salvarBanco(db);
         mostrarMsg("Conta criada com sucesso! Faça login.", "success");
         setTimeout(() => mudarTela('login'), 1200);
     }
 
     function carregarDadosDashboard() {
-        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        let db = obterBanco();
+        if (!usuarioAtual || !db[usuarioAtual]) {
+            fazerLogout();
+            return;
+        }
         let d = db[usuarioAtual];
 
         document.getElementById('dash-title').innerText = "Painel de " + usuarioAtual;
@@ -398,43 +420,46 @@
         let inicio = new Date('2023-01-01');
         let hoje = new Date();
         let dias = Math.floor((hoje - inicio) / (1000 * 60 * 60 * 24));
-        document.getElementById('freq-contador').innerText = `Juntos há ${dias} dias em harmonia ❤️`;
+        let contador = document.getElementById('freq-contador');
+        if (contador) contador.innerText = `Juntos há ${dias} dias em harmonia ❤️`;
 
         trocarAba('aria');
     }
 
     function salvarDadosGerais() {
         if (!usuarioAtual) return;
-        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        let db = obterBanco();
+        if (!db[usuarioAtual]) return;
         db[usuarioAtual].notas = document.getElementById('aria-notas').value;
         db[usuarioAtual].recado = document.getElementById('freq-recado').value;
         db[usuarioAtual].sintonia = document.getElementById('sintonia-notas').value;
-        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
+        salvarBanco(db);
     }
 
     function adicionarMeta() {
         let input = document.getElementById('aria-metainput');
         let val = input.value.trim();
         if (!val) return;
-        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        let db = obterBanco();
         if (!db[usuarioAtual].metas) db[usuarioAtual].metas = [];
         db[usuarioAtual].metas.push(val);
-        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
+        salvarBanco(db);
         input.value = "";
         renderizarMetas();
     }
 
     function removerMeta(idx) {
-        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        let db = obterBanco();
         db[usuarioAtual].metas.splice(idx, 1);
-        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
+        salvarBanco(db);
         renderizarMetas();
     }
 
     function renderizarMetas() {
-        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        let db = obterBanco();
         let metas = db[usuarioAtual].metas || [];
         let container = document.getElementById('aria-metalista');
+        if (!container) return;
         container.innerHTML = "";
         if (metas.length === 0) {
             container.innerHTML = `<p style="font-size:11px; opacity:0.6; text-align:center;">Nenhuma meta registrada.</p>`;
@@ -453,10 +478,10 @@
         let url = document.getElementById('galeria-url').value.trim();
         if (!tit || !url) return;
 
-        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        let db = obterBanco();
         if (!db[usuarioAtual].galeria) db[usuarioAtual].galeria = [];
         db[usuarioAtual].galeria.push({ titulo: tit, url: url });
-        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
+        salvarBanco(db);
 
         document.getElementById('galeria-titulo').value = "";
         document.getElementById('galeria-url').value = "";
@@ -464,16 +489,17 @@
     }
 
     function removerGaleria(idx) {
-        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        let db = obterBanco();
         db[usuarioAtual].galeria.splice(idx, 1);
-        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
+        salvarBanco(db);
         renderizarGaleria();
     }
 
     function renderizarGaleria() {
-        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        let db = obterBanco();
         let itens = db[usuarioAtual].galeria || [];
         let container = document.getElementById('galeria-container');
+        if (!container) return;
         container.innerHTML = "";
         if (itens.length === 0) {
             container.innerHTML = `<p style="font-size:11px; opacity:0.6; text-align:center;">Nenhum registro na galeria.</p>`;
@@ -493,10 +519,11 @@
         for (let i = 0; i < 14; i++) senha += chars.charAt(Math.floor(Math.random() * chars.length));
         document.getElementById('guardiao-senha').value = senha;
         
-        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
-        db[usuarioAtual].log = `Chave segura gerada em ${new Date().toLocaleTimeString()}`;
-        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
-        document.getElementById('guardiao-log').innerText = db[usuarioAtual].log;
+        let db = obterBanco();
+        db[usuarioAtual].log = `Chave gerada em ${new Date().toLocaleTimeString()}`;
+        salvarBanco(db);
+        let logEl = document.getElementById('guardiao-log');
+        if(logEl) logEl.innerText = db[usuarioAtual].log;
     }
 
     function desenharPadrao(tipo) {
@@ -536,22 +563,23 @@
     }
 
     function salvarConfiguracoes() {
-        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        let db = obterBanco();
         let novaS = document.getElementById('cfg-novasenha').value;
         let novoT = document.getElementById('cfg-tema').value;
         if (novaS) db[usuarioAtual].senha = novaS;
         db[usuarioAtual].tema = novoT;
-        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
+        salvarBanco(db);
         mostrarMsg("Configurações salvas com sucesso!", "success");
     }
 
     function fazerLogout() {
         usuarioAtual = null;
-        localStorage.removeItem('sistema_supremo_user');
+        localStorage.removeItem('sistema_supremo_user_v2');
         mudarTela('login');
     }
 
-    if (usuarioAtual && JSON.parse(localStorage.getItem('sistema_supremo_db'))[usuarioAtual]) {
+    let dbCheck = obterBanco();
+    if (usuarioAtual && dbCheck[usuarioAtual]) {
         mudarTela('dashboard');
     } else {
         mudarTela('login');
