@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aria - Sistema Definitivo & Integrado</title>
+    <title>Aria - Ecossistema Completo & Projetos Anteriores</title>
     <style>
         :root {
             --bg: #fdf2f2; --card: #ffffff; --text: #4a3b3c; --btn: #d4a5a5; --border: #e6c5c5;
         }
         * { box-sizing: border-box; }
         body { background-color: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 16px; transition: background-color 0.3s ease, color 0.3s ease; }
-        .card { background-color: var(--card); color: var(--text); padding: 25px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); width: 100%; max-width: 480px; border: 1px solid var(--border); transition: 0.3s ease; max-height: 94vh; overflow-y: auto; }
+        .card { background-color: var(--card); color: var(--text); padding: 25px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); width: 100%; max-width: 520px; border: 1px solid var(--border); transition: 0.3s ease; max-height: 94vh; overflow-y: auto; }
         input, select, textarea { width: 100%; padding: 11px; margin: 6px 0; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; background: rgba(255,255,255,0.95); color: #333; outline: none; }
         input:focus, select:focus, textarea:focus { border-color: var(--btn); box-shadow: 0 0 0 2px rgba(212,165,165,0.2); }
-        textarea { resize: vertical; min-height: 90px; }
+        textarea { resize: vertical; min-height: 80px; }
         .hint { font-size: 11px; opacity: 0.75; margin-bottom: 6px; display: block; font-style: italic; }
         .password-container { position: relative; width: 100%; }
         .toggle-pass { position: absolute; right: 12px; top: 16px; background: none; border: none; cursor: pointer; font-size: 14px; padding: 0; color: #666; }
@@ -29,15 +29,17 @@
         h2 { text-align: center; margin-top: 0; font-weight: 700; font-size: 20px; }
         .brand { text-align: center; font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 10px; opacity: 0.8; font-weight: bold; }
         .project-box { background: rgba(0,0,0,0.02); padding: 14px; border-radius: 8px; margin-top: 12px; border: 1px dashed var(--border); }
-        .tab-menu { display: flex; gap: 4px; margin-bottom: 12px; }
-        .tab-btn { flex: 1; padding: 8px 4px; font-size: 12px; background: rgba(0,0,0,0.04); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; font-weight: bold; color: inherit; text-align: center; }
+        .tab-menu { display: flex; gap: 3px; margin-bottom: 12px; flex-wrap: wrap; }
+        .tab-btn { flex: 1; min-width: 75px; padding: 8px 4px; font-size: 11px; background: rgba(0,0,0,0.04); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; font-weight: bold; color: inherit; text-align: center; }
         .tab-btn.active { background-color: var(--btn); color: white; border-color: var(--btn); }
+        .item-lista { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.7); padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; border: 1px solid var(--border); font-size: 13px; }
+        .item-lista button { background: none; border: none; color: #ff3b30; cursor: pointer; font-weight: bold; font-size: 14px; padding: 0; }
     </style>
 </head>
 <body>
 
 <div class="card" id="app">
-    <div class="brand">✨ Aria • Sistema Definitivo ✨</div>
+    <div class="brand">✨ Aria • Ecossistema Completo ✨</div>
     <div id="msg" class="msg"></div>
 
     <!-- TELA DE LOGIN -->
@@ -56,53 +58,67 @@
         <a onclick="mudarTela('cadastro')">Criar nova conta</a>
     </div>
 
-    <!-- PAINEL PRINCIPAL (DASHBOARD COMPLETO) -->
+    <!-- PAINEL PRINCIPAL (DASHBOARD COM TODOS OS PROJETOS ANTERIORES E NOVOS) -->
     <div id="view-dashboard" class="hidden">
         <h2 id="dash-title">Painel</h2>
         <p id="dash-tema-txt" style="text-align: center; font-size: 12px; opacity: 0.8; margin-bottom: 10px;"></p>
         
-        <!-- ABAS DE NAVEGAÇÃO -->
+        <!-- ABAS DE NAVEGAÇÃO DOS PROJETOS -->
         <div class="tab-menu">
             <button class="tab-btn active" id="btn-geral" onclick="mudarAba('geral')">Geral</button>
             <button class="tab-btn" id="btn-notas" onclick="mudarAba('notas')">Notas</button>
+            <button class="tab-btn" id="btn-tarefas" onclick="mudarAba('tarefas')">Tarefas</button>
             <button class="tab-btn" id="btn-casal" onclick="mudarAba('casal')">Casal ❤️</button>
-            <button class="tab-btn" id="btn-dicas" onclick="mudarAba('dicas')">Segurança 💡</button>
+            <button class="tab-btn" id="btn-dicas" onclick="mudarAba('dicas')">Guia 💡</button>
         </div>
 
         <!-- ABA 1: GERAL -->
         <div id="tab-geral" class="tab-content">
             <div class="project-box">
-                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Status do Projeto:</p>
+                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Status do Ecossistema:</p>
                 <p id="dash-info" style="margin: 0; font-size: 12px; opacity: 0.9;"></p>
             </div>
         </div>
 
-        <!-- ABA 2: NOTAS / TAREFAS -->
+        <!-- ABA 2: NOTAS (Projeto Anterior) -->
         <div id="tab-notas" class="tab-content hidden">
             <div class="project-box">
-                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Bloco de Notas & Tarefas:</p>
-                <textarea id="txt-notas" placeholder="Escreva suas anotações aqui..." oninput="salvarDadosTempoReal()"></textarea>
+                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Bloco de Notas Rápidas:</p>
+                <textarea id="txt-notas" placeholder="Escreva suas anotações livres..." oninput="salvarDadosTempoReal()"></textarea>
                 <span class="hint">Salvamento automático ativo.</span>
             </div>
         </div>
 
-        <!-- ABA 3: CASAL -->
+        <!-- ABA 3: TAREFAS / CHECKLIST (Projeto Anterior Resgatado) -->
+        <div id="tab-tarefas" class="tab-content hidden">
+            <div class="project-box">
+                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Lista de Tarefas & Metas:</p>
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="nova-tarefa" placeholder="Adicionar nova tarefa..." style="margin: 0;">
+                    <button class="main-btn" onclick="adicionarTarefa()" style="margin: 0; width: 42px;">+</button>
+                </div>
+                <div id="lista-tarefas-container" style="margin-top: 10px; max-height: 120px; overflow-y: auto;"></div>
+            </div>
+        </div>
+
+        <!-- ABA 4: CASAL - Contador e Recados -->
         <div id="tab-casal" class="tab-content hidden">
             <div class="project-box" style="text-align: center;">
                 <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Conexão Especial</p>
                 <p id="contador-dias" style="font-size: 14px; font-weight: bold; margin: 8px 0;"></p>
-                <input type="text" id="recado-amor" placeholder="Deixe um recado fofo..." oninput="salvarDadosTempoReal()">
-                <span class="hint">Sincronizado localmente.</span>
+                <input type="text" id="recado-amor" placeholder="Deixe um recado carinhoso..." oninput="salvarDadosTempoReal()">
+                <span class="hint">Sincronizado no banco local.</span>
             </div>
         </div>
 
-        <!-- ABA 4: DICAS E SEGURANÇA -->
+        <!-- ABA 5: GUIA E SEGURANÇA -->
         <div id="tab-dicas" class="tab-content hidden">
             <div class="project-box" style="font-size: 12px; line-height: 1.4;">
-                <p style="margin: 0 0 6px 0; font-weight: bold;">🛡️ Boas Práticas:</p>
+                <p style="margin: 0 0 6px 0; font-weight: bold;">🛡️ Boas Práticas dos Projetos:</p>
                 <ul style="padding-left: 15px; margin: 0;">
-                    <li>Mantenha suas respostas secretas em letras minúsculas.</li>
-                    <li>Utilize o botão de olho para validar senhas antes de salvar.</li>
+                    <li>Respostas secretas em minúsculas e sem acentos.</li>
+                    <li>Utilize o botão de olho para validar senhas.</li>
+                    <li>Todos os dados salvam direto no seu navegador.</li>
                 </ul>
             </div>
         </div>
@@ -218,15 +234,33 @@
         "Light Minimal": { bg: "#f8f9fa", card: "#ffffff", text: "#212529", btn: "#495057", border: "#dee2e6" }
     };
 
-    if (!localStorage.getItem('aria_sistema_db')) {
+    if (!localStorage.getItem('aria_ecossistema_db')) {
         const bancoInicial = {
-            "admin": { senha: "123", pergunta: "Qual o seu pet?", resposta: "rex", tema: "Rose Gold", info: "Painel Principal / Administrador", notas: "", recado: "" },
-            "namorada": { senha: "123", pergunta: "Nossa data especial?", resposta: "amor", tema: "Rose Gold", info: "Espaço compartilhado dos projetos do casal", notas: "", recado: "" }
+            "admin": { 
+                senha: "123", 
+                pergunta: "Qual o seu pet?", 
+                resposta: "rex", 
+                tema: "Rose Gold", 
+                info: "Painel Principal / Administrador", 
+                notas: "", 
+                recado: "",
+                tarefas: ["Configurar ecossistema", "Testar projetos anteriores"] 
+            },
+            "namorada": { 
+                senha: "123", 
+                pergunta: "Nossa data especial?", 
+                resposta: "amor", 
+                tema: "Rose Gold", 
+                info: "Espaço compartilhado dos projetos do casal", 
+                notas: "", 
+                recado: "",
+                tarefas: ["Verificar recados", "Curtir o dia"] 
+            }
         };
-        localStorage.setItem('aria_sistema_db', JSON.stringify(bancoInicial));
+        localStorage.setItem('aria_ecossistema_db', JSON.stringify(bancoInicial));
     }
 
-    let usuarioLogado = localStorage.getItem('aria_sistema_user') || null;
+    let usuarioLogado = localStorage.getItem('aria_ecossistema_user') || null;
     let usuarioRecuperando = "";
 
     function aplicarTema(nome) {
@@ -273,16 +307,18 @@
             aplicarTema("Rose Gold");
         } else if (tela === 'dashboard') {
             document.getElementById('view-dashboard').classList.remove('hidden');
-            let db = JSON.parse(localStorage.getItem('aria_sistema_db'));
+            let db = JSON.parse(localStorage.getItem('aria_ecossistema_db'));
             let uData = db[usuarioLogado];
             
             document.getElementById('dash-title').innerText = "Olá, " + usuarioLogado;
             document.getElementById('dash-tema-txt').innerText = "Tema: " + uData.tema;
-            document.getElementById('dash-info').innerText = uData.info || "Ambiente seguro integrado.";
+            document.getElementById('dash-info').innerText = uData.info || "Ambiente integrado ativo.";
             
             document.getElementById('txt-notas').value = uData.notas || "";
             document.getElementById('recado-amor').value = uData.recado || "";
             
+            renderizarTarefas();
+
             let inicioCasal = new Date('2023-01-01');
             let hoje = new Date();
             let diffDias = Math.floor((hoje - inicioCasal) / (1000 * 60 * 60 * 24));
@@ -291,7 +327,7 @@
             aplicarTema(uData.tema);
             mudarAba('geral');
         } else if (tela === 'config') {
-            let db = JSON.parse(localStorage.getItem('aria_sistema_db'));
+            let db = JSON.parse(localStorage.getItem('aria_ecossistema_db'));
             let uData = db[usuarioLogado];
             document.getElementById('cfg-pergunta').value = uData.pergunta;
             document.getElementById('cfg-resposta').value = "";
@@ -317,7 +353,7 @@
             document.getElementById('cad-pergunta').value = "";
             document.getElementById('cad-resposta').value = "";
             document.getElementById('cad-voltar').setAttribute("onclick", "mudarTela('dashboard')");
-            let db = JSON.parse(localStorage.getItem('aria_sistema_db'));
+            let db = JSON.parse(localStorage.getItem('aria_ecossistema_db'));
             aplicarTema(db[usuarioLogado].tema);
             document.getElementById('view-cadastro').classList.remove('hidden');
         }
@@ -325,22 +361,62 @@
 
     function salvarDadosTempoReal() {
         if (!usuarioLogado) return;
-        let db = JSON.parse(localStorage.getItem('aria_sistema_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_db'));
         if (db[usuarioLogado]) {
             db[usuarioLogado].notas = document.getElementById('txt-notas').value;
             db[usuarioLogado].recado = document.getElementById('recado-amor').value;
-            localStorage.setItem('aria_sistema_db', JSON.stringify(db));
+            localStorage.setItem('aria_ecossistema_db', JSON.stringify(db));
         }
+    }
+
+    function adicionarTarefa() {
+        let inputT = document.getElementById('nova-tarefa');
+        let texto = inputT.value.trim();
+        if (!texto) return;
+
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_db'));
+        if (!db[usuarioLogado].tarefas) db[usuarioLogado].tarefas = [];
+        
+        db[usuarioLogado].tarefas.push(texto);
+        localStorage.setItem('aria_ecossistema_db', JSON.stringify(db));
+        inputT.value = "";
+        renderizarTarefas();
+    }
+
+    function removerTarefa(index) {
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_db'));
+        db[usuarioLogado].tarefas.splice(index, 1);
+        localStorage.setItem('aria_ecossistema_db', JSON.stringify(db));
+        renderizarTarefas();
+    }
+
+    function renderizarTarefas() {
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_db'));
+        let tarefas = db[usuarioLogado].tarefas || [];
+        let container = document.getElementById('lista-tarefas-container');
+        container.innerHTML = "";
+
+        if (tarefas.length === 0) {
+            container.innerHTML = `<p style="font-size: 12px; opacity: 0.7; text-align: center; margin: 5px 0;">Nenhuma tarefa cadastrada.</p>`;
+            return;
+        }
+
+        tarefas.forEach((t, i) => {
+            let div = document.createElement('div');
+            div.className = "item-lista";
+            div.innerHTML = `<span>${t}</span><button onclick="removerTarefa(${i})">×</button>`;
+            container.appendChild(div);
+        });
     }
 
     function fazerLogin() {
         let u = document.getElementById('login-user').value.trim();
         let p = document.getElementById('login-pass').value;
-        let db = JSON.parse(localStorage.getItem('aria_sistema_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_db'));
 
         if (db[u] && db[u].senha === p) {
             usuarioLogado = u;
-            localStorage.setItem('aria_sistema_user', u);
+            localStorage.setItem('aria_ecossistema_user', u);
             mudarTela('dashboard');
         } else {
             mostrarMsg("Usuário ou senha incorretos!", "error");
@@ -348,7 +424,7 @@
     }
 
     function salvarConfiguracoes() {
-        let db = JSON.parse(localStorage.getItem('aria_sistema_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_db'));
         let senhaNova = document.getElementById('cfg-senha').value;
         let pNova = document.getElementById('cfg-pergunta').value;
         let rNova = document.getElementById('cfg-resposta').value.trim().toLowerCase();
@@ -359,14 +435,14 @@
         if (rNova) db[usuarioLogado].resposta = rNova;
         db[usuarioLogado].tema = tNovo;
 
-        localStorage.setItem('aria_sistema_db', JSON.stringify(db));
+        localStorage.setItem('aria_ecossistema_db', JSON.stringify(db));
         mostrarMsg("Alterações salvas com sucesso!", "success");
         setTimeout(() => mudarTela('dashboard'), 1000);
     }
 
     function buscarPergunta() {
         let u = document.getElementById('esq-user').value.trim();
-        let db = JSON.parse(localStorage.getItem('aria_sistema_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_db'));
         if (db[u]) {
             usuarioRecuperando = u;
             document.getElementById('lbl-pergunta').innerText = "Pergunta: " + db[u].pergunta;
@@ -380,11 +456,11 @@
     function redefinirSenha() {
         let resp = document.getElementById('esq-resposta').value.trim().toLowerCase();
         let novaS = document.getElementById('esq-novasenha').value;
-        let db = JSON.parse(localStorage.getItem('aria_sistema_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_db'));
 
         if (db[usuarioRecuperando].resposta === resp) {
             db[usuarioRecuperando].senha = novaS;
-            localStorage.setItem('aria_sistema_db', JSON.stringify(db));
+            localStorage.setItem('aria_ecossistema_db', JSON.stringify(db));
             mostrarMsg("Senha redefinida com sucesso!", "success");
             setTimeout(() => mudarTela('login'), 1500);
         } else {
@@ -404,14 +480,14 @@
             return;
         }
 
-        let db = JSON.parse(localStorage.getItem('aria_sistema_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_db'));
         if (db[u]) {
             mostrarMsg("Este usuário já existe!", "error");
             return;
         }
 
-        db[u] = { senha: p, pergunta: perg, resposta: resp, tema: tema, info: "Perfil adicionado.", notas: "", recado: "" };
-        localStorage.setItem('aria_sistema_db', JSON.stringify(db));
+        db[u] = { senha: p, pergunta: perg, resposta: resp, tema: tema, info: "Perfil adicionado.", notas: "", recado: "", tarefas: [] };
+        localStorage.setItem('aria_ecossistema_db', JSON.stringify(db));
         mostrarMsg("Conta criada com sucesso!", "success");
         
         setTimeout(() => {
@@ -422,11 +498,11 @@
 
     function fazerLogout() {
         usuarioLogado = null;
-        localStorage.removeItem('aria_sistema_user');
+        localStorage.removeItem('aria_ecossistema_user');
         mudarTela('login');
     }
 
-    if (usuarioLogado && JSON.parse(localStorage.getItem('aria_sistema_db'))[usuarioLogado]) {
+    if (usuarioLogado && JSON.parse(localStorage.getItem('aria_ecossistema_db'))[usuarioLogado]) {
         mudarTela('dashboard');
     } else {
         mudarTela('login');
