@@ -3,38 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aria - Sistema Unificado Completo</title>
+    <title>Aria - Sistema Unificado Completo & Projetos Antigos</title>
     <style>
         :root {
             --bg: #fdf2f2; --card: #ffffff; --text: #4a3b3c; --btn: #d4a5a5; --border: #e6c5c5;
         }
         body { background-color: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; transition: background-color 0.3s ease, color 0.3s ease; }
-        .card { background-color: var(--card); color: var(--text); padding: 30px; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); width: 100%; max-width: 480px; box-sizing: border-box; border: 1px solid var(--border); transition: 0.3s ease; max-height: 90vh; overflow-y: auto; }
-        input, select, textarea { width: 100%; padding: 12px; margin: 6px 0 4px 0; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-size: 16px; background: rgba(255,255,255,0.9); color: #333; }
-        textarea { resize: vertical; min-height: 80px; }
-        .hint { font-size: 12px; opacity: 0.75; margin-bottom: 10px; display: block; font-style: italic; }
+        .card { background-color: var(--card); color: var(--text); padding: 25px; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); width: 100%; max-width: 500px; box-sizing: border-box; border: 1px solid var(--border); transition: 0.3s ease; max-height: 92vh; overflow-y: auto; }
+        input, select, textarea { width: 100%; padding: 10px; margin: 6px 0 4px 0; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-size: 15px; background: rgba(255,255,255,0.9); color: #333; }
+        textarea { resize: vertical; min-height: 70px; }
+        .hint { font-size: 11px; opacity: 0.8; margin-bottom: 8px; display: block; font-style: italic; }
         .password-container { position: relative; width: 100%; }
-        .password-container input { margin-bottom: 4px; }
-        .toggle-pass { position: absolute; right: 12px; top: 14px; background: none; border: none; cursor: pointer; font-size: 14px; width: auto; padding: 0; margin: 0; color: #666; font-weight: normal; }
-        button.main-btn { background-color: var(--btn); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 10px; transition: 0.2s; }
+        .password-container input { margin-bottom: 2px; }
+        .toggle-pass { position: absolute; right: 12px; top: 12px; background: none; border: none; cursor: pointer; font-size: 14px; width: auto; padding: 0; margin: 0; color: #666; }
+        button.main-btn { background-color: var(--btn); color: white; border: none; padding: 11px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 15px; margin-top: 8px; transition: 0.2s; }
         button.main-btn:active { opacity: 0.8; }
-        .msg { font-size: 14px; text-align: center; margin-bottom: 12px; min-height: 20px; font-weight: 500; }
+        .msg { font-size: 13px; text-align: center; margin-bottom: 10px; min-height: 18px; font-weight: 500; }
         .error { color: #ff3b30; }
         .success { color: #34c759; }
-        a { color: var(--btn); text-decoration: none; display: block; text-align: center; margin-top: 15px; font-size: 14px; cursor: pointer; font-weight: 500; }
+        a { color: var(--btn); text-decoration: none; display: block; text-align: center; margin-top: 12px; font-size: 13px; cursor: pointer; font-weight: 500; }
         .hidden { display: none; }
-        h2 { text-align: center; margin-top: 0; font-weight: 700; letter-spacing: -0.5px; }
-        .brand { text-align: center; font-size: 13px; text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 8px; opacity: 0.8; font-weight: bold; }
-        .project-box { background: rgba(0,0,0,0.03); padding: 15px; border-radius: 8px; margin-top: 15px; border: 1px dashed var(--border); }
-        .tab-menu { display: flex; gap: 5px; margin-bottom: 15px; }
-        .tab-btn { flex: 1; padding: 8px; font-size: 13px; background: rgba(0,0,0,0.05); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; font-weight: bold; color: inherit; }
+        h2 { text-align: center; margin-top: 0; font-weight: 700; font-size: 20px; }
+        .brand { text-align: center; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; opacity: 0.8; font-weight: bold; }
+        .project-box { background: rgba(0,0,0,0.02); padding: 12px; border-radius: 8px; margin-top: 10px; border: 1px dashed var(--border); }
+        .tab-menu { display: flex; gap: 4px; margin-bottom: 12px; flex-wrap: wrap; }
+        .tab-btn { flex: 1; padding: 7px 4px; font-size: 12px; background: rgba(0,0,0,0.05); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; font-weight: bold; color: inherit; text-align: center; }
         .tab-btn.active { background-color: var(--btn); color: white; }
     </style>
 </head>
 <body>
 
 <div class="card" id="app">
-    <div class="brand">✨ Aria & Projetos Compartilhados ✨</div>
+    <div class="brand">✨ Aria & Projetos Completos ✨</div>
     <div id="msg" class="msg"></div>
 
     <!-- TELA DE LOGIN -->
@@ -46,56 +46,69 @@
             <input type="password" id="login-pass" placeholder="Sua senha">
             <button type="button" class="toggle-pass" onclick="alternarVisibilidade('login-pass', this)">👁️</button>
         </div>
-        <span class="hint">💡 Dica: A senha inicial padrão costuma ser 123.</span>
+        <span class="hint">💡 Dica de ouro: Senha padrão inicial é 123. Use o "👁️" para conferir se digitou certinho!</span>
 
         <button class="main-btn" onclick="fazerLogin()">Acessar Painel</button>
         <a onclick="mudarTela('esqueci')">Esqueci minha senha / Resposta</a>
         <a onclick="mudarTela('cadastro')">Criar nova conta</a>
     </div>
 
-    <!-- PAINEL PRINCIPAL (DASHBOARD UNIFICADO E COMPLETO) -->
+    <!-- PAINEL PRINCIPAL (DASHBOARD COM TODAS AS ABAS) -->
     <div id="view-dashboard" class="hidden">
         <h2 id="dash-title">Painel</h2>
-        <p id="dash-tema-txt" style="text-align: center; font-size: 14px; opacity: 0.8; margin-bottom: 10px;"></p>
+        <p id="dash-tema-txt" style="text-align: center; font-size: 13px; opacity: 0.8; margin-bottom: 8px;"></p>
         
-        <!-- ABAS DE NAVEGAÇÃO DOS PROJETOS ANTIGOS + NOVOS -->
+        <!-- MENU DE ABAS (Projetos Novos + Antigos Reintegrados) -->
         <div class="tab-menu">
             <button class="tab-btn active" id="btn-tab-geral" onclick="mudarAba('geral')">Geral</button>
-            <button class="tab-btn" id="btn-tab-notas" onclick="mudarAba('notas')">Notas / Tarefas</button>
+            <button class="tab-btn" id="btn-tab-notas" onclick="mudarAba('notas')">Notas</button>
             <button class="tab-btn" id="btn-tab-casal" onclick="mudarAba('casal')">Casal ❤️</button>
+            <button class="tab-btn" id="btn-tab-dicas" onclick="mudarAba('dicas')">Dicas 💡</button>
         </div>
 
         <!-- ABA 1: GERAL -->
         <div id="tab-geral" class="tab-content">
             <div class="project-box">
-                <p style="margin: 0 0 5px 0; font-weight: bold; font-size: 14px;">Espaço Integrado (Projetos & Namorada):</p>
-                <p id="dash-info" style="margin: 0; font-size: 13px; opacity: 0.9;"></p>
+                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Status do Espaço Unificado:</p>
+                <p id="dash-info" style="margin: 0; font-size: 12px; opacity: 0.9;"></p>
             </div>
         </div>
 
-        <!-- ABA 2: NOTAS / TAREFAS (Recurso antigo resgatado) -->
+        <!-- ABA 2: NOTAS / TAREFAS (Projeto Antigo) -->
         <div id="tab-notas" class="tab-content hidden">
             <div class="project-box">
-                <p style="margin: 0 0 5px 0; font-weight: bold; font-size: 13px;">Bloco de Notas & Lembretes Rápidos:</p>
-                <textarea id="txt-notas" placeholder="Escreva ideias, lembretes ou tarefas compartilhadas..." oninput="salvarNotasTempoReal()"></textarea>
+                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Bloco de Notas & Tarefas Rápidas:</p>
+                <textarea id="txt-notas" placeholder="Escreva ideias, listas ou compromissos..." oninput="salvarNotasTempoReal()"></textarea>
                 <span class="hint">Salva automaticamente conforme você digita!</span>
             </div>
         </div>
 
-        <!-- ABA 3: CASAL (Recurso antigo resgatado - Contador de Dias / Mensagens) -->
+        <!-- ABA 3: CASAL - Contador e Recados (Projeto Antigo) -->
         <div id="tab-casal" class="tab-content hidden">
             <div class="project-box" style="text-align: center;">
-                <p style="margin: 0 0 5px 0; font-weight: bold; font-size: 13px;">Nossa Conexão Especial</p>
-                <p id="contador-dias" style="font-size: 15px; font-weight: bold; margin: 10px 0;"></p>
-                <input type="text" id="recado-amor" placeholder="Deixe um recado fofo..." oninput="salvarRecadoTempoReal()">
-                <span class="hint">Tudo sincronizado no banco local.</span>
+                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Espaço do Casal</p>
+                <p id="contador-dias" style="font-size: 14px; font-weight: bold; margin: 8px 0;"></p>
+                <input type="text" id="recado-amor" placeholder="Deixe um recado carinhoso..." oninput="salvarRecadoTempoReal()">
+                <span class="hint">Sincronizado em tempo real para os dois.</span>
             </div>
         </div>
 
-        <hr style="border: 0; border-top: 1px solid var(--border); margin: 15px 0;">
+        <!-- ABA 4: DICAS PARA EVITAR PERDER SENHAS (Seu pedido inicial) -->
+        <div id="tab-dicas" class="tab-content hidden">
+            <div class="project-box" style="font-size: 12px; line-height: 1.4;">
+                <p style="margin: 0 0 6px 0; font-weight: bold;">🛡️ Guia Definitivo Antiesquecimento:</p>
+                <ul style="padding-left: 15px; margin: 0;">
+                    <li><b>Respostas Secretas:</b> Use sempre letras minúsculas e sem acentos (ex: <i>rex</i>, <i>azul</i>, <i>amor</i>). Evita erros de digitação futuros.</li>
+                    <li><b>Padrão de Senhas:</b> Escolha uma palavra familiar do seu dia a dia combinada com um número fácil.</li>
+                    <li><b>O Botão 👁️:</b> Sempre utilize o ícone de olho nos campos de senha antes de clicar em salvar para confirmar que não digitou nenhuma letra errada.</li>
+                </ul>
+            </div>
+        </div>
+
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 12px 0;">
         <button class="main-btn" onclick="mudarTela('config')">Minhas Configurações (Senha, Resposta e Tema)</button>
         <button class="main-btn" onclick="mudarTela('novo-usuario')" style="background-color: #4a3b3c; color: #fff;">Adicionar Novo Usuário</button>
-        <a onclick="fazerLogout()" style="color: #ff3b30; margin-top: 20px;">Sair da Conta</a>
+        <a onclick="fazerLogout()" style="color: #ff3b30; margin-top: 15px;">Sair da Conta</a>
     </div>
 
     <!-- CONFIGURAÇÕES INDIVIDUAIS -->
@@ -107,18 +120,17 @@
             <input type="password" id="cfg-senha" placeholder="Deixe em branco para manter">
             <button type="button" class="toggle-pass" onclick="alternarVisibilidade('cfg-senha', this)">👁️</button>
         </div>
-        <span class="hint">💡 Dica de Senha: Prefira algo simples que você usa no dia a dia.</span>
+        <span class="hint">💡 Dica: Prefira algo simples que você use no dia a dia.</span>
 
         <label>Pergunta Secreta:</label>
         <input type="text" id="cfg-pergunta" placeholder="Ex: Qual o nome do seu primeiro pet?">
-        <span class="hint">💡 Dica: Escolha uma pergunta cuja resposta só você saiba.</span>
         
         <label>Nova Resposta Secreta:</label>
         <div class="password-container">
             <input type="password" id="cfg-resposta" placeholder="Digite para alterar">
             <button type="button" class="toggle-pass" onclick="alternarVisibilidade('cfg-resposta', this)">👁️</button>
         </div>
-        <span class="hint">💡 Dica de Resposta: Escreva tudo em letras minúsculas (ex: "rex").</span>
+        <span class="hint">💡 Dica: Escreva tudo em minúsculas (ex: "rex") para facilitar a recuperação.</span>
         
         <label>Tema Visual:</label>
         <select id="cfg-tema" onchange="aplicarTema(this.value)">
@@ -129,7 +141,6 @@
             <option value="Sunset Luxury">Sunset Luxury</option>
             <option value="Light Minimal">Light Minimal</option>
         </select>
-        <span class="hint">💡 O tema muda na mesma hora!</span>
 
         <button class="main-btn" onclick="salvarConfiguracoes()">Salvar Alterações</button>
         <a onclick="mudarTela('dashboard')">Voltar ao Painel</a>
@@ -139,8 +150,6 @@
     <div id="view-esqueci" class="hidden">
         <h2>Recuperação</h2>
         <input type="text" id="esq-user" placeholder="Digite seu nome de usuário">
-        <span class="hint">💡 Dica: Digite exatamente o mesmo nome de usuário.</span>
-        
         <button class="main-btn" onclick="buscarPergunta()">Avançar</button>
         <a onclick="mudarTela('login')">Voltar ao Login</a>
     </div>
@@ -148,20 +157,19 @@
     <!-- RESPONDER PERGUNTA -->
     <div id="view-pergunta" class="hidden">
         <h2>Recuperação de Senha</h2>
-        <p id="lbl-pergunta" style="font-weight: 500; text-align: center; margin-bottom: 5px;"></p>
+        <p id="lbl-pergunta" style="font-weight: 500; text-align: center; margin-bottom: 5px; font-size: 14px;"></p>
         
         <div class="password-container">
             <input type="password" id="esq-resposta" placeholder="Sua resposta secreta">
             <button type="button" class="toggle-pass" onclick="alternarVisibilidade('esq-resposta', this)">👁️</button>
         </div>
-        <span class="hint">💡 Dica: Resposta curta, sem maiúsculas ou espaços.</span>
+        <span class="hint">💡 Lembre-se: sem letras maiúsculas e sem espaços.</span>
         
         <label>Defina sua nova senha:</label>
         <div class="password-container">
             <input type="password" id="esq-novasenha" placeholder="Nova senha">
             <button type="button" class="toggle-pass" onclick="alternarVisibilidade('esq-novasenha', this)">👁️</button>
         </div>
-        <span class="hint">💡 Dica: Anote ou memorize bem.</span>
 
         <button class="main-btn" onclick="redefinirSenha()">Redefinir Senha</button>
         <a onclick="mudarTela('login')">Voltar ao Login</a>
@@ -172,23 +180,21 @@
         <h2 id="cad-titulo">Criar Conta</h2>
         
         <input type="text" id="cad-user" placeholder="Nome de usuário">
-        <span class="hint">💡 Dica: Use um apelido curto sem espaços.</span>
         
         <label>Senha:</label>
         <div class="password-container">
             <input type="password" id="cad-pass" placeholder="Senha inicial">
             <button type="button" class="toggle-pass" onclick="alternarVisibilidade('cad-pass', this)">👁️</button>
         </div>
-        <span class="hint">💡 Dica: Senhas fáceis como 123 evitam bloqueios.</span>
+        <span class="hint">💡 Dica: 123 é ótimo para testes rápidos sem dor de cabeça.</span>
 
         <input type="text" id="cad-pergunta" placeholder="Pergunta secreta (ex: Qual seu pet?)">
-        <span class="hint">💡 Dica: Crie uma pergunta única.</span>
 
         <div class="password-container">
             <input type="password" id="cad-resposta" placeholder="Resposta secreta (ex: rex)">
             <button type="button" class="toggle-pass" onclick="alternarVisibilidade('cad-resposta', this)">👁️</button>
         </div>
-        <span class="hint">💡 Dica de Resposta: Tudo minúsculo para facilitar.</span>
+        <span class="hint">💡 Resposta toda em minúsculo para evitar bloqueios!</span>
         
         <label>Tema Visual:</label>
         <select id="cad-tema" onchange="aplicarTema(this.value)">
@@ -199,7 +205,6 @@
             <option value="Sunset Luxury">Sunset Luxury</option>
             <option value="Light Minimal">Light Minimal</option>
         </select>
-        <span class="hint">💡 Escolha seu tema favorito.</span>
 
         <button class="main-btn" onclick="salvarNovoUsuario()">Cadastrar</button>
         <a id="cad-voltar" onclick="mudarTela('login')">Voltar ao Login</a>
@@ -276,11 +281,11 @@
             document.getElementById('dash-tema-txt').innerText = "Tema ativo: " + uData.tema;
             document.getElementById('dash-info').innerText = uData.info || "Projeto unificado ativo.";
             
-            // Carregar dados antigos resgatados
+            // Carregar dados antigos de notas e recados
             document.getElementById('txt-notas').value = uData.notas || "";
             document.getElementById('recado-amor').value = uData.recado || "";
             
-            // Contador de dias simples (simulado a partir de uma data fixa do casal)
+            // Contador de dias simples
             let inicioCasal = new Date('2023-01-01');
             let hoje = new Date();
             let diffDias = Math.floor((hoje - inicioCasal) / (1000 * 60 * 60 * 24));
@@ -408,7 +413,7 @@
         let tema = document.getElementById('cad-tema').value;
 
         if (!u || !p || !perg || !resp) {
-            mostrarMsg("Preencha todos os campos sigilosos!", "error");
+            mostrarMsg("Preencha todos os campos!", "error");
             return;
         }
 
