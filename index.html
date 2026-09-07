@@ -3,50 +3,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aria • Ecossistema Completo Absoluto</title>
+    <title>Aria • Ecossistema Definitivo (14:00 - 22:30)</title>
     <style>
         :root {
-            --bg: #fdf2f2; --card: #ffffff; --text: #4a3b3c; --btn: #d4a5a5; --border: #e6c5c5;
+            --bg: #0f172a;
+            --card: #1e293b;
+            --text: #e2e8f0;
+            --btn: #3b82f6;
+            --border: #334155;
         }
         * { box-sizing: border-box; }
-        body { background-color: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 16px; transition: background-color 0.3s ease, color 0.3s ease; }
-        .card { background-color: var(--card); color: var(--text); padding: 24px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); width: 100%; max-width: 540px; border: 1px solid var(--border); transition: 0.3s ease; max-height: 94vh; overflow-y: auto; }
-        input, select, textarea { width: 100%; padding: 11px; margin: 6px 0; border: 1px solid var(--border); border-radius: 8px; font-size: 15px; background: rgba(255,255,255,0.95); color: #333; outline: none; }
-        input:focus, select:focus, textarea:focus { border-color: var(--btn); box-shadow: 0 0 0 2px rgba(212,165,165,0.2); }
-        textarea { resize: vertical; min-height: 80px; }
-        .hint { font-size: 11px; opacity: 0.75; margin-bottom: 6px; display: block; font-style: italic; }
-        .password-container { position: relative; width: 100%; }
-        .toggle-pass { position: absolute; right: 12px; top: 16px; background: none; border: none; cursor: pointer; font-size: 14px; padding: 0; color: #666; }
-        button.main-btn { background-color: var(--btn); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 15px; margin-top: 10px; transition: opacity 0.2s; }
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .card {
+            background-color: var(--card);
+            color: var(--text);
+            padding: 24px;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            width: 100%;
+            max-width: 580px;
+            border: 1px solid var(--border);
+            max-height: 95vh;
+            overflow-y: auto;
+            transition: 0.3s ease;
+        }
+        input, select, textarea {
+            width: 100%;
+            padding: 11px;
+            margin: 6px 0;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            color: inherit;
+            outline: none;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--btn);
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .hint {
+            font-size: 11px;
+            opacity: 0.75;
+            margin-bottom: 6px;
+            display: block;
+            font-style: italic;
+        }
+        .password-container {
+            position: relative;
+            width: 100%;
+        }
+        .toggle-pass {
+            position: absolute;
+            right: 12px;
+            top: 16px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 14px;
+            padding: 0;
+            color: inherit;
+            opacity: 0.7;
+        }
+        button.main-btn {
+            background-color: var(--btn);
+            color: white;
+            border: none;
+            padding: 12px;
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 15px;
+            margin-top: 10px;
+            transition: opacity 0.2s;
+        }
         button.main-btn:hover { opacity: 0.9; }
         button.main-btn:active { opacity: 0.8; }
-        .msg { font-size: 13px; text-align: center; margin-bottom: 10px; min-height: 18px; font-weight: 600; }
+        .msg {
+            font-size: 13px;
+            text-align: center;
+            margin-bottom: 10px;
+            min-height: 18px;
+            font-weight: 600;
+        }
         .error { color: #ff3b30; }
         .success { color: #34c759; }
-        a { color: var(--btn); text-decoration: none; display: block; text-align: center; margin-top: 14px; font-size: 13px; cursor: pointer; font-weight: 500; }
+        a {
+            color: var(--btn);
+            text-decoration: none;
+            display: block;
+            text-align: center;
+            margin-top: 14px;
+            font-size: 13px;
+            cursor: pointer;
+            font-weight: 500;
+        }
         a:hover { text-decoration: underline; }
         .hidden { display: none !important; }
         h2 { text-align: center; margin-top: 0; font-weight: 700; font-size: 20px; }
-        .brand { text-align: center; font-size: 11px; text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 10px; opacity: 0.8; font-weight: bold; }
-        .project-box { background: rgba(0,0,0,0.02); padding: 14px; border-radius: 8px; margin-top: 12px; border: 1px dashed var(--border); }
-        .tab-menu { display: flex; gap: 3px; margin-bottom: 12px; flex-wrap: wrap; }
-        .tab-btn { flex: 1; min-width: 60px; padding: 8px 2px; font-size: 11px; background: rgba(0,0,0,0.04); border: 1px solid var(--border); border-radius: 6px; cursor: pointer; font-weight: bold; color: inherit; text-align: center; }
-        .tab-btn.active { background-color: var(--btn); color: white; border-color: var(--btn); }
-        .item-lista { display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.7); padding: 8px 12px; border-radius: 6px; margin-bottom: 6px; border: 1px solid var(--border); font-size: 13px; }
-        .item-lista button { background: none; border: none; color: #ff3b30; cursor: pointer; font-weight: bold; font-size: 14px; padding: 0; }
-        .checkbox-group { display: flex; gap: 10px; align-items: center; font-size: 12px; margin: 6px 0; }
+        .brand {
+            text-align: center;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            margin-bottom: 10px;
+            opacity: 0.8;
+            font-weight: bold;
+        }
+        .project-box {
+            background: rgba(0, 0, 0, 0.15);
+            padding: 14px;
+            border-radius: 8px;
+            margin-top: 12px;
+            border: 1px dashed var(--border);
+        }
+        .tab-menu {
+            display: flex;
+            gap: 3px;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+        .tab-btn {
+            flex: 1;
+            min-width: 65px;
+            padding: 8px 2px;
+            font-size: 11px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: bold;
+            color: inherit;
+            text-align: center;
+        }
+        .tab-btn.active {
+            background-color: var(--btn);
+            color: white;
+            border-color: var(--btn);
+        }
+        .item-lista {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px 12px;
+            border-radius: 6px;
+            margin-bottom: 6px;
+            border: 1px solid var(--border);
+            font-size: 13px;
+        }
+        .item-lista button {
+            background: none;
+            border: none;
+            color: #ff3b30;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            padding: 0;
+        }
+        .checkbox-group {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            font-size: 12px;
+            margin: 6px 0;
+        }
         .checkbox-group input { width: auto; margin: 0; }
     </style>
 </head>
 <body>
 
 <div class="card" id="app">
-    <div class="brand">✨ Aria • Ecossistema Completo Absoluto ✨</div>
+    <div class="brand">✨ Aria • Ecossistema Completo Unificado ✨</div>
     <div id="msg" class="msg"></div>
 
-    <!-- TELA DE LOGIN -->
+    <!-- TELA 1: LOGIN -->
     <div id="view-login">
-        <h2>Acessar Sistema</h2>
+        <h2>Entrar no Sistema</h2>
         <input type="text" id="login-user" placeholder="Nome de usuário">
         
         <div class="password-container">
@@ -60,7 +209,7 @@
         <a onclick="mudarTela('cadastro')">Criar nova conta</a>
     </div>
 
-    <!-- PAINEL PRINCIPAL (DASHBOARD COMPLETO) -->
+    <!-- PAINEL PRINCIPAL (DASHBOARD COM ABAS UNIFICADAS) -->
     <div id="view-dashboard" class="hidden">
         <h2 id="dash-title">Painel</h2>
         <p id="dash-tema-txt" style="text-align: center; font-size: 12px; opacity: 0.8; margin-bottom: 10px;"></p>
@@ -70,15 +219,15 @@
             <button class="tab-btn active" id="btn-geral" onclick="mudarAba('geral')">Geral</button>
             <button class="tab-btn" id="btn-notas" onclick="mudarAba('notas')">Notas</button>
             <button class="tab-btn" id="btn-tarefas" onclick="mudarAba('tarefas')">Metas</button>
-            <button class="tab-btn" id="btn-senhas" onclick="mudarAba('senhas')">Gerador</button>
+            <button class="tab-btn" id="btn-senhas" onclick="mudarAba('senhas')">Senhas</button>
             <button class="tab-btn" id="btn-casal" onclick="mudarAba('casal')">Casal ❤️</button>
-            <button class="tab-btn" id="btn-dicas" onclick="mudarAba('dicas')">Guia 💡</button>
+            <button class="tab-btn" id="btn-config" onclick="mudarAba('config')">Ajustes</button>
         </div>
 
         <!-- ABA 1: GERAL & ESTATÍSTICAS -->
         <div id="tab-geral" class="tab-content">
             <div class="project-box">
-                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Status do Perfil:</p>
+                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Status do Perfil (Versão 1):</p>
                 <p id="dash-info" style="margin: 0; font-size: 12px; opacity: 0.9;"></p>
             </div>
             <div class="project-box" style="margin-top: 10px;">
@@ -87,28 +236,28 @@
             </div>
         </div>
 
-        <!-- ABA 2: NOTAS -->
+        <!-- ABA 2: BLOCO DE NOTAS (Versão 3) -->
         <div id="tab-notas" class="tab-content hidden">
             <div class="project-box">
                 <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Bloco de Notas Livres:</p>
-                <textarea id="txt-notas" placeholder="Escreva ideias, rascunhos ou anotações..." oninput="salvarDadosTempoReal()"></textarea>
-                <span class="hint">Salvamento automático em tempo real ativado.</span>
+                <textarea id="txt-notas" placeholder="Escreva suas ideias e anotações aqui..." oninput="salvarDadosTempoReal()"></textarea>
+                <span id="contador-caracteres" class="hint">Salvamento automático em tempo real ativado.</span>
             </div>
         </div>
 
-        <!-- ABA 3: TAREFAS / METAS -->
+        <!-- ABA 3: TAREFAS / METAS (Versão 3) -->
         <div id="tab-tarefas" class="tab-content hidden">
             <div class="project-box">
-                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Lista de Tarefas & Metas:</p>
+                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Lista de Metas & Tarefas:</p>
                 <div style="display: flex; gap: 6px;">
-                    <input type="text" id="nova-tarefa" placeholder="Nova tarefa ou meta..." style="margin: 0;">
+                    <input type="text" id="nova-tarefa" placeholder="Nova tarefa..." style="margin: 0;" onkeypress="if(event.key === 'Enter') adicionarTarefa()">
                     <button class="main-btn" onclick="adicionarTarefa()" style="margin: 0; width: 42px;">+</button>
                 </div>
-                <div id="lista-tarefas-container" style="margin-top: 10px; max-height: 130px; overflow-y: auto;"></div>
+                <div id="lista-tarefas-container" style="margin-top: 10px; max-height: 140px; overflow-y: auto;"></div>
             </div>
         </div>
 
-        <!-- ABA 4: GERADOR DE SENHAS -->
+        <!-- ABA 4: GERADOR DE SENHAS (Utilitário extra) -->
         <div id="tab-senhas" class="tab-content hidden">
             <div class="project-box">
                 <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">🔒 Gerador de Senhas Seguras:</p>
@@ -124,78 +273,66 @@
             </div>
         </div>
 
-        <!-- ABA 5: CASAL -->
+        <!-- ABA 5: ESPAÇO DO CASAL (Versão 4) -->
         <div id="tab-casal" class="tab-content hidden">
             <div class="project-box" style="text-align: center;">
-                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Contador do Casal & Recados</p>
-                <p id="contador-dias" style="font-size: 14px; font-weight: bold; margin: 8px 0;"></p>
+                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Nosso Cantinho ❤️</p>
+                <p id="contador-dias" style="font-size: 14px; font-weight: bold; color: var(--btn); margin: 8px 0;"></p>
                 <input type="text" id="recado-amor" placeholder="Deixe um recado carinhoso..." oninput="salvarDadosTempoReal()">
-                <span class="hint">Sincronizado diretamente na sua conta.</span>
+                <span class="hint">Sincronizado na sua conta.</span>
             </div>
         </div>
 
-        <!-- ABA 6: GUIA E SEGURANÇA -->
-        <div id="tab-dicas" class="tab-content hidden">
-            <div class="project-box" style="font-size: 12px; line-height: 1.4;">
-                <p style="margin: 0 0 6px 0; font-weight: bold;">🛡️ Guia Oficial de Segurança:</p>
-                <ul style="padding-left: 15px; margin: 0;">
-                    <li><b>Respostas Secretas:</b> Use sempre letras minúsculas (ex: <i>rex</i>, <i>amor</i>).</li>
-                    <li><b>Gerador:</b> Utilize senhas de no mínimo 12 caracteres com símbolos para máxima proteção.</li>
-                    <li><b>Armazenamento:</b> Seus dados ficam salvos em segurança no `localStorage` do navegador.</li>
-                </ul>
+        <!-- ABA 6: CONFIGURAÇÕES E TEMAS (Versão 2) -->
+        <div id="tab-config" class="tab-content hidden">
+            <div class="project-box">
+                <p style="margin: 0 0 6px 0; font-weight: bold; font-size: 13px;">⚙️ Configurações da Conta:</p>
+                
+                <label style="font-size: 12px;">Nova Senha (opcional):</label>
+                <div class="password-container">
+                    <input type="password" id="cfg-senha" placeholder="Deixe em branco para manter">
+                    <button type="button" class="toggle-pass" onclick="togglePass('cfg-senha', this)">👁️</button>
+                </div>
+
+                <label style="font-size: 12px;">Pergunta Secreta:</label>
+                <input type="text" id="cfg-pergunta" placeholder="Ex: Qual o seu pet?">
+                
+                <label style="font-size: 12px;">Nova Resposta Secreta:</label>
+                <div class="password-container">
+                    <input type="password" id="cfg-resposta" placeholder="Digite para alterar">
+                    <button type="button" class="toggle-pass" onclick="togglePass('cfg-resposta', this)">👁️</button>
+                </div>
+                
+                <label style="font-size: 12px;">Tema Visual (Versão 2):</label>
+                <select id="cfg-tema" onchange="aplicarTema(this.value)">
+                    <option value="Midnight Blue">Midnight Blue</option>
+                    <option value="Matrix Esmerald">Matrix Esmerald</option>
+                    <option value="Rose Gold">Rose Gold</option>
+                    <option value="Neon Cyber">Neon Cyber</option>
+                    <option value="Sunset Luxury">Sunset Luxury</option>
+                    <option value="Light Minimal">Light Minimal</option>
+                </select>
+
+                <button class="main-btn" onclick="salvarConfiguracoes()" style="margin-top: 8px;">Salvar Alterações</button>
             </div>
         </div>
 
         <hr style="border: 0; border-top: 1px solid var(--border); margin: 14px 0;">
-        <button class="main-btn" onclick="mudarTela('config')">Configurações da Conta</button>
-        <button class="main-btn" onclick="mudarTela('novo-usuario')" style="background-color: #4a3b3c; color: #fff;">Adicionar Novo Usuário</button>
-        <a onclick="fazerLogout()" style="color: #ff3b30; margin-top: 15px;">Encerrar Sessão</a>
+        <button class="main-btn" onclick="mudarTela('novo-usuario')" style="background-color: transparent; border: 1px solid var(--border); color: inherit;">Adicionar Novo Usuário</button>
+        <a onclick="fazerLogout()" style="color: #ff3b30; margin-top: 12px;">Encerrar Sessão</a>
     </div>
 
-    <!-- CONFIGURAÇÕES -->
-    <div id="view-config" class="hidden">
-        <h2>Configurações</h2>
-        
-        <label>Nova Senha (opcional):</label>
-        <div class="password-container">
-            <input type="password" id="cfg-senha" placeholder="Deixe em branco para manter">
-            <button type="button" class="toggle-pass" onclick="togglePass('cfg-senha', this)">👁️</button>
-        </div>
-
-        <label>Pergunta Secreta:</label>
-        <input type="text" id="cfg-pergunta" placeholder="Ex: Qual o nome do seu pet?">
-        
-        <label>Nova Resposta Secreta:</label>
-        <div class="password-container">
-            <input type="password" id="cfg-resposta" placeholder="Digite para alterar">
-            <button type="button" class="toggle-pass" onclick="togglePass('cfg-resposta', this)">👁️</button>
-        </div>
-        
-        <label>Tema Visual:</label>
-        <select id="cfg-tema">
-            <option value="Rose Gold">Rose Gold</option>
-            <option value="Matrix Esmerald">Matrix Esmerald</option>
-            <option value="Midnight Blue">Midnight Blue</option>
-            <option value="Neon Cyber">Neon Cyber</option>
-            <option value="Sunset Luxury">Sunset Luxury</option>
-            <option value="Light Minimal">Light Minimal</option>
-        </select>
-
-        <button class="main-btn" onclick="salvarConfiguracoes()">Salvar Alterações</button>
-        <a onclick="mudarTela('dashboard')">Voltar ao Painel</a>
-    </div>
-
-    <!-- ESQUECI A SENHA -->
+    <!-- TELA: ESQUECI A SENHA -->
     <div id="view-esqueci" class="hidden">
-        <h2>Recuperação</h2>
+        <h2>Recuperação de Senha</h2>
         <input type="text" id="esq-user" placeholder="Seu nome de usuário">
         <button class="main-btn" onclick="buscarPergunta()">Avançar</button>
         <a onclick="mudarTela('login')">Voltar ao Login</a>
     </div>
 
-    <!-- RESPONDER PERGUNTA -->
+    <!-- TELA: RESPONDER PERGUNTA -->
     <div id="view-pergunta" class="hidden">
-        <h2>Nova Senha</h2>
+        <h2>Redefinir Senha</h2>
         <p id="lbl-pergunta" style="font-weight: 500; text-align: center; margin-bottom: 8px; font-size: 13px;"></p>
         
         <div class="password-container">
@@ -203,7 +340,7 @@
             <button type="button" class="toggle-pass" onclick="togglePass('esq-resposta', this)">👁️</button>
         </div>
         
-        <label>Defina a nova senha:</label>
+        <label style="font-size: 12px;">Defina a nova senha:</label>
         <div class="password-container">
             <input type="password" id="esq-novasenha" placeholder="Nova senha">
             <button type="button" class="toggle-pass" onclick="togglePass('esq-novasenha', this)">👁️</button>
@@ -213,30 +350,30 @@
         <a onclick="mudarTela('login')">Voltar ao Login</a>
     </div>
 
-    <!-- CADASTRO / NOVO USUÁRIO -->
+    <!-- TELA: CADASTRO / NOVO USUÁRIO -->
     <div id="view-cadastro" class="hidden">
         <h2 id="cad-titulo">Criar Conta</h2>
         
         <input type="text" id="cad-user" placeholder="Nome de usuário">
         
-        <label>Senha:</label>
+        <label style="font-size: 12px;">Senha:</label>
         <div class="password-container">
             <input type="password" id="cad-pass" placeholder="Senha inicial">
             <button type="button" class="toggle-pass" onclick="togglePass('cad-pass', this)">👁️</button>
         </div>
 
-        <input type="text" id="cad-pergunta" placeholder="Pergunta secreta">
+        <input type="text" id="cad-pergunta" placeholder="Pergunta secreta (Ex: Meu pet)">
 
         <div class="password-container">
             <input type="password" id="cad-resposta" placeholder="Resposta secreta (minúscula)">
             <button type="button" class="toggle-pass" onclick="togglePass('cad-resposta', this)">👁️</button>
         </div>
         
-        <label>Tema Visual:</label>
+        <label style="font-size: 12px;">Tema Visual:</label>
         <select id="cad-tema">
-            <option value="Rose Gold">Rose Gold</option>
-            <option value="Matrix Esmerald">Matrix Esmerald</option>
             <option value="Midnight Blue">Midnight Blue</option>
+            <option value="Matrix Esmerald">Matrix Esmerald</option>
+            <option value="Rose Gold">Rose Gold</option>
             <option value="Neon Cyber">Neon Cyber</option>
             <option value="Sunset Luxury">Sunset Luxury</option>
             <option value="Light Minimal">Light Minimal</option>
@@ -248,46 +385,48 @@
 </div>
 
 <script>
+    // Versão 2: Dicionário completo de Temas Dinâmicos
     const temas = {
-        "Rose Gold": { bg: "#fdf2f2", card: "#ffffff", text: "#4a3b3c", btn: "#d4a5a5", border: "#e6c5c5" },
-        "Matrix Esmerald": { bg: "#0d1117", card: "#161b22", text: "#00ff66", btn: "#238636", border: "#30363d" },
         "Midnight Blue": { bg: "#0f172a", card: "#1e293b", text: "#e2e8f0", btn: "#3b82f6", border: "#334155" },
+        "Matrix Esmerald": { bg: "#0d1117", card: "#161b22", text: "#00ff66", btn: "#238636", border: "#30363d" },
+        "Rose Gold": { bg: "#fdf2f2", card: "#ffffff", text: "#4a3b3c", btn: "#d4a5a5", border: "#e6c5c5" },
         "Neon Cyber": { bg: "#05050a", card: "#12121f", text: "#00ffff", btn: "#ff007f", border: "#ff007f55" },
         "Sunset Luxury": { bg: "#22132b", card: "#321e3f", text: "#ffd700", btn: "#ff7b00", border: "#5d3570" },
         "Light Minimal": { bg: "#f8f9fa", card: "#ffffff", text: "#212529", btn: "#495057", border: "#dee2e6" }
     };
 
-    if (!localStorage.getItem('aria_ecossistema_completo_db')) {
+    // Banco de dados inicial unificado com todas as versões (Versão 1, 3 e 4)
+    if (!localStorage.getItem('aria_ecossistema_total_db')) {
         const bancoInicial = {
             "admin": { 
                 senha: "123", 
                 pergunta: "Qual o seu pet?", 
                 resposta: "rex", 
-                tema: "Rose Gold", 
-                info: "Painel Principal / Administrador", 
-                notas: "", 
-                recado: "",
-                tarefas: ["Configurar ecossistema completo", "Testar gerador de senhas"] 
+                tema: "Midnight Blue", 
+                info: "Sistema de contas e painel unificado ativo.", 
+                notas: "Bem-vindo ao monólito absoluto construído ao longo do dia!", 
+                recado: "Sempre evoluindo nossos projetos.",
+                tarefas: ["Testar autenticação", "Escrever anotações", "Conferir contador do casal"] 
             },
             "namorada": { 
                 senha: "123", 
                 pergunta: "Nossa data especial?", 
                 resposta: "amor", 
                 tema: "Rose Gold", 
-                info: "Espaço compartilhado dos projetos do casal", 
-                notas: "", 
-                recado: "",
-                tarefas: ["Checar recados fofos", "Curtir o dia juntas"] 
+                info: "Espaço compartilhado do casal.", 
+                notas: "Nosso cantinho especial de rascunhos.", 
+                recado: "Te amo muito! ❤️",
+                tarefas: ["Checar recados carinhosos", "Curtir o dia juntas"] 
             }
         };
-        localStorage.setItem('aria_ecossistema_completo_db', JSON.stringify(bancoInicial));
+        localStorage.setItem('aria_ecossistema_total_db', JSON.stringify(bancoInicial));
     }
 
-    let usuarioLogado = localStorage.getItem('aria_ecossistema_completo_user') || null;
+    let usuarioLogado = localStorage.getItem('aria_ecossistema_total_user') || null;
     let usuarioRecuperando = "";
 
     function aplicarTema(nome) {
-        let t = temas[nome] || temas["Rose Gold"];
+        let t = temas[nome] || temas["Midnight Blue"];
         let root = document.documentElement;
         root.style.setProperty('--bg', t.bg);
         root.style.setProperty('--card', t.card);
@@ -296,6 +435,7 @@
         root.style.setProperty('--border', t.border);
     }
 
+    // Versão 1: Alternador de visibilidade de senha (ícone de olho 👁️ / 🔒)
     function togglePass(id, btn) {
         let el = document.getElementById(id);
         if (el.type === "password") {
@@ -327,55 +467,50 @@
 
         if (tela === 'login') {
             document.getElementById('view-login').classList.remove('hidden');
-            aplicarTema("Rose Gold");
+            aplicarTema("Midnight Blue");
         } else if (tela === 'dashboard') {
             document.getElementById('view-dashboard').classList.remove('hidden');
-            let db = JSON.parse(localStorage.getItem('aria_ecossistema_completo_db'));
+            let db = JSON.parse(localStorage.getItem('aria_ecossistema_total_db'));
             let uData = db[usuarioLogado];
             
             document.getElementById('dash-title').innerText = "Olá, " + usuarioLogado;
             document.getElementById('dash-tema-txt').innerText = "Tema ativo: " + uData.tema;
             document.getElementById('dash-info').innerText = uData.info || "Ambiente integrado ativo.";
             
+            // Versão 3: Carregar notas e tarefas
             document.getElementById('txt-notas').value = uData.notas || "";
             document.getElementById('recado-amor').value = uData.recado || "";
             
+            atualizarContadorNotas();
             renderizarTarefas();
 
             let totalTarefas = (uData.tarefas || []).length;
             let caracteresNotas = (uData.notas || "").length;
             document.getElementById('dash-resumo-estatisticas').innerHTML = `
-                • Tarefas/Metas pendentes: <b>${totalTarefas}</b><br>
-                • Caracteres nas anotações: <b>${caracteresNotas}</b><br>
-                • Status da Conta: <b>Ativa e Sincronizada</b>
+                • Metas/Tarefas pendentes: <b>${totalTarefas}</b><br>
+                • Caracteres nas notas: <b>${caracteresNotas}</b><br>
+                • Sincronização: <b>100% Ativa (LocalStorage)</b>
             `;
 
+            // Versão 4: Contador dinâmico de dias do casal
             let inicioCasal = new Date('2023-01-01');
             let hoje = new Date();
             let diffDias = Math.floor((hoje - inicioCasal) / (1000 * 60 * 60 * 24));
-            document.getElementById('contador-dias').innerText = `Juntos há ${diffDias} dias de cumplicidade! ❤️`;
+            document.getElementById('contador-dias').innerText = `Juntos há ${diffDias} dias de muito amor! ❤️`;
 
             aplicarTema(uData.tema);
-            mudarAba('geral');
-        } else if (tela === 'config') {
-            let db = JSON.parse(localStorage.getItem('aria_ecossistema_completo_db'));
-            let uData = db[usuarioLogado];
-            document.getElementById('cfg-pergunta').value = uData.pergunta;
-            document.getElementById('cfg-resposta').value = "";
-            document.getElementById('cfg-senha').value = "";
             document.getElementById('cfg-tema').value = uData.tema;
-            aplicarTema(uData.tema);
-            document.getElementById('view-config').classList.remove('hidden');
+            mudarAba('geral');
         } else if (tela === 'esqueci') {
             document.getElementById('view-esqueci').classList.remove('hidden');
-            aplicarTema("Rose Gold");
+            aplicarTema("Midnight Blue");
         } else if (tela === 'pergunta') {
             document.getElementById('view-pergunta').classList.remove('hidden');
-            aplicarTema("Rose Gold");
+            aplicarTema("Midnight Blue");
         } else if (tela === 'cadastro') {
             document.getElementById('cad-titulo').innerText = "Criar Conta";
             document.getElementById('cad-voltar').setAttribute("onclick", "mudarTela('login')");
-            aplicarTema("Rose Gold");
+            aplicarTema("Midnight Blue");
             document.getElementById('view-cadastro').classList.remove('hidden');
         } else if (tela === 'novo-usuario') {
             document.getElementById('cad-titulo').innerText = "Adicionar Novo Usuário";
@@ -384,19 +519,25 @@
             document.getElementById('cad-pergunta').value = "";
             document.getElementById('cad-resposta').value = "";
             document.getElementById('cad-voltar').setAttribute("onclick", "mudarTela('dashboard')");
-            let db = JSON.parse(localStorage.getItem('aria_ecossistema_completo_db'));
+            let db = JSON.parse(localStorage.getItem('aria_ecossistema_total_db'));
             aplicarTema(db[usuarioLogado].tema);
             document.getElementById('view-cadastro').classList.remove('hidden');
         }
     }
 
+    function atualizarContadorNotas() {
+        let texto = document.getElementById('txt-notas').value;
+        document.getElementById('contador-caracteres').innerText = `Salvamento automático ativo • ${texto.length} caractere(s)`;
+    }
+
     function salvarDadosTempoReal() {
         if (!usuarioLogado) return;
-        let db = JSON.parse(localStorage.getItem('aria_ecossistema_completo_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_total_db'));
         if (db[usuarioLogado]) {
             db[usuarioLogado].notas = document.getElementById('txt-notas').value;
             db[usuarioLogado].recado = document.getElementById('recado-amor').value;
-            localStorage.setItem('aria_ecossistema_completo_db', JSON.stringify(db));
+            localStorage.setItem('aria_ecossistema_total_db', JSON.stringify(db));
+            atualizarContadorNotas();
         }
     }
 
@@ -405,24 +546,24 @@
         let texto = inputT.value.trim();
         if (!texto) return;
 
-        let db = JSON.parse(localStorage.getItem('aria_ecossistema_completo_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_total_db'));
         if (!db[usuarioLogado].tarefas) db[usuarioLogado].tarefas = [];
         
         db[usuarioLogado].tarefas.push(texto);
-        localStorage.setItem('aria_ecossistema_completo_db', JSON.stringify(db));
+        localStorage.setItem('aria_ecossistema_total_db', JSON.stringify(db));
         inputT.value = "";
         renderizarTarefas();
     }
 
     function removerTarefa(index) {
-        let db = JSON.parse(localStorage.getItem('aria_ecossistema_completo_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_total_db'));
         db[usuarioLogado].tarefas.splice(index, 1);
-        localStorage.setItem('aria_ecossistema_completo_db', JSON.stringify(db));
+        localStorage.setItem('aria_ecossistema_total_db', JSON.stringify(db));
         renderizarTarefas();
     }
 
     function renderizarTarefas() {
-        let db = JSON.parse(localStorage.getItem('aria_ecossistema_completo_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_total_db'));
         let tarefas = db[usuarioLogado].tarefas || [];
         let container = document.getElementById('lista-tarefas-container');
         container.innerHTML = "";
@@ -443,7 +584,6 @@
     function gerarSenhaSegura() {
         let tamanho = parseInt(document.getElementById('gen-tamanho').value) || 12;
         let usarSimbolos = document.getElementById('gen-simbolos').checked;
-        
         let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         if (usarSimbolos) chars += "!@#$%^&*()_+-=[]{}|;:,.<>?";
         
@@ -457,11 +597,11 @@
     function fazerLogin() {
         let u = document.getElementById('login-user').value.trim();
         let p = document.getElementById('login-pass').value;
-        let db = JSON.parse(localStorage.getItem('aria_ecossistema_completo_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_total_db'));
 
         if (db[u] && db[u].senha === p) {
             usuarioLogado = u;
-            localStorage.setItem('aria_ecossistema_completo_user', u);
+            localStorage.setItem('aria_ecossistema_total_user', u);
             mudarTela('dashboard');
         } else {
             mostrarMsg("Usuário ou senha incorretos!", "error");
@@ -469,7 +609,7 @@
     }
 
     function salvarConfiguracoes() {
-        let db = JSON.parse(localStorage.getItem('aria_ecossistema_completo_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_total_db'));
         let senhaNova = document.getElementById('cfg-senha').value;
         let pNova = document.getElementById('cfg-pergunta').value;
         let rNova = document.getElementById('cfg-resposta').value.trim().toLowerCase();
@@ -480,14 +620,14 @@
         if (rNova) db[usuarioLogado].resposta = rNova;
         db[usuarioLogado].tema = tNovo;
 
-        localStorage.setItem('aria_ecossistema_completo_db', JSON.stringify(db));
+        localStorage.setItem('aria_ecossistema_total_db', JSON.stringify(db));
         mostrarMsg("Alterações salvas com sucesso!", "success");
         setTimeout(() => mudarTela('dashboard'), 1000);
     }
 
     function buscarPergunta() {
         let u = document.getElementById('esq-user').value.trim();
-        let db = JSON.parse(localStorage.getItem('aria_ecossistema_completo_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_total_db'));
         if (db[u]) {
             usuarioRecuperando = u;
             document.getElementById('lbl-pergunta').innerText = "Pergunta: " + db[u].pergunta;
@@ -501,11 +641,11 @@
     function redefinirSenha() {
         let resp = document.getElementById('esq-resposta').value.trim().toLowerCase();
         let novaS = document.getElementById('esq-novasenha').value;
-        let db = JSON.parse(localStorage.getItem('aria_ecossistema_completo_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_total_db'));
 
         if (db[usuarioRecuperando].resposta === resp) {
             db[usuarioRecuperando].senha = novaS;
-            localStorage.setItem('aria_ecossistema_completo_db', JSON.stringify(db));
+            localStorage.setItem('aria_ecossistema_total_db', JSON.stringify(db));
             mostrarMsg("Senha redefinida com sucesso!", "success");
             setTimeout(() => mudarTela('login'), 1500);
         } else {
@@ -525,14 +665,14 @@
             return;
         }
 
-        let db = JSON.parse(localStorage.getItem('aria_ecossistema_completo_db'));
+        let db = JSON.parse(localStorage.getItem('aria_ecossistema_total_db'));
         if (db[u]) {
             mostrarMsg("Este usuário já existe!", "error");
             return;
         }
 
-        db[u] = { senha: p, pergunta: perg, resposta: resp, tema: tema, info: "Perfil personalizado adicionado.", notas: "", recado: "", tarefas: [] };
-        localStorage.setItem('aria_ecossistema_completo_db', JSON.stringify(db));
+        db[u] = { senha: p, pergunta: perg, resposta: resp, tema: tema, info: "Perfil personalizado.", notas: "", recado: "", tarefas: [] };
+        localStorage.setItem('aria_ecossistema_total_db', JSON.stringify(db));
         mostrarMsg("Conta criada com sucesso!", "success");
         
         setTimeout(() => {
@@ -543,11 +683,11 @@
 
     function fazerLogout() {
         usuarioLogado = null;
-        localStorage.removeItem('aria_ecossistema_completo_user');
+        localStorage.removeItem('aria_ecossistema_total_user');
         mudarTela('login');
     }
 
-    if (usuarioLogado && JSON.parse(localStorage.getItem('aria_ecossistema_completo_db'))[usuarioLogado]) {
+    if (usuarioLogado && JSON.parse(localStorage.getItem('aria_ecossistema_total_db'))[usuarioLogado]) {
         mudarTela('dashboard');
     } else {
         mudarTela('login');
