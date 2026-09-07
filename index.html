@@ -3,20 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aria - Sistema Unificado Dinâmico</title>
+    <title>Aria - Sistema Unificado Completo</title>
     <style>
         :root {
             --bg: #fdf2f2; --card: #ffffff; --text: #4a3b3c; --btn: #d4a5a5; --border: #e6c5c5;
         }
-        body { background-color: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; transition: 0.3s; }
-        .card { background-color: var(--card); padding: 30px; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); width: 100%; max-width: 420px; box-sizing: border-box; border: 1px solid var(--border); transition: 0.3s; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0 16px 0; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-size: 16px; background: rgba(255,255,255,0.9); color: inherit; transition: 0.3s; }
-        button { background-color: var(--btn); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 5px; transition: 0.3s; }
-        button:active { opacity: 0.8; }
+        body { background-color: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; transition: background-color 0.3s ease, color 0.3s ease; }
+        .card { background-color: var(--card); color: var(--text); padding: 30px; border-radius: 16px; box-shadow: 0 8px 25px rgba(0,0,0,0.1); width: 100%; max-width: 420px; box-sizing: border-box; border: 1px solid var(--border); transition: 0.3s ease; }
+        input, select { width: 100%; padding: 12px; margin: 8px 0 4px 0; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-size: 16px; background: rgba(255,255,255,0.9); color: #333; }
+        .hint { font-size: 12px; opacity: 0.75; margin-bottom: 12px; display: block; font-style: italic; }
+        .password-container { position: relative; width: 100%; }
+        .password-container input { margin-bottom: 4px; }
+        .toggle-pass { position: absolute; right: 12px; top: 14px; background: none; border: none; cursor: pointer; font-size: 14px; width: auto; padding: 0; margin: 0; color: #666; font-weight: normal; }
+        button.main-btn { background-color: var(--btn); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 10px; transition: 0.2s; }
+        button.main-btn:active { opacity: 0.8; }
         .msg { font-size: 14px; text-align: center; margin-bottom: 12px; min-height: 20px; font-weight: 500; }
         .error { color: #ff3b30; }
         .success { color: #34c759; }
-        a { color: var(--btn); text-decoration: none; display: block; text-align: center; margin-top: 15px; font-size: 14px; cursor: pointer; font-weight: 500; transition: 0.3s; }
+        a { color: var(--btn); text-decoration: none; display: block; text-align: center; margin-top: 15px; font-size: 14px; cursor: pointer; font-weight: 500; }
         .hidden { display: none; }
         h2 { text-align: center; margin-top: 0; font-weight: 700; letter-spacing: -0.5px; }
         .brand { text-align: center; font-size: 13px; text-transform: uppercase; letter-spacing: 2.5px; margin-bottom: 8px; opacity: 0.8; font-weight: bold; }
@@ -33,8 +37,14 @@
     <div id="view-login">
         <h2>Entrar na Conta</h2>
         <input type="text" id="login-user" placeholder="Seu nome de usuário">
-        <input type="password" id="login-pass" placeholder="Sua senha">
-        <button onclick="fazerLogin()">Acessar Painel</button>
+        
+        <div class="password-container">
+            <input type="password" id="login-pass" placeholder="Sua senha">
+            <button type="button" class="toggle-pass" onclick="alternarVisibilidade('login-pass', this)">👁️</button>
+        </div>
+        <span class="hint">💡 Dica: A senha inicial padrão costuma ser 123. Use o botão ao lado para conferir se digitou certo!</span>
+
+        <button class="main-btn" onclick="fazerLogin()">Acessar Painel</button>
         <a onclick="mudarTela('esqueci')">Esqueci minha senha / Resposta</a>
         <a onclick="mudarTela('cadastro')">Criar nova conta</a>
     </div>
@@ -50,32 +60,45 @@
         </div>
 
         <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
-        <button onclick="mudarTela('config')">Minhas Configurações (Senha, Resposta e Tema)</button>
-        <button onclick="mudarTela('novo-usuario')" style="background-color: var(--text); color: var(--card);">Adicionar Novo Usuário</button>
+        <button class="main-btn" onclick="mudarTela('config')">Minhas Configurações (Senha, Resposta e Tema)</button>
+        <button class="main-btn" onclick="mudarTela('novo-usuario')" style="background-color: #4a3b3c; color: #fff;">Adicionar Novo Usuário</button>
         <a onclick="fazerLogout()" style="color: #ff3b30; margin-top: 25px;">Sair da Conta</a>
     </div>
 
     <!-- CONFIGURAÇÕES INDIVIDUAIS -->
     <div id="view-config" class="hidden">
         <h2>Configurações Pessoais</h2>
+        
         <label>Nova Senha (opcional):</label>
-        <input type="password" id="cfg-senha" placeholder="Deixe em branco para manter">
+        <div class="password-container">
+            <input type="password" id="cfg-senha" placeholder="Deixe em branco para manter">
+            <button type="button" class="toggle-pass" onclick="alternarVisibilidade('cfg-senha', this)">👁️</button>
+        </div>
+        <span class="hint">💡 Dica de Senha: Prefira algo simples que você usa no dia a dia, mas que seja seguro.</span>
+
         <label>Pergunta Secreta:</label>
-        <input type="text" id="cfg-pergunta">
+        <input type="text" id="cfg-pergunta" placeholder="Ex: Qual o nome do seu primeiro pet?">
+        <span class="hint">💡 Dica: Escolha uma pergunta cuja resposta só você saiba, mas que seja fácil de lembrar de cabeça.</span>
+        
         <label>Nova Resposta Secreta:</label>
-        <input type="text" id="cfg-resposta" placeholder="Digite para alterar">
+        <div class="password-container">
+            <input type="password" id="cfg-resposta" placeholder="Digite para alterar">
+            <button type="button" class="toggle-pass" onclick="alternarVisibilidade('cfg-resposta', this)">👁️</button>
+        </div>
+        <span class="hint">💡 Dica de Resposta: Escreva tudo em letras minúsculas e sem acentos para evitar erros futuros (ex: "rex" ou "amor").</span>
         
         <label>Tema Visual:</label>
-        <select id="cfg-tema" onchange="testarTemaAoMudar(this.value)">
-            <option value="Rose Gold">Rose Gold (Original)</option>
+        <select id="cfg-tema" onchange="aplicarTema(this.value)">
+            <option value="Rose Gold">Rose Gold</option>
             <option value="Matrix Esmerald">Matrix Esmerald</option>
             <option value="Midnight Blue">Midnight Blue</option>
             <option value="Neon Cyber">Neon Cyber</option>
             <option value="Sunset Luxury">Sunset Luxury</option>
             <option value="Light Minimal">Light Minimal</option>
         </select>
+        <span class="hint">💡 O tema muda na mesma hora para você testar e escolher o seu favorito!</span>
 
-        <button onclick="salvarConfiguracoes()">Salvar Alterações</button>
+        <button class="main-btn" onclick="salvarConfiguracoes()">Salvar Alterações</button>
         <a onclick="mudarTela('dashboard')">Voltar ao Painel</a>
     </div>
 
@@ -83,38 +106,69 @@
     <div id="view-esqueci" class="hidden">
         <h2>Recuperação</h2>
         <input type="text" id="esq-user" placeholder="Digite seu nome de usuário">
-        <button onclick="buscarPergunta()">Avançar</button>
+        <span class="hint">💡 Dica: Digite exatamente o mesmo nome de usuário com que você costuma entrar.</span>
+        
+        <button class="main-btn" onclick="buscarPergunta()">Avançar</button>
         <a onclick="mudarTela('login')">Voltar ao Login</a>
     </div>
 
     <!-- RESPONDER PERGUNTA -->
     <div id="view-pergunta" class="hidden">
         <h2>Recuperação de Senha</h2>
-        <p id="lbl-pergunta" style="font-weight: 500; text-align: center; margin-bottom: 15px;"></p>
-        <input type="text" id="esq-resposta" placeholder="Sua resposta secreta">
-        <input type="password" id="esq-novasenha" placeholder="Defina sua nova senha">
-        <button onclick="redefinirSenha()">Redefinir Senha</button>
+        <p id="lbl-pergunta" style="font-weight: 500; text-align: center; margin-bottom: 5px;"></p>
+        
+        <div class="password-container">
+            <input type="password" id="esq-resposta" placeholder="Sua resposta secreta">
+            <button type="button" class="toggle-pass" onclick="alternarVisibilidade('esq-resposta', this)">👁️</button>
+        </div>
+        <span class="hint">💡 Dica: Lembre-se que a resposta costuma ser curta, sem letras maiúsculas e sem espaços extras.</span>
+        
+        <label>Defina sua nova senha:</label>
+        <div class="password-container">
+            <input type="password" id="esq-novasenha" placeholder="Nova senha">
+            <button type="button" class="toggle-pass" onclick="alternarVisibilidade('esq-novasenha', this)">👁️</button>
+        </div>
+        <span class="hint">💡 Dica: Anote em um lugar seguro ou escolha uma senha bem familiar para não esquecer de novo.</span>
+
+        <button class="main-btn" onclick="redefinirSenha()">Redefinir Senha</button>
         <a onclick="mudarTela('login')">Voltar ao Login</a>
     </div>
 
     <!-- CRIAR CONTA / NOVO USUÁRIO -->
     <div id="view-cadastro" class="hidden">
         <h2 id="cad-titulo">Criar Conta</h2>
-        <input type="text" id="cad-user" placeholder="Nome de usuário">
-        <input type="password" id="cad-pass" placeholder="Senha padrão inicial">
-        <input type="text" id="cad-pergunta" placeholder="Pergunta secreta">
-        <input type="text" id="cad-resposta" placeholder="Resposta secreta">
         
-        <select id="cad-tema" onchange="testarTemaAoMudar(this.value)">
-            <option value="Rose Gold">Rose Gold (Original)</option>
+        <input type="text" id="cad-user" placeholder="Nome de usuário">
+        <span class="hint">💡 Dica: Use um apelido curto ou seu primeiro nome sem espaços.</span>
+        
+        <label>Senha:</label>
+        <div class="password-container">
+            <input type="password" id="cad-pass" placeholder="Senha inicial">
+            <button type="button" class="toggle-pass" onclick="alternarVisibilidade('cad-pass', this)">👁️</button>
+        </div>
+        <span class="hint">💡 Dica: Senhas fáceis como 123 ou datas importantes evitam bloqueios desnecessários.</span>
+
+        <input type="text" id="cad-pergunta" placeholder="Pergunta secreta (ex: Qual seu pet?)">
+        <span class="hint">💡 Dica: Crie uma pergunta que só você saiba a resposta exata.</span>
+
+        <div class="password-container">
+            <input type="password" id="cad-resposta" placeholder="Resposta secreta (ex: rex)">
+            <button type="button" class="toggle-pass" onclick="alternarVisibilidade('cad-resposta', this)">👁️</button>
+        </div>
+        <span class="hint">💡 Dica de Resposta: Guarde bem essa palavra. Escreva tudo minúsculo para facilitar na hora de recuperar!</span>
+        
+        <label>Tema Visual:</label>
+        <select id="cad-tema" onchange="aplicarTema(this.value)">
+            <option value="Rose Gold">Rose Gold</option>
             <option value="Matrix Esmerald">Matrix Esmerald</option>
             <option value="Midnight Blue">Midnight Blue</option>
             <option value="Neon Cyber">Neon Cyber</option>
             <option value="Sunset Luxury">Sunset Luxury</option>
             <option value="Light Minimal">Light Minimal</option>
         </select>
+        <span class="hint">💡 Escolha o tema que mais combina com o seu estilo visual atual.</span>
 
-        <button onclick="salvarNovoUsuario()">Cadastrar</button>
+        <button class="main-btn" onclick="salvarNovoUsuario()">Cadastrar</button>
         <a id="cad-voltar" onclick="mudarTela('login')">Voltar ao Login</a>
     </div>
 </div>
@@ -148,8 +202,15 @@
         document.documentElement.style.setProperty('--border', t.border);
     }
 
-    function testarTemaAoMudar(nomeTema) {
-        aplicarTema(nomeTema);
+    function alternarVisibilidade(idCampo, botao) {
+        let campo = document.getElementById(idCampo);
+        if (campo.type === "password") {
+            campo.type = "text";
+            botao.innerText = "🔒";
+        } else {
+            campo.type = "password";
+            botao.innerText = "👁️";
+        }
     }
 
     function mostrarMsg(texto, tipo) {
@@ -185,6 +246,10 @@
             document.getElementById('view-config').classList.remove('hidden');
         } else if (tela === 'esqueci') {
             document.getElementById('view-esqueci').classList.remove('hidden');
+            aplicarTema("Rose Gold");
+        } else if (tela === 'pergunta') {
+            document.getElementById('view-pergunta').classList.remove('hidden');
+            aplicarTema("Rose Gold");
         } else if (tela === 'cadastro') {
             document.getElementById('cad-titulo').innerText = "Criar Conta";
             document.getElementById('cad-voltar').setAttribute("onclick", "mudarTela('login')");
@@ -272,7 +337,7 @@
         let tema = document.getElementById('cad-tema').value;
 
         if (!u || !p || !perg || !resp) {
-            mostrarMsg("Preencha todos os campos!", "error");
+            mostrarMsg("Preencha todos os campos sigilosos!", "error");
             return;
         }
 
