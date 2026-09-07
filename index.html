@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aria • Ecossistema Definitivo (14:00 - 22:30)</title>
+    <title>Aria • Ecossistema Definitivo</title>
     <style>
         :root {
             --bg: #0f172a;
@@ -227,7 +227,7 @@
         <!-- ABA 1: GERAL & ESTATÍSTICAS -->
         <div id="tab-geral" class="tab-content">
             <div class="project-box">
-                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Status do Perfil (Versão 1):</p>
+                <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Status do Perfil:</p>
                 <p id="dash-info" style="margin: 0; font-size: 12px; opacity: 0.9;"></p>
             </div>
             <div class="project-box" style="margin-top: 10px;">
@@ -236,7 +236,7 @@
             </div>
         </div>
 
-        <!-- ABA 2: BLOCO DE NOTAS (Versão 3) -->
+        <!-- ABA 2: BLOCO DE NOTAS -->
         <div id="tab-notas" class="tab-content hidden">
             <div class="project-box">
                 <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Bloco de Notas Livres:</p>
@@ -245,7 +245,7 @@
             </div>
         </div>
 
-        <!-- ABA 3: TAREFAS / METAS (Versão 3) -->
+        <!-- ABA 3: TAREFAS / METAS -->
         <div id="tab-tarefas" class="tab-content hidden">
             <div class="project-box">
                 <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Lista de Metas & Tarefas:</p>
@@ -257,7 +257,7 @@
             </div>
         </div>
 
-        <!-- ABA 4: GERADOR DE SENHAS (Utilitário extra) -->
+        <!-- ABA 4: GERADOR DE SENHAS -->
         <div id="tab-senhas" class="tab-content hidden">
             <div class="project-box">
                 <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">🔒 Gerador de Senhas Seguras:</p>
@@ -273,7 +273,7 @@
             </div>
         </div>
 
-        <!-- ABA 5: ESPAÇO DO CASAL (Versão 4) -->
+        <!-- ABA 5: ESPAÇO DO CASAL -->
         <div id="tab-casal" class="tab-content hidden">
             <div class="project-box" style="text-align: center;">
                 <p style="margin: 0 0 4px 0; font-weight: bold; font-size: 13px;">Nosso Cantinho ❤️</p>
@@ -283,7 +283,7 @@
             </div>
         </div>
 
-        <!-- ABA 6: CONFIGURAÇÕES E TEMAS (Versão 2) -->
+        <!-- ABA 6: CONFIGURAÇÕES E TEMAS -->
         <div id="tab-config" class="tab-content hidden">
             <div class="project-box">
                 <p style="margin: 0 0 6px 0; font-weight: bold; font-size: 13px;">⚙️ Configurações da Conta:</p>
@@ -303,7 +303,7 @@
                     <button type="button" class="toggle-pass" onclick="togglePass('cfg-resposta', this)">👁️</button>
                 </div>
                 
-                <label style="font-size: 12px;">Tema Visual (Versão 2):</label>
+                <label style="font-size: 12px;">Tema Visual:</label>
                 <select id="cfg-tema" onchange="aplicarTema(this.value)">
                     <option value="Midnight Blue">Midnight Blue</option>
                     <option value="Matrix Esmerald">Matrix Esmerald</option>
@@ -385,7 +385,6 @@
 </div>
 
 <script>
-    // Versão 2: Dicionário completo de Temas Dinâmicos
     const temas = {
         "Midnight Blue": { bg: "#0f172a", card: "#1e293b", text: "#e2e8f0", btn: "#3b82f6", border: "#334155" },
         "Matrix Esmerald": { bg: "#0d1117", card: "#161b22", text: "#00ff66", btn: "#238636", border: "#30363d" },
@@ -395,7 +394,6 @@
         "Light Minimal": { bg: "#f8f9fa", card: "#ffffff", text: "#212529", btn: "#495057", border: "#dee2e6" }
     };
 
-    // Banco de dados inicial unificado com todas as versões (Versão 1, 3 e 4)
     if (!localStorage.getItem('aria_ecossistema_total_db')) {
         const bancoInicial = {
             "admin": { 
@@ -404,7 +402,7 @@
                 resposta: "rex", 
                 tema: "Midnight Blue", 
                 info: "Sistema de contas e painel unificado ativo.", 
-                notas: "Bem-vindo ao monólito absoluto construído ao longo do dia!", 
+                notas: "Bem-vindo ao monólito absoluto!", 
                 recado: "Sempre evoluindo nossos projetos.",
                 tarefas: ["Testar autenticação", "Escrever anotações", "Conferir contador do casal"] 
             },
@@ -435,7 +433,6 @@
         root.style.setProperty('--border', t.border);
     }
 
-    // Versão 1: Alternador de visibilidade de senha (ícone de olho 👁️ / 🔒)
     function togglePass(id, btn) {
         let el = document.getElementById(id);
         if (el.type === "password") {
@@ -477,7 +474,6 @@
             document.getElementById('dash-tema-txt').innerText = "Tema ativo: " + uData.tema;
             document.getElementById('dash-info').innerText = uData.info || "Ambiente integrado ativo.";
             
-            // Versão 3: Carregar notas e tarefas
             document.getElementById('txt-notas').value = uData.notas || "";
             document.getElementById('recado-amor').value = uData.recado || "";
             
@@ -492,7 +488,6 @@
                 • Sincronização: <b>100% Ativa (LocalStorage)</b>
             `;
 
-            // Versão 4: Contador dinâmico de dias do casal
             let inicioCasal = new Date('2023-01-01');
             let hoje = new Date();
             let diffDias = Math.floor((hoje - inicioCasal) / (1000 * 60 * 60 * 24));
