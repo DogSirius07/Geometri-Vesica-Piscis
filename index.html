@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecossistema Unificado • Núcleo Direto</title>
+    <title>Ecossistema Unificado • Aria.OS Completo</title>
     <style>
         :root {
             --bg: #090d16;
@@ -23,10 +23,11 @@
             justify-content: center;
             align-items: center;
             padding: 16px;
+            transition: background 0.3s ease;
         }
         .container {
             width: 100%;
-            max-width: 720px;
+            max-width: 800px;
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 16px;
@@ -45,7 +46,7 @@
         }
         input, select, textarea {
             width: 100%;
-            padding: 11px;
+            padding: 10px;
             margin-bottom: 10px;
             background: rgba(255,255,255,0.03);
             border: 1px solid var(--border);
@@ -58,10 +59,10 @@
             border-color: var(--accent);
             box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
         }
-        textarea { resize: vertical; min-height: 90px; }
+        textarea { resize: vertical; min-height: 70px; }
         .btn {
             width: 100%;
-            padding: 11px;
+            padding: 10px;
             background: var(--accent);
             color: white;
             border: none;
@@ -76,16 +77,16 @@
         .btn-outline { background: transparent; border: 1px solid var(--border); }
         .nav-tabs {
             display: flex;
-            gap: 3px;
+            gap: 2px;
             margin-bottom: 16px;
             overflow-x: auto;
             padding-bottom: 4px;
         }
         .tab-btn {
             flex: 1;
-            min-width: 75px;
-            padding: 7px 2px;
-            font-size: 10px;
+            min-width: 70px;
+            padding: 6px 2px;
+            font-size: 9px;
             font-weight: bold;
             background: rgba(255,255,255,0.03);
             border: 1px solid var(--border);
@@ -93,6 +94,7 @@
             color: inherit;
             cursor: pointer;
             text-align: center;
+            white-space: nowrap;
         }
         .tab-btn.active {
             background: var(--accent);
@@ -102,7 +104,7 @@
             background: rgba(0,0,0,0.25);
             border: 1px dashed var(--border);
             border-radius: 10px;
-            padding: 14px;
+            padding: 12px;
             margin-bottom: 12px;
         }
         .hidden { display: none !important; }
@@ -111,25 +113,47 @@
         .error { color: var(--danger); }
         .link { color: var(--accent); cursor: pointer; text-align: center; display: block; font-size: 13px; margin-top: 8px; text-decoration: none; }
         .link:hover { text-decoration: underline; }
-        canvas { display: block; margin: 10px auto; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid var(--border); }
+        canvas { display: block; margin: 8px auto; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid var(--border); }
         .list-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background: rgba(255,255,255,0.03);
-            padding: 8px 12px;
+            padding: 7px 10px;
             border-radius: 6px;
-            margin-bottom: 6px;
+            margin-bottom: 5px;
             border: 1px solid var(--border);
             font-size: 13px;
         }
-        .list-item button { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 16px; font-weight: bold; }
+        .list-item button { background: none; border: none; color: var(--danger); cursor: pointer; font-size: 15px; font-weight: bold; }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+            gap: 8px;
+            max-height: 150px;
+            overflow-y: auto;
+            margin-top: 6px;
+        }
+        .gallery-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 5px;
+            text-align: center;
+        }
+        .gallery-card img {
+            width: 100%;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 6px;
+            margin-bottom: 3px;
+        }
     </style>
 </head>
 <body>
 
 <div class="container" id="app">
-    <div class="brand">✨ Ecossistema Unificado • Núcleo Direto ✨</div>
+    <div class="brand">✨ Aria.OS • Ecossistema Completo ✨</div>
     <div id="msg" class="msg"></div>
 
     <!-- TELA DE LOGIN -->
@@ -150,6 +174,8 @@
             <button class="tab-btn" id="tb-guardiao" onclick="trocarAba('guardiao')">🛡️ Guardião</button>
             <button class="tab-btn" id="tb-frequencia" onclick="trocarAba('frequencia')">❤️ Frequência</button>
             <button class="tab-btn" id="tb-sintonia" onclick="trocarAba('sintonia')">⚡ Sintonia</button>
+            <button class="tab-btn" id="tb-tarefas" onclick="trocarAba('tarefas')">📋 Tarefas</button>
+            <button class="tab-btn" id="tb-financas" onclick="trocarAba('financas')">💰 Finanças</button>
             <button class="tab-btn" id="tb-geometria" onclick="trocarAba('geometria')">💠 Geometria</button>
             <button class="tab-btn" id="tb-galeria" onclick="trocarAba('galeria')">🖼️ Galeria</button>
             <button class="tab-btn" id="tb-config" onclick="trocarAba('config')">⚙️ Ajustes</button>
@@ -158,16 +184,16 @@
         <!-- ABA 1: ARIA -->
         <div id="tab-aria" class="tab-content">
             <div class="section-box">
-                <h3>Bloco de Notas Inteligente</h3>
-                <textarea id="aria-notas" placeholder="Escreva suas anotações..." oninput="salvarDadosGerais()"></textarea>
+                <h3>💬 Aria Core • Bloco de Notas</h3>
+                <textarea id="aria-notas" placeholder="Anotações centrais..." oninput="salvarDadosGerais()"></textarea>
             </div>
             <div class="section-box">
-                <h3>Metas e Objetivos</h3>
+                <h3>🎯 Metas & Objetivos</h3>
                 <div style="display: flex; gap: 6px;">
                     <input type="text" id="aria-metainput" placeholder="Nova meta..." style="margin-bottom:0;" onkeypress="if(event.key==='Enter')adicionarMeta()">
                     <button class="btn" style="width: 45px; margin-bottom:0;" onclick="adicionarMeta()">+</button>
                 </div>
-                <div id="aria-metalista" style="margin-top: 8px; max-height: 100px; overflow-y: auto;"></div>
+                <div id="aria-metalista" style="margin-top: 8px; max-height: 90px; overflow-y: auto;"></div>
             </div>
         </div>
 
@@ -176,7 +202,10 @@
             <div class="section-box">
                 <h3>🛡️ Guardião • Cofre & Senhas</h3>
                 <input type="text" id="guardiao-senha" readonly placeholder="Gerar chave segura..." style="font-family: monospace; text-align: center; font-weight: bold;">
-                <button class="btn" onclick="gerarSenhaGuardiao()">Gerar Chave Blindada</button>
+                <div style="display: flex; gap: 6px;">
+                    <button class="btn" onclick="gerarSenhaGuardiao()" style="margin-bottom:0;">Gerar Chave</button>
+                    <button class="btn btn-outline" onclick="copiarSenhaGuardiao()" style="margin-bottom:0;">Copiar</button>
+                </div>
             </div>
             <div class="section-box">
                 <h3>📊 Auditoria de Segurança</h3>
@@ -187,44 +216,70 @@
         <!-- ABA 3: NOSSA FREQUÊNCIA -->
         <div id="tab-frequencia" class="tab-content hidden">
             <div class="section-box" style="text-align: center;">
-                <h3>❤️ Projeto Nossa Frequência</h3>
+                <h3>❤️ Nossa Frequência & Saúde</h3>
                 <p id="freq-contador" style="font-size: 13px; font-weight: bold; color: var(--accent); margin: 6px 0;"></p>
-                <textarea id="freq-recado" placeholder="Mensagens de conexão..." oninput="salvarDadosGerais()"></textarea>
+                <textarea id="freq-recado" placeholder="Mensagens e diário de casal..." oninput="salvarDadosGerais()"></textarea>
             </div>
         </div>
 
         <!-- ABA 4: SINTONIA -->
         <div id="tab-sintonia" class="tab-content hidden">
             <div class="section-box">
-                <h3>⚡ Projeto Sintonia</h3>
-                <textarea id="sintonia-notas" placeholder="Diretrizes de sintonia..." oninput="salvarDadosGerais()"></textarea>
+                <h3>⚡ Sintonia Mental</h3>
+                <textarea id="sintonia-notas" placeholder="Diretrizes energéticas e foco do dia..." oninput="salvarDadosGerais()"></textarea>
             </div>
         </div>
 
-        <!-- ABA 5: GEOMETRIA SAGRADA -->
+        <!-- ABA 5: TAREFAS -->
+        <div id="tab-tarefas" class="tab-content hidden">
+            <div class="section-box">
+                <h3>📋 Gerenciador de Tarefas</h3>
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="tarefa-input" placeholder="Nova tarefa..." style="margin-bottom:0;" onkeypress="if(event.key==='Enter')adicionarTarefa()">
+                    <button class="btn" style="width: 45px; margin-bottom:0;" onclick="adicionarTarefa()">+</button>
+                </div>
+                <div id="tarefa-lista" style="margin-top: 8px; max-height: 120px; overflow-y: auto;"></div>
+            </div>
+        </div>
+
+        <!-- ABA 6: FINANÇAS -->
+        <div id="tab-financas" class="tab-content hidden">
+            <div class="section-box">
+                <h3>💰 Controle de Finanças</h3>
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="fin-desc" placeholder="Descrição (Ex: Supermercado)" style="margin-bottom:6px;">
+                    <input type="number" id="fin-val" placeholder="Valor (R$)" style="margin-bottom:6px; width: 110px;" step="0.01">
+                </div>
+                <button class="btn" onclick="adicionarFinanca()">Adicionar Lançamento</button>
+                <div id="fin-saldo" style="font-size: 13px; font-weight: bold; margin: 6px 0; text-align: center;"></div>
+                <div id="fin-lista" style="max-height: 90px; overflow-y: auto;"></div>
+            </div>
+        </div>
+
+        <!-- ABA 7: GEOMETRIA SAGRADA -->
         <div id="tab-geometria" class="tab-content hidden">
             <div class="section-box" style="text-align: center;">
                 <h3>💠 Geometria Sagrada</h3>
-                <canvas id="geoCanvas" width="220" height="160"></canvas>
+                <canvas id="geoCanvas" width="200" height="130"></canvas>
                 <div style="display: flex; gap: 6px; justify-content: center; margin-top: 6px;">
-                    <button class="btn" style="font-size: 11px; padding: 6px; margin: 0;" onclick="desenharPadrao('flor')">Flor da Vida</button>
-                    <button class="btn" style="font-size: 11px; padding: 6px; margin: 0;" onclick="desenharPadrao('metatron')">Cubo de Metatron</button>
+                    <button class="btn" style="font-size: 11px; padding: 5px; margin: 0;" onclick="desenharPadrao('flor')">Flor da Vida</button>
+                    <button class="btn" style="font-size: 11px; padding: 5px; margin: 0;" onclick="desenharPadrao('metatron')">Metatron</button>
                 </div>
             </div>
         </div>
 
-        <!-- ABA 6: GALERIA -->
+        <!-- ABA 8: GALERIA -->
         <div id="tab-galeria" class="tab-content hidden">
             <div class="section-box">
-                <h3>🖼️ Projeto Galeria</h3>
-                <input type="text" id="galeria-titulo" placeholder="Título da memória..." style="margin-bottom:6px;">
+                <h3>🖼️ Galeria de Memórias</h3>
+                <input type="text" id="galeria-titulo" placeholder="Título..." style="margin-bottom:6px;">
                 <input type="text" id="galeria-url" placeholder="Link da imagem (URL)..." style="margin-bottom:6px;">
-                <button class="btn" onclick="adicionarGaleria()">Adicionar à Galeria</button>
-                <div id="galeria-container" style="margin-top: 10px; max-height: 130px; overflow-y: auto;"></div>
+                <button class="btn" onclick="adicionarGaleria()">Adicionar Imagem</button>
+                <div id="galeria-container" class="gallery-grid"></div>
             </div>
         </div>
 
-        <!-- ABA 7: CONFIGURAÇÕES -->
+        <!-- ABA 9: CONFIGURAÇÕES -->
         <div id="tab-config" class="tab-content hidden">
             <div class="section-box">
                 <h3>⚙️ Ajustes do Sistema</h3>
@@ -238,7 +293,7 @@
             </div>
         </div>
 
-        <button class="btn btn-outline" style="margin-top: 12px;" onclick="fazerLogout()">Encerrar Sessão</button>
+        <button class="btn btn-outline" style="margin-top: 10px;" onclick="fazerLogout()">Encerrar Sessão</button>
     </div>
 
     <!-- TELA DE CADASTRO -->
@@ -259,7 +314,7 @@
     };
 
     function carregarBanco() {
-        let dados = localStorage.getItem('app_db_v3');
+        let dados = localStorage.getItem('app_db_v5');
         if (!dados) {
             let padrao = {
                 "admin": {
@@ -269,26 +324,26 @@
                     metas: [],
                     recado: "",
                     sintonia: "",
+                    tarefas: [],
+                    financas: [],
                     galeria: [],
-                    log: "Sistema pronto."
+                    log: "Sistema inicializado."
                 }
             };
-            localStorage.setItem('app_db_v3', JSON.stringify(padrao));
+            localStorage.setItem('app_db_v5', JSON.stringify(padrao));
             return padrao;
         }
-        try {
-            return JSON.parse(dados);
-        } catch (e) {
-            localStorage.removeItem('app_db_v3');
+        try { return JSON.parse(dados); } catch (e) {
+            localStorage.removeItem('app_db_v5');
             return carregarBanco();
         }
     }
 
     function salvarBanco(db) {
-        localStorage.setItem('app_db_v3', JSON.stringify(db));
+        localStorage.setItem('app_db_v5', JSON.stringify(db));
     }
 
-    let usuarioLogado = localStorage.getItem('app_user_v3') || null;
+    let usuarioLogado = localStorage.getItem('app_user_v5') || null;
     let tipoGeometria = 'flor';
 
     function mudarTema(nome) {
@@ -330,7 +385,6 @@
     function trocarAba(aba) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        let t = document.getElementById('tab- ' + aba); // fix string matching below
         let tabEl = document.getElementById('tab-' + aba);
         let btnEl = document.getElementById('tb-' + aba);
         if (tabEl) tabEl.classList.remove('hidden');
@@ -348,19 +402,13 @@
         }
 
         let db = carregarBanco();
-
-        if (!db[u]) {
-            mostrarMsg("Este usuário não existe.", "error");
-            return;
-        }
-
-        if (db[u].senha !== p) {
-            mostrarMsg("Senha incorreta.", "error");
+        if (!db[u] || db[u].senha !== p) {
+            mostrarMsg("Usuário ou senha incorretos.", "error");
             return;
         }
 
         usuarioLogado = u;
-        localStorage.setItem('app_user_v3', u);
+        localStorage.setItem('app_user_v5', u);
         mudarTela('dashboard');
     }
 
@@ -369,14 +417,13 @@
         let p = document.getElementById('cad-pass').value;
 
         if (!u || !p) {
-            mostrarMsg("Preencha todos os campos para cadastrar.", "error");
+            mostrarMsg("Preencha todos os campos.", "error");
             return;
         }
 
         let db = carregarBanco();
-
         if (db[u]) {
-            mostrarMsg("Este nome de usuário já está em uso.", "error");
+            mostrarMsg("Este usuário já existe.", "error");
             return;
         }
 
@@ -387,6 +434,8 @@
             metas: [],
             recado: "",
             sintonia: "",
+            tarefas: [],
+            financas: [],
             galeria: [],
             log: "Conta criada com sucesso."
         };
@@ -417,6 +466,8 @@
 
         mudarTema(d.tema);
         renderizarMetas();
+        renderizarTarefas();
+        renderizarFinancas();
         renderizarGaleria();
 
         let inicio = new Date('2023-01-01');
@@ -473,6 +524,88 @@
         });
     }
 
+    function adicionarTarefa() {
+        let input = document.getElementById('tarefa-input');
+        let val = input.value.trim();
+        if (!val) return;
+        let db = carregarBanco();
+        if (!db[usuarioLogado].tarefas) db[usuarioLogado].tarefas = [];
+        db[usuarioLogado].tarefas.push(val);
+        salvarBanco(db);
+        input.value = "";
+        renderizarTarefas();
+    }
+
+    function removerTarefa(idx) {
+        let db = carregarBanco();
+        db[usuarioLogado].tarefas.splice(idx, 1);
+        salvarBanco(db);
+        renderizarTarefas();
+    }
+
+    function renderizarTarefas() {
+        let db = carregarBanco();
+        let tarefas = db[usuarioLogado].tarefas || [];
+        let container = document.getElementById('tarefa-lista');
+        container.innerHTML = "";
+        if (tarefas.length === 0) {
+            container.innerHTML = `<p style="font-size:11px; opacity:0.6; text-align:center;">Nenhuma tarefa pendente.</p>`;
+            return;
+        }
+        tarefas.forEach((t, i) => {
+            let div = document.createElement('div');
+            div.className = "list-item";
+            div.innerHTML = `<span>${t}</span><button onclick="removerTarefa(${i})">×</button>`;
+            container.appendChild(div);
+        });
+    }
+
+    function adicionarFinanca() {
+        let desc = document.getElementById('fin-desc').value.trim();
+        let val = parseFloat(document.getElementById('fin-val').value);
+        if (!desc || isNaN(val)) return;
+
+        let db = carregarBanco();
+        if (!db[usuarioLogado].financas) db[usuarioLogado].financas = [];
+        db[usuarioLogado].financas.push({ desc: desc, val: val });
+        salvarBanco(db);
+
+        document.getElementById('fin-desc').value = "";
+        document.getElementById('fin-val').value = "";
+        renderizarFinancas();
+    }
+
+    function removerFinanca(idx) {
+        let db = carregarBanco();
+        db[usuarioLogado].financas.splice(idx, 1);
+        salvarBanco(db);
+        renderizarFinancas();
+    }
+
+    function renderizarFinancas() {
+        let db = carregarBanco();
+        let financas = db[usuarioLogado].financas || [];
+        let container = document.getElementById('fin-lista');
+        let saldoEl = document.getElementById('fin-saldo');
+        container.innerHTML = "";
+        
+        let total = 0;
+        if (financas.length === 0) {
+            container.innerHTML = `<p style="font-size:11px; opacity:0.6; text-align:center;">Nenhum lançamento financeiro.</p>`;
+            saldoEl.innerText = "Saldo Total: R$ 0,00";
+            return;
+        }
+
+        financas.forEach((f, i) => {
+            total += f.val;
+            let div = document.createElement('div');
+            div.className = "list-item";
+            div.innerHTML = `<span><b>${f.desc}</b></span> <span style="color:${f.val >= 0 ? 'var(--success)' : 'var(--danger)'}">R$ ${f.val.toFixed(2)}</span> <button onclick="removerFinanca(${i})">×</button>`;
+            container.appendChild(div);
+        });
+        saldoEl.innerText = `Saldo Total: R$ ${total.toFixed(2)}`;
+    }
+
     function adicionarGaleria() {
         let tit = document.getElementById('galeria-titulo').value.trim();
         let url = document.getElementById('galeria-url').value.trim();
@@ -501,14 +634,18 @@
         let container = document.getElementById('galeria-container');
         container.innerHTML = "";
         if (itens.length === 0) {
-            container.innerHTML = `<p style="font-size:11px; opacity:0.6; text-align:center;">Nenhum registro na galeria.</p>`;
+            container.innerHTML = `<p style="font-size:11px; opacity:0.6; text-align:center; grid-column: 1/-1;">Nenhuma imagem na galeria.</p>`;
             return;
         }
         itens.forEach((item, i) => {
-            let div = document.createElement('div');
-            div.className = "list-item";
-            div.innerHTML = `<span><b>${item.titulo}</b></span> <button onclick="removerGaleria(${i})">×</button>`;
-            container.appendChild(div);
+            let card = document.createElement('div');
+            card.className = "gallery-card";
+            card.innerHTML = `
+                <img src="${item.url}" alt="${item.titulo}" onerror="this.src='https://via.placeholder.com/130x70?text=Erro'">
+                <div style="font-size: 10px; font-weight: bold; margin-bottom: 2px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${item.titulo}</div>
+                <button onclick="removerGaleria(${i})" style="color:var(--danger); border:none; background:none; cursor:pointer; font-size:10px;">Remover</button>
+            `;
+            container.appendChild(card);
         });
     }
 
@@ -524,6 +661,13 @@
         document.getElementById('guardiao-log').innerText = db[usuarioLogado].log;
     }
 
+    function copiarSenhaGuardiao() {
+        let campo = document.getElementById('guardiao-senha');
+        if (!campo.value) return;
+        navigator.clipboard.writeText(campo.value);
+        mostrarMsg("Chave copiada para a área de transferência!", "success");
+    }
+
     function desenharPadrao(tipo) {
         tipoGeometria = tipo;
         let canvas = document.getElementById('geoCanvas');
@@ -536,14 +680,14 @@
         ctx.lineWidth = 1.2;
 
         if (tipo === 'flor') {
-            let r = 32;
+            let r = 26;
             ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
             for (let i = 0; i < 6; i++) {
                 let ang = i * Math.PI / 3;
                 ctx.beginPath(); ctx.arc(cx + r * Math.cos(ang), cy + r * Math.sin(ang), r, 0, Math.PI * 2); ctx.stroke();
             }
         } else {
-            let r = 55;
+            let r = 45;
             ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
             let pts = [];
             for (let i = 0; i < 6; i++) {
@@ -572,7 +716,7 @@
 
     function fazerLogout() {
         usuarioLogado = null;
-        localStorage.removeItem('app_user_v3');
+        localStorage.removeItem('app_user_v5');
         mudarTela('login');
     }
 
