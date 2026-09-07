@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecossistema Unificado • Versão Blindada</title>
+    <title>Ecossistema Unificado • Núcleo Direto</title>
     <style>
         :root {
             --bg: #090d16;
@@ -129,7 +129,7 @@
 <body>
 
 <div class="container" id="app">
-    <div class="brand">✨ Ecossistema Unificado • Versão Blindada ✨</div>
+    <div class="brand">✨ Ecossistema Unificado • Núcleo Direto ✨</div>
     <div id="msg" class="msg"></div>
 
     <!-- TELA DE LOGIN -->
@@ -258,42 +258,41 @@
         "Rose Gold": { bg: "#fdf2f2", card: "#ffffff", text: "#4a3b3c", accent: "#d4a5a5", border: "#e6c5c5" }
     };
 
-    // Garante inicialização limpa do banco de dados no localStorage
-    function obterBanco() {
-        let db = localStorage.getItem('sistema_supremo_db_v2');
-        if (!db) {
-            let inicial = {
+    function carregarBanco() {
+        let dados = localStorage.getItem('app_db_v3');
+        if (!dados) {
+            let padrao = {
                 "admin": {
                     senha: "123",
                     tema: "Midnight Blue",
-                    notas: "Sistema inicializado com sucesso.",
-                    metas: ["Testar ecossistema"],
-                    recado: "Conexão ativa.",
-                    sintonia: "Alinhado.",
+                    notas: "",
+                    metas: [],
+                    recado: "",
+                    sintonia: "",
                     galeria: [],
-                    log: "Criado em modo seguro."
+                    log: "Sistema pronto."
                 }
             };
-            localStorage.setItem('sistema_supremo_db_v2', JSON.stringify(inicial));
-            return inicial;
+            localStorage.setItem('app_db_v3', JSON.stringify(padrao));
+            return padrao;
         }
         try {
-            return JSON.parse(db);
+            return JSON.parse(dados);
         } catch (e) {
-            localStorage.removeItem('sistema_supremo_db_v2');
-            return obterBanco();
+            localStorage.removeItem('app_db_v3');
+            return carregarBanco();
         }
     }
 
     function salvarBanco(db) {
-        localStorage.setItem('sistema_supremo_db_v2', JSON.stringify(db));
+        localStorage.setItem('app_db_v3', JSON.stringify(db));
     }
 
-    let usuarioAtual = localStorage.getItem('sistema_supremo_user_v2') || null;
+    let usuarioLogado = localStorage.getItem('app_user_v3') || null;
     let tipoGeometria = 'flor';
 
-    function mudarTema(nomeTema) {
-        let t = temasDisponiveis[nomeTema] || temasDisponiveis["Midnight Blue"];
+    function mudarTema(nome) {
+        let t = temasDisponiveis[nome] || temasDisponiveis["Midnight Blue"];
         let r = document.documentElement;
         r.style.setProperty('--bg', t.bg);
         r.style.setProperty('--card', t.card);
@@ -302,28 +301,26 @@
         r.style.setProperty('--border', t.border);
     }
 
-    function mostrarMsg(texto, tipo) {
+    function mostrarMsg(txt, tipo) {
         let m = document.getElementById('msg');
         if (!m) return;
         m.className = "msg " + tipo;
-        m.innerText = texto;
-        setTimeout(() => { if(m.innerText === texto) m.innerText = ""; }, 4000);
+        m.innerText = txt;
+        setTimeout(() => { if(m.innerText === txt) m.innerText = ""; }, 4000);
     }
 
     function mudarTela(tela) {
-        ['view-login', 'view-dashboard', 'view-cadastro'].forEach(id => {
-            let el = document.getElementById(id);
-            if (el) el.classList.add('hidden');
-        });
-        let m = document.getElementById('msg');
-        if (m) m.innerText = "";
+        document.getElementById('view-login').classList.add('hidden');
+        document.getElementById('view-dashboard').classList.add('hidden');
+        document.getElementById('view-cadastro').classList.add('hidden');
+        document.getElementById('msg').innerText = "";
 
         if (tela === 'login') {
             document.getElementById('view-login').classList.remove('hidden');
             mudarTema("Midnight Blue");
         } else if (tela === 'dashboard') {
             document.getElementById('view-dashboard').classList.remove('hidden');
-            carregarDadosDashboard();
+            carregarPainel();
         } else if (tela === 'cadastro') {
             document.getElementById('view-cadastro').classList.remove('hidden');
             mudarTema("Midnight Blue");
@@ -333,10 +330,11 @@
     function trocarAba(aba) {
         document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
         document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-        let tab = document.getElementById('tab-' + aba);
-        let btn = document.getElementById('tb-' + aba);
-        if (tab) tab.classList.remove('hidden');
-        if (btn) btn.classList.add('active');
+        let t = document.getElementById('tab- ' + aba); // fix string matching below
+        let tabEl = document.getElementById('tab-' + aba);
+        let btnEl = document.getElementById('tb-' + aba);
+        if (tabEl) tabEl.classList.remove('hidden');
+        if (btnEl) btnEl.classList.add('active');
         if (aba === 'geometria') desenharPadrao(tipoGeometria);
     }
 
@@ -345,24 +343,24 @@
         let p = document.getElementById('login-pass').value;
 
         if (!u || !p) {
-            mostrarMsg("Preencha o usuário e a senha corretamente!", "error");
+            mostrarMsg("Preencha o usuário e a senha.", "error");
             return;
         }
 
-        let db = obterBanco();
+        let db = carregarBanco();
 
         if (!db[u]) {
-            mostrarMsg("Usuário não encontrado!", "error");
+            mostrarMsg("Este usuário não existe.", "error");
             return;
         }
 
         if (db[u].senha !== p) {
-            mostrarMsg("Senha incorreta!", "error");
+            mostrarMsg("Senha incorreta.", "error");
             return;
         }
 
-        usuarioAtual = u;
-        localStorage.setItem('sistema_supremo_user_v2', u);
+        usuarioLogado = u;
+        localStorage.setItem('app_user_v3', u);
         mudarTela('dashboard');
     }
 
@@ -371,48 +369,52 @@
         let p = document.getElementById('cad-pass').value;
 
         if (!u || !p) {
-            mostrarMsg("Informe um usuário e uma senha válidos!", "error");
+            mostrarMsg("Preencha todos os campos para cadastrar.", "error");
             return;
         }
 
-        let db = obterBanco();
-        
+        let db = carregarBanco();
+
         if (db[u]) {
-            mostrarMsg("Este nome de usuário já existe!", "error");
+            mostrarMsg("Este nome de usuário já está em uso.", "error");
             return;
         }
 
-        db[u] = { 
-            senha: p, 
-            tema: "Midnight Blue", 
-            notas: "", 
-            metas: [], 
-            recado: "", 
-            sintonia: "", 
-            galeria: [], 
-            log: "Conta criada com sucesso." 
+        db[u] = {
+            senha: p,
+            tema: "Midnight Blue",
+            notas: "",
+            metas: [],
+            recado: "",
+            sintonia: "",
+            galeria: [],
+            log: "Conta criada com sucesso."
         };
-        
+
         salvarBanco(db);
         mostrarMsg("Conta criada com sucesso! Faça login.", "success");
-        setTimeout(() => mudarTela('login'), 1200);
+        setTimeout(() => {
+            document.getElementById('login-user').value = u;
+            document.getElementById('login-pass').value = "";
+            mudarTela('login');
+        }, 1200);
     }
 
-    function carregarDadosDashboard() {
-        let db = obterBanco();
-        if (!usuarioAtual || !db[usuarioAtual]) {
+    function carregarPainel() {
+        let db = carregarBanco();
+        if (!usuarioLogado || !db[usuarioLogado]) {
             fazerLogout();
             return;
         }
-        let d = db[usuarioAtual];
+        let d = db[usuarioLogado];
 
-        document.getElementById('dash-title').innerText = "Painel de " + usuarioAtual;
+        document.getElementById('dash-title').innerText = "Painel de " + usuarioLogado;
         document.getElementById('aria-notas').value = d.notas || "";
         document.getElementById('freq-recado').value = d.recado || "";
         document.getElementById('sintonia-notas').value = d.sintonia || "";
-        document.getElementById('guardiao-log').innerText = d.log || "Nenhum evento registrado.";
+        document.getElementById('guardiao-log').innerText = d.log || "";
         document.getElementById('cfg-tema').value = d.tema || "Midnight Blue";
-        
+
         mudarTema(d.tema);
         renderizarMetas();
         renderizarGaleria();
@@ -420,19 +422,18 @@
         let inicio = new Date('2023-01-01');
         let hoje = new Date();
         let dias = Math.floor((hoje - inicio) / (1000 * 60 * 60 * 24));
-        let contador = document.getElementById('freq-contador');
-        if (contador) contador.innerText = `Juntos há ${dias} dias em harmonia ❤️`;
+        document.getElementById('freq-contador').innerText = `Juntos há ${dias} dias em harmonia ❤️`;
 
         trocarAba('aria');
     }
 
     function salvarDadosGerais() {
-        if (!usuarioAtual) return;
-        let db = obterBanco();
-        if (!db[usuarioAtual]) return;
-        db[usuarioAtual].notas = document.getElementById('aria-notas').value;
-        db[usuarioAtual].recado = document.getElementById('freq-recado').value;
-        db[usuarioAtual].sintonia = document.getElementById('sintonia-notas').value;
+        if (!usuarioLogado) return;
+        let db = carregarBanco();
+        if (!db[usuarioLogado]) return;
+        db[usuarioLogado].notas = document.getElementById('aria-notas').value;
+        db[usuarioLogado].recado = document.getElementById('freq-recado').value;
+        db[usuarioLogado].sintonia = document.getElementById('sintonia-notas').value;
         salvarBanco(db);
     }
 
@@ -440,26 +441,25 @@
         let input = document.getElementById('aria-metainput');
         let val = input.value.trim();
         if (!val) return;
-        let db = obterBanco();
-        if (!db[usuarioAtual].metas) db[usuarioAtual].metas = [];
-        db[usuarioAtual].metas.push(val);
+        let db = carregarBanco();
+        if (!db[usuarioLogado].metas) db[usuarioLogado].metas = [];
+        db[usuarioLogado].metas.push(val);
         salvarBanco(db);
         input.value = "";
         renderizarMetas();
     }
 
     function removerMeta(idx) {
-        let db = obterBanco();
-        db[usuarioAtual].metas.splice(idx, 1);
+        let db = carregarBanco();
+        db[usuarioLogado].metas.splice(idx, 1);
         salvarBanco(db);
         renderizarMetas();
     }
 
     function renderizarMetas() {
-        let db = obterBanco();
-        let metas = db[usuarioAtual].metas || [];
+        let db = carregarBanco();
+        let metas = db[usuarioLogado].metas || [];
         let container = document.getElementById('aria-metalista');
-        if (!container) return;
         container.innerHTML = "";
         if (metas.length === 0) {
             container.innerHTML = `<p style="font-size:11px; opacity:0.6; text-align:center;">Nenhuma meta registrada.</p>`;
@@ -478,9 +478,9 @@
         let url = document.getElementById('galeria-url').value.trim();
         if (!tit || !url) return;
 
-        let db = obterBanco();
-        if (!db[usuarioAtual].galeria) db[usuarioAtual].galeria = [];
-        db[usuarioAtual].galeria.push({ titulo: tit, url: url });
+        let db = carregarBanco();
+        if (!db[usuarioLogado].galeria) db[usuarioLogado].galeria = [];
+        db[usuarioLogado].galeria.push({ titulo: tit, url: url });
         salvarBanco(db);
 
         document.getElementById('galeria-titulo').value = "";
@@ -489,17 +489,16 @@
     }
 
     function removerGaleria(idx) {
-        let db = obterBanco();
-        db[usuarioAtual].galeria.splice(idx, 1);
+        let db = carregarBanco();
+        db[usuarioLogado].galeria.splice(idx, 1);
         salvarBanco(db);
         renderizarGaleria();
     }
 
     function renderizarGaleria() {
-        let db = obterBanco();
-        let itens = db[usuarioAtual].galeria || [];
+        let db = carregarBanco();
+        let itens = db[usuarioLogado].galeria || [];
         let container = document.getElementById('galeria-container');
-        if (!container) return;
         container.innerHTML = "";
         if (itens.length === 0) {
             container.innerHTML = `<p style="font-size:11px; opacity:0.6; text-align:center;">Nenhum registro na galeria.</p>`;
@@ -519,11 +518,10 @@
         for (let i = 0; i < 14; i++) senha += chars.charAt(Math.floor(Math.random() * chars.length));
         document.getElementById('guardiao-senha').value = senha;
         
-        let db = obterBanco();
-        db[usuarioAtual].log = `Chave gerada em ${new Date().toLocaleTimeString()}`;
+        let db = carregarBanco();
+        db[usuarioLogado].log = `Chave gerada em ${new Date().toLocaleTimeString()}`;
         salvarBanco(db);
-        let logEl = document.getElementById('guardiao-log');
-        if(logEl) logEl.innerText = db[usuarioAtual].log;
+        document.getElementById('guardiao-log').innerText = db[usuarioLogado].log;
     }
 
     function desenharPadrao(tipo) {
@@ -563,23 +561,23 @@
     }
 
     function salvarConfiguracoes() {
-        let db = obterBanco();
+        let db = carregarBanco();
         let novaS = document.getElementById('cfg-novasenha').value;
         let novoT = document.getElementById('cfg-tema').value;
-        if (novaS) db[usuarioAtual].senha = novaS;
-        db[usuarioAtual].tema = novoT;
+        if (novaS) db[usuarioLogado].senha = novaS;
+        db[usuarioLogado].tema = novoT;
         salvarBanco(db);
         mostrarMsg("Configurações salvas com sucesso!", "success");
     }
 
     function fazerLogout() {
-        usuarioAtual = null;
-        localStorage.removeItem('sistema_supremo_user_v2');
+        usuarioLogado = null;
+        localStorage.removeItem('app_user_v3');
         mudarTela('login');
     }
 
-    let dbCheck = obterBanco();
-    if (usuarioAtual && dbCheck[usuarioAtual]) {
+    let bancoInicial = carregarBanco();
+    if (usuarioLogado && bancoInicial[usuarioLogado]) {
         mudarTela('dashboard');
     } else {
         mudarTela('login');
