@@ -270,7 +270,7 @@
             </div>
         </div>
 
-        <!-- ABA 5: HÁBITOS (NOVO) -->
+        <!-- ABA 5: HÁBITOS -->
         <div id="tab-habitos" class="tab-content hidden">
             <div class="section-box">
                 <h3>🔥 Rastreador de Hábitos Diários</h3>
@@ -321,14 +321,15 @@
             </div>
         </div>
 
-        <!-- ABA 9: GEOMETRIA SAGRADA -->
+        <!-- ABA 9: GEOMETRIA SAGRADA (COM VESICA PISCIS) -->
         <div id="tab-geometria" class="tab-content hidden">
             <div class="section-box" style="text-align: center;">
                 <h3>💠 Geometria Sagrada Visual</h3>
                 <canvas id="geoCanvas" width="240" height="160"></canvas>
-                <div style="display: flex; gap: 6px; justify-content: center; margin-top: 8px;">
-                    <button class="btn" style="font-size: 11px; padding: 6px; margin: 0;" onclick="desenharPadrao('flor')">Flor da Vida</button>
-                    <button class="btn" style="font-size: 11px; padding: 6px; margin: 0;" onclick="desenharPadrao('metatron')">Cubo de Metatron</button>
+                <div style="display: flex; gap: 6px; justify-content: center; margin-top: 8px; flex-wrap: wrap;">
+                    <button class="btn" style="font-size: 11px; padding: 6px; margin: 0; width: auto;" onclick="desenharPadrao('vesica')">Vesica Piscis</button>
+                    <button class="btn" style="font-size: 11px; padding: 6px; margin: 0; width: auto;" onclick="desenharPadrao('flor')">Flor da Vida</button>
+                    <button class="btn" style="font-size: 11px; padding: 6px; margin: 0; width: auto;" onclick="desenharPadrao('metatron')">Cubo de Metatron</button>
                 </div>
             </div>
         </div>
@@ -423,7 +424,7 @@
     }
 
     let usuarioLogado = localStorage.getItem('aria_os_user_v10') || null;
-    let tipoGeometria = 'flor';
+    let tipoGeometria = 'vesica';
     let pomodoroInterval = null;
     let tempoRestante = 1500;
     let pomodoroAtivo = false;
@@ -575,7 +576,6 @@
         salvarBanco(db);
     }
 
-    /* COPILOT INTELIGENTE */
     function enviarMensagemAria() {
         let input = document.getElementById('chat-input');
         let txt = input.value.trim();
@@ -649,7 +649,6 @@
         mostrarMsg("Ouvindo... Fale agora.", "success");
     }
 
-    /* METAS */
     function adicionarMeta() {
         let input = document.getElementById('aria-metainput');
         let val = input.value.trim();
@@ -684,7 +683,6 @@
         });
     }
 
-    /* HÁBITOS (NOVO) */
     function adicionarHabito() {
         let input = document.getElementById('habito-input');
         let val = input.value.trim();
@@ -725,7 +723,6 @@
         });
     }
 
-    /* TAREFAS */
     function adicionarTarefa() {
         let input = document.getElementById('tarefa-input');
         let val = input.value.trim();
@@ -760,7 +757,6 @@
         });
     }
 
-    /* FINANÇAS */
     function adicionarFinanca() {
         let desc = document.getElementById('fin-desc').value.trim();
         let val = parseFloat(document.getElementById('fin-val').value);
@@ -805,7 +801,6 @@
         saldoEl.innerText = `Saldo Total: R$ ${total.toFixed(2)}`;
     }
 
-    /* POMODORO */
     function atualizarDisplayPomodoro() {
         let min = Math.floor(tempoRestante / 60);
         let sec = tempoRestante % 60;
@@ -834,7 +829,6 @@
         atualizarDisplayPomodoro();
     }
 
-    /* GALERIA */
     function adicionarGaleria() {
         let tit = document.getElementById('galeria-titulo').value.trim();
         let url = document.getElementById('galeria-url').value.trim();
@@ -876,7 +870,6 @@
         });
     }
 
-    /* GUARDIÃO */
     async function gerarChaveCriptografica() {
         let array = new Uint8Array(16);
         window.crypto.getRandomValues(array);
@@ -895,7 +888,6 @@
         mostrarMsg("Chave criptográfica copiada com segurança!", "success");
     }
 
-    /* GEOLOCALIZAÇÃO HTML5 */
     function carregarGeolocalizacao() {
         let info = document.getElementById('clima-info');
         if (!navigator.geolocation) {
@@ -915,7 +907,6 @@
         );
     }
 
-    /* GEOMETRIA SAGRADA */
     function desenharPadrao(tipo) {
         tipoGeometria = tipo;
         let canvas = document.getElementById('geoCanvas');
@@ -927,14 +918,18 @@
         ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#6366f1';
         ctx.lineWidth = 1.2;
 
-        if (tipo === 'flor') {
+        if (tipo === 'vesica') {
+            let r = 42;
+            ctx.beginPath(); ctx.arc(cx - 18, cy, r, 0, Math.PI * 2); ctx.stroke();
+            ctx.beginPath(); ctx.arc(cx + 18, cy, r, 0, Math.PI * 2); ctx.stroke();
+        } else if (tipo === 'flor') {
             let r = 32;
             ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
             for (let i = 0; i < 6; i++) {
                 let ang = i * Math.PI / 3;
                 ctx.beginPath(); ctx.arc(cx + r * Math.cos(ang), cy + r * Math.sin(ang), r, 0, Math.PI * 2); ctx.stroke();
             }
-        } else {
+        } else if (tipo === 'metatron') {
             let r = 52;
             ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
             let pts = [];
