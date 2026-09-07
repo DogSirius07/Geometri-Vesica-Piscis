@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ecossistema Unificado • Aria, Guardião, Nossa Frequência & Geometria</title>
+    <title>Ecossistema Completo • Aria, Guardião, Frequência, Geometria, Galeria & Sintonia</title>
     <style>
         :root {
-            --bg: #0b0f19;
-            --card: #151c2f;
-            --text: #f1f5f9;
-            --accent: #6366f1;
-            --border: #334155;
-            --danger: #ef4444;
-            --success: #22c55e;
+            --bg: #090d16;
+            --card: #131b2e;
+            --text: #f8fafc;
+            --accent: #4f46e5;
+            --border: #1e293b;
+            --danger: #dc2626;
+            --success: #16a34a;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: system-ui, -apple-system, sans-serif; }
         body {
@@ -26,28 +26,28 @@
         }
         .container {
             width: 100%;
-            max-width: 680px;
+            max-width: 720px;
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 16px;
             padding: 24px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
         h1, h2, h3 { text-align: center; margin-bottom: 12px; }
         .brand {
-            font-size: 11px;
+            font-size: 10px;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 3px;
             text-align: center;
-            opacity: 0.7;
+            opacity: 0.6;
             margin-bottom: 16px;
             font-weight: bold;
         }
         input, select, textarea {
             width: 100%;
-            padding: 12px;
-            margin-bottom: 12px;
-            background: rgba(255,255,255,0.04);
+            padding: 11px;
+            margin-bottom: 10px;
+            background: rgba(255,255,255,0.03);
             border: 1px solid var(--border);
             border-radius: 8px;
             color: inherit;
@@ -56,12 +56,12 @@
         }
         input:focus, select:focus, textarea:focus {
             border-color: var(--accent);
-            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+            box-shadow: 0 0 0 2px rgba(79, 70, 229, 0.2);
         }
-        textarea { resize: vertical; min-height: 100px; }
+        textarea { resize: vertical; min-height: 90px; }
         .btn {
             width: 100%;
-            padding: 12px;
+            padding: 11px;
             background: var(--accent);
             color: white;
             border: none;
@@ -73,23 +73,19 @@
             margin-bottom: 8px;
         }
         .btn:hover { opacity: 0.9; }
-        .btn-outline {
-            background: transparent;
-            border: 1px solid var(--border);
-        }
-        .btn-danger { background: var(--danger); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); }
         .nav-tabs {
             display: flex;
-            gap: 4px;
+            gap: 3px;
             margin-bottom: 16px;
             overflow-x: auto;
             padding-bottom: 4px;
         }
         .tab-btn {
             flex: 1;
-            min-width: 80px;
-            padding: 8px 4px;
-            font-size: 11px;
+            min-width: 75px;
+            padding: 7px 2px;
+            font-size: 10px;
             font-weight: bold;
             background: rgba(255,255,255,0.03);
             border: 1px solid var(--border);
@@ -103,7 +99,7 @@
             border-color: var(--accent);
         }
         .section-box {
-            background: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.25);
             border: 1px dashed var(--border);
             border-radius: 10px;
             padding: 14px;
@@ -115,7 +111,7 @@
         .error { color: var(--danger); }
         .link { color: var(--accent); cursor: pointer; text-align: center; display: block; font-size: 13px; margin-top: 8px; text-decoration: none; }
         .link:hover { text-decoration: underline; }
-        canvas { display: block; margin: 12px auto; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid var(--border); }
+        canvas { display: block; margin: 10px auto; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px solid var(--border); }
         .list-item {
             display: flex;
             justify-content: space-between;
@@ -133,7 +129,7 @@
 <body>
 
 <div class="container" id="app">
-    <div class="brand">⚡ Ecossistema Integrado Definitivo ⚡</div>
+    <div class="brand">✨ Ecossistema Unificado • Versão Suprema Completa ✨</div>
     <div id="msg" class="msg"></div>
 
     <!-- TELA DE LOGIN -->
@@ -141,11 +137,11 @@
         <h2>Entrar no Sistema</h2>
         <input type="text" id="login-user" placeholder="Usuário (ex: admin)">
         <input type="password" id="login-pass" placeholder="Senha">
-        <button class="btn" onclick="fazerLogin()">Acessar</button>
+        <button class="btn" onclick="fazerLogin()">Acessar Ecossistema</button>
         <a class="link" onclick="mudarTela('cadastro')">Criar nova conta</a>
     </div>
 
-    <!-- PAINEL CENTRAL (COM ABAS PARA CADA PROJETO) -->
+    <!-- PAINEL CENTRAL (COM TODAS AS ABAS DOS PROJETOS) -->
     <div id="view-dashboard" class="hidden">
         <h2 id="dash-title">Painel</h2>
         
@@ -153,83 +149,106 @@
             <button class="tab-btn active" id="tb-aria" onclick="trocarAba('aria')">💬 Aria</button>
             <button class="tab-btn" id="tb-guardiao" onclick="trocarAba('guardiao')">🛡️ Guardião</button>
             <button class="tab-btn" id="tb-frequencia" onclick="trocarAba('frequencia')">❤️ Frequência</button>
+            <button class="tab-btn" id="tb-sintonia" onclick="trocarAba('sintonia')">⚡ Sintonia</button>
             <button class="tab-btn" id="tb-geometria" onclick="trocarAba('geometria')">💠 Geometria</button>
+            <button class="tab-btn" id="tb-galeria" onclick="trocarAba('galeria')">🖼️ Galeria</button>
             <button class="tab-btn" id="tb-config" onclick="trocarAba('config')">⚙️ Ajustes</button>
         </div>
 
-        <!-- ABA 1: ARIA (Notas, Metas e Diário) -->
+        <!-- ABA 1: ARIA -->
         <div id="tab-aria" class="tab-content">
             <div class="section-box">
-                <h3>Bloco de Notas do Aria</h3>
-                <textarea id="aria-notas" placeholder="Escreva suas ideias e notas aqui..." oninput="salvarAria()"></textarea>
-                <span style="font-size: 10px; opacity: 0.6; display: block; margin-top: 4px;">Salvamento automático ativo.</span>
+                <h3>Bloco de Notas Inteligente</h3>
+                <textarea id="aria-notas" placeholder="Escreva suas anotações..." oninput="salvarDadosGerais()"></textarea>
+                <span style="font-size: 10px; opacity: 0.6; display: block;">Salvamento automático em tempo real.</span>
             </div>
             <div class="section-box">
-                <h3>Metas & Objetivos</h3>
+                <h3>Metas e Objetivos</h3>
                 <div style="display: flex; gap: 6px;">
                     <input type="text" id="aria-metainput" placeholder="Nova meta..." style="margin-bottom:0;" onkeypress="if(event.key==='Enter')adicionarMeta()">
-                    <button class="btn" style="width: 50px; margin-bottom:0;" onclick="adicionarMeta()">+</button>
+                    <button class="btn" style="width: 45px; margin-bottom:0;" onclick="adicionarMeta()">+</button>
                 </div>
-                <div id="aria-metalista" style="margin-top: 10px; max-height: 120px; overflow-y: auto;"></div>
+                <div id="aria-metalista" style="margin-top: 8px; max-height: 100px; overflow-y: auto;"></div>
             </div>
         </div>
 
-        <!-- ABA 2: GUARDIÃO (Cofre e Segurança) -->
+        <!-- ABA 2: GUARDIÃO -->
         <div id="tab-guardiao" class="tab-content hidden">
             <div class="section-box">
-                <h3>🛡️ Guardião • Gerador de Chaves</h3>
-                <input type="text" id="guardiao-senha" readonly placeholder="Clique para gerar..." style="font-family: monospace; text-align: center; font-weight: bold;">
-                <button class="btn" onclick="gerarSenhaGuardiao()">Gerar Senha Blindada</button>
+                <h3>🛡️ Guardião • Cofre & Senhas</h3>
+                <input type="text" id="guardiao-senha" readonly placeholder="Gerar chave segura..." style="font-family: monospace; text-align: center; font-weight: bold;">
+                <button class="btn" onclick="gerarSenhaGuardiao()">Gerar Chave Blindada</button>
             </div>
             <div class="section-box">
-                <h3>📊 Auditoria de Acesso</h3>
+                <h3>📊 Auditoria de Segurança</h3>
                 <p id="guardiao-log" style="font-size: 11px; font-family: monospace; opacity: 0.8;"></p>
             </div>
         </div>
 
-        <!-- ABA 3: NOSSA FREQUÊNCIA (Casal & Sincronia) -->
+        <!-- ABA 3: NOSSA FREQUÊNCIA -->
         <div id="tab-frequencia" class="tab-content hidden">
             <div class="section-box" style="text-align: center;">
-                <h3>❤️ Nossa Frequência</h3>
-                <p id="freq-contador" style="font-size: 14px; font-weight: bold; color: var(--accent); margin: 8px 0;"></p>
-                <textarea id="freq-recado" placeholder="Mensagens de sintonia e carinho..." oninput="salvarFrequencia()"></textarea>
+                <h3>❤️ Projeto Nossa Frequência</h3>
+                <p id="freq-contador" style="font-size: 13px; font-weight: bold; color: var(--accent); margin: 6px 0;"></p>
+                <textarea id="freq-recado" placeholder="Mensagens de conexão e carinho..." oninput="salvarDadosGerais()"></textarea>
             </div>
         </div>
 
-        <!-- ABA 4: GEOMETRIA SAGRADA (Arte & Meditação) -->
+        <!-- ABA 4: SINTONIA -->
+        <div id="tab-sintonia" class="tab-content hidden">
+            <div class="section-box">
+                <h3>⚡ Projeto Sintonia</h3>
+                <p style="font-size: 11px; opacity: 0.7; margin-bottom: 8px;">Alinhamento de propósitos, sintonia mental e frequências ativas.</p>
+                <textarea id="sintonia-notas" placeholder="Insira aqui as diretrizes de sintonia e alinhamento..." oninput="salvarDadosGerais()"></textarea>
+            </div>
+        </div>
+
+        <!-- ABA 5: GEOMETRIA SAGRADA -->
         <div id="tab-geometria" class="tab-content hidden">
             <div class="section-box" style="text-align: center;">
                 <h3>💠 Geometria Sagrada</h3>
-                <p style="font-size: 11px; opacity: 0.7; margin-bottom: 8px;">Padrões de expansão visual e harmonia.</p>
-                <canvas id="geoCanvas" width="240" height="180"></canvas>
-                <div style="display: flex; gap: 8px; justify-content: center; margin-top: 8px;">
+                <canvas id="geoCanvas" width="220" height="160"></canvas>
+                <div style="display: flex; gap: 6px; justify-content: center; margin-top: 6px;">
                     <button class="btn" style="font-size: 11px; padding: 6px; margin: 0;" onclick="desenharPadrao('flor')">Flor da Vida</button>
                     <button class="btn" style="font-size: 11px; padding: 6px; margin: 0;" onclick="desenharPadrao('metatron')">Cubo de Metatron</button>
                 </div>
             </div>
         </div>
 
-        <!-- ABA 5: CONFIGURAÇÕES -->
+        <!-- ABA 6: GALERIA -->
+        <div id="tab-galeria" class="tab-content hidden">
+            <div class="section-box">
+                <h3>🖼️ Projeto Galeria (Registros Visuais)</h3>
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="galeria-titulo" placeholder="Título da imagem/memória..." style="margin-bottom:6px;">
+                </div>
+                <input type="text" id="galeria-url" placeholder="Cole o link da imagem (URL)..." style="margin-bottom:6px;">
+                <button class="btn" onclick="adicionarGaleria()">Adicionar à Galeria</button>
+                <div id="galeria-container" style="margin-top: 10px; max-height: 130px; overflow-y: auto;"></div>
+            </div>
+        </div>
+
+        <!-- ABA 7: CONFIGURAÇÕES -->
         <div id="tab-config" class="tab-content hidden">
             <div class="section-box">
-                <h3>⚙️ Configurações da Conta</h3>
-                <input type="password" id="cfg-novasenha" placeholder="Alterar senha">
+                <h3>⚙️ Ajustes do Sistema</h3>
+                <input type="password" id="cfg-novasenha" placeholder="Alterar senha atual">
                 <select id="cfg-tema" onchange="mudarTema(this.value)">
                     <option value="Midnight Blue">Midnight Blue</option>
                     <option value="Matrix Esmerald">Matrix Esmerald</option>
                     <option value="Rose Gold">Rose Gold</option>
                 </select>
-                <button class="btn" onclick="salvarConfiguracoes()">Salvar Alterações</button>
+                <button class="btn" onclick="salvarConfiguracoes()">Salvar Configurações</button>
             </div>
         </div>
 
-        <button class="btn btn-outline" style="margin-top: 14px;" onclick="fazerLogout()">Encerrar Sessão</button>
+        <button class="btn btn-outline" style="margin-top: 12px;" onclick="fazerLogout()">Encerrar Sessão</button>
     </div>
 
     <!-- TELA DE CADASTRO -->
     <div id="view-cadastro" class="hidden">
-        <h2>Criar Conta</h2>
-        <input type="text" id="cad-user" placeholder="Nome de usuário">
+        <h2>Criar Nova Conta</h2>
+        <input type="text" id="cad-user" placeholder="Usuário">
         <input type="password" id="cad-pass" placeholder="Senha">
         <button class="btn" onclick="cadastrarUsuario()">Cadastrar</button>
         <a class="link" onclick="mudarTela('login')">Voltar ao Login</a>
@@ -238,26 +257,28 @@
 
 <script>
     const temasDisponiveis = {
-        "Midnight Blue": { bg: "#0b0f19", card: "#151c2f", text: "#f1f5f9", accent: "#6366f1", border: "#334155" },
+        "Midnight Blue": { bg: "#090d16", card: "#131b2e", text: "#f8fafc", accent: "#4f46e5", border: "#1e293b" },
         "Matrix Esmerald": { bg: "#0d1117", card: "#161b22", text: "#00ff66", accent: "#238636", border: "#30363d" },
         "Rose Gold": { bg: "#fdf2f2", card: "#ffffff", text: "#4a3b3c", accent: "#d4a5a5", border: "#e6c5c5" }
     };
 
-    if (!localStorage.getItem('sistema_unificado_db')) {
+    if (!localStorage.getItem('sistema_supremo_db')) {
         const bancoInicial = {
             "admin": {
                 senha: "123",
                 tema: "Midnight Blue",
-                notas: "Bem-vindo ao Aria unificado.",
-                metas: ["Estruturar módulos", "Validar Guardião"],
+                notas: "Bem-vindo ao ecossistema supremo unificado.",
+                metas: ["Organizar módulos", "Validar Galeria e Sintonia"],
                 recado: "Frequência ativa e sincronizada.",
+                sintonia: "Alinhamento mental e propósito em alta.",
+                galeria: [{titulo: "Primeiro Registro", url: "https://via.placeholder.com/150"}],
                 log: "Sessão inicial segura criada."
             }
         };
-        localStorage.setItem('sistema_unificado_db', JSON.stringify(bancoInicial));
+        localStorage.setItem('sistema_supremo_db', JSON.stringify(bancoInicial));
     }
 
-    let usuarioAtual = localStorage.getItem('sistema_unificado_user') || null;
+    let usuarioAtual = localStorage.getItem('sistema_supremo_user') || null;
     let tipoGeometria = 'flor';
 
     function mudarTema(nomeTema) {
@@ -306,11 +327,11 @@
     function fazerLogin() {
         let u = document.getElementById('login-user').value.trim();
         let p = document.getElementById('login-pass').value;
-        let db = JSON.parse(localStorage.getItem('sistema_unificado_db'));
+        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
 
         if (db[u] && db[u].senha === p) {
             usuarioAtual = u;
-            localStorage.setItem('sistema_unificado_user', u);
+            localStorage.setItem('sistema_supremo_user', u);
             mudarTela('dashboard');
         } else {
             mostrarMsg("Usuário ou senha inválidos!", "error");
@@ -324,29 +345,31 @@
             mostrarMsg("Preencha todos os campos!", "error");
             return;
         }
-        let db = JSON.parse(localStorage.getItem('sistema_unificado_db'));
+        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
         if (db[u]) {
             mostrarMsg("Usuário já existe!", "error");
             return;
         }
-        db[u] = { senha: p, tema: "Midnight Blue", notas: "", metas: [], recado: "", log: "Conta criada com sucesso." };
-        localStorage.setItem('sistema_unificado_db', JSON.stringify(db));
+        db[u] = { senha: p, tema: "Midnight Blue", notas: "", metas: [], recado: "", sintonia: "", galeria: [], log: "Conta criada com sucesso." };
+        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
         mostrarMsg("Cadastrado com sucesso!", "success");
         setTimeout(() => mudarTela('login'), 1000);
     }
 
     function carregarDadosDashboard() {
-        let db = JSON.parse(localStorage.getItem('sistema_unificado_db'));
+        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
         let d = db[usuarioAtual];
 
         document.getElementById('dash-title').innerText = "Painel de " + usuarioAtual;
         document.getElementById('aria-notas').value = d.notas || "";
         document.getElementById('freq-recado').value = d.recado || "";
+        document.getElementById('sintonia-notas').value = d.sintonia || "";
         document.getElementById('guardiao-log').innerText = d.log || "Nenhum evento registrado.";
         document.getElementById('cfg-tema').value = d.tema || "Midnight Blue";
         
         mudarTema(d.tema);
         renderizarMetas();
+        renderizarGaleria();
 
         let inicio = new Date('2023-01-01');
         let hoje = new Date();
@@ -356,43 +379,41 @@
         trocarAba('aria');
     }
 
-    function salvarAria() {
-        let db = JSON.parse(localStorage.getItem('sistema_unificado_db'));
+    function salvarDadosGerais() {
+        if (!usuarioAtual) return;
+        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
         db[usuarioAtual].notas = document.getElementById('aria-notas').value;
         db[usuarioAtual].recado = document.getElementById('freq-recado').value;
-        localStorage.setItem('sistema_unificado_db', JSON.stringify(db));
-    }
-
-    function salvarFrequencia() {
-        salvarAria();
+        db[usuarioAtual].sintonia = document.getElementById('sintonia-notas').value;
+        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
     }
 
     function adicionarMeta() {
         let input = document.getElementById('aria-metainput');
         let val = input.value.trim();
         if (!val) return;
-        let db = JSON.parse(localStorage.getItem('sistema_unificado_db'));
+        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
         if (!db[usuarioAtual].metas) db[usuarioAtual].metas = [];
         db[usuarioAtual].metas.push(val);
-        localStorage.setItem('sistema_unificado_db', JSON.stringify(db));
+        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
         input.value = "";
         renderizarMetas();
     }
 
     function removerMeta(idx) {
-        let db = JSON.parse(localStorage.getItem('sistema_unificado_db'));
+        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
         db[usuarioAtual].metas.splice(idx, 1);
-        localStorage.setItem('sistema_unificado_db', JSON.stringify(db));
+        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
         renderizarMetas();
     }
 
     function renderizarMetas() {
-        let db = JSON.parse(localStorage.getItem('sistema_unificado_db'));
+        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
         let metas = db[usuarioAtual].metas || [];
         let container = document.getElementById('aria-metalista');
         container.innerHTML = "";
         if (metas.length === 0) {
-            container.innerHTML = `<p style="font-size:12px; opacity:0.6; text-align:center;">Nenhuma meta registrada.</p>`;
+            container.innerHTML = `<p style="font-size:11px; opacity:0.6; text-align:center;">Nenhuma meta registrada.</p>`;
             return;
         }
         metas.forEach((m, i) => {
@@ -403,15 +424,54 @@
         });
     }
 
+    function adicionarGaleria() {
+        let tit = document.getElementById('galeria-titulo').value.trim();
+        let url = document.getElementById('galeria-url').value.trim();
+        if (!tit || !url) return;
+
+        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        if (!db[usuarioAtual].galeria) db[usuarioAtual].galeria = [];
+        db[usuarioAtual].galeria.push({ titulo: tit, url: url });
+        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
+
+        document.getElementById('galeria-titulo').value = "";
+        document.getElementById('galeria-url').value = "";
+        renderizarGaleria();
+    }
+
+    function removerGaleria(idx) {
+        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        db[usuarioAtual].galeria.splice(idx, 1);
+        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
+        renderizarGaleria();
+    }
+
+    function renderizarGaleria() {
+        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
+        let itens = db[usuarioAtual].galeria || [];
+        let container = document.getElementById('galeria-container');
+        container.innerHTML = "";
+        if (itens.length === 0) {
+            container.innerHTML = `<p style="font-size:11px; opacity:0.6; text-align:center;">Nenhum registro na galeria.</p>`;
+            return;
+        }
+        itens.forEach((item, i) => {
+            let div = document.createElement('div');
+            div.className = "list-item";
+            div.innerHTML = `<span><b>${item.titulo}</b></span> <button onclick="removerGaleria(${i})">×</button>`;
+            container.appendChild(div);
+        });
+    }
+
     function gerarSenhaGuardiao() {
         let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
         let senha = "";
         for (let i = 0; i < 14; i++) senha += chars.charAt(Math.floor(Math.random() * chars.length));
         document.getElementById('guardiao-senha').value = senha;
         
-        let db = JSON.parse(localStorage.getItem('sistema_unificado_db'));
+        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
         db[usuarioAtual].log = `Chave segura gerada em ${new Date().toLocaleTimeString()}`;
-        localStorage.setItem('sistema_unificado_db', JSON.stringify(db));
+        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
         document.getElementById('guardiao-log').innerText = db[usuarioAtual].log;
     }
 
@@ -423,18 +483,18 @@
         let w = canvas.width, h = canvas.height;
         ctx.clearRect(0, 0, w, h);
         let cx = w / 2, cy = h / 2;
-        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#6366f1';
+        ctx.strokeStyle = getComputedStyle(document.documentElement).getPropertyValue('--accent').trim() || '#4f46e5';
         ctx.lineWidth = 1.2;
 
         if (tipo === 'flor') {
-            let r = 35;
+            let r = 32;
             ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
             for (let i = 0; i < 6; i++) {
                 let ang = i * Math.PI / 3;
                 ctx.beginPath(); ctx.arc(cx + r * Math.cos(ang), cy + r * Math.sin(ang), r, 0, Math.PI * 2); ctx.stroke();
             }
         } else {
-            let r = 60;
+            let r = 55;
             ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
             let pts = [];
             for (let i = 0; i < 6; i++) {
@@ -452,22 +512,22 @@
     }
 
     function salvarConfiguracoes() {
-        let db = JSON.parse(localStorage.getItem('sistema_unificado_db'));
+        let db = JSON.parse(localStorage.getItem('sistema_supremo_db'));
         let novaS = document.getElementById('cfg-novasenha').value;
         let novoT = document.getElementById('cfg-tema').value;
         if (novaS) db[usuarioAtual].senha = novaS;
         db[usuarioAtual].tema = novoT;
-        localStorage.setItem('sistema_unificado_db', JSON.stringify(db));
+        localStorage.setItem('sistema_supremo_db', JSON.stringify(db));
         mostrarMsg("Configurações salvas com sucesso!", "success");
     }
 
     function fazerLogout() {
         usuarioAtual = null;
-        localStorage.removeItem('sistema_unificado_user');
+        localStorage.removeItem('sistema_supremo_user');
         mudarTela('login');
     }
 
-    if (usuarioAtual && JSON.parse(localStorage.getItem('sistema_unificado_db'))[usuarioAtual]) {
+    if (usuarioAtual && JSON.parse(localStorage.getItem('sistema_supremo_db'))[usuarioAtual]) {
         mudarTela('dashboard');
     } else {
         mudarTela('login');
