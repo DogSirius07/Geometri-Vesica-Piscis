@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Aria.OS • Infinite Neural Ecosystem 2026</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#020617">
+</head>
+<body>
+
+<div class="container" id="app">
+    <div class="brand">✨ Aria.OS • Infinite Neural Ecosystem ✨</div>
+    <div id="msg" class="msg"></div>
+
+    <!-- TELA DE LOGIN -->
+    <div id="view-login">
+        <h2>Entrar no Ecossistema</h2>
+        <input type="text" id="login-user" placeholder="Identidade do Usuário">
+        <input type="password" id="login-pass" placeholder="Chave de Acesso">
+        <button class="btn" onclick="fazerLogin()">Autenticar Sessão</button>
+        <a class="link" onclick="mudarTela('cadastro')">Criar Nova Identidade Segura</a>
+    </div>
+
+    <!-- PAINEL CENTRAL -->
+    <div id="view-dashboard" class="hidden">
+        <h2 id="dash-title">Painel Neural</h2>
+        
+        <div class="nav-tabs">
+            <button class="tab-btn active" id="tb-aria" onclick="trocarAba('aria')">💬 Aria Copilot</button>
+            <button class="tab-btn" id="tb-guardiao" onclick="trocarAba('guardiao')">🛡️ Guardião</button>
+            <button class="tab-btn" id="tb-frequencia" onclick="trocarAba('frequencia')">❤️ Frequência</button>
+            <button class="tab-btn" id="tb-sintonia" onclick="trocarAba('sintonia')">⚡ Sintonia</button>
+            <button class="tab-btn" id="tb-habitos" onclick="trocarAba('habitos')">🔥 Hábitos</button>
+            <button class="tab-btn" id="tb-tarefas" onclick="trocarAba('tarefas')">📋 Tarefas</button>
+            <button class="tab-btn" id="tb-financas" onclick="trocarAba('financas')">💰 Finanças</button>
+            <button class="tab-btn" id="tb-foco" onclick="trocarAba('foco')">⏳ Foco/Pom</button>
+            <button class="tab-btn" id="tb-geometria" onclick="trocarAba('geometria')">💠 Geometria</button>
+            <button class="tab-btn" id="tb-galeria" onclick="trocarAba('galeria')">🖼️ Galeria</button>
+            <button class="tab-btn" id="tb-clima" onclick="trocarAba('clima')">🌤️ Clima</button>
+            <button class="tab-btn" id="tb-config" onclick="trocarAba('config')">⚙️ Ajustes</button>
+        </div>
+
+        <!-- ABA 1: ARIA COPILOT -->
+        <div id="tab-aria" class="tab-content">
+            <div class="section-box">
+                <h3>🤖 Aria Neural Copilot & Voz</h3>
+                <div id="chat-container" class="chat-box">
+                    <div class="chat-msg ai">Olá! Sincronizada com seu núcleo de dados. Qual é o próximo marco de alta performance?</div>
+                </div>
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="chat-input" placeholder="Converse com a Aria..." style="margin-bottom:0;" onkeypress="if(event.key==='Enter')enviarMensagemAria()">
+                    <button class="btn" style="width: 75px; margin-bottom:0;" onclick="enviarMensagemAria()">Enviar</button>
+                    <button class="btn btn-outline" style="width: 45px; margin-bottom:0;" onclick="falarComAria()" title="Ouvir resposta">🔊</button>
+                    <button class="btn btn-outline" style="width: 45px; margin-bottom:0;" onclick="ouvirMicrofone()" title="Ditado por voz">🎙️</button>
+                </div>
+            </div>
+            <div class="section-box">
+                <h3>📝 Bloco de Notas Inteligente</h3>
+                <textarea id="aria-notas" placeholder="Escreva ideias, códigos ou reflexões rápidas..." oninput="salvarDadosGerais()"></textarea>
+            </div>
+        </div>
+
+        <!-- ABA 2: GUARDIÃO -->
+        <div id="tab-guardiao" class="tab-content hidden">
+            <div class="section-box">
+                <h3>🛡️ Guardião • Criptografia de Alta Entropia</h3>
+                <input type="text" id="guardiao-senha" readonly placeholder="Gerar chave forte protegida..." style="font-family: monospace; text-align: center; font-weight: bold;">
+                <div style="display: flex; gap: 6px;">
+                    <button class="btn" onclick="gerarChaveCriptografica()" style="margin-bottom:0;">Gerar Chave Segura</button>
+                    <button class="btn btn-outline" onclick="copiarSenhaGuardiao()" style="margin-bottom:0;">Copiar</button>
+                </div>
+            </div>
+            <div class="section-box">
+                <h3>🔒 Registro de Auditoria Criptografada</h3>
+                <p id="guardiao-log" style="font-size: 11px; font-family: monospace; opacity: 0.8;"></p>
+            </div>
+        </div>
+
+        <!-- ABA 3: NOSSA FREQUÊNCIA -->
+        <div id="tab-frequencia" class="tab-content hidden">
+            <div class="section-box" style="text-align: center;">
+                <h3>❤️ Projeto Nossa Frequência</h3>
+                <p id="freq-contador" style="font-size: 15px; font-weight: bold; color: var(--accent); margin: 10px 0;"></p>
+                <textarea id="freq-recado" placeholder="Diário de casal, votos e memórias compartilhadas..." oninput="salvarDadosGerais()"></textarea>
+            </div>
+        </div>
+
+        <!-- ABA 4: SINTONIA -->
+        <div id="tab-sintonia" class="tab-content hidden">
+            <div class="section-box">
+                <h3>⚡ Sintonia Mental & Metas Estratégicas</h3>
+                <textarea id="sintonia-notas" placeholder="Diretrizes energéticas, intenções e foco diário..." oninput="salvarDadosGerais()"></textarea>
+                <div style="margin-top: 12px;">
+                    <h4 style="font-size: 12px; margin-bottom: 6px;">Metas em Andamento</h4>
+                    <div style="display: flex; gap: 6px;">
+                        <input type="text" id="aria-metainput" placeholder="Nova meta..." style="margin-bottom:0;" onkeypress="if(event.key==='Enter')adicionarMeta()">
+                        <button class="btn" style="width: 45px; margin-bottom:0;" onclick="adicionarMeta()">+</button>
+                    </div>
+                    <div id="aria-metalista" style="margin-top: 10px; max-height: 100px; overflow-y: auto;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA 5: HÁBITOS -->
+        <div id="tab-habitos" class="tab-content hidden">
+            <div class="section-box">
+                <h3>🔥 Rastreador de Hábitos Diários</h3>
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="habito-input" placeholder="Ex: Meditação / Leitura / Treino" style="margin-bottom:0;" onkeypress="if(event.key==='Enter')adicionarHabito()">
+                    <button class="btn" style="width: 45px; margin-bottom:0;" onclick="adicionarHabito()">+</button>
+                </div>
+                <div id="habito-lista" style="margin-top: 10px; max-height: 150px; overflow-y: auto;"></div>
+            </div>
+        </div>
+
+        <!-- ABA 6: TAREFAS -->
+        <div id="tab-tarefas" class="tab-content hidden">
+            <div class="section-box">
+                <h3>📋 Gerenciador de Tarefas</h3>
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="tarefa-input" placeholder="Nova pendência..." style="margin-bottom:0;" onkeypress="if(event.key==='Enter')adicionarTarefa()">
+                    <button class="btn" style="width: 45px; margin-bottom:0;" onclick="adicionarTarefa()">+</button>
+                </div>
+                <div id="tarefa-lista" style="margin-top: 10px; max-height: 150px; overflow-y: auto;"></div>
+            </div>
+        </div>
+
+        <!-- ABA 7: FINANÇAS -->
+        <div id="tab-financas" class="tab-content hidden">
+            <div class="section-box">
+                <h3>💰 Gestão Financeira Integrada</h3>
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="fin-desc" placeholder="Ex: Salário / Projeto / Despesa" style="margin-bottom:8px;">
+                    <input type="number" id="fin-val" placeholder="Valor (R$)" style="margin-bottom:8px; width: 130px;" step="0.01">
+                </div>
+                <button class="btn" onclick="adicionarFinanca()">Registrar Movimentação</button>
+                <div id="fin-saldo" style="font-size: 15px; font-weight: bold; margin: 10px 0; text-align: center;"></div>
+                <div id="fin-lista" style="max-height: 110px; overflow-y: auto;"></div>
+            </div>
+        </div>
+
+        <!-- ABA 8: FOCO & POMODORO -->
+        <div id="tab-foco" class="tab-content hidden">
+            <div class="section-box" style="text-align: center;">
+                <h3>⏳ Cronômetro de Foco Neural</h3>
+                <div id="pomodoro-display" style="font-size: 40px; font-weight: bold; font-family: monospace; color: var(--accent); margin: 18px 0;">25:00</div>
+                <div style="display: flex; gap: 8px; justify-content: center;">
+                    <button class="btn" style="width: 100px; margin-bottom:0;" onclick="iniciarPomodoro()">Iniciar</button>
+                    <button class="btn btn-outline" style="width: 100px; margin-bottom:0;" onclick="pausarPomodoro()">Pausar</button>
+                    <button class="btn btn-outline" style="width: 100px; margin-bottom:0;" onclick="resetarPomodoro()">Resetar</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA 9: GEOMETRIA SAGRADA -->
+        <div id="tab-geometria" class="tab-content hidden">
+            <div class="section-box" style="text-align: center;">
+                <h3>💠 Geometria Sagrada Visual</h3>
+                <canvas id="geoCanvas" width="240" height="160"></canvas>
+                <div style="display: flex; gap: 6px; justify-content: center; margin-top: 8px; flex-wrap: wrap;">
+                    <button class="btn" style="font-size: 11px; padding: 6px; margin: 0; width: auto;" onclick="desenharPadrao('vesica')">Vesica Piscis</button>
+                    <button class="btn" style="font-size: 11px; padding: 6px; margin: 0; width: auto;" onclick="desenharPadrao('flor')">Flor da Vida</button>
+                    <button class="btn" style="font-size: 11px; padding: 6px; margin: 0; width: auto;" onclick="desenharPadrao('metatron')">Cubo de Metatron</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- ABA 10: GALERIA -->
+        <div id="tab-galeria" class="tab-content hidden">
+            <div class="section-box">
+                <h3>🖼️ Galeria de Memórias Visuais</h3>
+                <input type="text" id="galeria-titulo" placeholder="Título da memória..." style="margin-bottom:8px;">
+                <input type="text" id="galeria-url" placeholder="Link direto da imagem (URL)..." style="margin-bottom:8px;">
+                <button class="btn" onclick="adicionarGaleria()">Adicionar Registro</button>
+                <div id="galeria-container" class="gallery-grid"></div>
+            </div>
+        </div>
+
+        <!-- ABA 11: CLIMA E LOCALIZAÇÃO -->
+        <div id="tab-clima" class="tab-content hidden">
+            <div class="section-box" style="text-align: center;">
+                <h3>🌤️ Radar de Coordenadas & Ambiente</h3>
+                <p id="clima-info" style="font-size: 13px; margin: 12px 0; line-height: 1.5;">Clique no botão abaixo para capturar sua geolocalização e dados climáticos do navegador.</p>
+                <button class="btn" onclick="carregarGeolocalizacao()">Capturar Sensores de Ambiente</button>
+            </div>
+        </div>
+
+        <!-- ABA 12: CONFIGURAÇÕES -->
+        <div id="tab-config" class="tab-content hidden">
+            <div class="section-box">
+                <h3>⚙️ Preferências & Relatórios</h3>
+                <input type="password" id="cfg-novasenha" placeholder="Alterar chave de acesso">
+                <select id="cfg-tema" onchange="mudarTema(this.value)">
+                    <option value="Midnight Blue">Midnight Blue</option>
+                    <option value="Matrix Esmerald">Matrix Esmerald</option>
+                    <option value="Cyberpunk Dark">Cyberpunk Dark</option>
+                    <option value="Rose Gold">Rose Gold</option>
+                </select>
+                <button class="btn" onclick="salvarConfiguracoes()">Salvar Configurações</button>
+                <button class="btn btn-outline" onclick="exportarRelatorioPDF()" style="margin-top: 6px;">📥 Exportar Relatório Geral (.JSON)</button>
+            </div>
+        </div>
+
+        <button class="btn btn-outline" style="margin-top: 16px;" onclick="fazerLogout()">Encerrar Sessão Segura</button>
+    </div>
+
+    <!-- TELA DE CADASTRO -->
+    <div id="view-cadastro" class="hidden">
+        <h2>Criar Identidade Segura</h2>
+        <input type="text" id="cad-user" placeholder="Nome de usuário">
+        <input type="password" id="cad-pass" placeholder="Chave de acesso principal">
+        <button class="btn" onclick="cadastrarUsuario()">Registrar Conta</button>
+        <a class="link" onclick="mudarTela('login')">Voltar ao Login</a>
+    </div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
