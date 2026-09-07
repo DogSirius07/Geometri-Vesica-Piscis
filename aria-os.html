@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aria.OS • Ultimate Neural Ecosystem</title>
+    <title>Aria.OS • Infinite Neural Ecosystem 2026</title>
     <style>
         :root {
-            --bg: #030712;
+            --bg: #020617;
             --card: #0f172a;
             --text: #f8fafc;
             --accent: #6366f1;
@@ -29,12 +29,12 @@
         }
         .container {
             width: 100%;
-            max-width: 960px;
+            max-width: 1000px;
             background: var(--card);
             border: 1px solid var(--border);
             border-radius: 24px;
             padding: 28px;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.85);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.9);
         }
         h2 { text-align: center; margin-bottom: 6px; font-size: 22px; }
         .brand {
@@ -178,7 +178,7 @@
 <body>
 
 <div class="container" id="app">
-    <div class="brand">✨ Aria.OS • Ultimate Neural Ecosystem ✨</div>
+    <div class="brand">✨ Aria.OS • Infinite Neural Ecosystem ✨</div>
     <div id="msg" class="msg"></div>
 
     <!-- TELA DE LOGIN -->
@@ -199,11 +199,13 @@
             <button class="tab-btn" id="tb-guardiao" onclick="trocarAba('guardiao')">🛡️ Guardião</button>
             <button class="tab-btn" id="tb-frequencia" onclick="trocarAba('frequencia')">❤️ Frequência</button>
             <button class="tab-btn" id="tb-sintonia" onclick="trocarAba('sintonia')">⚡ Sintonia</button>
+            <button class="tab-btn" id="tb-habitos" onclick="trocarAba('habitos')">🔥 Hábitos</button>
             <button class="tab-btn" id="tb-tarefas" onclick="trocarAba('tarefas')">📋 Tarefas</button>
             <button class="tab-btn" id="tb-financas" onclick="trocarAba('financas')">💰 Finanças</button>
             <button class="tab-btn" id="tb-foco" onclick="trocarAba('foco')">⏳ Foco/Pom</button>
             <button class="tab-btn" id="tb-geometria" onclick="trocarAba('geometria')">💠 Geometria</button>
             <button class="tab-btn" id="tb-galeria" onclick="trocarAba('galeria')">🖼️ Galeria</button>
+            <button class="tab-btn" id="tb-clima" onclick="trocarAba('clima')">🌤️ Clima</button>
             <button class="tab-btn" id="tb-config" onclick="trocarAba('config')">⚙️ Ajustes</button>
         </div>
 
@@ -212,10 +214,10 @@
             <div class="section-box">
                 <h3>🤖 Aria Neural Copilot & Voz</h3>
                 <div id="chat-container" class="chat-box">
-                    <div class="chat-msg ai">Olá! Estou sincronizada com suas notas e rotina. O que vamos estruturar hoje?</div>
+                    <div class="chat-msg ai">Olá! Sincronizada com seu núcleo de dados. Qual é o próximo marco de alta performance?</div>
                 </div>
                 <div style="display: flex; gap: 6px;">
-                    <input type="text" id="chat-input" placeholder="Pergunte à Aria ou peça insights..." style="margin-bottom:0;" onkeypress="if(event.key==='Enter')enviarMensagemAria()">
+                    <input type="text" id="chat-input" placeholder="Converse com a Aria..." style="margin-bottom:0;" onkeypress="if(event.key==='Enter')enviarMensagemAria()">
                     <button class="btn" style="width: 75px; margin-bottom:0;" onclick="enviarMensagemAria()">Enviar</button>
                     <button class="btn btn-outline" style="width: 45px; margin-bottom:0;" onclick="falarComAria()" title="Ouvir resposta">🔊</button>
                     <button class="btn btn-outline" style="width: 45px; margin-bottom:0;" onclick="ouvirMicrofone()" title="Ditado por voz">🎙️</button>
@@ -230,10 +232,10 @@
         <!-- ABA 2: GUARDIÃO -->
         <div id="tab-guardiao" class="tab-content hidden">
             <div class="section-box">
-                <h3>🛡️ Guardião • Cofre de Segurança</h3>
+                <h3>🛡️ Guardião • Criptografia de Alta Entropia</h3>
                 <input type="text" id="guardiao-senha" readonly placeholder="Gerar chave forte protegida..." style="font-family: monospace; text-align: center; font-weight: bold;">
                 <div style="display: flex; gap: 6px;">
-                    <button class="btn" onclick="gerarSenhaGuardiao()" style="margin-bottom:0;">Gerar Chave AES</button>
+                    <button class="btn" onclick="gerarChaveCriptografica()" style="margin-bottom:0;">Gerar Chave Segura</button>
                     <button class="btn btn-outline" onclick="copiarSenhaGuardiao()" style="margin-bottom:0;">Copiar</button>
                 </div>
             </div>
@@ -268,7 +270,19 @@
             </div>
         </div>
 
-        <!-- ABA 5: TAREFAS -->
+        <!-- ABA 5: HÁBITOS (NOVO) -->
+        <div id="tab-habitos" class="tab-content hidden">
+            <div class="section-box">
+                <h3>🔥 Rastreador de Hábitos Diários</h3>
+                <div style="display: flex; gap: 6px;">
+                    <input type="text" id="habito-input" placeholder="Ex: Meditação / Leitura / Treino" style="margin-bottom:0;" onkeypress="if(event.key==='Enter')adicionarHabito()">
+                    <button class="btn" style="width: 45px; margin-bottom:0;" onclick="adicionarHabito()">+</button>
+                </div>
+                <div id="habito-lista" style="margin-top: 10px; max-height: 150px; overflow-y: auto;"></div>
+            </div>
+        </div>
+
+        <!-- ABA 6: TAREFAS -->
         <div id="tab-tarefas" class="tab-content hidden">
             <div class="section-box">
                 <h3>📋 Gerenciador de Tarefas</h3>
@@ -280,7 +294,7 @@
             </div>
         </div>
 
-        <!-- ABA 6: FINANÇAS -->
+        <!-- ABA 7: FINANÇAS -->
         <div id="tab-financas" class="tab-content hidden">
             <div class="section-box">
                 <h3>💰 Gestão Financeira Integrada</h3>
@@ -294,7 +308,7 @@
             </div>
         </div>
 
-        <!-- ABA 7: FOCO & POMODORO -->
+        <!-- ABA 8: FOCO & POMODORO -->
         <div id="tab-foco" class="tab-content hidden">
             <div class="section-box" style="text-align: center;">
                 <h3>⏳ Cronômetro de Foco Neural</h3>
@@ -307,7 +321,7 @@
             </div>
         </div>
 
-        <!-- ABA 8: GEOMETRIA SAGRADA -->
+        <!-- ABA 9: GEOMETRIA SAGRADA -->
         <div id="tab-geometria" class="tab-content hidden">
             <div class="section-box" style="text-align: center;">
                 <h3>💠 Geometria Sagrada Visual</h3>
@@ -319,7 +333,7 @@
             </div>
         </div>
 
-        <!-- ABA 9: GALERIA -->
+        <!-- ABA 10: GALERIA -->
         <div id="tab-galeria" class="tab-content hidden">
             <div class="section-box">
                 <h3>🖼️ Galeria de Memórias Visuais</h3>
@@ -330,7 +344,16 @@
             </div>
         </div>
 
-        <!-- ABA 10: CONFIGURAÇÕES -->
+        <!-- ABA 11: CLIMA E LOCALIZAÇÃO -->
+        <div id="tab-clima" class="tab-content hidden">
+            <div class="section-box" style="text-align: center;">
+                <h3>🌤️ Radar de Coordenadas & Ambiente</h3>
+                <p id="clima-info" style="font-size: 13px; margin: 12px 0; line-height: 1.5;">Clique no botão abaixo para capturar sua geolocalização e dados climáticos do navegador.</p>
+                <button class="btn" onclick="carregarGeolocalizacao()">Capturar Sensores de Ambiente</button>
+            </div>
+        </div>
+
+        <!-- ABA 12: CONFIGURAÇÕES -->
         <div id="tab-config" class="tab-content hidden">
             <div class="section-box">
                 <h3>⚙️ Preferências & Relatórios</h3>
@@ -342,7 +365,7 @@
                     <option value="Rose Gold">Rose Gold</option>
                 </select>
                 <button class="btn" onclick="salvarConfiguracoes()">Salvar Configurações</button>
-                <button class="btn btn-outline" onclick="exportarRelatorioPDF()" style="margin-top: 6px;">📥 Exportar Relatório Geral (TXT/JSON)</button>
+                <button class="btn btn-outline" onclick="exportarRelatorioPDF()" style="margin-top: 6px;">📥 Exportar Relatório Geral (.JSON)</button>
             </div>
         </div>
 
@@ -361,14 +384,14 @@
 
 <script>
     const temasDisponiveis = {
-        "Midnight Blue": { bg: "#030712", card: "#0f172a", text: "#f8fafc", accent: "#6366f1", hover: "#4f46e5", border: "#1e293b" },
+        "Midnight Blue": { bg: "#020617", card: "#0f172a", text: "#f8fafc", accent: "#6366f1", hover: "#4f46e5", border: "#1e293b" },
         "Matrix Esmerald": { bg: "#020904", card: "#0a170d", text: "#00ff66", accent: "#16a34a", hover: "#15803d", border: "#14532d" },
         "Cyberpunk Dark": { bg: "#0a020f", card: "#180824", text: "#f43f5e", accent: "#e11d48", hover: "#be123c", border: "#881337" },
         "Rose Gold": { bg: "#fff5f5", card: "#ffffff", text: "#4a3b3c", accent: "#d4a5a5", hover: "#bc8a8a", border: "#e6c5c5" }
     };
 
     function carregarBanco() {
-        let dados = localStorage.getItem('aria_os_db_v8');
+        let dados = localStorage.getItem('aria_os_db_v10');
         if (!dados) {
             let padrao = {
                 "admin": {
@@ -376,29 +399,30 @@
                     tema: "Midnight Blue",
                     notas: "",
                     metas: [],
+                    habitos: [],
                     recado: "",
                     sintonia: "",
                     tarefas: [],
                     financas: [],
                     galeria: [],
-                    log: "Núcleo neural definitivo inicializado.",
+                    log: "Núcleo neural infinito inicializado.",
                     chat: []
                 }
             };
-            localStorage.setItem('aria_os_db_v8', JSON.stringify(padrao));
+            localStorage.setItem('aria_os_db_v10', JSON.stringify(padrao));
             return padrao;
         }
         try { return JSON.parse(dados); } catch (e) {
-            localStorage.removeItem('aria_os_db_v8');
+            localStorage.removeItem('aria_os_db_v10');
             return carregarBanco();
         }
     }
 
     function salvarBanco(db) {
-        localStorage.setItem('aria_os_db_v8', JSON.stringify(db));
+        localStorage.setItem('aria_os_db_v10', JSON.stringify(db));
     }
 
-    let usuarioLogado = localStorage.getItem('aria_os_user_v8') || null;
+    let usuarioLogado = localStorage.getItem('aria_os_user_v10') || null;
     let tipoGeometria = 'flor';
     let pomodoroInterval = null;
     let tempoRestante = 1500;
@@ -467,7 +491,7 @@
         }
 
         usuarioLogado = u;
-        localStorage.setItem('aria_os_user_v8', u);
+        localStorage.setItem('aria_os_user_v10', u);
         mudarTela('dashboard');
     }
 
@@ -491,6 +515,7 @@
             tema: "Midnight Blue",
             notas: "",
             metas: [],
+            habitos: [],
             recado: "",
             sintonia: "",
             tarefas: [],
@@ -526,6 +551,7 @@
 
         mudarTema(d.tema);
         renderizarMetas();
+        renderizarHabitos();
         renderizarTarefas();
         renderizarFinancas();
         renderizarGaleria();
@@ -561,14 +587,14 @@
         db[usuarioLogado].chat.push({ sender: 'user', text: txt });
         input.value = "";
 
-        let respostaAI = "Compreendido. Integrei essa diretriz aos seus registros neurais.";
+        let respostaAI = "Compreendido perfeitamente. Sincronizei essa diretriz com o núcleo do Aria.OS.";
         let lower = txt.toLowerCase();
         if (lower.includes('meta') || lower.includes('objetivo')) {
-            respostaAI = "Suas metas ativas estão na aba Sintonia. Mantenha o foco constante!";
+            respostaAI = "Suas metas estratégicas estão listadas na aba Sintonia. Foque no progresso diário!";
         } else if (lower.includes('finance') || lower.includes('dinheiro') || lower.includes('saldo')) {
-            respostaAI = "Verifique seus lançamentos e saldo total na aba Finanças.";
+            respostaAI = "Verifique seus lançamentos e saldo consolidado na aba Finanças.";
         } else if (lower.includes('olá') || lower.includes('oi')) {
-            respostaAI = `Olá, ${usuarioLogado}! Como posso ajudar a otimizar sua alta performance hoje?`;
+            respostaAI = `Olá, ${usuarioLogado}! Pronta para otimizar sua alta performance hoje?`;
         }
 
         db[usuarioLogado].chat.push({ sender: 'ai', text: respostaAI });
@@ -581,7 +607,7 @@
         let chatContainer = document.getElementById('chat-container');
         let chatList = db[usuarioLogado].chat || [];
         
-        chatContainer.innerHTML = `<div class="chat-msg ai">Olá! Estou sincronizada com suas notas e rotina. O que vamos estruturar hoje?</div>`;
+        chatContainer.innerHTML = `<div class="chat-msg ai">Olá! Sincronizada com seu núcleo de dados. Qual é o próximo marco de alta performance?</div>`;
         chatList.forEach(m => {
             let div = document.createElement('div');
             div.className = `chat-msg ${m.sender}`;
@@ -654,6 +680,47 @@
             let div = document.createElement('div');
             div.className = "list-item";
             div.innerHTML = `<span>${m}</span><button onclick="removerMeta(${i})">×</button>`;
+            container.appendChild(div);
+        });
+    }
+
+    /* HÁBITOS (NOVO) */
+    function adicionarHabito() {
+        let input = document.getElementById('habito-input');
+        let val = input.value.trim();
+        if (!val) return;
+        let db = carregarBanco();
+        if (!db[usuarioLogado].habitos) db[usuarioLogado].habitos = [];
+        db[usuarioLogado].habitos.push({ nome: val, streak: 0 });
+        salvarBanco(db);
+        input.value = "";
+        renderizarHabitos();
+    }
+    function incrementarStreak(idx) {
+        let db = carregarBanco();
+        db[usuarioLogado].habitos[idx].streak++;
+        salvarBanco(db);
+        renderizarHabitos();
+    }
+    function removerHabito(idx) {
+        let db = carregarBanco();
+        db[usuarioLogado].habitos.splice(idx, 1);
+        salvarBanco(db);
+        renderizarHabitos();
+    }
+    function renderizarHabitos() {
+        let db = carregarBanco();
+        let habitos = db[usuarioLogado].habitos || [];
+        let container = document.getElementById('habito-lista');
+        container.innerHTML = "";
+        if (habitos.length === 0) {
+            container.innerHTML = `<p style="font-size:11px; opacity:0.6; text-align:center;">Nenhum hábito cadastrado.</p>`;
+            return;
+        }
+        habitos.forEach((h, i) => {
+            let div = document.createElement('div');
+            div.className = "list-item";
+            div.innerHTML = `<span><b>${h.nome}</b> (🔥 ${h.streak} dias)</span> <div><button onclick="incrementarStreak(${i})" style="color:var(--success); margin-right:6px;" title="Registrar hoje">✓</button><button onclick="removerHabito(${i})">×</button></div>`;
             container.appendChild(div);
         });
     }
@@ -810,14 +877,14 @@
     }
 
     /* GUARDIÃO */
-    function gerarSenhaGuardiao() {
-        let chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=";
-        let senha = "";
-        for (let i = 0; i < 20; i++) senha += chars.charAt(Math.floor(Math.random() * chars.length));
-        document.getElementById('guardiao-senha').value = senha;
+    async function gerarChaveCriptografica() {
+        let array = new Uint8Array(16);
+        window.crypto.getRandomValues(array);
+        let hex = Array.from(array, b => b.toString(16).padStart(2, '0')).join('');
+        document.getElementById('guardiao-senha').value = "QUANTUM-" + hex.toUpperCase();
         
         let db = carregarBanco();
-        db[usuarioLogado].log = `Chave criptografada AES gerada em ${new Date().toLocaleTimeString()}`;
+        db[usuarioLogado].log = `Chave de criptografia de alta entropia gerada em ${new Date().toLocaleTimeString()}`;
         salvarBanco(db);
         document.getElementById('guardiao-log').innerText = db[usuarioLogado].log;
     }
@@ -825,7 +892,27 @@
         let campo = document.getElementById('guardiao-senha');
         if (!campo.value) return;
         navigator.clipboard.writeText(campo.value);
-        mostrarMsg("Chave copiada para a área de transferência!", "success");
+        mostrarMsg("Chave criptográfica copiada com segurança!", "success");
+    }
+
+    /* GEOLOCALIZAÇÃO HTML5 */
+    function carregarGeolocalizacao() {
+        let info = document.getElementById('clima-info');
+        if (!navigator.geolocation) {
+            info.innerText = "Geolocalização não suportada pelo seu navegador.";
+            return;
+        }
+        info.innerText = "Capturando coordenadas via satélite/navegador...";
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                let lat = pos.coords.latitude.toFixed(4);
+                let lon = pos.coords.longitude.toFixed(4);
+                info.innerHTML = `<b>Localização Confirmada:</b><br>Latitude: ${lat} | Longitude: ${lon}<br><span style="color:var(--success)">Sistemas sincronizados com o ambiente físico.</span>`;
+            },
+            (err) => {
+                info.innerText = "Erro ao obter geolocalização. Verifique as permissões do navegador.";
+            }
+        );
     }
 
     /* GEOMETRIA SAGRADA */
@@ -882,14 +969,14 @@
         let url = URL.createObjectURL(blob);
         let a = document.createElement('a');
         a.href = url;
-        a.download = `AriaOS_Relatorio_${usuarioLogado}.json`;
+        a.download = `AriaOS_InfiniteReport_${usuarioLogado}.json`;
         a.click();
         mostrarMsg("Relatório exportado com sucesso!", "success");
     }
 
     function fazerLogout() {
         usuarioLogado = null;
-        localStorage.removeItem('aria_os_user_v8');
+        localStorage.removeItem('aria_os_user_v10');
         mudarTela('login');
     }
 
