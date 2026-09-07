@@ -1,48 +1,51 @@
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Painel Individual de Usuários</title>
+    <title>Aria - Painel de Usuários</title>
     <style>
         :root {
-            --bg: #f4f4f4; --card: #ffffff; --text: #333333; --btn: #007bff;
+            --bg: #fdf2f2; --card: #ffffff; --text: #4a3b3c; --btn: #d4a5a5; --border: #e6c5c5;
         }
         body { background-color: var(--bg); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 20px; box-sizing: border-box; transition: 0.3s; }
-        .card { background-color: var(--card); padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 100%; max-width: 360px; box-sizing: border-box; }
-        input, select { width: 100%; padding: 12px; margin: 8px 0 16px 0; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 16px; }
-        button { background-color: var(--btn); color: white; border: none; padding: 12px; width: 100%; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 5px; }
+        .card { background-color: var(--card); padding: 25px; border-radius: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); width: 100%; max-width: 380px; box-sizing: border-box; border: 1px solid var(--border); }
+        input, select { width: 100%; padding: 12px; margin: 8px 0 16px 0; border: 1px solid var(--border); border-radius: 8px; box-sizing: border-box; font-size: 16px; background: rgba(255,255,255,0.8); color: inherit; }
+        button { background-color: var(--btn); color: white; border: none; padding: 12px; width: 100%; border-radius: 8px; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 5px; transition: 0.2s; }
         button:active { opacity: 0.8; }
-        .msg { font-size: 14px; text-align: center; margin-bottom: 10px; min-height: 20px; }
+        .msg { font-size: 14px; text-align: center; margin-bottom: 10px; min-height: 20px; font-weight: 500; }
         .error { color: #ff3b30; }
         .success { color: #34c759; }
-        a { color: var(--btn); text-decoration: none; display: block; text-align: center; margin-top: 15px; font-size: 14px; cursor: pointer; }
+        a { color: var(--btn); text-decoration: none; display: block; text-align: center; margin-top: 15px; font-size: 14px; cursor: pointer; font-weight: 500; }
         .hidden { display: none; }
-        h2 { text-align: center; margin-top: 0; }
+        h2 { text-align: center; margin-top: 0; font-weight: 600; letter-spacing: -0.5px; }
+        .brand { text-align: center; font-size: 12px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 5px; opacity: 0.7; }
     </style>
 </head>
 <body>
 
 <div class="card" id="app">
+    <div class="brand">Aria Ecosystem</div>
     <div id="msg" class="msg"></div>
 
     <!-- TELA DE LOGIN -->
     <div id="view-login">
-        <h2>Entrar</h2>
-        <input type="text" id="login-user" placeholder="Usuário">
-        <input type="password" id="login-pass" placeholder="Senha">
+        <h2>Acesso Individual</h2>
+        <input type="text" id="login-user" placeholder="Nome de usuário">
+        <input type="password" id="login-pass" placeholder="Sua senha">
         <button onclick="fazerLogin()">Entrar</button>
-        <a onclick="mudarTela('esqueci')">Esqueci minha senha</a>
-        <a onclick="mudarTela('cadastro')">Criar nova conta</a>
+        <a onclick="mudarTela('esqueci')">Esqueci minha senha / Resposta</a>
+        <a onclick="mudarTela('cadastro')">Criar primeira conta</a>
     </div>
 
     <!-- PAINEL / DASHBOARD -->
     <div id="view-dashboard" class="hidden">
         <h2 id="dash-title">Painel</h2>
-        <p id="dash-tema-txt" style="text-align: center; font-size: 14px;"></p>
-        <hr style="border: 0; border-top: 1px solid #ddd; margin: 15px 0;">
+        <p id="dash-tema-txt" style="text-align: center; font-size: 14px; opacity: 0.8;"></p>
+        <hr style="border: 0; border-top: 1px solid var(--border); margin: 20px 0;">
         <button onclick="mudarTela('config')">Minhas Configurações</button>
-        <button onclick="mudarTela('novo-usuario')" style="background-color: #5856d6;">Adicionar Novo Usuário</button>
+        <button onclick="mudarTela('novo-usuario')" style="background-color: var(--text); color: var(--card);">Adicionar Novo Usuário</button>
         <a onclick="fazerLogout()" style="color: #ff3b30; margin-top: 25px;">Sair da Conta</a>
     </div>
 
@@ -55,12 +58,12 @@
         <input type="text" id="cfg-pergunta">
         <label>Nova Resposta Secreta:</label>
         <input type="text" id="cfg-resposta" placeholder="Digite para alterar">
-        <label>Tema do Painel:</label>
+        <label>Tema Visual:</label>
         <select id="cfg-tema">
             <option value="Rose Gold">Rose Gold</option>
             <option value="Matrix Esmerald">Matrix Esmerald</option>
             <option value="Midnight Blue">Midnight Blue</option>
-            <option value="Claro Padrão">Claro Padrão</option>
+            <option value="Light Minimal">Light Minimal</option>
         </select>
         <button onclick="salvarConfiguracoes()">Salvar Alterações</button>
         <a onclick="mudarTela('dashboard')">Voltar ao Painel</a>
@@ -77,9 +80,9 @@
     <!-- RESPONDER PERGUNTA -->
     <div id="view-pergunta" class="hidden">
         <h2>Recuperação</h2>
-        <p id="lbl-pergunta" style="font-weight: bold; text-align: center;"></p>
+        <p id="lbl-pergunta" style="font-weight: 500; text-align: center; margin-bottom: 15px;"></p>
         <input type="text" id="esq-resposta" placeholder="Sua resposta secreta">
-        <input type="password" id="esq-novasenha" placeholder="Nova senha">
+        <input type="password" id="esq-novasenha" placeholder="Defina sua nova senha">
         <button onclick="redefinirSenha()">Redefinir Senha</button>
         <a onclick="mudarTela('login')">Voltar ao Login</a>
     </div>
@@ -95,7 +98,7 @@
             <option value="Rose Gold">Rose Gold</option>
             <option value="Matrix Esmerald">Matrix Esmerald</option>
             <option value="Midnight Blue">Midnight Blue</option>
-            <option value="Claro Padrão">Claro Padrão</option>
+            <option value="Light Minimal">Light Minimal</option>
         </select>
         <button onclick="salvarNovoUsuario()">Cadastrar</button>
         <a id="cad-voltar" onclick="mudarTela('login')">Voltar ao Login</a>
@@ -103,30 +106,29 @@
 </div>
 
 <script>
-    // Paleta de Temas
     const temas = {
-        "Rose Gold": { bg: "#fdf2f2", card: "#ffffff", text: "#4a3b3c", btn: "#d4a5a5" },
-        "Matrix Esmerald": { bg: "#0d1117", card: "#161b22", text: "#00ff66", btn: "#238636" },
-        "Midnight Blue": { bg: "#0f172a", card: "#1e293b", text: "#e2e8f0", btn: "#3b82f6" },
-        "Claro Padrão": { bg: "#f4f4f4", card: "#ffffff", text: "#333333", btn: "#007bff" }
+        "Rose Gold": { bg: "#fdf2f2", card: "#ffffff", text: "#4a3b3c", btn: "#d4a5a5", border: "#e6c5c5" },
+        "Matrix Esmerald": { bg: "#0d1117", card: "#161b22", text: "#00ff66", btn: "#238636", border: "#30363d" },
+        "Midnight Blue": { bg: "#0f172a", card: "#1e293b", text: "#e2e8f0", btn: "#3b82f6", border: "#334155" },
+        "Light Minimal": { bg: "#f8f9fa", card: "#ffffff", text: "#212529", btn: "#495057", border: "#dee2e6" }
     };
 
-    // Banco Inicial se estiver vazio
-    if (!localStorage.getItem('usuarios')) {
+    if (!localStorage.getItem('aria_usuarios')) {
         const inicial = {
-            "admin": { senha: "123", pergunta: "Qual seu pet?", resposta: "rex", tema: "Rose Gold" }
+            "admin": { senha: "123", pergunta: "Qual o seu pet?", resposta: "rex", tema: "Rose Gold" }
         };
-        localStorage.setItem('usuarios', JSON.stringify(inicial));
+        localStorage.setItem('aria_usuarios', JSON.stringify(inicial));
     }
 
-    let usuarioLogado = localStorage.getItem('usuarioLogado') || null;
+    let usuarioLogado = localStorage.getItem('aria_usuarioLogado') || null;
 
     function aplicarTema(nomeTema) {
-        let t = temas[nomeTema] || temas["Claro Padrão"];
+        let t = temas[nomeTema] || temas["Rose Gold"];
         document.documentElement.style.setProperty('--bg', t.bg);
         document.documentElement.style.setProperty('--card', t.card);
         document.documentElement.style.setProperty('--text', t.text);
         document.documentElement.style.setProperty('--btn', t.btn);
+        document.documentElement.style.setProperty('--border', t.border);
     }
 
     function mostrarMsg(texto, tipo) {
@@ -137,21 +139,21 @@
     }
 
     function mudarTela(tela) {
-        document.querySelectorAll('#app > div').forEach(d => d.classList.add('hidden'));
+        document.querySelectorAll('#app > div:not(.brand)').forEach(d => d.classList.add('hidden'));
         document.getElementById('msg').innerText = "";
 
         if (tela === 'login') {
             document.getElementById('view-login').classList.remove('hidden');
-            aplicarTema("Claro Padrão");
+            aplicarTema("Rose Gold");
         } else if (tela === 'dashboard') {
             document.getElementById('view-dashboard').classList.remove('hidden');
-            let db = JSON.parse(localStorage.getItem('usuarios'));
+            let db = JSON.parse(localStorage.getItem('aria_usuarios'));
             let uData = db[usuarioLogado];
             document.getElementById('dash-title').innerText = "Olá, " + usuarioLogado;
             document.getElementById('dash-tema-txt').innerText = "Tema ativo: " + uData.tema;
             aplicarTema(uData.tema);
         } else if (tela === 'config') {
-            let db = JSON.parse(localStorage.getItem('usuarios'));
+            let db = JSON.parse(localStorage.getItem('aria_usuarios'));
             let uData = db[usuarioLogado];
             document.getElementById('cfg-pergunta').value = uData.pergunta;
             document.getElementById('cfg-resposta').value = "";
@@ -178,11 +180,11 @@
     function fazerLogin() {
         let u = document.getElementById('login-user').value.trim();
         let p = document.getElementById('login-pass').value;
-        let db = JSON.parse(localStorage.getItem('usuarios'));
+        let db = JSON.parse(localStorage.getItem('aria_usuarios'));
 
         if (db[u] && db[u].senha === p) {
             usuarioLogado = u;
-            localStorage.setItem('usuarioLogado', u);
+            localStorage.setItem('aria_usuarioLogado', u);
             mudarTela('dashboard');
         } else {
             mostrarMsg("Usuário ou senha incorretos!", "error");
@@ -190,7 +192,7 @@
     }
 
     function salvarConfiguracoes() {
-        let db = JSON.parse(localStorage.getItem('usuarios'));
+        let db = JSON.parse(localStorage.getItem('aria_usuarios'));
         let senhaNova = document.getElementById('cfg-senha').value;
         let pNova = document.getElementById('cfg-pergunta').value;
         let rNova = document.getElementById('cfg-resposta').value.trim().toLowerCase();
@@ -201,7 +203,7 @@
         if (rNova) db[usuarioLogado].resposta = rNova;
         db[usuarioLogado].tema = tNovo;
 
-        localStorage.setItem('usuarios', JSON.stringify(db));
+        localStorage.setItem('aria_usuarios', JSON.stringify(db));
         mostrarMsg("Atualizado com sucesso!", "success");
         setTimeout(() => mudarTela('dashboard'), 1000);
     }
@@ -209,7 +211,7 @@
     let usuarioRecuperando = "";
     function buscarPergunta() {
         let u = document.getElementById('esq-user').value.trim();
-        let db = JSON.parse(localStorage.getItem('usuarios'));
+        let db = JSON.parse(localStorage.getItem('aria_usuarios'));
         if (db[u]) {
             usuarioRecuperando = u;
             document.getElementById('lbl-pergunta').innerText = "Pergunta: " + db[u].pergunta;
@@ -223,11 +225,11 @@
     function redefinirSenha() {
         let resp = document.getElementById('esq-resposta').value.trim().toLowerCase();
         let novaS = document.getElementById('esq-novasenha').value;
-        let db = JSON.parse(localStorage.getItem('usuarios'));
+        let db = JSON.parse(localStorage.getItem('aria_usuarios'));
 
         if (db[usuarioRecuperando].resposta === resp) {
             db[usuarioRecuperando].senha = novaS;
-            localStorage.setItem('usuarios', JSON.stringify(db));
+            localStorage.setItem('aria_usuarios', JSON.stringify(db));
             mostrarMsg("Senha alterada com sucesso!", "success");
             setTimeout(() => mudarTela('login'), 1500);
         } else {
@@ -247,14 +249,14 @@
             return;
         }
 
-        let db = JSON.parse(localStorage.getItem('usuarios'));
+        let db = JSON.parse(localStorage.getItem('aria_usuarios'));
         if (db[u]) {
             mostrarMsg("Usuário já existe!", "error");
             return;
         }
 
         db[u] = { senha: p, pergunta: perg, resposta: resp, tema: tema };
-        localStorage.setItem('usuarios', JSON.stringify(db));
+        localStorage.setItem('aria_usuarios', JSON.stringify(db));
         mostrarMsg("Usuário criado com sucesso!", "success");
         
         setTimeout(() => {
@@ -265,12 +267,11 @@
 
     function fazerLogout() {
         usuarioLogado = null;
-        localStorage.removeItem('usuarioLogado');
+        localStorage.removeItem('aria_usuarioLogado');
         mudarTela('login');
     }
 
-    // Inicialização ao abrir a página
-    if (usuarioLogado && JSON.parse(localStorage.getItem('usuarios'))[usuarioLogado]) {
+    if (usuarioLogado && JSON.parse(localStorage.getItem('aria_usuarios'))[usuarioLogado]) {
         mudarTela('dashboard');
     } else {
         mudarTela('login');
