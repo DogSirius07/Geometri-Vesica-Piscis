@@ -1,9 +1,10 @@
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aria.OS - Autenticação & Ecossistema</title>
+    <title>Aria.OS - Core & Intelligence Ecosystem</title>
     <style>
         * {
             box-sizing: border-box;
@@ -13,8 +14,8 @@
         }
 
         body {
-            background-color: #0f172a;
-            background-image: radial-gradient(circle at top right, #1e293b, #0f172a);
+            background-color: #090d16;
+            background-image: radial-gradient(circle at top right, #1e293b, #090d16);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -24,16 +25,16 @@
 
         .container {
             width: 100%;
-            max-width: 420px;
+            max-width: 480px;
             padding: 20px;
         }
 
         .card {
             background: rgba(30, 41, 59, 0.85);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
             padding: 35px;
-            border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
             border: 1px solid rgba(255, 255, 255, 0.1);
             display: none;
         }
@@ -134,26 +135,31 @@
             background-color: #0ea5e9;
         }
 
-        .dashboard-box {
-            text-align: center;
-        }
-
-        .contador {
-            background: rgba(15, 23, 42, 0.6);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 15px 0;
+        .captcha-box {
+            background: rgba(15, 23, 42, 0.7);
             border: 1px solid #334155;
-            font-size: 15px;
-            color: #38bdf8;
-            font-weight: bold;
+            padding: 12px;
+            border-radius: 6px;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
-        .mystic-text {
+        .captcha-box label {
+            margin: 0;
             font-size: 13px;
-            color: #94a3b8;
-            line-height: 1.5;
-            margin-bottom: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .captcha-box input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: #38bdf8;
+            cursor: pointer;
         }
 
         .error-msg {
@@ -162,6 +168,73 @@
             text-align: center;
             margin-bottom: 12px;
             display: none;
+        }
+
+        .success-msg {
+            color: #34d399;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 12px;
+            display: none;
+        }
+
+        /* Estilos dos Módulos no Painel */
+        .module-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .module-btn {
+            background: #1e293b;
+            border: 1px solid #334155;
+            color: #f8fafc;
+            padding: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            text-align: center;
+            transition: all 0.2s;
+        }
+
+        .module-btn:hover, .module-btn.active {
+            background: #38bdf8;
+            color: #0f172a;
+            font-weight: bold;
+            border-color: #38bdf8;
+        }
+
+        .module-panel {
+            display: none;
+            background: rgba(15, 23, 42, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px solid #334155;
+            margin-bottom: 15px;
+        }
+
+        .module-panel.active {
+            display: block;
+        }
+
+        .contador {
+            font-size: 14px;
+            color: #38bdf8;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+        }
+
+        .admin-badge {
+            background: #f59e0b;
+            color: #0f172a;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-left: 5px;
         }
     </style>
 </head>
@@ -172,11 +245,11 @@
         <!-- TELA 1: LOGIN -->
         <div id="loginScreen" class="card active">
             <h2>Aria.OS Login</h2>
-            <div id="loginError" class="error-msg">Usuário ou senha incorretos.</div>
+            <div id="loginError" class="error-msg"></div>
             <form onsubmit="handleLogin(event)">
                 <div class="input-group">
                     <label for="loginUser">Usuário</label>
-                    <input type="text" id="loginUser" placeholder="Digite seu usuário" required>
+                    <input type="text" id="loginUser" placeholder="Digite seu usuário (Ex: Andressa)" required>
                 </div>
 
                 <div class="input-group">
@@ -187,95 +260,124 @@
                     </div>
                 </div>
 
+                <!-- Simulação de Anti-Bot / CAPTCHA -->
+                <div class="captcha-box" id="captchaContainer" style="display: none;">
+                    <label>
+                        <input type="checkbox" id="captchaCheck"> Não sou um robô (Proteção Anti-Brute-Force)
+                    </label>
+                </div>
+
                 <div class="links-row">
-                    <a onclick="switchScreen('registerScreen')">Criar primeira conta</a>
-                    <a onclick="recoverData('user')">Esqueci dados</a>
+                    <a onclick="switchScreen('registerScreen')">Criar conta</a>
+                    <a onclick="recoverData()">Esqueci dados</a>
                 </div>
 
                 <button type="submit" class="btn-primary">Entrar</button>
             </form>
         </div>
 
-        <!-- TELA 2: REGISTRO / CRIAÇÃO DE CONTA -->
+        <!-- TELA 2: REGISTRO COM SENSIBILIDADE A MAIÚSCULAS/MINÚSCULAS -->
         <div id="registerScreen" class="card">
             <h2>Criar Conta Aria.OS</h2>
-            <div id="registerError" class="error-msg">Este usuário já está cadastrado ou dados inválidos.</div>
+            <div id="registerError" class="error-msg"></div>
+            <div id="registerSuccess" class="success-msg"></div>
             <form onsubmit="handleRegister(event)">
                 <div class="input-group">
-                    <label for="regUser">Novo Usuário</label>
-                    <input type="text" id="regUser" placeholder="Escolha seu usuário" required>
+                    <label for="regUser">Usuário (Diferencia maiúsculas/minúsculas)</label>
+                    <input type="text" id="regUser" placeholder="Ex: Andressa, andressa1, Admin" required>
                 </div>
 
                 <div class="input-group">
                     <label for="regPass">Senha</label>
                     <div class="password-wrapper">
-                        <input type="password" id="regPass" placeholder="Crie uma senha" required>
+                        <input type="password" id="regPass" placeholder="Crie uma senha forte" required>
                         <button type="button" class="toggle-password" id="toggleRegBtn" onclick="togglePass('regPass', 'toggleRegBtn')">Mostrar</button>
                     </div>
                 </div>
 
                 <div class="links-row">
-                    <a onclick="switchScreen('loginScreen')">Já possui conta? Entrar</a>
+                    <a onclick="switchScreen('loginScreen')">Voltar para o Login</a>
                 </div>
 
                 <button type="submit" class="btn-primary">Cadastrar</button>
             </form>
         </div>
 
-        <!-- TELA 3: DASHBOARD / PAINEL DA ANDRESSA -->
-        <div id="dashboardAndressa" class="card">
-            <div class="dashboard-box">
-                <h2>🌌 Projeto 05.05</h2>
-                <h3>Nossa Frequência</h3>
-                <p class="mystic-text">Bem-vinda de volta, Andressa. Experiência digital interativa consagrada para celebrar nossa união e harmonia.</p>
-                
-                <div class="contador" id="contadorTempo">
-                    Calculando tempo de conexão...
-                </div>
-
-                <button class="btn-primary" onclick="logout()" style="background-color: #ef4444; color: white;">Sair</button>
+        <!-- TELA 3: DASHBOARD UNIFICADO COM MÓDULOS -->
+        <div id="dashboardScreen" class="card">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                <h3 id="userWelcome" style="margin: 0; font-size: 16px;">Painel Aria.OS</h3>
+                <button onclick="logout()" style="background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold;">Sair</button>
             </div>
-        </div>
 
-        <!-- TELA 4: DASHBOARD / PAINEL GERAL (OUTROS USUÁRIOS) -->
-        <div id="dashboardGeneric" class="card">
-            <div class="dashboard-box">
-                <h2>Aria.OS Workspace</h2>
-                <h3 id="welcomeGenericUser" style="color: #38bdf8; font-size: 16px; margin-bottom: 10px;"></h3>
-                <p class="mystic-text">Ambiente autenticado e restrito para o seu perfil no ecossistema.</p>
-                
-                <div class="contador">
-                    Status do Sistema: Sincronizado e Seguro 🛡️
-                </div>
+            <!-- Seletor de Módulos do Sistema -->
+            <div class="module-selector">
+                <div class="module-btn active" onclick="switchModule('modFrequencia', this)">🌌 Nossa Frequência</div>
+                <div class="module-btn" onclick="switchModule('modDiario', this)">📖 Diário de Sintonia</div>
+                <div class="module-btn" onclick="switchModule('modMusica', this)">🎶 Trilha Sonora</div>
+                <div class="module-btn" id="adminTabBtn" style="display: none;" onclick="switchModule('modAdmin', this)">🛡️ Admin Core</div>
+            </div>
 
-                <button class="btn-primary" onclick="logout()" style="background-color: #ef4444; color: white;">Sair</button>
+            <!-- Módulo 1: Projeto 05.05 - Nossa Frequência -->
+            <div id="modFrequencia" class="module-panel active">
+                <h4 style="color: #38bdf8; margin-bottom: 8px;">Projeto 05.05 - Nossa Frequência</h4>
+                <p style="font-size: 12px; color: #94a3b8; line-height: 1.4;">Experiência digital interativa consagrada para celebrar nossa união, harmonia e geometria sagrada.</p>
+                <div class="contador" id="contadorTempo">Calculando tempo...</div>
+            </div>
+
+            <!-- Módulo 2: Diário de Gratidão -->
+            <div id="modDiario" class="module-panel">
+                <h4 style="color: #38bdf8; margin-bottom: 8px;">Diário de Conexão</h4>
+                <textarea id="diarioText" placeholder="Escreva um momento especial ou pensamento de hoje..." style="width: 100%; height: 70px; background: #090d16; border: 1px solid #334155; color: white; padding: 8px; border-radius: 4px; font-size: 12px; resize: none; margin-bottom: 8px;"></textarea>
+                <button class="btn-primary" onclick="salvarDiario()" style="font-size: 12px; padding: 8px;">Salvar Registro</button>
+                <p id="diarioFeedback" style="font-size: 11px; color: #34d399; margin-top: 5px; display: none;">Registro salvo na memória do Aria.OS ✨</p>
+            </div>
+
+            <!-- Módulo 3: Trilha Sonora / Rádio -->
+            <div id="modMusica" class="module-panel" style="text-align: center;">
+                <h4 style="color: #38bdf8; margin-bottom: 8px;">Sintonia Sonora</h4>
+                <p style="font-size: 12px; color: #94a3b8; margin-bottom: 12px;">Frequências harmônicas sintonizadas para o casal.</p>
+                <button class="btn-primary" onclick="toggleAudio()" id="audioBtn" style="font-size: 12px; padding: 8px;">▶ Tocar Frequência Base</button>
+            </div>
+
+            <!-- Módulo 4: Painel Administrativo (Exclusivo Admin) -->
+            <div id="modAdmin" class="module-panel">
+                <h4 style="color: #f59e0b; margin-bottom: 8px;">Painel de Controle Administrativo</h4>
+                <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;">Gerenciamento de acessos e segurança do Aria.OS:</p>
+                <div id="adminUserList" style="font-size: 12px; background: #090d16; padding: 8px; border-radius: 4px; max-height: 100px; overflow-y: auto; color: #cbd5e1;"></div>
             </div>
         </div>
 
     </div>
 
     <script>
-        // Banco de dados local simulado (Inicializado com a Andressa e sua senha definitiva)
+        // Sistema de Armazenamento Local Inicial com Admin e Andressa diferenciados por Case-Sensitivity
         function getDatabase() {
-            const db = localStorage.getItem('aria_users');
+            const db = localStorage.getItem('aria_os_db');
             if (!db) {
                 const initial = {
-                    'andressa': { pass: 'amor2026password', type: 'andressa' }
+                    'Admin': { pass: 'admin2026', role: 'admin' },
+                    'Andressa': { pass: 'amor2026password', role: 'andressa' },
+                    'andressa': { pass: 'amor2026password', role: 'andressa' },
+                    'andressa1': { pass: 'senha123', role: 'generic' }
                 };
-                localStorage.setItem('aria_users', JSON.stringify(initial));
+                localStorage.setItem('aria_os_db', JSON.stringify(initial));
                 return initial;
             }
             return JSON.parse(db);
         }
 
         function saveDatabase(db) {
-            localStorage.setItem('aria_users', JSON.stringify(db));
+            localStorage.setItem('aria_os_db', JSON.stringify(db));
         }
+
+        // Controle de Tentativas Inválidas (Proteção contra Brute Force / Bots)
+        let loginAttempts = 0;
 
         function switchScreen(screenId) {
             document.querySelectorAll('.card').forEach(card => card.classList.remove('active'));
             document.getElementById(screenId).classList.add('active');
-            document.querySelectorAll('.error-msg').forEach(err => err.style.display = 'none');
+            document.querySelectorAll('.error-msg, .success-msg').forEach(el => el.style.display = 'none');
         }
 
         function togglePass(inputId, btnId) {
@@ -292,39 +394,89 @@
 
         function handleLogin(event) {
             event.preventDefault();
-            const user = document.getElementById('loginUser').value.trim().toLowerCase();
+            const user = document.getElementById('loginUser').value.trim(); // Mantém case-sensitive exato
             const pass = document.getElementById('loginPass').value.trim();
             const db = getDatabase();
 
-            if (db[user] && db[user].pass === pass) {
-                document.getElementById('loginPass').value = '';
-                if (db[user].type === 'andressa') {
-                    switchScreen('dashboardAndressa');
-                    iniciarContador();
-                } else {
-                    document.getElementById('welcomeGenericUser').textContent = `Usuário: ${user}`;
-                    switchScreen('dashboardGeneric');
+            // Verificação de Bot / CAPTCHA se houver mais de 2 tentativas erradas
+            if (loginAttempts >= 2) {
+                const captchaChecked = document.getElementById('captchaCheck').checked;
+                if (!captchaChecked) {
+                    const errEl = document.getElementById('loginError');
+                    errEl.textContent = 'Por favor, confirme a verificação anti-bot.';
+                    errEl.style.display = 'block';
+                    return;
                 }
+            }
+
+            // Validação exata respeitando maiúsculas e minúsculas
+            if (db[user] && db[user].pass === pass) {
+                loginAttempts = 0;
+                document.getElementById('loginPass').value = '';
+                document.getElementById('captchaContainer').style.display = 'none';
+                
+                // Configuração do Painel de acordo com o usuário
+                const userData = db[user];
+                let welcomeText = `Bem-vindo(a), ${user}`;
+                if (userData.role === 'admin') welcomeText += ' <span class="admin-badge">Admin</span>';
+                
+                document.getElementById('userWelcome').innerHTML = welcomeText;
+                
+                // Exibir ou ocultar aba de Admin
+                const adminTab = document.getElementById('adminTabBtn');
+                if (userData.role === 'admin') {
+                    adminTab.style.display = 'block';
+                    carregarListaAdmin();
+                } else {
+                    adminTab.style.display = 'none';
+                }
+
+                switchScreen('dashboardScreen');
+                iniciarContador();
             } else {
-                document.getElementById('loginError').style.display = 'block';
+                loginAttempts++;
+                const errEl = document.getElementById('loginError');
+                errEl.textContent = 'Usuário (verifique maiúsculas/minúsculas) ou senha incorretos.';
+                errEl.style.display = 'block';
+
+                if (loginAttempts >= 2) {
+                    document.getElementById('captchaContainer').style.display = 'flex';
+                }
             }
         }
 
         function handleRegister(event) {
             event.preventDefault();
-            const user = document.getElementById('regUser').value.trim().toLowerCase();
+            const user = document.getElementById('regUser').value.trim();
             const pass = document.getElementById('regPass').value.trim();
             const db = getDatabase();
 
-            if (db[user] || user === '') {
-                document.getElementById('registerError').style.display = 'block';
+            const errEl = document.getElementById('registerError');
+            const succEl = document.getElementById('registerSuccess');
+
+            errEl.style.display = 'none';
+            succEl.style.display = 'none';
+
+            if (!user || !pass) {
+                errEl.textContent = 'Preencha todos os campos.';
+                errEl.style.display = 'block';
+                return;
+            }
+
+            // Impede sobrescrever chaves existentes considerando diferenciação exata
+            if (db[user]) {
+                errEl.textContent = 'Este nome de usuário exato já existe. Tente variar letras ou números (ex: ' + user + '1).';
+                errEl.style.display = 'block';
             } else {
-                db[user] = { pass: pass, type: 'generic' };
+                db[user] = { pass: pass, role: 'generic' };
                 saveDatabase(db);
-                alert('Conta criada com sucesso! Faça login com suas novas credenciais.');
-                document.getElementById('regUser').value = '';
-                document.getElementById('regPass').value = '';
-                switchScreen('loginScreen');
+                succEl.textContent = 'Conta criada com sucesso! Redirecionando...';
+                succEl.style.display = 'block';
+                setTimeout(() => {
+                    document.getElementById('regUser').value = '';
+                    document.getElementById('regPass').value = '';
+                    switchScreen('loginScreen');
+                }, 1500);
             }
         }
 
@@ -334,16 +486,61 @@
             document.getElementById('loginPass').value = '';
         }
 
-        function recoverData(type) {
-            const identifier = prompt('Informe seu usuário cadastrado para recuperação:');
-            if (identifier) {
+        function recoverData() {
+            const user = prompt('Informe o nome exato do seu usuário para iniciar a recuperação:');
+            if (user) {
                 const db = getDatabase();
-                if (db[identifier.toLowerCase()]) {
-                    alert(`Instruções de recuperação enviadas para o perfil: ${identifier}`);
+                if (db[user]) {
+                    alert(`Instruções e chave de restauração enviadas para os registros do perfil "${user}".`);
                 } else {
-                    alert('Usuário não encontrado no sistema.');
+                    alert('Usuário não localizado no ecossistema.');
                 }
             }
+        }
+
+        // Navegação entre Módulos
+        function switchModule(modId, btnElement) {
+            document.querySelectorAll('.module-panel').forEach(panel => panel.classList.remove('active'));
+            document.querySelectorAll('.module-btn').forEach(btn => btn.classList.remove('active'));
+            
+            document.getElementById(modId).classList.add('active');
+            btnElement.classList.add('active');
+        }
+
+        function salvarDiario() {
+            const texto = document.getElementById('diarioText').value;
+            if (texto.trim()) {
+                const fb = document.getElementById('diarioFeedback');
+                fb.style.display = 'block';
+                setTimeout(() => fb.style.display = 'none', 3000);
+                document.getElementById('diarioText').value = '';
+            }
+        }
+
+        let audioAtivo = false;
+        function toggleAudio() {
+            const btn = document.getElementById('audioBtn');
+            audioAtivo = !audioAtivo;
+            if (audioAtivo) {
+                btn.textContent = '⏹ Parar Frequência';
+                btn.style.background = '#ef4444';
+                btn.style.color = 'white';
+            } else {
+                btn.textContent = '▶ Tocar Frequência Base';
+                btn.style.background = '#38bdf8';
+                btn.style.color = '#0f172a';
+            }
+        }
+
+        function carregarListaAdmin() {
+            const db = getDatabase();
+            const listContainer = document.getElementById('adminUserList');
+            let html = '<ul>';
+            for (let u in db) {
+                html += `<li><b>${u}</b> - Nível: ${db[u].role}</li>`;
+            }
+            html += '</ul>';
+            listContainer.innerHTML = html;
         }
 
         function iniciarContador() {
@@ -359,9 +556,13 @@
             const horas = Math.floor((diferenca / (1000 * 60 * 60)) % 24);
             const minutos = Math.floor((diferenca / 1000 / 60) % 60);
 
-            document.getElementById('contadorTempo').innerHTML = 
-                `Frequência Ativa há:<br>${dias} dias, ${horas}h e ${minutos}m em sintonia ✨`;
+            const contadorEl = document.getElementById('contadorTempo');
+            if (contadorEl) {
+                contadorEl.innerHTML = `Frequência Ativa há:<br>${dias} dias, ${horas}h e ${minutos}m em sintonia ✨`;
+            }
         }
     </script>
 </body>
 </html>
+
+```
