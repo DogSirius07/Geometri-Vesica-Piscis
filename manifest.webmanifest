@@ -1,0 +1,11 @@
+{
+  "name": "Aria.OS — Infinite Neural Ecosystem",
+  "short_name": "Aria.OS",
+  "description": "Um sistema operacional pessoal, local-first e privado.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#0d1020",
+  "theme_color": "#101426",
+  "icons": [{ "src": "icons/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}

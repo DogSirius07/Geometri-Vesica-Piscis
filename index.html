@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#101426" />
+  <meta name="description" content="Aria.OS — seu ecossistema pessoal local-first." />
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self' data: blob:; media-src 'self' blob:; connect-src 'self'; worker-src 'self'; manifest-src 'self'">
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+  <title>Aria.OS — Infinite Neural Ecosystem</title>
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div><div class="noise"></div>
+  <div class="boot" id="boot" aria-live="polite"><div class="boot-orbit"></div><strong>ARIA.OS</strong><span>inicializando seu ecossistema</span></div>
+  <div class="app-shell" id="app" hidden>
+    <aside class="sidebar" aria-label="Navegação principal">
+      <a class="brand" href="#home" aria-label="Aria OS, início"><span class="brand-mark">✦</span><span><b>Aria.OS</b><small>Infinite Neural Ecosystem</small></span></a>
+      <button class="command-trigger" data-action="command"><kbd>⌘</kbd><span>Buscar ou comandar</span><kbd>K</kbd></button>
+      <nav id="sidebar-nav" class="nav-list"></nav>
+      <div class="sidebar-bottom"><button class="quiet-button" data-action="theme">◐ <span>Midnight</span></button><button class="profile-button" data-action="profile"><span class="avatar">A</span><span><b>Andressa</b><small>Local & privado</small></span><span>⌄</span></button></div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar"><button class="mobile-menu icon-button" data-action="menu" aria-label="Abrir menu">☰</button><div class="crumb"><span id="page-eyebrow">NEURAL COCKPIT</span><h1 id="page-title">Seu agora</h1></div><div class="top-actions"><button class="icon-button" data-action="notifications" aria-label="Notificações">◌<i id="notification-dot"></i></button><button class="add-button" data-action="quick-create">＋ <span>Criar</span></button></div></header>
+      <section id="view" tabindex="-1"></section>
+    </main>
+    <nav class="mobile-nav" aria-label="Navegação móvel"><button data-route="home">⌂<span>Início</span></button><button data-route="neural">◈<span>Neural</span></button><button data-action="quick-create" class="mobile-create">＋</button><button data-route="aria">✦<span>Aria</span></button><button data-action="menu">•••<span>Mais</span></button></nav>
+  </div>
+  <div id="layer" aria-live="polite"></div>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
